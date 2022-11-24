@@ -1,0 +1,11 @@
+main: me.indian.pl.OsTag
+name: OsTagPNX
+author: IndianPL
+description: OsTagPNX plugin
+version: 1.4.7.02
+api: [ "1.0.14" ]
+commands:
+  ostag:
+    description: add/remove player to advanced player list
+  tto:
+    description: test command

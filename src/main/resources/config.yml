@@ -1,0 +1,116 @@
+#--------------------------------------------------
+#               OsTagPNX
+#       Contains ChatFormating and OsTag
+#           By: IndianPL
+#
+#----------------------------------------------------
+#Placeholders
+# <name> - player name [OsTag \ ChatFormater] \\name\\
+# <msg> - player message [ChatFormater]
+# <health> - player health [OsTag \ ChatFormater]
+# <max_health> - player max health [OsTag]
+# <device> - player device [OsTag \ ChatFormater]
+# <model> - device model [OsTag \ ChatFormater]
+# <version> - Minecraft version [OsTag \ ChatFormater]
+# <xuid> - get player xuid (DON'T WORKING WHEN PLAYER DONT XBOX ACCOUNT) [OsTag ]
+# <language> - player Language [OsTag \ ChatFormater]
+# <ping> - player ping [OsTag \ ChatFormater]
+# <controler> - Player controls [OsTag ]
+# <suffix> - player group sufix (Luck Perms Required) [OsTag \ ChatFormater] \\name\\
+# <prefix> player group prefix (Luck Perms Required) [OsTag \ ChatFormater] \\name\\
+# <xp> - player xp lvl [OsTag \ ChatFormater]
+# <cps> - left click per second counter [OsTag]
+# <gamemode> - player gamemode [OsTag]
+#if in the description of the placeholders any one contains \\name\\ it means that it can be used in the player's name in ostag
+# for better work dont use \ , only use \n
+
+#--------------------------------
+#       Modules
+#
+#OsTag module
+OsTag: true
+#
+#ChatFormating module
+ChatFormater: true
+#
+#when turn off some module restart server
+#-------------------------------
+
+
+#Important notes
+#Note if you use only \ (BackSlash) in config, the plugin may produce errors in the console or not work
+#if you use server-authoritative-movement=client-auth in powernukkitx, set this to false
+PowerNukkiX-movement-server: true
+
+
+#OsTag Options
+#Information refresh time in seconds
+refresh-time: 1
+
+#Score Tag (When true name don't change)
+#DON'T RELOAD SERVER OR PLUGIN  ( when you set to true restart server)
+#May be buged when player is not new player
+ScoreTagOnly: false
+
+#Normal Player
+nick: "<prefix> <name> <suffix> "
+subtag: "<device> | <controler> \n§eDevice Model: §r<model>\n§eGamemode: §r<gamemode>\n§eCps: §r<cps>  §ePing: <ping> §eXp: <xp> \n§eGame Version: §r<version> \n\n§eXuid: §r<xuid>\n\n§eLanguage: §r<language>\n<health>/<max_health>§c❤"
+#Advanced Player
+a-nick: "<prefix> <name> <suffix> "
+a-subtag: "<device> | <controler>\n§eCps: §r<cps>  §ePing: <ping>\n<health>/<max_health>§c❤\n§eXp: <xp>"
+advanced-players:
+  - "JndjanBartonka"
+  - "TheTwuj"
+
+
+#Formater options
+message.format: "<prefix> <name> <suffix> » <msg>"
+#Censorship
+#CenzorShip remove all Upper words
+enable-censorship: true
+censorship: "Bread"
+BlackWords:
+  - "dupa"
+  - "fuck"
+  - "nab"
+  - "ez"
+#Cooldown
+cooldown-enable: true
+cooldown: 5
+cooldown-message: "§aYou must wait §b <left>§eSeconds§a!"
+
+#Messages and informations
+#Gamemodes
+survival: "survival"
+creative: "creative"
+adventure: "adventure"
+
+#Xp colors (Why? use this as it is used on hive if you want)
+1lvl: "§r"
+10lvl: "§e"
+15lvl: "§a"
+20lvl: "§2"
+25lvl: "§c"
+30lvl: "§4"
+
+#Os
+Windows: "§f[§bWindows§f]"
+Android: "§f[§aAndroid§f]"
+Ios: "§f[§bIos§f]"
+Mac: "§f[§cMac Os§f]"
+Fire: "§f[§6Fire Os§f]"
+Gearvr: "§f[§aGearVr§f]"
+Hololens: "§f[§aHoloLens§f]"
+Dedicated: "§f[§aDedicated§f]"
+TvOs: "§f[§aTvOs§f]"
+PlayStation: "§f[§aPS§f]"
+Nintendo: "§f[§aNintendo§f]"
+Xbox: "§f[§aXbox§f]"
+Unknow: "§f[§aUnknow§f]"
+
+#Controls
+touch: "Touch"
+keyboard: "Keyboard"
+gamepad: "GamePad"
+motion_controller: "motion_controller"
+UnknowControler: "Unknow"
