@@ -12,24 +12,32 @@ import me.indian.pl.Listeners.InputListener;
 import me.indian.pl.Others.Metrics;
 import me.indian.pl.Utils.OsTagAdd;
 import me.indian.pl.Utils.OsTimer;
+import me.indian.pl.Utils.OtherUtils;
 
 public class OsTag extends PluginBase implements Listener {
 
     private static int pluginId = 16838;
+    public static Boolean luckPerm;
+    public static Boolean deathSkulls;
 
     @Override
     public void onEnable() {
+
         PluginManager pm = getServer().getPluginManager();
         if (getServer().getPluginManager().getPlugin("LuckPerms") == null) {
-            getLogger().warning("You dont have lucky perms , ChatFormating dont corectly work");
+            getLogger().warning("You don't have lucky perms , ChatFormating dont corectly work");
+            luckPerm = false;
         } else {
-
+            luckPerm = true;
         }
-
+        if (getServer().getPluginManager().getPlugin("DeathSkulls") == null) {
+            getLogger().info("You don't have DeathSkulls plugin, <deathskull> placeholder will not workg");
+            deathSkulls = false;
+        } else {
+            deathSkulls = true;
+        }
         saveDefaultConfig();
-
-        new OsTagAdd(this);
-
+        sendOnEnableInfo();
 
         pm.registerEvents(new InputListener(this), this);
 
@@ -43,7 +51,6 @@ public class OsTag extends PluginBase implements Listener {
         }
         if(this.getConfig().getBoolean("ChatFormater")){
             pm.registerEvents(new Formater(this), this);
-
         }
 
         Metrics metrics = new Metrics(this, pluginId);
@@ -69,9 +76,33 @@ public class OsTag extends PluginBase implements Listener {
             }
             return info;
         }));
-
-
-
-
     }
+
+    private void sendOnEnableInfo(){
+        String ver = this.getDescription().getVersion();
+        String aut = this.getDescription().getAuthors() + "";
+        String verNuk = this.getServer().getNukkitVersion();
+        String servVer = this.getServer().getVersion();
+        String  apiVer =  this.getServer().getApiVersion();
+        String ip = this.getServer().getIp();
+        String port = this.getServer().getPort() + "";
+
+        this.getLogger().info("§b-------------------------------");
+        this.getLogger().info("§aOsTagPNX version:§3 " + ver );
+        this.getLogger().info("§aPlugin by:§6 " + aut.replace("[" , "").replace("]", ""));
+        this.getLogger().info("§aNukkit Version:§3 " + verNuk);
+        this.getLogger().info("§aNukkit Api Version:§3 " + apiVer);
+        this.getLogger().info("§aServer Version:§3 " + servVer);
+        this.getLogger().info(" ");
+        this.getLogger().info("§6Modules");
+        this.getLogger().info("§aFormater§3: " + OtherUtils.getFormaterStatus(this));
+        this.getLogger().info("§aOsTag§3: " + OtherUtils.getOsTagStatus(this));
+        this.getLogger().info(" ");
+        this.getLogger().info("§ePlugins§3");
+        this.getLogger().info("§aDeathSkulls§3: " + OtherUtils.getDeathSkullsStatus(this));
+        this.getLogger().info("§aLuckPerms§3: " + OtherUtils.getLuckPermStatus(this));
+        this.getLogger().info(" ");
+        this.getLogger().info("§b-------------------------------");
+    }
+
 }

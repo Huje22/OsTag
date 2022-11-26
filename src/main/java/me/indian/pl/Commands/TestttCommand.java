@@ -7,6 +7,8 @@ import cn.nukkit.command.CommandExecutor;
 import cn.nukkit.command.CommandSender;
 import me.indian.pl.Listeners.InputListener;
 import me.indian.pl.OsTag;
+import me.indian.pl.Utils.LuckPermUtil;
+import me.indian.pl.Utils.PlayerInfoUtil;
 
 public class TestttCommand implements CommandExecutor {
 
@@ -20,12 +22,9 @@ public class TestttCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         String input = "";
         Player p = (Player) sender;
-        if (!(args.length == 0)) {
-            Player cel = Server.getInstance().getPlayer(args[0]);
-            p.sendMessage(InputListener.controler.get(cel) + " ");
-        } else {
-            p.sendMessage(InputListener.controler.get(p) + "");
-        }
+            p.sendMessage(PlayerInfoUtil.getGroupDisName(p, plugin));
+            p.sendMessage(PlayerInfoUtil.getSkulll(p, plugin));
+
         return false;
     }
 }

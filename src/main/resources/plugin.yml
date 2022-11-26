@@ -2,7 +2,7 @@ main: me.indian.pl.OsTag
 name: OsTagPNX
 author: IndianPL
 description: OsTagPNX plugin
-version: 1.4.7.02
+version: 1.4.7.05
 api: [ "1.0.14" ]
 commands:
   ostag:

@@ -8,6 +8,9 @@ import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
 
+import static me.indian.pl.listeners.PlayerDeathListener.skullPlayer;
+
+
 public class PlayerInfoUtil {
 
 
@@ -63,8 +66,19 @@ public class PlayerInfoUtil {
         } else {
             controlerr = p.getLoginChainData().getCurrentInputMode() + "";
         }
+        String crt = controlerr
+                .replace("0", unknowcon)
+                .replace("1", klawa)
+                .replace("2", dotyk)
+                .replace("3", pad)
+                .replace("4", motion_controller)
+                .replace("UNDEFINED", unknowcon)
+                .replace("MOUSE", klawa)
+                .replace("TOUCH", dotyk)
+                .replace("GAME_PAD", pad)
+                .replace("MOTION_CONTROLLER", motion_controller);
 
-        return controlerr;
+        return crt;
     }
     public static String getXp(Player p, OsTag plugin) {
         Config conf = plugin.getConfig();
@@ -121,17 +135,13 @@ public class PlayerInfoUtil {
     }
     public static String getLuckPermPrefix(Player p, OsTag plugin) {
 
-
         String pref = "";
-        String suf = "";
 
         if (plugin.getServer().getPluginManager().getPlugin("LuckPerms") != null) {
 
             LuckPerms luckPerms = LuckPermsProvider.get();
             User user = luckPerms.getPlayerAdapter(Player.class).getUser(p);
             pref = LuckPermUtil.getPrefix(user);
-            suf = LuckPermUtil.getSuffix(user);
-
         }
         return pref;
     }
@@ -145,6 +155,17 @@ public class PlayerInfoUtil {
         }
         return suf;
     }
+    public static String getGroupDisName(Player p, OsTag plugin){
+        String group = "";
+        if (plugin.getServer().getPluginManager().getPlugin("LuckPerms") != null) {
+            LuckPerms luckPerms = LuckPermsProvider.get();
+            User user = luckPerms.getPlayerAdapter(Player.class).getUser(p);
+            if (luckPerms.getGroupManager().getGroup(user.getPrimaryGroup()).getDisplayName() != null) {
+                group = luckPerms.getGroupManager().getGroup(user.getPrimaryGroup()).getDisplayName();
+            }
+        }
+        return group ;
+    }
     public static String getXuid(Player p) {
         String xuid = "Guest";
         if (p.getLoginChainData().getXUID() != null) {
@@ -152,6 +173,14 @@ public class PlayerInfoUtil {
         }
         return xuid;
     }
-
+    public static String getSkulll(Player p,OsTag plugin){
+        String skull = "";
+        if (plugin.getServer().getPluginManager().getPlugin("DeathSkulls") != null) {
+            if (skullPlayer.contains(p.getUniqueId())) {
+                skull = plugin.getConfig().getString("Skull-icon");
+            }
+        }
+        return skull;
+    }
 
 }

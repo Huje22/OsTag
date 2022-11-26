@@ -61,12 +61,14 @@ public class Formater implements Listener {
                             .replace("<suffix>" ,getLuckPermSufix(p, plugin) )
                             .replace("<prefix>" ,  getLuckPermPrefix(p, plugin))
                             .replace("<msg>", msg)
+                            .replace("<groupDisName>" , getGroupDisName(p , plugin))
                             .replace("<device>", getDevice(p, plugin))
                             .replace("<health>", p.getHealth() + "")
                             .replace("<model>", p.getLoginChainData().getDeviceModel() + "")
                             .replace("<version>", p.getLoginChainData().getGameVersion())
                             .replace("<language>", p.getLoginChainData().getLanguageCode())
                             .replace("<ping>", getPing(p))
+                            .replace("<deathskull>" , getSkulll(p , plugin))
                     //message.format: "<prefix> <player> <suffix> >> <msg>
             );
         }
@@ -90,8 +92,4 @@ public class Formater implements Listener {
             }
         }
     }
-
-
-
-
 }

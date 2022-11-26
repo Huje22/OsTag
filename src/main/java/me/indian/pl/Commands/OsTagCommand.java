@@ -47,18 +47,22 @@ public class OsTagCommand implements CommandExecutor {
                 String ip = plugin.getServer().getIp();
                 String port = plugin.getServer().getPort() + "";
 
-                sender.sendMessage("§b-------------------------");
+                sender.sendMessage("§b-------------------------------");
                 sender.sendMessage("§aOsTagPNX version:§3 " + ver );
                 sender.sendMessage("§aPlugin by:§6 " + aut.replace("[" , "").replace("]", ""));
                 sender.sendMessage("§aNukkit Version:§3 " + verNuk);
                 sender.sendMessage("§aNukkit Api Version:§3 " + apiVer);
                 sender.sendMessage("§aServer Version:§3 " + servVer);
                 sender.sendMessage(" ");
-                sender.sendMessage("§eModules");
+                sender.sendMessage("§6Modules");
                 sender.sendMessage("§aFormater§3: " + OtherUtils.getFormaterStatus(plugin));
                 sender.sendMessage("§aOsTag§3: " + OtherUtils.getOsTagStatus(plugin));
                 sender.sendMessage(" ");
-                sender.sendMessage("§b-------------------------");
+                sender.sendMessage("§aPlugins");
+                sender.sendMessage("§aDeathSkulls§3: " + OtherUtils.getDeathSkullsStatus(plugin));
+                sender.sendMessage("§aLuckPerms§3: " + OtherUtils.getLuckPermStatus(plugin));
+                sender.sendMessage(" ");
+                sender.sendMessage("§b-------------------------------");
             }
             if(args[0].equalsIgnoreCase("reload")){
                 plugin.getConfig().reload();

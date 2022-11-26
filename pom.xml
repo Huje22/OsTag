@@ -6,7 +6,7 @@
 
     <groupId>me.indian.pl</groupId>
     <artifactId>OsTagPNX</artifactId>
-    <version>1.4.7.02</version>
+    <version>1.4.7.05</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -28,6 +28,14 @@
         <version>5.4</version>
         <scope>provided</scope>
     </dependency>
+
+        <dependency>
+            <groupId>me.indian.pl</groupId>
+            <artifactId>DeathSkulls</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/libs/DeathSkulls.jar</systemPath>
+        </dependency>
     </dependencies>
 
 

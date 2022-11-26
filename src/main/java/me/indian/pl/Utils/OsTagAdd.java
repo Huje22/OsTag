@@ -26,9 +26,11 @@ public class OsTagAdd {
                         .replace("<name>", p.getDisplayName())
                         .replace("<suffix>", getLuckPermSufix(p, plugin))
                         .replace("<prefix>", getLuckPermPrefix(p, plugin))
+                        .replace("<groupDisName>" , getGroupDisName(p , plugin))
+                        .replace("<deathskull>" , getSkulll(p , plugin))
                         + "\n" + conf.getString("subtag")
-//subtag replaces
                         .replace("<device>", getDevice(p, plugin))
+                        .replace("<deathskull>" , getSkulll(p , plugin))
                         .replace("§7", "§7")
                         .replace("<controler>", getControler(p, plugin))
                         .replace("<health>", p.getHealth() + "")
@@ -43,8 +45,6 @@ public class OsTagAdd {
                         .replace("<xp>", getXp(p, plugin))
                         .replace("<cps>", String.valueOf(InputListener.getCPS(p)))
                         .replace("<gamemode>", getGameMode(p, plugin))
-
-
         );
     }
 
@@ -56,8 +56,10 @@ public class OsTagAdd {
                         .replace("<suffix>", getLuckPermSufix(p, plugin))
                         .replace("<prefix>", getLuckPermPrefix(p, plugin))
                         .replace("<name>", p.getDisplayName())
+                        .replace("<groupDisName>" , getGroupDisName(p , plugin))
+                        .replace("<deathskull>" , getSkulll(p , plugin))
                         + "\n" + conf.getString("a-subtag")
-//subtag replaces
+                        .replace("<deathskull>" , getSkulll(p , plugin))
                         .replace("<device>", getDevice(p, plugin))
                         .replace("§7", "§7")
                         .replace("<controler>", getControler(p, plugin))
@@ -83,6 +85,7 @@ public class OsTagAdd {
 
         p.setScoreTag(conf.getString("subtag")
                 .replace("<device>", getDevice(p, plugin))
+                .replace("<deathskull>" , getSkulll(p , plugin))
                 .replace("§7", "§7")
                 .replace("<controler>", getControler(p, plugin))
                 .replace("<health>", p.getHealth() + "")
@@ -106,6 +109,7 @@ public class OsTagAdd {
 
 
         p.setScoreTag(conf.getString("a-subtag")
+                .replace("<deathskull>" , getSkulll(p , plugin))
                 .replace("<device>", getDevice(p, plugin))
                 .replace("§7", "§7")
                 .replace("<controler>", getControler(p, plugin))
