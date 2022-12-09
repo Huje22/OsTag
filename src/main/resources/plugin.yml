@@ -1,7 +1,7 @@
 main: me.indian.pl.OsTag
 name: OsTag
 author: IndianPL
-description: OsTagPNX plugin
+description: OsTag plugin
 version: 1.4.8
 api: [ "1.0.14" ]
 commands:
