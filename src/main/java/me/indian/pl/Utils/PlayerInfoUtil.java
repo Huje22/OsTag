@@ -8,7 +8,7 @@ import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
 
-import static me.indian.pl.listeners.PlayerDeathListener.skullPlayer;
+import static me.indian.deathskulls.listeners.PlayerDeathListener.skullPlayer;
 
 
 public class PlayerInfoUtil {
@@ -16,19 +16,19 @@ public class PlayerInfoUtil {
 
     public static String getDevice(Player p, OsTag plugin) {
         Config conf = plugin.getConfig();
-        String windows = conf.getString("Windows");
-        String android = conf.getString("Android");
-        String ios = conf.getString("Ios");
-        String mac = conf.getString("Mac");
-        String fire = conf.getString("Fire");
-        String gearvr = conf.getString("Gearvr");
-        String hololens = conf.getString("Hololens");
-        String dedicated = conf.getString("Hedicated");
-        String tvos = conf.getString("TvOs");
-        String playstation = conf.getString("PlayStation");
-        String nx = conf.getString("Nintendo");
-        String xbox = conf.getString("Xbox");
-        String unknow = conf.getString("Unknow");
+        String windows = ChatColor.replaceColorCode(conf.getString("Windows"));
+        String android = ChatColor.replaceColorCode(conf.getString("Android"));
+        String ios = ChatColor.replaceColorCode(conf.getString("Ios"));
+        String mac = ChatColor.replaceColorCode(conf.getString("Mac"));
+        String fire = ChatColor.replaceColorCode(conf.getString("Fire"));
+        String gearvr = ChatColor.replaceColorCode(conf.getString("Gearvr"));
+        String hololens = ChatColor.replaceColorCode(conf.getString("Hololens"));
+        String dedicated = ChatColor.replaceColorCode(conf.getString("Hedicated"));
+        String tvos = ChatColor.replaceColorCode(conf.getString("TvOs"));
+        String playstation = ChatColor.replaceColorCode(conf.getString("PlayStation"));
+        String nx = ChatColor.replaceColorCode(conf.getString("Nintendo"));
+        String xbox = ChatColor.replaceColorCode(conf.getString("Xbox"));
+        String unknow = ChatColor.replaceColorCode(conf.getString("Unknow"));
 
 
         String dev = "" + p.getLoginChainData().getDeviceOS();
@@ -51,14 +51,15 @@ public class PlayerInfoUtil {
 
         return device;
     }
+
     public static String getControler(Player p, OsTag plugin) {
         Config conf = plugin.getConfig();
 
-        String motion_controller = conf.getString("motion_controller");
-        String dotyk = conf.getString("touch");
-        String klawa = conf.getString("keyboard");
-        String pad = conf.getString("gamepad");
-        String unknowcon = conf.getString("UnknowControler");
+        String motion_controller = ChatColor.replaceColorCode(conf.getString("motion_controller"));
+        String dotyk = ChatColor.replaceColorCode(conf.getString("touch"));
+        String klawa = ChatColor.replaceColorCode(conf.getString("keyboard"));
+        String pad = ChatColor.replaceColorCode(conf.getString("gamepad"));
+        String unknowcon = ChatColor.replaceColorCode(conf.getString("UnknowControler"));
 
         String controlerr = "";
         if (plugin.getConfig().getBoolean("PowerNukkiX-movement-server")) {
@@ -80,34 +81,39 @@ public class PlayerInfoUtil {
 
         return crt;
     }
+
     public static String getXp(Player p, OsTag plugin) {
         Config conf = plugin.getConfig();
-        String xp = "";
+        String xp = "0";
+        if (p.getExperienceLevel() == 0) {
+            xp = ChatColor.replaceColorCode(conf.getString("1lvl")) + p.getExperienceLevel();
+        }
         if (p.getExperienceLevel() >= 1) {
-            xp = conf.getString("1lvl") + p.getExperienceLevel();
+            xp = ChatColor.replaceColorCode(conf.getString("1lvl")) + p.getExperienceLevel();
         }
         if (p.getExperienceLevel() >= 10) {
-            xp = conf.getString("10lvl") + p.getExperienceLevel();
+            xp = ChatColor.replaceColorCode(conf.getString("10lvl")) + p.getExperienceLevel();
         }
         if (p.getExperienceLevel() >= 15) {
-            xp = conf.getString("15lvl") + p.getExperienceLevel();
+            xp = ChatColor.replaceColorCode(conf.getString("15lvl")) + p.getExperienceLevel();
         }
         if (p.getExperienceLevel() >= 20) {
-            xp = conf.getString("20lvl") + p.getExperienceLevel();
+            xp = ChatColor.replaceColorCode(conf.getString("20lvl")) + p.getExperienceLevel();
         }
         if (p.getExperienceLevel() >= 25) {
-            xp = conf.getString("25lvl") + p.getExperienceLevel();
+            xp = ChatColor.replaceColorCode(conf.getString("25lvl")) + p.getExperienceLevel();
         }
         if (p.getExperienceLevel() >= 30) {
-            xp = conf.getString("30lvl") + p.getExperienceLevel();
+            xp = ChatColor.replaceColorCode(conf.getString("30lvl")) + p.getExperienceLevel();
         }
         return xp;
     }
+
     public static String getGameMode(Player p, OsTag plugin) {
         Config conf = plugin.getConfig();
-        String survival = conf.getString("survival");
-        String creative = conf.getString("creative");
-        String adventure = conf.getString("adventure");
+        String survival = ChatColor.replaceColorCode(conf.getString("survival"));
+        String creative = ChatColor.replaceColorCode(conf.getString("creative"));
+        String adventure = ChatColor.replaceColorCode(conf.getString("adventure"));
 
         String gamemode = "" + p.getGamemode();
 
@@ -119,20 +125,23 @@ public class PlayerInfoUtil {
 
         return gmf;
     }
-    public static String getPing(Player p) {
+
+    public static String getPing(Player p, OsTag plugin) {
 
         String ping = "";
+        Config conf = plugin.getConfig();
         if (p.getPing() >= 1) {
-            ping = "§a" + p.getPing();
+            ping = ChatColor.replaceColorCode(conf.getString("low-ping")) + p.getPing();
         }
         if (p.getPing() >= 75) {
-            ping = "§e" + p.getPing();
+            ping = ChatColor.replaceColorCode(conf.getString("medium-ping")) + p.getPing();
         }
         if (p.getPing() >= 100) {
-            ping = "§c" + p.getPing();
+            ping = ChatColor.replaceColorCode(conf.getString("high-ping")) + p.getPing();
         }
         return ping;
     }
+
     public static String getLuckPermPrefix(Player p, OsTag plugin) {
 
         String pref = "";
@@ -145,6 +154,7 @@ public class PlayerInfoUtil {
         }
         return pref;
     }
+
     public static String getLuckPermSufix(Player p, OsTag plugin) {
         String suf = "";
         if (plugin.getServer().getPluginManager().getPlugin("LuckPerms") != null) {
@@ -155,7 +165,8 @@ public class PlayerInfoUtil {
         }
         return suf;
     }
-    public static String getGroupDisName(Player p, OsTag plugin){
+
+    public static String getGroupDisName(Player p, OsTag plugin) {
         String group = "";
         if (plugin.getServer().getPluginManager().getPlugin("LuckPerms") != null) {
             LuckPerms luckPerms = LuckPermsProvider.get();
@@ -164,20 +175,23 @@ public class PlayerInfoUtil {
                 group = luckPerms.getGroupManager().getGroup(user.getPrimaryGroup()).getDisplayName();
             }
         }
-        return group ;
+        return group;
     }
-    public static String getXuid(Player p) {
-        String xuid = "Guest";
+
+    public static String getXuid(Player p, OsTag plugin) {
+        Config conf = plugin.getConfig();
+        String xuid = ChatColor.replaceColorCode(conf.getString("guest"));
         if (p.getLoginChainData().getXUID() != null) {
             xuid = p.getLoginChainData().getXUID();
         }
         return xuid;
     }
-    public static String getSkulll(Player p,OsTag plugin){
+
+    public static String getSkulll(Player p, OsTag plugin) {
         String skull = "";
         if (plugin.getServer().getPluginManager().getPlugin("DeathSkulls") != null) {
             if (skullPlayer.contains(p.getUniqueId())) {
-                skull = plugin.getConfig().getString("Skull-icon");
+                skull = ChatColor.replaceColorCode(plugin.getConfig().getString("Skull-icon"));
             }
         }
         return skull;

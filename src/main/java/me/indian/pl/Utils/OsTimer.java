@@ -14,6 +14,7 @@ import java.util.List;
 
 public class OsTimer extends Task implements Runnable, Listener {
     private final OsTag plugin;
+
     public OsTimer(OsTag plugin) {
         this.plugin = plugin;
     }
@@ -25,7 +26,7 @@ public class OsTimer extends Task implements Runnable, Listener {
         Config conf = plugin.getConfig();
         for (Player p : Server.getInstance().getOnlinePlayers().values()) {
             if (playerlist.contains(p.getDisplayName())) {
-                if(conf.getBoolean("ScoreTagOnly")){
+                if (conf.getBoolean("ScoreTagOnly")) {
                     OsTagAdd.scoreTagAdvancd(p, plugin);
                 } else {
                     p.setScoreTag("");
@@ -33,7 +34,7 @@ public class OsTimer extends Task implements Runnable, Listener {
                 }
             } else {
                 if (conf.getBoolean("ScoreTagOnly")) {
-                    OsTagAdd.scoreTagNormal(p , plugin);
+                    OsTagAdd.scoreTagNormal(p, plugin);
                 } else {
                     p.setScoreTag("");
                     OsTagAdd.addDevNormal(p, plugin);
@@ -49,14 +50,14 @@ public class OsTimer extends Task implements Runnable, Listener {
         Config conf = plugin.getConfig();
         List<String> playerlist = plugin.getConfig().getStringList("advanced-players");
         if (playerlist.contains(p.getDisplayName())) {
-            if(conf.getBoolean("ScoreTagOnly")){
+            if (conf.getBoolean("ScoreTagOnly")) {
                 OsTagAdd.scoreTagAdvancd(p, plugin);
             } else {
                 OsTagAdd.addDevAdvanced(p, plugin);
             }
         } else {
             if (conf.getBoolean("ScoreTagOnly")) {
-                OsTagAdd.addDevNormal(p , plugin);
+                OsTagAdd.addDevNormal(p, plugin);
             } else {
                 OsTagAdd.addDevNormal(p, plugin);
             }

@@ -1,0 +1,20 @@
+09.12.2022
+Version: 1.4.8
+The plugin now has so many naming changes, see the plugin page on CloudBurst to know them all and get it right
+Changed name from "OstagPNX" to "OsTag"
+Changed permision names
+
+Permisions:
+ostag.admin - all comands and colors in chat
+ostag.colors - allow to use § in chat
+
+added support for Nukkit (Vanilla) (required java 8 or higer)
+added Ping colors added in config yml
+added colors improvement in /ostag ver and start message
+added showing plugin activation speed
+now you can use /ostag r for reload plugin
+now you can use & for colors in config
+now you can use & for colors in chat if you have ostag.colors and disable § in chat
+when the plugin encounters an error while reloading the config, it will inform about it and show an error in the console
+
+

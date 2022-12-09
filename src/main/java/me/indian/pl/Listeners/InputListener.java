@@ -18,13 +18,15 @@ import java.util.*;
 public class InputListener implements Listener {
 
     private final OsTag plugin;
-    public static Map<Player , InputMode> controler = new HashMap<Player , InputMode>();
+    public static Map<Player, InputMode> controler = new HashMap<Player, InputMode>();
     private static final SplittableRandom random;
     private static HashMap<Player, List<Long>> cps;
+
     public InputListener(OsTag plugin) {
         this.plugin = plugin;
         this.cps = new HashMap<Player, List<Long>>();
     }
+
     static {
         random = new SplittableRandom();
     }
@@ -35,7 +37,7 @@ public class InputListener implements Listener {
         if (e.getPacket() instanceof PlayerAuthInputPacket) {
             InputMode inputMode = ((PlayerAuthInputPacket) e.getPacket()).getInputMode();
             Player player = e.getPlayer();
-            controler.put(player , inputMode);
+            controler.put(player, inputMode);
         }
     }
 
@@ -47,7 +49,7 @@ public class InputListener implements Listener {
         if (!(event.getPacket() instanceof LevelSoundEventPacket)) {
             return;
         }
-        LevelSoundEventPacket packet = (LevelSoundEventPacket)event.getPacket();
+        LevelSoundEventPacket packet = (LevelSoundEventPacket) event.getPacket();
         if (packet.sound != 41 && packet.sound != 42 && packet.sound != 43) {
             return;
         }
@@ -74,13 +76,13 @@ public class InputListener implements Listener {
     // witch permisions from author
 
 
-
     @EventHandler
-    public void removeControl(PlayerQuitEvent e){
+    public void removeControl(PlayerQuitEvent e) {
         Player p = (Player) e.getPlayer();
         controler.remove(p);
     }
-    public static String getControler(Player p){
+
+    public static String getControler(Player p) {
         String control = controler.get(p) + "";
         return control;
     }

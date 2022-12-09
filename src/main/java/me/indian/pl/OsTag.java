@@ -1,6 +1,7 @@
 package me.indian.pl;
 
 import cn.nukkit.Server;
+import cn.nukkit.command.CommandSender;
 import cn.nukkit.command.PluginCommand;
 import cn.nukkit.event.Listener;
 import cn.nukkit.plugin.PluginBase;
@@ -10,7 +11,6 @@ import me.indian.pl.Commands.TestttCommand;
 import me.indian.pl.Listeners.Formater;
 import me.indian.pl.Listeners.InputListener;
 import me.indian.pl.Others.Metrics;
-import me.indian.pl.Utils.OsTagAdd;
 import me.indian.pl.Utils.OsTimer;
 import me.indian.pl.Utils.OtherUtils;
 
@@ -20,24 +20,39 @@ public class OsTag extends PluginBase implements Listener {
     public static Boolean luckPerm;
     public static Boolean deathSkulls;
 
+    private static OsTag instance;
+    public OsTag() {
+        instance = this;
+    }
+    public static OsTag getInstance() {
+        return instance;
+    }
+
+
     @Override
     public void onEnable() {
+        long millisActualTime = System.currentTimeMillis();
+
+        getLogger().warning("§4The plugin now has so many naming changes, see the plugin page on CloudBurst to know them all and get it right ");
+        getLogger().warning("§4If you have used the OsTag plugin before, rename the folder from §bOsTagPNX §4to §bOsTag");
+        getLogger().warning("§4Permision names changed! From §bostagpnc.admin §4to §bostag.admin §4and added permision §bostag.colors §4for using §b& §4and disable §b§ §4in chat");
+
 
         PluginManager pm = getServer().getPluginManager();
-        if (getServer().getPluginManager().getPlugin("LuckPerms") == null) {
-            getLogger().warning("You don't have lucky perms , ChatFormating dont corectly work");
+        if (pm.getPlugin("LuckPerms") == null) {
+            getLogger().warning("§4You don't have lucky perms , ChatFormating don't corectly work");
             luckPerm = false;
         } else {
             luckPerm = true;
         }
-        if (getServer().getPluginManager().getPlugin("DeathSkulls") == null) {
-            getLogger().info("You don't have DeathSkulls plugin, <deathskull> placeholder will not workg");
+        if (pm.getPlugin("DeathSkulls") == null) {
+            getLogger().info("§cYou don't have DeathSkulls plugin, <deathskull> placeholder will not workg");
             deathSkulls = false;
         } else {
             deathSkulls = true;
         }
         saveDefaultConfig();
-        sendOnEnableInfo();
+        sendOnEnableInfo(true, null);
 
         pm.registerEvents(new InputListener(this), this);
 
@@ -49,7 +64,7 @@ public class OsTag extends PluginBase implements Listener {
             pm.registerEvents(new OsTimer(this), this);
             this.getServer().getScheduler().scheduleRepeatingTask(new OsTimer(this), 20 * this.getConfig().getInt("refresh-time"));
         }
-        if(this.getConfig().getBoolean("ChatFormater")){
+        if (this.getConfig().getBoolean("ChatFormater")) {
             pm.registerEvents(new Formater(this), this);
         }
 
@@ -61,48 +76,57 @@ public class OsTag extends PluginBase implements Listener {
             return Server.getInstance().getNukkitVersion();
         }));
 
-        metrics.addCustomChart(new Metrics.SimplePie("ostag_vs_chatformater", () -> {
-            String info = "";
-            Boolean ostag = this.getConfig().getBoolean("OsTag");
-            Boolean chatFormater = this.getConfig().getBoolean("ChatFormater");
-            if(ostag == true && chatFormater == true) {
-                info = "OsTag and ChatFormater";
-            }
-            if(ostag == true && chatFormater == false){
-                info = "OsTag";
-            }
-            if(ostag == false && chatFormater == true){
-                info = "ChatFormater";
-            }
-            return info;
-        }));
+
+        long executionTime = System.currentTimeMillis() - millisActualTime;
+        getLogger().info("§aStarted in §b" + executionTime + " §ams");
     }
 
-    private void sendOnEnableInfo(){
-        String ver = this.getDescription().getVersion();
-        String aut = this.getDescription().getAuthors() + "";
-        String verNuk = this.getServer().getNukkitVersion();
-        String servVer = this.getServer().getVersion();
-        String  apiVer =  this.getServer().getApiVersion();
-        String ip = this.getServer().getIp();
-        String port = this.getServer().getPort() + "";
+    public void sendOnEnableInfo(boolean console, CommandSender sender) {
 
-        this.getLogger().info("§b-------------------------------");
-        this.getLogger().info("§aOsTagPNX version:§3 " + ver );
-        this.getLogger().info("§aPlugin by:§6 " + aut.replace("[" , "").replace("]", ""));
-        this.getLogger().info("§aNukkit Version:§3 " + verNuk);
-        this.getLogger().info("§aNukkit Api Version:§3 " + apiVer);
-        this.getLogger().info("§aServer Version:§3 " + servVer);
-        this.getLogger().info(" ");
-        this.getLogger().info("§6Modules");
-        this.getLogger().info("§aFormater§3: " + OtherUtils.getFormaterStatus(this));
-        this.getLogger().info("§aOsTag§3: " + OtherUtils.getOsTagStatus(this));
-        this.getLogger().info(" ");
-        this.getLogger().info("§ePlugins§3");
-        this.getLogger().info("§aDeathSkulls§3: " + OtherUtils.getDeathSkullsStatus(this));
-        this.getLogger().info("§aLuckPerms§3: " + OtherUtils.getLuckPermStatus(this));
-        this.getLogger().info(" ");
-        this.getLogger().info("§b-------------------------------");
+            String ver = this.getDescription().getVersion();
+            String aut = this.getDescription().getAuthors() + "";
+            String verNuk = this.getServer().getNukkitVersion();
+            String servVer = this.getServer().getVersion();
+            String apiVer = this.getServer().getApiVersion();
+            String ip = this.getServer().getIp();
+            String port = this.getServer().getPort() + "";
+            if(console) {
+                this.getLogger().info("§b-------------------------------");
+                this.getLogger().info("§aOsTag version:§3 " + ver);
+                this.getLogger().info("§aPlugin by:§6 " + aut.replace("[", "").replace("]", ""));
+                this.getLogger().info("§aNukkit Version:§3 " + verNuk);
+                this.getLogger().info("§aNukkit Api Version:§3 " + apiVer);
+                this.getLogger().info("§aServer Version:§3 " + servVer);
+                this.getLogger().info(" ");
+                this.getLogger().info("§1Modules");
+                this.getLogger().info("§aFormater§3: " + OtherUtils.getFormaterStatus(this));
+                this.getLogger().info("§aOsTag§3: " + OtherUtils.getOsTagStatus(this));
+                this.getLogger().info(" ");
+                this.getLogger().info("§1Plugins§3");
+                this.getLogger().info("§aDeathSkulls§3: " + OtherUtils.getDeathSkullsStatus(this));
+                this.getLogger().info("§aLuckPerms§3: " + OtherUtils.getLuckPermStatus(this));
+                this.getLogger().info(" ");
+                this.getLogger().info("§b-------------------------------");
+            } else {
+            sender.sendMessage("§b-------------------------------");
+            sender.sendMessage("§aOsTag version:§3 " + ver);
+            sender.sendMessage("§aPlugin by:§6 " + aut.replace("[", "").replace("]", ""));
+            sender.sendMessage("§aNukkit Version:§3 " + verNuk);
+            sender.sendMessage("§aNukkit Api Version:§3 " + apiVer);
+            sender.sendMessage("§aServer Version:§3 " + servVer);
+            sender.sendMessage(" ");
+            sender.sendMessage("§1Modules");
+            sender.sendMessage("§aFormater§3: " + OtherUtils.getFormaterStatus(this));
+            sender.sendMessage("§aOsTag§3: " + OtherUtils.getOsTagStatus(this));
+            sender.sendMessage(" ");
+            sender.sendMessage("§1Plugins");
+            sender.sendMessage("§aDeathSkulls§3: " + OtherUtils.getDeathSkullsStatus(this));
+            sender.sendMessage("§aLuckPerms§3: " + OtherUtils.getLuckPermStatus(this));
+            sender.sendMessage(" ");
+            sender.sendMessage("§b-------------------------------");
+            }
+
+
     }
 
 }

@@ -1,5 +1,5 @@
 #--------------------------------------------------
-#               OsTag
+#               OsTagPNX
 #       Contains ChatFormating and OsTag
 #           By: IndianPL
 #           for colors use &
@@ -72,7 +72,7 @@ BlackWords:
 #Cooldown
 cooldown-enable: true
 cooldown: 5
-cooldown-message: "&aYou must wait &b<left> &eSeconds&a!"
+cooldown-message: "&aYou must wait &b <left>&eSeconds&a!"
 #----------------------------------
 #Messages and informations
 #----------------------------------
