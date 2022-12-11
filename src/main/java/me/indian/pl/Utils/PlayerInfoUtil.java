@@ -51,7 +51,6 @@ public class PlayerInfoUtil {
 
         return device;
     }
-
     public static String getControler(Player p, OsTag plugin) {
         Config conf = plugin.getConfig();
 
@@ -81,34 +80,33 @@ public class PlayerInfoUtil {
 
         return crt;
     }
-
     public static String getXp(Player p, OsTag plugin) {
         Config conf = plugin.getConfig();
         String xp = "0";
         if (p.getExperienceLevel() == 0) {
-            xp = ChatColor.replaceColorCode(conf.getString("1lvl")) + p.getExperienceLevel();
+            xp = ChatColor.replaceColorCode(conf.getString("1lvl") + p.getExperienceLevel());
         }
         if (p.getExperienceLevel() >= 1) {
-            xp = ChatColor.replaceColorCode(conf.getString("1lvl")) + p.getExperienceLevel();
+            xp = ChatColor.replaceColorCode(conf.getString("1lvl") + p.getExperienceLevel());
         }
         if (p.getExperienceLevel() >= 10) {
-            xp = ChatColor.replaceColorCode(conf.getString("10lvl")) + p.getExperienceLevel();
+            xp = ChatColor.replaceColorCode(conf.getString("10lvl") + p.getExperienceLevel());
         }
         if (p.getExperienceLevel() >= 15) {
-            xp = ChatColor.replaceColorCode(conf.getString("15lvl")) + p.getExperienceLevel();
+            xp = ChatColor.replaceColorCode(conf.getString("15lvl") + p.getExperienceLevel());
         }
         if (p.getExperienceLevel() >= 20) {
-            xp = ChatColor.replaceColorCode(conf.getString("20lvl")) + p.getExperienceLevel();
+            xp = ChatColor.replaceColorCode(conf.getString("20lvl") + p.getExperienceLevel());
         }
         if (p.getExperienceLevel() >= 25) {
-            xp = ChatColor.replaceColorCode(conf.getString("25lvl")) + p.getExperienceLevel();
+            xp = ChatColor.replaceColorCode(conf.getString("25lvl") + p.getExperienceLevel());
         }
         if (p.getExperienceLevel() >= 30) {
-            xp = ChatColor.replaceColorCode(conf.getString("30lvl")) + p.getExperienceLevel();
+            xp = ChatColor.replaceColorCode(conf.getString("30lvl") + p.getExperienceLevel());
         }
+
         return xp;
     }
-
     public static String getGameMode(Player p, OsTag plugin) {
         Config conf = plugin.getConfig();
         String survival = ChatColor.replaceColorCode(conf.getString("survival"));
@@ -125,7 +123,6 @@ public class PlayerInfoUtil {
 
         return gmf;
     }
-
     public static String getPing(Player p, OsTag plugin) {
 
         String ping = "";
@@ -141,7 +138,6 @@ public class PlayerInfoUtil {
         }
         return ping;
     }
-
     public static String getLuckPermPrefix(Player p, OsTag plugin) {
 
         String pref = "";
@@ -152,9 +148,8 @@ public class PlayerInfoUtil {
             User user = luckPerms.getPlayerAdapter(Player.class).getUser(p);
             pref = LuckPermUtil.getPrefix(user);
         }
-        return pref;
+        return ChatColor.replaceColorCode(pref);
     }
-
     public static String getLuckPermSufix(Player p, OsTag plugin) {
         String suf = "";
         if (plugin.getServer().getPluginManager().getPlugin("LuckPerms") != null) {
@@ -163,9 +158,8 @@ public class PlayerInfoUtil {
             suf = LuckPermUtil.getSuffix(user);
 
         }
-        return suf;
+        return ChatColor.replaceColorCode(suf);
     }
-
     public static String getGroupDisName(Player p, OsTag plugin) {
         String group = "";
         if (plugin.getServer().getPluginManager().getPlugin("LuckPerms") != null) {
@@ -175,9 +169,8 @@ public class PlayerInfoUtil {
                 group = luckPerms.getGroupManager().getGroup(user.getPrimaryGroup()).getDisplayName();
             }
         }
-        return group;
+        return ChatColor.replaceColorCode(group);
     }
-
     public static String getXuid(Player p, OsTag plugin) {
         Config conf = plugin.getConfig();
         String xuid = ChatColor.replaceColorCode(conf.getString("guest"));
@@ -186,7 +179,6 @@ public class PlayerInfoUtil {
         }
         return xuid;
     }
-
     public static String getSkulll(Player p, OsTag plugin) {
         String skull = "";
         if (plugin.getServer().getPluginManager().getPlugin("DeathSkulls") != null) {
@@ -194,7 +186,22 @@ public class PlayerInfoUtil {
                 skull = ChatColor.replaceColorCode(plugin.getConfig().getString("Skull-icon"));
             }
         }
-        return skull;
+        return ChatColor.replaceColorCode(skull);
+    }
+    public static String getDimension(Player p, OsTag plugin){
+        Config conf = plugin.getConfig();
+        String overworld = conf.getString("overworld");
+        String nether = conf.getString("nether");
+        String end = conf.getString("end");
+
+        String dimension = "" + p.getLevel().getDimension();
+        String dim = dimension
+                .replace("0", overworld)
+                .replace("1", nether)
+                .replace("2", end);
+
+
+        return ChatColor.replaceColorCode(dim);
     }
 
 }

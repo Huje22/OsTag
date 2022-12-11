@@ -16,5 +16,11 @@ now you can use /ostag r for reload plugin
 now you can use & for colors in config
 now you can use & for colors in chat if you have ostag.colors and disable § in chat
 when the plugin encounters an error while reloading the config, it will inform about it and show an error in the console
-
-
+11.12.2022
+Version: 1.4.8.01
+now if you want everyone to be able to use & by default instead of § "set and-for-all" to true
+Still canot use § in chat , I try to fix it
+now  <suffix> <prefix> <groupDisName> support & in chat
+now you can use <xp> in name and chat
+block \n in chat formating
+changed message.format to message-format

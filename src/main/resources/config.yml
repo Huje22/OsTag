@@ -19,10 +19,11 @@
 # <suffix> - player group sufix (Luck Perms Required) [OsTag \ ChatFormater] \\name\\
 # <prefix> - player group prefix (Luck Perms Required) [OsTag \ ChatFormater] \\name\\
 # <groupDisName> - player group dispalya mame (Luck Perms Required) [OsTag \ ChatFormater] \\name only\\
-# <xp> - player xp lvl [OsTag \ ChatFormater]
+# <xp> - player xp lvl [OsTag \ ChatFormater] //name//
 # <cps> - left click per second counter [OsTag]
 # <gamemode> - player gamemode [OsTag]
 # <deathskull> - player skull info (DeathSkull plugin required) [OsTag \ ChatFormater] \\name\\
+# <dimension> - player current dimension [ChatFormater]
 #if in the description of the placeholders any one contains \\name\\ it means that it can be used in the player's name in ostag
 # for better work dont use \ , only use \n
 
@@ -50,18 +51,21 @@ refresh-time: 1
 #May be buged when player is not new player
 ScoreTagOnly: false
 #Normal Player
-nick: "<groupDisName> <name> <suffix> "
+nick: "<xp> <groupDisName> <name> <suffix> "
 subtag: "<deathskull>\n<device> | <controler> \n&eDevice Model: &r<model>\n&eGamemode: &r<gamemode>\n&eCps: &r<cps>  &ePing: <ping> &eXp: <xp> \n&eGame Version: &r<version> \n\n&eXuid: &r<xuid>\n\n&eLanguage: &r<language>\n<health>/<max_health>&c❤"
 #Advanced Player
-a-nick: "<groupDisName> <name> <suffix> "
+a-nick: "<xp> <groupDisName> <name> <suffix> "
 a-subtag: "<deathskull>\n<device> | <controler>\n&eCps: &r<cps>  &ePing: <ping>\n<health>/<max_health>&c❤\n&eXp: <xp>"
 advanced-players:
   - "JndjanBartonka"
   - "TheTwuj"
+#-------------------------
 #Formater options
-message.format: "<deathskull> <groupDisName> <prefix> <name> <suffix> »&r <msg>"
-#Censorship
-#CenzorShip remove all Upper words
+#-------------------------
+message-format: "<dimension> &r<xp>&r <deathskull><groupDisName> <prefix> &r<name> <suffix> &r» <msg>"
+#If this option set to true everyone can use & by default instead of §
+and-for-all: true
+#Censorship (remove all Upper words)
 enable-censorship: true
 censorship: "Bread"
 BlackWords:
@@ -69,21 +73,25 @@ BlackWords:
   - "fuck"
   - "nab"
   - "ez"
-#Cooldown
+#Cooldown (exparimental)
 cooldown-enable: true
-cooldown: 5
+cooldown: 10
 cooldown-message: "&aYou must wait &b<left> &eSeconds&a!"
 #----------------------------------
 #Messages and informations
 #----------------------------------
 #When player don't have xbox live account loged show this information in <xuid> placeholder
 guest: "&lGuest"
+#Skull icon for DeathSkulls
+Skull-icon: "&lSkull&r "
 #Gamemodes
 survival: "survival"
 creative: "creative"
 adventure: "adventure"
-#Skull icon for DeathSkulls
-Skull-icon: "&lSkull&r"
+#Dimensions
+overworld: "&aOverWorld&r"
+nether: "&cNether&r"
+end: "&eEnd&r"
 #Ping colors
 low-ping: "&a"
 medium-ping: "&e"

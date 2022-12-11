@@ -16,7 +16,6 @@ import static me.indian.pl.Utils.PlayerInfoUtil.*;
 public class Formater implements Listener {
     private HashMap<UUID, Long> cooldown = new HashMap<>();
     private final OsTag plugin;
-
     public Formater(OsTag plugin) {
         this.plugin = plugin;
     }
@@ -45,19 +44,20 @@ public class Formater implements Listener {
                 if (!(p.isOp())) {
                     msg = e.getMessage().toLowerCase().replace(czarnalista.toLowerCase(), cenzura);
                 }
-                if (p.hasPermission("ostag.admin") || p.hasPermission("ostag.colors")) {
-                    wiad = msg.replace("&", "§");
-                } else {
-                    wiad = msg;
-                }
-                e.setMessage(wiad);
+                e.setMessage(msg);
             }
+            if (p.hasPermission("ostag.admin") || p.hasPermission("ostag.colors") || conf.getBoolean("and-for-all")) {
+                wiad = e.getMessage().replace("&", "§");
+            } else {
+                wiad = e.getMessage();
+            }
+            e.setMessage(wiad);
 
-            e.setFormat(ChatColor.replaceColorCode(plugin.getConfig().getString("message.format"))
+            e.setFormat(ChatColor.replaceColorCode(plugin.getConfig().getString("message-format"))
                             .replace("<name>", p.getName())
                             .replace("<suffix>", getLuckPermSufix(p, plugin))
                             .replace("<prefix>", getLuckPermPrefix(p, plugin))
-                            .replace("<msg>", wiad)
+                            .replace("<msg>", e.getMessage())
                             .replace("<groupDisName>", getGroupDisName(p, plugin))
                             .replace("<device>", getDevice(p, plugin))
                             .replace("<health>", p.getHealth() + "")
@@ -66,7 +66,11 @@ public class Formater implements Listener {
                             .replace("<language>", p.getLoginChainData().getLanguageCode())
                             .replace("<ping>", getPing(p, plugin))
                             .replace("<deathskull>", getSkulll(p, plugin))
+                            .replace("<xp>", getXp(p, plugin))
+                            .replace("<dimension>", getDimension(p, plugin))
+                            .replace("\n" , " this action not allowed here ")
                     //message.format: "<prefix> <player> <suffix> >> <msg>
+
             );
         }
     }

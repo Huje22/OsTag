@@ -36,6 +36,7 @@ public class OsTag extends PluginBase implements Listener {
         getLogger().warning("§4The plugin now has so many naming changes, see the plugin page on CloudBurst to know them all and get it right ");
         getLogger().warning("§4If you have used the OsTag plugin before, rename the folder from §bOsTagPNX §4to §bOsTag");
         getLogger().warning("§4Permision names changed! From §bostagpnc.admin §4to §bostag.admin §4and added permision §bostag.colors §4for using §b& §4and disable §b§ §4in chat");
+        getLogger().warning("§4Now §bmessage.format §4 changed to §bmessage-format§4!");
 
 
         PluginManager pm = getServer().getPluginManager();
@@ -74,6 +75,21 @@ public class OsTag extends PluginBase implements Listener {
         }));
         metrics.addCustomChart(new Metrics.SimplePie("nukkit_version", () -> {
             return Server.getInstance().getNukkitVersion();
+        }));
+        metrics.addCustomChart(new Metrics.SimplePie("ostag_vs_chatformater", () -> {
+            String info = "";
+            Boolean ostag = this.getConfig().getBoolean("OsTag");
+            Boolean chatFormater = this.getConfig().getBoolean("ChatFormater");
+            if (ostag && chatFormater) {
+                info = "OsTag and ChatFormater";
+            }
+            if (ostag && !chatFormater) {
+                info = "OsTag";
+            }
+            if (!ostag && chatFormater) {
+                info = "ChatFormater";
+            }
+            return info;
         }));
 
 

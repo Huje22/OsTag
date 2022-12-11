@@ -12,7 +12,6 @@ import java.util.List;
 public class OsTagCommand implements CommandExecutor {
 
     private final OsTag plugin;
-
     public OsTagCommand(OsTag plugin) {
         this.plugin = plugin;
     }

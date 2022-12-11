@@ -21,6 +21,7 @@ public class TestttCommand implements CommandExecutor {
         Player p = (Player) sender;
         p.sendMessage(PlayerInfoUtil.getGroupDisName(p, plugin));
         p.sendMessage(PlayerInfoUtil.getSkulll(p, plugin));
+        p.sendMessage(PlayerInfoUtil.getXuid(p, plugin));
         return false;
     }
 }
