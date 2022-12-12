@@ -1,5 +1,7 @@
 package me.indian.pl.Utils;
 
+import cn.nukkit.Player;
+import cn.nukkit.Server;
 import me.indian.pl.OsTag;
 
 public class OtherUtils {
@@ -54,6 +56,11 @@ public class OtherUtils {
             deaths = fal;
         }
         return deaths;
+    }
+    public static void sendMessageToAll(String msg){
+        for(Player all : Server.getInstance().getOnlinePlayers().values()){
+            all.sendMessage(msg);
+        }
     }
 
 }

@@ -1,33 +1,34 @@
-#--------------------------------------------------
+#----------------------------------------
 #               OsTag
-#       Contains ChatFormating and OsTag
-#           By: IndianPL
-#           for colors use &
-#----------------------------------------------------
-#Placeholders
+#           Contains ChatFormating and OsTag
+#             By: IndianPL
+#             for colors use &
+#----------------------------
+#       Placeholders
+#
 # <name> - player name [OsTag \ ChatFormater] \\name\\
-# <msg> - player message [ChatFormater]
+# <ping> - player ping [OsTag \ ChatFormater]
 # <health> - player health [OsTag \ ChatFormater]
 # <max_health> - player max health [OsTag]
-# <device> - player device [OsTag \ ChatFormater]
-# <model> - device model [OsTag \ ChatFormater]
-# <version> - Minecraft version [OsTag \ ChatFormater]
-# <xuid> - get player xuid (DON'T WORKING WHEN PLAYER DONT XBOX ACCOUNT) [OsTag ]
-# <language> - player Language [OsTag \ ChatFormater]
-# <ping> - player ping [OsTag \ ChatFormater]
-# <controler> - Player controls [OsTag ]
+# <dimension> - player current dimension [ChatFormater]
+# <xp> - player xp lvl [OsTag \ ChatFormater] //name//
+# <gamemode> - player gamemode [OsTag]
+# <msg> - player message [ChatFormater]
 # <suffix> - player group sufix (Luck Perms Required) [OsTag \ ChatFormater] \\name\\
 # <prefix> - player group prefix (Luck Perms Required) [OsTag \ ChatFormater] \\name\\
 # <groupDisName> - player group dispalya mame (Luck Perms Required) [OsTag \ ChatFormater] \\name only\\
-# <xp> - player xp lvl [OsTag \ ChatFormater] //name//
+# <model> - device model [OsTag \ ChatFormater]
+# <device> - player device [OsTag \ ChatFormater]
+# <controler> - Player controls [OsTag ]
+# <version> - Minecraft version [OsTag \ ChatFormater]
+# <xuid> - get player xuid (DON'T WORKING WHEN PLAYER DONT XBOX ACCOUNT) [OsTag]
+# <language> - player Language [OsTag \ ChatFormater]
 # <cps> - left click per second counter [OsTag]
-# <gamemode> - player gamemode [OsTag]
 # <deathskull> - player skull info (DeathSkull plugin required) [OsTag \ ChatFormater] \\name\\
-# <dimension> - player current dimension [ChatFormater]
+# <unique-description> - player unique description from config [OsTag \ ChatFormater] \\name\\
 #if in the description of the placeholders any one contains \\name\\ it means that it can be used in the player's name in ostag
 # for better work dont use \ , only use \n
-
-#--------------------------------
+#--------------------------
 #       Modules
 #
 #OsTag module
@@ -37,49 +38,73 @@ OsTag: true
 ChatFormater: true
 #
 #when turn off some module restart server
-#-------------------------------
-
-#Important notes
+#--------------------------
+#     Important notes
+#
 #Note if you use only \ (BackSlash) in config, the plugin may produce errors in the console or not work
+#
+#
 #if you use server-authoritative-movement=client-auth in powernukkitx, set this to false
 PowerNukkiX-movement-server: true
-#OsTag Options
+#
+#
+#Score Tag (When true name don't change)
+#May be buged when player is not new player (DON'T RELOAD SERVER OR PLUGIN ,when you change this restart server)
+ScoreTagOnly: false
+#--------------------------
+#   OsTag options
+#
 #Information refresh time in seconds
 refresh-time: 1
-#Score Tag (When true name don't change)
-#DON'T RELOAD SERVER OR PLUGIN  ( when you change this restart server)
-#May be buged when player is not new player
-ScoreTagOnly: false
+#
+#
 #Normal Player
-nick: "<xp> <groupDisName> <name> <suffix> "
-subtag: "<deathskull>\n<device> | <controler> \n&eDevice Model: &r<model>\n&eGamemode: &r<gamemode>\n&eCps: &r<cps>  &ePing: <ping> &eXp: <xp> \n&eGame Version: &r<version> \n\n&eXuid: &r<xuid>\n\n&eLanguage: &r<language>\n<health>/<max_health>&c❤"
+nick: "<unique-description><xp> <groupDisName> <name> <suffix> "
+subtag: "<device> | <controler> \n&eDevice Model: &r<model>\n&eGamemode: &r<gamemode>\n&eCps: &r<cps>  &ePing: <ping> &eXp: <xp> \n&eGame Version: &r<version> \n\n&eXuid: &r<xuid>\n\n&eLanguage: &r<language>\n<health>/<max_health>&c❤\n<deathskull>"
+#
+#
 #Advanced Player
-a-nick: "<xp> <groupDisName> <name> <suffix> "
-a-subtag: "<deathskull>\n<device> | <controler>\n&eCps: &r<cps>  &ePing: <ping>\n<health>/<max_health>&c❤\n&eXp: <xp>"
+a-nick: "<unique-description><xp> <groupDisName> <name> <suffix> "
+a-subtag: "<device> | <controler>\n&eCps: &r<cps>  &ePing: <ping>\n<health>/<max_health>&c❤\n&eXp: <xp>\n<deathskull>"
 advanced-players:
   - "JndjanBartonka"
   - "TheTwuj"
-#-------------------------
-#Formater options
-#-------------------------
-message-format: "<dimension> &r<xp>&r <deathskull><groupDisName> <prefix> &r<name> <suffix> &r» <msg>"
+#--------------------------
+#    Formater options
+#
+#Message format
+message-format: "<unique-description><dimension> &r<xp>&r <deathskull><groupDisName> <prefix> &r<name> <suffix> &r» <msg>"
+#
+#
 #If this option set to true everyone can use & by default instead of §
 and-for-all: true
-#Censorship (remove all Upper words)
-enable-censorship: true
-censorship: "Bread"
+#
+#
+#break between messages, why? so that the emotes you give players will be visible if they are 16x16 [exparimental]
+break-between-messages:
+  enable: true
+#
+#
+#Censorship (remove all Upper words) [exparimental]
+censorship:
+  word: "Bread"
+  enable: true
 BlackWords:
   - "dupa"
   - "fuck"
   - "nab"
   - "ez"
-#Cooldown (exparimental)
-cooldown-enable: true
-cooldown: 10
-cooldown-message: "&aYou must wait &b<left> &eSeconds&a!"
-#----------------------------------
-#Messages and informations
-#----------------------------------
+  - "kutas"
+#
+#
+#Cooldown [exparimental]
+cooldown:
+  enable: true
+  delay: 10
+  message: "&aYou must wait &b<left> &eSeconds&a!"
+#--------------------------
+#     Messages and informations
+#
 #When player don't have xbox live account loged show this information in <xuid> placeholder
 guest: "&lGuest"
 #Skull icon for DeathSkulls
@@ -103,6 +128,16 @@ high-ping: "&c"
 20lvl: "&2"
 25lvl: "&c"
 30lvl: "&4"
+#Players (here you can add a unique description or icon from your texture pack for a given player) [exparimental]
+Players:
+  default:
+    description: " "
+  JndjanBartonka:
+    unique-description: " "
+  RoXuSTheWolf:
+    unique-description: " "
+  nick-name-here1:
+    unique-description: "icon from teksture or some text"
 #Os
 Windows: "&f[&bWindows&f]"
 Android: "&f[&aAndroid&f]"
@@ -123,3 +158,4 @@ keyboard: "Keyboard"
 gamepad: "GamePad"
 motion_controller: "motion_controller"
 UnknowControler: "Unknow"
+#--------------------------

@@ -203,5 +203,16 @@ public class PlayerInfoUtil {
 
         return ChatColor.replaceColorCode(dim);
     }
+    public static String getPlayerUnique(Player p ,OsTag plugin){
+        Config conf = plugin.getConfig();
+        String unique = "";
+        String name = p.getDisplayName();
 
+        if(!(conf.getString("Players." + name + ".unique-description").isEmpty())){
+            unique = conf.getString("Players." + name + ".unique-description");
+        } else {
+            unique = conf.getString("Players.default.description");
+        }
+        return unique;
+    }
 }

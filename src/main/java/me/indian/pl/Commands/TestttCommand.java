@@ -1,6 +1,7 @@
 package me.indian.pl.Commands;
 
 import cn.nukkit.Player;
+import cn.nukkit.Server;
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandExecutor;
 import cn.nukkit.command.CommandSender;
@@ -22,6 +23,8 @@ public class TestttCommand implements CommandExecutor {
         p.sendMessage(PlayerInfoUtil.getGroupDisName(p, plugin));
         p.sendMessage(PlayerInfoUtil.getSkulll(p, plugin));
         p.sendMessage(PlayerInfoUtil.getXuid(p, plugin));
+        Server.getInstance().broadcastMessage(" ");
+        Server.getInstance().broadcastMessage(" ");
         return false;
     }
 }

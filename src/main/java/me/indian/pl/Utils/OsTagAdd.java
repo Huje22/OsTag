@@ -26,6 +26,7 @@ public class OsTagAdd {
                 .replace("<groupDisName>", getGroupDisName(p, plugin))
                 .replace("<deathskull>", getSkulll(p, plugin))
                 .replace("<xp>", getXp(p, plugin))
+                .replace("<unique-description>", getPlayerUnique(p , plugin))
                 + "\n" + ChatColor.replaceColorCode(conf.getString("subtag"))
                 .replace("<device>", getDevice(p, plugin))
                 .replace("<deathskull>", getSkulll(p, plugin))
@@ -43,6 +44,7 @@ public class OsTagAdd {
                 .replace("<xp>", getXp(p, plugin))
                 .replace("<cps>", String.valueOf(InputListener.getCPS(p)))
                 .replace("<gamemode>", getGameMode(p, plugin))
+                .replace("<unique-description>", getPlayerUnique(p , plugin))
         );
     }
 
@@ -57,6 +59,7 @@ public class OsTagAdd {
                 .replace("<groupDisName>", getGroupDisName(p, plugin))
                 .replace("<deathskull>", getSkulll(p, plugin))
                 .replace("<xp>", getXp(p, plugin))
+                .replace("<unique-description>", getPlayerUnique(p , plugin))
                 + "\n" + ChatColor.replaceColorCode(conf.getString("a-subtag"))
                 .replace("<deathskull>", getSkulll(p, plugin))
                 .replace("<device>", getDevice(p, plugin))
@@ -74,7 +77,7 @@ public class OsTagAdd {
                 .replace("<xp>", getXp(p, plugin))
                 .replace("<cps>", String.valueOf(InputListener.getCPS(p)))
                 .replace("<gamemode>", getGameMode(p, plugin))
-
+                .replace("<unique-description>", getPlayerUnique(p , plugin))
         );
     }
 
@@ -99,6 +102,7 @@ public class OsTagAdd {
                 .replace("<xp>", getXp(p, plugin))
                 .replace("<cps>", String.valueOf(InputListener.getCPS(p)))
                 .replace("<gamemode>", getGameMode(p, plugin))
+                .replace("<unique-description>", getPlayerUnique(p , plugin))
         );
     }
 
@@ -124,6 +128,7 @@ public class OsTagAdd {
                 .replace("<xp>", getXp(p, plugin))
                 .replace("<cps>", String.valueOf(InputListener.getCPS(p)))
                 .replace("<gamemode>", getGameMode(p, plugin))
+                .replace("<unique-description>", getPlayerUnique(p , plugin))
         );
     }
 }

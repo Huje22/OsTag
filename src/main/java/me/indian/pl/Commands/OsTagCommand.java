@@ -6,6 +6,7 @@ import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandExecutor;
 import cn.nukkit.command.CommandSender;
 import me.indian.pl.OsTag;
+import me.indian.pl.Utils.ChatColor;
 
 import java.util.List;
 
@@ -20,6 +21,10 @@ public class OsTagCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         List<String> playerlist = plugin.getConfig().getStringList("advanced-players");
         if (sender.hasPermission("ostagpnx.admin")) {
+            if(args.length == 0){
+                sender.sendMessage(ChatColor.replaceColorCode("&aUsage &b/ostag &8[version , reload , add <player>]"));
+                return false;
+            }
             if (args[0].equalsIgnoreCase("add")) {
                 Player cel = Server.getInstance().getPlayer(args[1]);
                 if (cel == null) {

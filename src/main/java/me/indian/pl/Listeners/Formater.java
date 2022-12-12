@@ -1,12 +1,14 @@
 package me.indian.pl.Listeners;
 
 import cn.nukkit.Player;
+import cn.nukkit.Server;
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerChatEvent;
 import cn.nukkit.utils.Config;
 import me.indian.pl.OsTag;
 import me.indian.pl.Utils.ChatColor;
+import me.indian.pl.Utils.OtherUtils;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -32,7 +34,7 @@ public class Formater implements Listener {
         Config conf = plugin.getConfig();
         String wiad = e.getMessage();
 
-        String cenzura = plugin.getConfig().getString("censorship");
+        String cenzura = plugin.getConfig().getString("censorship.word");
 
         for (String czarnalista : plugin.getConfig().getStringList("BlackWords")) {
             if (e.getMessage().toLowerCase().contains(czarnalista.toLowerCase())) {
@@ -40,7 +42,7 @@ public class Formater implements Listener {
                     return;
                 }
             }
-            if (plugin.getConfig().getBoolean("enable-censorship")) {
+            if (plugin.getConfig().getBoolean("censorship.enable")) {
                 if (!(p.isOp())) {
                     msg = e.getMessage().toLowerCase().replace(czarnalista.toLowerCase(), cenzura);
                 }
@@ -68,10 +70,12 @@ public class Formater implements Listener {
                             .replace("<deathskull>", getSkulll(p, plugin))
                             .replace("<xp>", getXp(p, plugin))
                             .replace("<dimension>", getDimension(p, plugin))
+                            .replace("<unique-description>", getPlayerUnique(p , plugin))
                             .replace("\n" , " this action not allowed here ")
                     //message.format: "<prefix> <player> <suffix> >> <msg>
 
             );
+
         }
     }
 
@@ -79,15 +83,22 @@ public class Formater implements Listener {
     public void cooldownMessage(PlayerChatEvent e) {
         Player p = (Player) e.getPlayer();
         Config conf = plugin.getConfig();
-        Long time = conf.getLong("cooldown") * 100;
-        if (conf.getBoolean("cooldown-enable")) {
+        Long time = conf.getLong("cooldown.delay") * 100;
+        if (conf.getBoolean("cooldown.enable")) {
             if (!(p.isOp())) {
                 if (!cooldown.containsKey(p.getUniqueId()) || System.currentTimeMillis() - cooldown.get(p.getUniqueId()) > time) {
                     cooldown.put(p.getUniqueId(), System.currentTimeMillis());
+                    if(conf.getBoolean("break-between-messages.enable")) {
+                            Server.getInstance().getScheduler().scheduleDelayedTask(null, () -> OtherUtils.sendMessageToAll(" "), 1);
+                            System.out.println(" ");
+                    }
                 } else {
                     long cooldownTime = (time - (System.currentTimeMillis() - cooldown.get(p.getUniqueId()))) / 100;
                     e.setCancelled(true);
-                    p.sendMessage(ChatColor.replaceColorCode(conf.getString("cooldown-message")
+                    if(conf.getBoolean("break-between-messages.enable")) {
+                    p.sendMessage(" ");
+                    }
+                    p.sendMessage(ChatColor.replaceColorCode(conf.getString("cooldown.message")
                             .replace("<left>", cooldownTime + "")));
                 }
             }

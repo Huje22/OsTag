@@ -36,7 +36,7 @@ public class OsTag extends PluginBase implements Listener {
         getLogger().warning("§4The plugin now has so many naming changes, see the plugin page on CloudBurst to know them all and get it right ");
         getLogger().warning("§4If you have used the OsTag plugin before, rename the folder from §bOsTagPNX §4to §bOsTag");
         getLogger().warning("§4Permision names changed! From §bostagpnc.admin §4to §bostag.admin §4and added permision §bostag.colors §4for using §b& §4and disable §b§ §4in chat");
-        getLogger().warning("§4Now §bmessage.format §4 changed to §bmessage-format§4!");
+        getLogger().warning("§4See chnage log!");
 
 
         PluginManager pm = getServer().getPluginManager();
@@ -91,7 +91,6 @@ public class OsTag extends PluginBase implements Listener {
             }
             return info;
         }));
-
 
         long executionTime = System.currentTimeMillis() - millisActualTime;
         getLogger().info("§aStarted in §b" + executionTime + " §ams");
