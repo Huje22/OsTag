@@ -18,6 +18,7 @@ import static me.indian.pl.Utils.PlayerInfoUtil.*;
 public class Formater implements Listener {
     private HashMap<UUID, Long> cooldown = new HashMap<>();
     private final OsTag plugin;
+
     public Formater(OsTag plugin) {
         this.plugin = plugin;
     }
@@ -70,8 +71,8 @@ public class Formater implements Listener {
                             .replace("<deathskull>", getSkulll(p, plugin))
                             .replace("<xp>", getXp(p, plugin))
                             .replace("<dimension>", getDimension(p, plugin))
-                            .replace("<unique-description>", getPlayerUnique(p , plugin))
-                            .replace("\n" , " this action not allowed here ")
+                            .replace("<unique-description>", getPlayerUnique(p, plugin))
+                            .replace("\n", " this action not allowed here ")
                     //message.format: "<prefix> <player> <suffix> >> <msg>
 
             );
@@ -85,22 +86,22 @@ public class Formater implements Listener {
         Config conf = plugin.getConfig();
         Long time = conf.getLong("cooldown.delay") * 100;
         if (conf.getBoolean("cooldown.enable")) {
-            if (!(p.isOp())) {
-                if (!cooldown.containsKey(p.getUniqueId()) || System.currentTimeMillis() - cooldown.get(p.getUniqueId()) > time) {
+
+            if (!cooldown.containsKey(p.getUniqueId()) || System.currentTimeMillis() - cooldown.get(p.getUniqueId()) > time) {
+                if (!(p.isOp())) {
                     cooldown.put(p.getUniqueId(), System.currentTimeMillis());
-                    if(conf.getBoolean("break-between-messages.enable")) {
-                            Server.getInstance().getScheduler().scheduleDelayedTask(null, () -> OtherUtils.sendMessageToAll(" "), 1);
-                            System.out.println(" ");
-                    }
-                } else {
-                    long cooldownTime = (time - (System.currentTimeMillis() - cooldown.get(p.getUniqueId()))) / 100;
-                    e.setCancelled(true);
-                    if(conf.getBoolean("break-between-messages.enable")) {
-                    p.sendMessage(" ");
-                    }
-                    p.sendMessage(ChatColor.replaceColorCode(conf.getString("cooldown.message")
-                            .replace("<left>", cooldownTime + "")));
                 }
+                if (conf.getBoolean("break-between-messages.enable")) {
+                    Server.getInstance().getScheduler().scheduleDelayedTask(null, () -> OtherUtils.sendMessageToAll(" "), 1);
+                }
+            } else {
+                long cooldownTime = (time - (System.currentTimeMillis() - cooldown.get(p.getUniqueId()))) / 100;
+                e.setCancelled(true);
+                if (conf.getBoolean("break-between-messages.enable")) {
+                    p.sendMessage(" ");
+                }
+                p.sendMessage(ChatColor.replaceColorCode(conf.getString("cooldown.message")
+                        .replace("<left>", cooldownTime + "")));
             }
         }
     }
