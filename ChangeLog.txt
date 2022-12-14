@@ -51,7 +51,7 @@ added breaks between messages
 **Released on the day xx.12.2022**
 Version: 1.4.9.01
 no breaks between messages when player was operator, fixed!
-
+some improvments in code
 
 
 
