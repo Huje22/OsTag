@@ -14,6 +14,7 @@ import me.indian.pl.others.Metrics;
 import me.indian.pl.utils.ChatColor;
 import me.indian.pl.utils.OsTimer;
 import me.indian.pl.utils.OtherUtils;
+import me.indian.pl.utils.PlayerInfoUtil;
 
 public class OsTag extends PluginBase implements Listener {
 
@@ -88,6 +89,7 @@ public class OsTag extends PluginBase implements Listener {
             return info;
         }));
 
+        new PlayerInfoUtil();
         long executionTime = System.currentTimeMillis() - millisActualTime;
         getLogger().info(ChatColor.replaceColorCode("&aStarted in &b" + executionTime + " &ams"));
     }

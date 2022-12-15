@@ -13,8 +13,15 @@ import static me.indian.deathskulls.listeners.PlayerDeathListener.skullPlayer;
 
 public class PlayerInfoUtil {
 
+    private static OsTag plugin;
 
-    public static String getDevice(Player p, OsTag plugin) {
+    public PlayerInfoUtil(){
+        this.plugin = OsTag.getInstance();
+    }
+
+
+
+    public static String getDevice(Player p) {
         Config conf = plugin.getConfig();
         String windows = ChatColor.replaceColorCode(conf.getString("Windows"));
         String android = ChatColor.replaceColorCode(conf.getString("Android"));
@@ -52,7 +59,7 @@ public class PlayerInfoUtil {
         return device;
     }
 
-    public static String getControler(Player p, OsTag plugin) {
+    public static String getControler(Player p) {
         Config conf = plugin.getConfig();
 
         String motion_controller = ChatColor.replaceColorCode(conf.getString("motion_controller"));
@@ -82,7 +89,7 @@ public class PlayerInfoUtil {
         return crt;
     }
 
-    public static String getXp(Player p, OsTag plugin) {
+    public static String getXp(Player p) {
         Config conf = plugin.getConfig();
         String xp = "0";
         if (p.getExperienceLevel() == 0) {
@@ -110,7 +117,7 @@ public class PlayerInfoUtil {
         return xp;
     }
 
-    public static String getGameMode(Player p, OsTag plugin) {
+    public static String getGameMode(Player p) {
         Config conf = plugin.getConfig();
         String survival = ChatColor.replaceColorCode(conf.getString("survival"));
         String creative = ChatColor.replaceColorCode(conf.getString("creative"));
@@ -127,7 +134,7 @@ public class PlayerInfoUtil {
         return gmf;
     }
 
-    public static String getPing(Player p, OsTag plugin) {
+    public static String getPing(Player p) {
 
         String ping = "";
         Config conf = plugin.getConfig();
@@ -143,7 +150,7 @@ public class PlayerInfoUtil {
         return ping;
     }
 
-    public static String getLuckPermPrefix(Player p, OsTag plugin) {
+    public static String getLuckPermPrefix(Player p) {
 
         String pref = "";
 
@@ -156,7 +163,7 @@ public class PlayerInfoUtil {
         return ChatColor.replaceColorCode(pref);
     }
 
-    public static String getLuckPermSufix(Player p, OsTag plugin) {
+    public static String getLuckPermSufix(Player p) {
         String suf = "";
         if (plugin.getServer().getPluginManager().getPlugin("LuckPerms") != null) {
             LuckPerms luckPerms = LuckPermsProvider.get();
@@ -167,7 +174,7 @@ public class PlayerInfoUtil {
         return ChatColor.replaceColorCode(suf);
     }
 
-    public static String getGroupDisName(Player p, OsTag plugin) {
+    public static String getGroupDisName(Player p) {
         String group = "";
         if (plugin.getServer().getPluginManager().getPlugin("LuckPerms") != null) {
             LuckPerms luckPerms = LuckPermsProvider.get();
@@ -179,7 +186,7 @@ public class PlayerInfoUtil {
         return ChatColor.replaceColorCode(group);
     }
 
-    public static String getXuid(Player p, OsTag plugin) {
+    public static String getXuid(Player p) {
         Config conf = plugin.getConfig();
         String xuid = ChatColor.replaceColorCode(conf.getString("guest"));
         if (p.getLoginChainData().getXUID() != null) {
@@ -188,7 +195,7 @@ public class PlayerInfoUtil {
         return xuid;
     }
 
-    public static String getSkulll(Player p, OsTag plugin) {
+    public static String getSkulll(Player p) {
         String skull = "";
         if (plugin.getServer().getPluginManager().getPlugin("DeathSkulls") != null) {
             if (skullPlayer.contains(p.getUniqueId())) {
@@ -198,7 +205,7 @@ public class PlayerInfoUtil {
         return ChatColor.replaceColorCode(skull);
     }
 
-    public static String getDimension(Player p, OsTag plugin) {
+    public static String getDimension(Player p) {
         Config conf = plugin.getConfig();
         String overworld = conf.getString("overworld");
         String nether = conf.getString("nether");
@@ -214,7 +221,7 @@ public class PlayerInfoUtil {
         return ChatColor.replaceColorCode(dim);
     }
 
-    public static String getPlayerUnique(Player p, OsTag plugin) {
+    public static String getPlayerUnique(Player p) {
         Config conf = plugin.getConfig();
         String unique = "";
         String name = p.getDisplayName();

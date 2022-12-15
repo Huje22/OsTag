@@ -1,7 +1,6 @@
 package me.indian.pl.commands;
 
 import cn.nukkit.Player;
-import cn.nukkit.Server;
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandExecutor;
 import cn.nukkit.command.CommandSender;
@@ -21,12 +20,25 @@ public class TestttCommand implements CommandExecutor {
         if (sender.hasPermission("ostagpnx.admin")) {
             String input = "";
             Player p = (Player) sender;
-            p.sendMessage(PlayerInfoUtil.getGroupDisName(p, plugin));
-            p.sendMessage(PlayerInfoUtil.getSkulll(p, plugin));
-            p.sendMessage(PlayerInfoUtil.getXuid(p, plugin));
-            Server.getInstance().broadcastMessage(" ");
-            Server.getInstance().broadcastMessage(" ");
+            p.sendMessage(PlayerInfoUtil.getGroupDisName(p));
+            p.sendMessage(PlayerInfoUtil.getSkulll(p));
+            p.sendMessage(PlayerInfoUtil.getXuid(p));
+            p.sendMessage(PlayerInfoUtil.getXp(p));
+            p.sendMessage(PlayerInfoUtil.getDevice(p));
+            p.sendMessage(PlayerInfoUtil.getControler(p));
+            p.sendMessage(PlayerInfoUtil.getGameMode(p));
         }
+        // for later
+//        switch(args[0]) {
+//            case "banuj":
+//                sender.sendMessage("ban");
+//                break;
+//            case "odbanuj":
+//                sender.sendMessage("Unban");
+//                break;
+//            default:
+//                sender.sendMessage("Niepoprawne użycie komendy");
+//        }
         return false;
     }
 }

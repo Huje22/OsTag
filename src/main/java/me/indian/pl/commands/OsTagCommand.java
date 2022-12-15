@@ -42,9 +42,11 @@ public class OsTagCommand implements CommandExecutor {
                 }
                 plugin.getConfig().save();
             }
+
             if (args[0].equalsIgnoreCase("ver") || args[0].equalsIgnoreCase("v")) {
                 OsTag.getInstance().sendOnEnableInfo(false, sender);
             }
+
             if (args[0].equalsIgnoreCase("reload") || args[0].equalsIgnoreCase("r")) {
                 try {
                     long millisActualTime = System.currentTimeMillis();
@@ -59,9 +61,11 @@ public class OsTagCommand implements CommandExecutor {
                     System.out.println(e);
                 }
             }
+
         } else {
             sender.sendMessage(ChatColor.replaceColorCode("&cYou don't have permisions"));
         }
+
         return false;
     }
 }

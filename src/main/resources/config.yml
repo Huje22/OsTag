@@ -158,4 +158,25 @@ keyboard: "Keyboard"
 gamepad: "GamePad"
 motion_controller: "motion_controller"
 UnknowControler: "Unknow"
+
+#When you use indian emoji pack can use this emoijs
+#Windows: ''
+#Android: ''
+#Ios: ''
+#Mac: ''
+#Fire: '&f[&6Fire Os&f]'
+#Gearvr: '&f[&aGearVr&f]'
+#Hololens: '&f[&aHoloLens&f]'
+#Dedicated: '&f[&aDedicated&f]'
+#TvOs: ''
+#PlayStation: ''
+#Nintendo: ''
+#Xbox: ''
+#Unknow: '&f[&aUnknow&f]'
+#touch: Touch
+#keyboard: Keyboard
+#gamepad: GamePad
+#motion_controller: motion_controller
+#UnknowControler: Unknow
+
 #--------------------------
