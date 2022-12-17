@@ -7,6 +7,7 @@ import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerChatEvent;
 import cn.nukkit.utils.Config;
 import cn.nukkit.utils.TextFormat;
+import com.creeperface.nukkit.placeholderapi.api.PlaceholderAPI;
 import me.indian.pl.OsTag;
 import me.indian.pl.utils.ChatColor;
 import me.indian.pl.utils.OtherUtils;
@@ -57,7 +58,14 @@ public class Formater implements Listener {
             }
             e.setMessage(wiad);
 
-            e.setFormat(ChatColor.replaceColorCode(plugin.getConfig().getString("message-format"))
+            String messageformat = ChatColor.replaceColorCode(plugin.getConfig().getString("message-format"));
+
+            if(plugin.papKot){
+                PlaceholderAPI api = PlaceholderAPI.getInstance();
+                messageformat = api.translateString(ChatColor.replaceColorCode(conf.getString("message-format")), p);
+            }
+
+            e.setFormat(messageformat
                             .replace("<name>", p.getName())
                             .replace("<suffix>", getLuckPermSufix(p))
                             .replace("<prefix>", getLuckPermPrefix(p))
@@ -73,7 +81,7 @@ public class Formater implements Listener {
                             .replace("<xp>", getXp(p))
                             .replace("<dimension>", getDimension(p))
                             .replace("<unique-description>", getPlayerUnique(p))
-                            .replace("<faction>", getFaction(p))
+
 
                             .replace("\n", " this action not allowed here ")
                     //message.format: "<prefix> <player> <suffix> >> <msg>

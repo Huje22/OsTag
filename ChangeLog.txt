@@ -58,6 +58,13 @@ code improvments
 now § working in chat :D
 added disable ostag in a given world! if the player logs into a world where it is allowed, the name and information will remain until no other plugin changes it or enters a allowed world
 Factions plugin support (Placeholder <faction>)
+**Released on the day 18.12.2022**
+1.5.0
+added PlaceholderAPI support
+removed <faction> placeholder
+want to use OsTag but don't want to use PlaceholderAPI? you can still use it without the placeholder api
+
+
 
 
 

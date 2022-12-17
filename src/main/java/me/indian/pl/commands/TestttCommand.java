@@ -4,6 +4,7 @@ import cn.nukkit.Player;
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandExecutor;
 import cn.nukkit.command.CommandSender;
+import com.creeperface.nukkit.placeholderapi.api.PlaceholderAPI;
 import me.indian.pl.OsTag;
 
 public class TestttCommand implements CommandExecutor {
@@ -34,6 +35,12 @@ public class TestttCommand implements CommandExecutor {
 //            OsTag.getInstance().sendOnEnableInfo("normal" , p);
 //            p.sendMessage(TextFormat.colorize('&' , "&aTest"));
             p.sendMessage(p.getLevel().getName());
+
+
+            PlaceholderAPI api = PlaceholderAPI.getInstance();
+            String test = api.getValue("%time%", p);
+            p.sendMessage(api.translateString("%server_online% - get current online players count %server_max_players% - get max player count %server_motd% - get the server motd %server_ram_used% - get used memory %server_ram_free% - get free memory %server_ram_total% - get total memory %server_ram_max% - get max memory %server_cores% - get available processor cores %server_tps% - get current TPS %server_uptime% - get the current uptime" , p));
+
 
         }
         // for later

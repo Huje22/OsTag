@@ -228,17 +228,4 @@ public class PlayerInfoUtil {
         return unique;
     }
 
-    public static String getFaction(Player p){
-        //code from
-        //https://github.com/ZenSirzechs/LuckChat-NK/blob/master/src/main/java/zen/luckchat/LuckChatPlugin.java#L113
-        // with out permissions :/
-
-        String faction = "Missing Factions plugin";
-        if(plugin.factions) {
-            if (com.massivecraft.factions.P.p.getPlayerFactionTag(p) != null) {
-                faction = com.massivecraft.factions.P.p.getPlayerFactionTag(p);
-            }
-        }
-        return faction;
-    }
 }

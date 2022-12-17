@@ -2,7 +2,7 @@ main: me.indian.pl.OsTag
 name: OsTag
 author: IndianPL
 description: OsTag plugin
-version: 1.4.9.02
+version: 1.5.0
 api: [ "1.0.14" ]
 commands:
   ostag:

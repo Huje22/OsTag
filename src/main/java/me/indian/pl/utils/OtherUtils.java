@@ -48,13 +48,13 @@ public class OtherUtils {
         return deaths;
     }
 
-    public static String getFactionsStatus() {
-        boolean f = plugin.factions;
-        String fact = fal;
-        if (f) {
-            fact = tru;
+    public static String getKotOrPapiStatus() {
+        boolean papko = plugin.papKot;
+        String papkot = fal;
+        if (papko) {
+            papkot = tru;
         }
-        return fact;
+        return papkot;
     }
 
     public static void sendMessageToAll(String msg) {

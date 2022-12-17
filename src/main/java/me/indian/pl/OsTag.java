@@ -19,7 +19,7 @@ public class OsTag extends PluginBase implements Listener {
 
     public static boolean deathSkulls;
 
-    public static boolean factions;
+    public static boolean papKot;
 
     private static OsTag instance;
 
@@ -40,7 +40,6 @@ public class OsTag extends PluginBase implements Listener {
         getLogger().warning(ChatColor.replaceColorCode("&4Permision names changed! From &bostagpnc.admin &4to &bostag.admin &4and added permision &bostag.colors &4for using §b& &4in chat"));
         getLogger().warning(ChatColor.replaceColorCode("&4See chnage log!"));
 
-
         PluginManager pm = getServer().getPluginManager();
         //plugins info
         if (pm.getPlugin("LuckPerms") == null) {
@@ -55,11 +54,11 @@ public class OsTag extends PluginBase implements Listener {
         } else {
             deathSkulls = true;
         }
-        if (pm.getPlugin("Factions") == null) {
-            getLogger().info(ChatColor.replaceColorCode("&cYou don't have Factions plugin, <faction> placeholder will not working"));
-            factions = false;
+        if (pm.getPlugin("PlaceholderAPI") == null && pm.getPlugin("KotlinLib") == null) {
+            getLogger().info(ChatColor.replaceColorCode("&cYou don't have PlaceholderAPI or kotlin lib,placeholders with \"PlaceholderAPI\" will not work"));
+            papKot = false;
         } else {
-            factions = true;
+            papKot = true;
         }
 
         saveDefaultConfig();
@@ -137,7 +136,7 @@ public class OsTag extends PluginBase implements Listener {
                 this.getLogger().info(ChatColor.replaceColorCode("&1Plugins&3"));
                 this.getLogger().info(ChatColor.replaceColorCode("&aDeathSkulls&3: " + OtherUtils.getDeathSkullsStatus()));
                 this.getLogger().info(ChatColor.replaceColorCode("&aLuckPerms&3: " + OtherUtils.getLuckPermStatus()));
-                this.getLogger().info(ChatColor.replaceColorCode("&aFactions&3: " + OtherUtils.getFactionsStatus()));
+                this.getLogger().info(ChatColor.replaceColorCode("&aKotlinLib & PlaceholderAPI&3: " + OtherUtils.getKotOrPapiStatus()));
 
 
                 this.getLogger().info(ChatColor.replaceColorCode(" "));
@@ -158,7 +157,7 @@ public class OsTag extends PluginBase implements Listener {
                 sender.sendMessage(ChatColor.replaceColorCode("&1Plugins"));
                 sender.sendMessage(ChatColor.replaceColorCode("&aDeathSkulls&3: " + OtherUtils.getDeathSkullsStatus()));
                 sender.sendMessage(ChatColor.replaceColorCode("&aLuckPerms&3: " + OtherUtils.getLuckPermStatus()));
-                sender.sendMessage(ChatColor.replaceColorCode("&aFactions&3: " + OtherUtils.getFactionsStatus()));
+                sender.sendMessage(ChatColor.replaceColorCode("&aKotlinLib & PlaceholderAPI&3: " + OtherUtils.getKotOrPapiStatus()));
 
 
                 sender.sendMessage(ChatColor.replaceColorCode(" "));

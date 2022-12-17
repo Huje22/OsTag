@@ -6,6 +6,8 @@
 #----------------------------
 #       Placeholders
 #
+# Support PlaceholderAPI
+#
 # <name> - player name [OsTag \ ChatFormater] \\name\\
 # <ping> - player ping [OsTag \ ChatFormater]
 # <health> - player health [OsTag \ ChatFormater]
@@ -26,7 +28,6 @@
 # <cps> - left click per second counter [OsTag]
 # <deathskull> - player skull info (DeathSkull plugin required) [OsTag \ ChatFormater] \\name\\
 # <unique-description> - player unique description from config [OsTag \ ChatFormater] \\name\\
-# <faction> - player faction name (Factions plugin reguired) [OsTag \ ChatFormater] \\name\\
 #if in the description of the placeholders any one contains \\name\\ it means that it can be used in the player's name in ostag
 # for better work dont use \ , only use \n
 #--------------------------
@@ -60,13 +61,13 @@ refresh-time: 1
 #
 #
 #Normal Player
-nick: "<faction> <unique-description><xp> <groupDisName> <name> <suffix> "
-subtag: "<faction> <device> | <controler> \n&eDevice Model: &r<model>\n&eGamemode: &r<gamemode>\n&eCps: &r<cps>  &ePing: <ping> &eXp: <xp> \n&eGame Version: &r<version> \n\n&eXuid: &r<xuid>\n\n&eLanguage: &r<language>\n<health>/<max_health>&c❤\n<deathskull>"
+nick: "%player_exp_to_next% <unique-description><xp> <groupDisName> <name> <suffix> "
+subtag: "%player_exp_to_next% <device> | <controler> \n&eDevice Model: &r<model>\n&eGamemode: &r<gamemode>\n&eCps: &r<cps>  &ePing: <ping> &eXp: <xp> \n&eGame Version: &r<version> \n\n&eXuid: &r<xuid>\n\n&eLanguage: &r<language>\n<health>/<max_health>&c❤\n<deathskull>"
 #
 #
 #Advanced Player
-a-nick: "<faction> <unique-description><xp> <groupDisName> <name> <suffix> "
-a-subtag: "<faction> <device> | <controler>\n&eCps: &r<cps>  &ePing: <ping>\n<health>/<max_health>&c❤\n&eXp: <xp>\n<deathskull>"
+a-nick: "%player_exp_to_next% <unique-description><xp> <groupDisName> <name> <suffix> "
+a-subtag: "%player_exp_to_next% <device> | <controler>\n&eCps: &r<cps>  &ePing: <ping>\n<health>/<max_health>&c❤\n&eXp: <xp>\n<deathskull>"
 advanced-players:
   - "JndjanBartonka"
   - "TheTwuj"
@@ -79,7 +80,7 @@ disabled-worlds:
 #    Formater options
 #
 #Message format
-message-format: "<faction> <unique-description><dimension> &r<xp>&r <deathskull><groupDisName> <prefix> &r<name> <suffix> &r» <msg>"
+message-format: "%player_exp_to_next% <unique-description><dimension> &r<xp>&r <deathskull><groupDisName> <prefix> &r<name> <suffix> &r» <msg>"
 #
 #
 #If this option set to true everyone can use & by default instead of §
