@@ -56,7 +56,7 @@ some improvments in code
 1.4.9.02
 code improvments
 now § working in chat :D
-
+added disable ostag in a given world! if the player logs into a world where it is allowed, the name and information will remain until no other plugin changes it or enters a allowed world
 
 
 

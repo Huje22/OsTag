@@ -69,6 +69,13 @@ a-subtag: "<device> | <controler>\n&eCps: &r<cps>  &ePing: <ping>\n<health>/<max
 advanced-players:
   - "JndjanBartonka"
   - "TheTwuj"
+#
+#
+#Disabled worlds [Experimental]
+disabled-worlds:
+  - "test"
+
+
 #--------------------------
 #    Formater options
 #

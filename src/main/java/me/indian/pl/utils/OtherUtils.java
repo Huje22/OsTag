@@ -6,11 +6,13 @@ import me.indian.pl.OsTag;
 
 public class OtherUtils {
 
+    private static OsTag plugin = OsTag.getInstance();
 
     private static String fal = "§cfalse";
+
     private static String tru = "§etrue";
 
-    public static String getOsTagStatus(OsTag plugin) {
+    public static String getOsTagStatus() {
         Boolean ostag = plugin.getConfig().getBoolean("OsTag");
         String os = fal;
         if (ostag != null) {
@@ -21,7 +23,7 @@ public class OtherUtils {
         return os;
     }
 
-    public static String getFormaterStatus(OsTag plugin) {
+    public static String getFormaterStatus() {
         Boolean chatFormater = plugin.getConfig().getBoolean("ChatFormater");
         String forma = fal;
         if (chatFormater != null) {
@@ -32,7 +34,7 @@ public class OtherUtils {
         return forma;
     }
 
-    public static String getLuckPermStatus(OsTag plugin) {
+    public static String getLuckPermStatus() {
         Boolean lp = plugin.luckPerm;
         String luck = fal;
         if (lp) {
@@ -41,7 +43,7 @@ public class OtherUtils {
         return luck;
     }
 
-    public static String getDeathSkullsStatus(OsTag plugin) {
+    public static String getDeathSkullsStatus() {
         Boolean ds = plugin.deathSkulls;
         String deaths = fal;
         if (ds) {
