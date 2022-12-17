@@ -4,6 +4,7 @@ import cn.nukkit.Player;
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandExecutor;
 import cn.nukkit.command.CommandSender;
+import cn.nukkit.utils.TextFormat;
 import me.indian.pl.OsTag;
 import me.indian.pl.utils.PlayerInfoUtil;
 
@@ -27,6 +28,15 @@ public class TestttCommand implements CommandExecutor {
             p.sendMessage(PlayerInfoUtil.getDevice(p));
             p.sendMessage(PlayerInfoUtil.getControler(p));
             p.sendMessage(PlayerInfoUtil.getGameMode(p));
+            p.sendMessage("Konsola");
+            OsTag.getInstance().sendOnEnableInfo("console" , null);
+            p.sendMessage("admin");
+            OsTag.getInstance().sendOnEnableInfo("admin" , p);
+            p.sendMessage("Normal");
+            OsTag.getInstance().sendOnEnableInfo("normal" , p);
+            p.sendMessage(TextFormat.colorize('&' , "&aTest"));
+
+
         }
         // for later
 //        switch(args[0]) {
@@ -39,6 +49,9 @@ public class TestttCommand implements CommandExecutor {
 //            default:
 //                sender.sendMessage("Niepoprawne użycie komendy");
 //        }
+
+
+
         return false;
     }
 }

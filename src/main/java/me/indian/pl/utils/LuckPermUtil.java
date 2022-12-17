@@ -5,7 +5,6 @@ import net.luckperms.api.model.user.User;
 
 public class LuckPermUtil {
 
-
     public static String getPrefix(User user) {
         String prefix = "";
         if (user.getCachedData().getMetaData().getPrefix() != null) {

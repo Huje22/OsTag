@@ -12,12 +12,10 @@ public class OtherUtils {
 
     public static String getOsTagStatus(OsTag plugin) {
         Boolean ostag = plugin.getConfig().getBoolean("OsTag");
-        String os = "";
+        String os = fal;
         if (ostag != null) {
-            if (ostag == true) {
+            if (ostag) {
                 os = tru;
-            } else {
-                os = fal;
             }
         }
         return os;
@@ -25,12 +23,10 @@ public class OtherUtils {
 
     public static String getFormaterStatus(OsTag plugin) {
         Boolean chatFormater = plugin.getConfig().getBoolean("ChatFormater");
-        String forma = "";
+        String forma = fal;
         if (chatFormater != null) {
-            if (chatFormater == true) {
+            if (chatFormater) {
                 forma = tru;
-            } else {
-                forma = fal;
             }
         }
         return forma;
@@ -38,22 +34,18 @@ public class OtherUtils {
 
     public static String getLuckPermStatus(OsTag plugin) {
         Boolean lp = plugin.luckPerm;
-        String luck = "";
-        if (lp == true) {
+        String luck = fal;
+        if (lp) {
             luck = tru;
-        } else {
-            luck = fal;
         }
         return luck;
     }
 
     public static String getDeathSkullsStatus(OsTag plugin) {
         Boolean ds = plugin.deathSkulls;
-        String deaths = "";
-        if (ds == true) {
+        String deaths = fal;
+        if (ds) {
             deaths = tru;
-        } else {
-            deaths = fal;
         }
         return deaths;
     }

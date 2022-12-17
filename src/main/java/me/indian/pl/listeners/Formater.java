@@ -6,6 +6,7 @@ import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerChatEvent;
 import cn.nukkit.utils.Config;
+import cn.nukkit.utils.TextFormat;
 import me.indian.pl.OsTag;
 import me.indian.pl.utils.ChatColor;
 import me.indian.pl.utils.OtherUtils;
@@ -50,7 +51,7 @@ public class Formater implements Listener {
                 e.setMessage(msg);
             }
             if (p.hasPermission("ostag.admin") || p.hasPermission("ostag.colors") || conf.getBoolean("and-for-all")) {
-                wiad = e.getMessage().replace("&", "§");
+                wiad = TextFormat.colorize('&' , e.getMessage());
             } else {
                 wiad = e.getMessage();
             }

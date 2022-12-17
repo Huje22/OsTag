@@ -13,6 +13,7 @@ import java.util.List;
 public class OsTagCommand implements CommandExecutor {
 
     private final OsTag plugin;
+
     public OsTagCommand(OsTag plugin) {
         this.plugin = plugin;
     }
@@ -20,11 +21,22 @@ public class OsTagCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         List<String> playerlist = plugin.getConfig().getStringList("advanced-players");
-        if (sender.hasPermission("ostagpnx.admin")) {
-            if (args.length == 0) {
-                sender.sendMessage(ChatColor.replaceColorCode("&aUsage &b/ostag &8[version , reload , add <player>]"));
-                return false;
+
+        if (args.length == 0) {
+            sender.sendMessage(ChatColor.replaceColorCode("&aUsage &b/ostag &8[version , reload , add <player>]"));
+            return false;
+        }
+
+        if (args[0].equalsIgnoreCase("ver") || args[0].equalsIgnoreCase("v")) {
+            if (sender.hasPermission("ostag.admin")) {
+                OsTag.getInstance().sendOnEnableInfo("admin", sender);
+            } else {
+                OsTag.getInstance().sendOnEnableInfo("normal", sender);
             }
+            return false;
+        }
+
+        if (sender.hasPermission("ostag.admin")) {
             if (args[0].equalsIgnoreCase("add")) {
                 Player cel = Server.getInstance().getPlayer(args[1]);
                 if (cel == null) {
@@ -40,13 +52,7 @@ public class OsTagCommand implements CommandExecutor {
                     sender.sendMessage(ChatColor.replaceColorCode("&6" + cel.getDisplayName() + " &ahas been added to advanced player list"));
                     plugin.getConfig().set("advanced-players", playerlist);
                 }
-                plugin.getConfig().save();
             }
-
-            if (args[0].equalsIgnoreCase("ver") || args[0].equalsIgnoreCase("v")) {
-                OsTag.getInstance().sendOnEnableInfo(false, sender);
-            }
-
             if (args[0].equalsIgnoreCase("reload") || args[0].equalsIgnoreCase("r")) {
                 try {
                     long millisActualTime = System.currentTimeMillis();
@@ -61,11 +67,10 @@ public class OsTagCommand implements CommandExecutor {
                     System.out.println(e);
                 }
             }
-
+            plugin.getConfig().save();
         } else {
             sender.sendMessage(ChatColor.replaceColorCode("&cYou don't have permisions"));
         }
-
         return false;
     }
 }

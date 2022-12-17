@@ -13,13 +13,7 @@ import static me.indian.deathskulls.listeners.PlayerDeathListener.skullPlayer;
 
 public class PlayerInfoUtil {
 
-    private static OsTag plugin;
-
-    public PlayerInfoUtil(){
-        this.plugin = OsTag.getInstance();
-    }
-
-
+    private static OsTag plugin = OsTag.getInstance();
 
     public static String getDevice(Player p) {
         Config conf = plugin.getConfig();

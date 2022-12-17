@@ -1,10 +1,13 @@
 package me.indian.pl.utils;
 
+import cn.nukkit.utils.TextFormat;
+
 public class ChatColor {
 
     public static String replaceColorCode(String msg) {
-        String repl = msg.replace("&", "§");
+        String repl = TextFormat.colorize('&' , msg);
         return repl;
     }
+    //I don't know nukkit has TextFormat.colorize(); and I made my own method, then I found out and replaced it with this one without removing the class because it would be hard to change ChatColor everywhere
 
 }

@@ -26,17 +26,17 @@ public class OsTimer extends Task implements Runnable, Listener {
         for (Player p : Server.getInstance().getOnlinePlayers().values()) {
             if (playerlist.contains(p.getDisplayName())) {
                 if (conf.getBoolean("ScoreTagOnly")) {
-                    OsTagAdd.scoreTagAdvancd(p, plugin);
+                    OsTagAdd.scoreTagAdvancd(p);
                 } else {
                     p.setScoreTag("");
-                    OsTagAdd.addDevAdvanced(p, plugin);
+                    OsTagAdd.addDevAdvanced(p);
                 }
             } else {
                 if (conf.getBoolean("ScoreTagOnly")) {
-                    OsTagAdd.scoreTagNormal(p, plugin);
+                    OsTagAdd.scoreTagNormal(p);
                 } else {
                     p.setScoreTag("");
-                    OsTagAdd.addDevNormal(p, plugin);
+                    OsTagAdd.addDevNormal(p);
                 }
             }
         }
@@ -50,15 +50,15 @@ public class OsTimer extends Task implements Runnable, Listener {
         List<String> playerlist = plugin.getConfig().getStringList("advanced-players");
         if (playerlist.contains(p.getDisplayName())) {
             if (conf.getBoolean("ScoreTagOnly")) {
-                OsTagAdd.scoreTagAdvancd(p, plugin);
+                OsTagAdd.scoreTagAdvancd(p);
             } else {
-                OsTagAdd.addDevAdvanced(p, plugin);
+                OsTagAdd.addDevAdvanced(p);
             }
         } else {
             if (conf.getBoolean("ScoreTagOnly")) {
-                OsTagAdd.addDevNormal(p, plugin);
+                OsTagAdd.addDevNormal(p);
             } else {
-                OsTagAdd.addDevNormal(p, plugin);
+                OsTagAdd.addDevNormal(p);
             }
         }
     }

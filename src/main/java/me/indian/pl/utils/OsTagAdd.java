@@ -8,14 +8,10 @@ import me.indian.pl.OsTag;
 import static me.indian.pl.utils.PlayerInfoUtil.*;
 
 public class OsTagAdd {
-    private final OsTag plugin;
 
-    public OsTagAdd(OsTag plugin) {
-        this.plugin = plugin;
-    }
+    private static OsTag plugin = OsTag.getInstance();
 
-
-    public static void addDevNormal(Player p, OsTag plugin) {
+    public static void addDevNormal(Player p) {
 
         Config conf = plugin.getConfig();
 
@@ -48,7 +44,7 @@ public class OsTagAdd {
         );
     }
 
-    public static void addDevAdvanced(Player p, OsTag plugin) {
+    public static void addDevAdvanced(Player p) {
 
         Config conf = plugin.getConfig();
 
@@ -81,7 +77,7 @@ public class OsTagAdd {
         );
     }
 
-    public static void scoreTagNormal(Player p, OsTag plugin) {
+    public static void scoreTagNormal(Player p) {
 
         Config conf = plugin.getConfig();
 
@@ -106,7 +102,7 @@ public class OsTagAdd {
         );
     }
 
-    public static void scoreTagAdvancd(Player p, OsTag plugin) {
+    public static void scoreTagAdvancd(Player p) {
 
         Config conf = plugin.getConfig();
 
