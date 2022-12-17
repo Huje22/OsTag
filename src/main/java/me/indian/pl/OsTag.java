@@ -19,6 +19,8 @@ public class OsTag extends PluginBase implements Listener {
 
     public static boolean deathSkulls;
 
+    public static boolean factions;
+
     private static OsTag instance;
 
     public static OsTag getInstance() {
@@ -48,10 +50,16 @@ public class OsTag extends PluginBase implements Listener {
             luckPerm = true;
         }
         if (pm.getPlugin("DeathSkulls") == null) {
-            getLogger().info(ChatColor.replaceColorCode("&cYou don't have DeathSkulls plugin, <deathskull> placeholder will not workg"));
+            getLogger().info(ChatColor.replaceColorCode("&cYou don't have DeathSkulls plugin, <deathskull> placeholder will not working"));
             deathSkulls = false;
         } else {
             deathSkulls = true;
+        }
+        if (pm.getPlugin("Factions") == null) {
+            getLogger().info(ChatColor.replaceColorCode("&cYou don't have Factions plugin, <faction> placeholder will not working"));
+            factions = false;
+        } else {
+            factions = true;
         }
 
         saveDefaultConfig();
@@ -129,6 +137,9 @@ public class OsTag extends PluginBase implements Listener {
                 this.getLogger().info(ChatColor.replaceColorCode("&1Plugins&3"));
                 this.getLogger().info(ChatColor.replaceColorCode("&aDeathSkulls&3: " + OtherUtils.getDeathSkullsStatus()));
                 this.getLogger().info(ChatColor.replaceColorCode("&aLuckPerms&3: " + OtherUtils.getLuckPermStatus()));
+                this.getLogger().info(ChatColor.replaceColorCode("&aFactions&3: " + OtherUtils.getFactionsStatus()));
+
+
                 this.getLogger().info(ChatColor.replaceColorCode(" "));
                 this.getLogger().info(ChatColor.replaceColorCode("&b-------------------------------"));
                 break;
@@ -147,6 +158,9 @@ public class OsTag extends PluginBase implements Listener {
                 sender.sendMessage(ChatColor.replaceColorCode("&1Plugins"));
                 sender.sendMessage(ChatColor.replaceColorCode("&aDeathSkulls&3: " + OtherUtils.getDeathSkullsStatus()));
                 sender.sendMessage(ChatColor.replaceColorCode("&aLuckPerms&3: " + OtherUtils.getLuckPermStatus()));
+                sender.sendMessage(ChatColor.replaceColorCode("&aFactions&3: " + OtherUtils.getFactionsStatus()));
+
+
                 sender.sendMessage(ChatColor.replaceColorCode(" "));
                 sender.sendMessage(ChatColor.replaceColorCode("&b-------------------------------"));
                 break;

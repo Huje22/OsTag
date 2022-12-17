@@ -73,6 +73,8 @@ public class Formater implements Listener {
                             .replace("<xp>", getXp(p))
                             .replace("<dimension>", getDimension(p))
                             .replace("<unique-description>", getPlayerUnique(p))
+                            .replace("<faction>", getFaction(p))
+
                             .replace("\n", " this action not allowed here ")
                     //message.format: "<prefix> <player> <suffix> >> <msg>
 

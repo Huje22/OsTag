@@ -52,12 +52,12 @@ added breaks between messages
 Version: 1.4.9.01
 no breaks between messages when player was operator, fixed!
 some improvments in code
-**Released on the day xx.12.2022**
+**Released on the day 17.12.2022**
 1.4.9.02
 code improvments
 now § working in chat :D
 added disable ostag in a given world! if the player logs into a world where it is allowed, the name and information will remain until no other plugin changes it or enters a allowed world
-
+Factions plugin support (Placeholder <faction>)
 
 
 

@@ -46,6 +46,15 @@
             <scope>system</scope>
             <systemPath>${basedir}/libs/DeathSkulls.jar</systemPath>
         </dependency>
+
+    <dependency>
+        <groupId>com.massivecraft.factions</groupId>
+        <artifactId>Factions</artifactId>
+        <version>1.8.0</version>
+        <scope>system</scope>
+        <optional>false</optional>
+        <systemPath>${basedir}/libs/Factions.jar</systemPath>
+    </dependency>
     </dependencies>
 
 

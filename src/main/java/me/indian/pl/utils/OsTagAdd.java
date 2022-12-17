@@ -23,6 +23,7 @@ public class OsTagAdd {
                 .replace("<deathskull>", getSkulll(p))
                 .replace("<xp>", getXp(p))
                 .replace("<unique-description>", getPlayerUnique(p))
+                .replace("<faction>", getFaction(p))
                 + "\n" + ChatColor.replaceColorCode(conf.getString("subtag"))
                 .replace("<device>", getDevice(p))
                 .replace("<deathskull>", getSkulll(p))
@@ -41,6 +42,7 @@ public class OsTagAdd {
                 .replace("<cps>", String.valueOf(InputListener.getCPS(p)))
                 .replace("<gamemode>", getGameMode(p))
                 .replace("<unique-description>", getPlayerUnique(p))
+                .replace("<faction>", getFaction(p))
         );
     }
 
@@ -56,6 +58,7 @@ public class OsTagAdd {
                 .replace("<deathskull>", getSkulll(p))
                 .replace("<xp>", getXp(p))
                 .replace("<unique-description>", getPlayerUnique(p))
+                .replace("<faction>", getFaction(p))
                 + "\n" + ChatColor.replaceColorCode(conf.getString("a-subtag"))
                 .replace("<deathskull>", getSkulll(p))
                 .replace("<device>", getDevice(p))
@@ -74,6 +77,7 @@ public class OsTagAdd {
                 .replace("<cps>", String.valueOf(InputListener.getCPS(p)))
                 .replace("<gamemode>", getGameMode(p))
                 .replace("<unique-description>", getPlayerUnique(p))
+                .replace("<faction>", getFaction(p))
         );
     }
 
@@ -99,6 +103,7 @@ public class OsTagAdd {
                 .replace("<cps>", String.valueOf(InputListener.getCPS(p)))
                 .replace("<gamemode>", getGameMode(p))
                 .replace("<unique-description>", getPlayerUnique(p))
+                .replace("<faction>", getFaction(p))
         );
     }
 
@@ -125,6 +130,7 @@ public class OsTagAdd {
                 .replace("<cps>", String.valueOf(InputListener.getCPS(p)))
                 .replace("<gamemode>", getGameMode(p))
                 .replace("<unique-description>", getPlayerUnique(p))
+                .replace("<faction>", getFaction(p))
         );
     }
 }

@@ -2,8 +2,8 @@ package me.indian.pl.utils;
 
 import cn.nukkit.Player;
 import cn.nukkit.utils.Config;
-import me.indian.pl.listeners.InputListener;
 import me.indian.pl.OsTag;
+import me.indian.pl.listeners.InputListener;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
@@ -226,5 +226,19 @@ public class PlayerInfoUtil {
             unique = conf.getString("Players.default.description");
         }
         return unique;
+    }
+
+    public static String getFaction(Player p){
+        //code from
+        //https://github.com/ZenSirzechs/LuckChat-NK/blob/master/src/main/java/zen/luckchat/LuckChatPlugin.java#L113
+        // with out permissions :/
+
+        String faction = "Missing Factions plugin";
+        if(plugin.factions) {
+            if (com.massivecraft.factions.P.p.getPlayerFactionTag(p) != null) {
+                faction = com.massivecraft.factions.P.p.getPlayerFactionTag(p);
+            }
+        }
+        return faction;
     }
 }

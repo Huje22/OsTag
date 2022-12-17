@@ -13,29 +13,25 @@ public class OtherUtils {
     private static String tru = "§etrue";
 
     public static String getOsTagStatus() {
-        Boolean ostag = plugin.getConfig().getBoolean("OsTag");
+        boolean ostag = plugin.getConfig().getBoolean("OsTag");
         String os = fal;
-        if (ostag != null) {
             if (ostag) {
                 os = tru;
-            }
         }
         return os;
     }
 
     public static String getFormaterStatus() {
-        Boolean chatFormater = plugin.getConfig().getBoolean("ChatFormater");
+        boolean chatFormater = plugin.getConfig().getBoolean("ChatFormater");
         String forma = fal;
-        if (chatFormater != null) {
             if (chatFormater) {
                 forma = tru;
-            }
         }
         return forma;
     }
 
     public static String getLuckPermStatus() {
-        Boolean lp = plugin.luckPerm;
+        boolean lp = plugin.luckPerm;
         String luck = fal;
         if (lp) {
             luck = tru;
@@ -44,12 +40,21 @@ public class OtherUtils {
     }
 
     public static String getDeathSkullsStatus() {
-        Boolean ds = plugin.deathSkulls;
+        boolean ds = plugin.deathSkulls;
         String deaths = fal;
         if (ds) {
             deaths = tru;
         }
         return deaths;
+    }
+
+    public static String getFactionsStatus() {
+        boolean f = plugin.factions;
+        String fact = fal;
+        if (f) {
+            fact = tru;
+        }
+        return fact;
     }
 
     public static void sendMessageToAll(String msg) {
