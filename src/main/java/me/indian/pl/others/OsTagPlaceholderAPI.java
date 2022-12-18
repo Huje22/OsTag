@@ -8,7 +8,7 @@ import me.indian.pl.utils.PlayerInfoUtil;
 public class OsTagPlaceholderAPI {
 
     /*
-    This is only test , but now corectly working
+    This is only test , but now not corectly working
      */
 
 
