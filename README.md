@@ -1,3 +1,4 @@
+#OsTag Plugin for nukkit
 This plugin is used to display information under the player's nickname or nickname. And for chat formatting with LuckPerms plugin.
 Java 8 required.
 For nukkit
