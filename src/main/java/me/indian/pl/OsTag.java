@@ -11,6 +11,7 @@ import me.indian.pl.commands.TestttCommand;
 import me.indian.pl.listeners.Formater;
 import me.indian.pl.listeners.InputListener;
 import me.indian.pl.others.Metrics;
+import me.indian.pl.others.OsTagPlaceholderAPI;
 import me.indian.pl.utils.*;
 
 public class OsTag extends PluginBase implements Listener {
@@ -35,11 +36,9 @@ public class OsTag extends PluginBase implements Listener {
         new OtherUtils();
         new PlayerInfoUtil();
         //some informations
-        getLogger().warning(ChatColor.replaceColorCode("&4The plugin now has so many naming changes, see the plugin page on CloudBurst to know them all and get it right "));
-        getLogger().warning(ChatColor.replaceColorCode("&4If you have used the OsTag plugin before, rename the folder from &bOsTagPNX &4to &bOsTag"));
-        getLogger().warning(ChatColor.replaceColorCode("&4Permision names changed! From &bostagpnc.admin &4to &bostag.admin &4and added permision &bostag.colors &4for using §b& &4in chat"));
-        getLogger().warning(ChatColor.replaceColorCode("&4See chnage log!"));
-
+        /*
+        None
+         */
         PluginManager pm = getServer().getPluginManager();
         //plugins info
         if (pm.getPlugin("LuckPerms") == null) {
@@ -57,8 +56,11 @@ public class OsTag extends PluginBase implements Listener {
         if (pm.getPlugin("PlaceholderAPI") == null && pm.getPlugin("KotlinLib") == null) {
             getLogger().info(ChatColor.replaceColorCode("&cYou don't have PlaceholderAPI or kotlin lib,placeholders with \"PlaceholderAPI\" will not work"));
             papKot = false;
+
         } else {
             papKot = true;
+            new OsTagPlaceholderAPI();
+            OsTagPlaceholderAPI.registerPlaceholders();
         }
 
         saveDefaultConfig();
@@ -167,6 +169,7 @@ public class OsTag extends PluginBase implements Listener {
                 sender.sendMessage(ChatColor.replaceColorCode("&b-------------------------------"));
                 sender.sendMessage(ChatColor.replaceColorCode("&aOsTag version:&3 " + ver));
                 sender.sendMessage(ChatColor.replaceColorCode("&aPlugin by:&6 " + aut.replace("[", "").replace("]", "")));
+                sender.sendMessage(ChatColor.replaceColorCode("&aServer Version:&3 " + servVer));
                 sender.sendMessage(ChatColor.replaceColorCode(" "));
                 sender.sendMessage(ChatColor.replaceColorCode("&1Modules"));
                 sender.sendMessage(ChatColor.replaceColorCode("&aFormater&3: " + OtherUtils.getFormaterStatus()));

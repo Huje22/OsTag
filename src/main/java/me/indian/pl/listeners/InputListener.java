@@ -16,15 +16,10 @@ public class InputListener implements Listener {
 
     private final OsTag plugin;
     public static Map<Player, InputMode> controler = new HashMap<Player, InputMode>();
-    private static final SplittableRandom random;
-    private static HashMap<Player, List<Long>> cps;
+    private static final SplittableRandom random = new SplittableRandom();
+    private static HashMap<Player, List<Long>> cps =  new HashMap<Player, List<Long>>();
     public InputListener(OsTag plugin) {
         this.plugin = plugin;
-        this.cps = new HashMap<Player, List<Long>>();
-    }
-
-    static {
-        random = new SplittableRandom();
     }
 
 

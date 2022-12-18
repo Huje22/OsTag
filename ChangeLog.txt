@@ -63,8 +63,9 @@ Factions plugin support (Placeholder <faction>)
 added PlaceholderAPI support
 removed <faction> placeholder
 want to use OsTag but don't want to use PlaceholderAPI? you can still use it without the placeholder api
-
-
-
+**Released on the day 18.12.2022**
+1.5.1
+code improvments
+bug fixes (<device> placeholder)
 
 

@@ -27,30 +27,41 @@ public class PlayerInfoUtil {
         String dedicated = ChatColor.replaceColorCode(conf.getString("Hedicated"));
         String tvos = ChatColor.replaceColorCode(conf.getString("TvOs"));
         String playstation = ChatColor.replaceColorCode(conf.getString("PlayStation"));
-        String nx = ChatColor.replaceColorCode(conf.getString("Nintendo"));
+        String nintendo = ChatColor.replaceColorCode(conf.getString("Nintendo"));
         String xbox = ChatColor.replaceColorCode(conf.getString("Xbox"));
         String unknow = ChatColor.replaceColorCode(conf.getString("Unknow"));
 
+        switch (p.getLoginChainData().getDeviceOS()){
+            case 1:
+                return android;
+            case 2:
+                return ios;
+            case 3:
+                return mac;
+            case 4:
+                return fire;
+            case 5:
+                return gearvr;
+            case 6:
+                return hololens;
+            case 7:
+                return windows;
+            case 8:
+                return windows;
+            case 9:
+                return dedicated;
+            case 10:
+                return tvos;
+            case 11:
+                return playstation;
+            case 12:
+                return nintendo;
+            case 13:
+                return xbox;
+            default:
+                return unknow;
+        }
 
-        String dev = "" + p.getLoginChainData().getDeviceOS();
-
-        String device = dev
-                .replace("1", android)
-                .replace("2", ios)
-                .replace("3", mac)
-                .replace("4", fire)
-                .replace("5", gearvr)
-                .replace("6", hololens)
-                .replace("7", windows)
-                .replace("8", windows)
-                .replace("9", dedicated)
-                .replace("10", tvos)
-                .replace("11", playstation)
-                .replace("12", nx)
-                .replace("13", xbox)
-                .replace("Unknow", unknow);
-
-        return device;
     }
 
     public static String getControler(Player p) {
@@ -62,25 +73,33 @@ public class PlayerInfoUtil {
         String pad = ChatColor.replaceColorCode(conf.getString("gamepad"));
         String unknowcon = ChatColor.replaceColorCode(conf.getString("UnknowControler"));
 
-        String controlerr = "";
         if (plugin.getConfig().getBoolean("PowerNukkiX-movement-server")) {
-            controlerr = InputListener.getControler(p) + "";
+            switch (InputListener.getControler(p)){
+                case "MOUSE":
+                    return klawa;
+                case "TOUCH":
+                    return dotyk;
+                case "GAME_PAD":
+                    return pad;
+                case "MOTION_CONTROLLER":
+                    return motion_controller;
+                default:
+                    return unknowcon;
+            }
         } else {
-            controlerr = p.getLoginChainData().getCurrentInputMode() + "";
+            switch (p.getLoginChainData().getCurrentInputMode()){
+                case 1:
+                    return klawa;
+                case 2:
+                    return dotyk;
+                case 3:
+                    return pad;
+                case 4:
+                    return motion_controller;
+                default:
+                    return unknowcon;
+            }
         }
-        String crt = controlerr
-                .replace("0", unknowcon)
-                .replace("1", klawa)
-                .replace("2", dotyk)
-                .replace("3", pad)
-                .replace("4", motion_controller)
-                .replace("UNDEFINED", unknowcon)
-                .replace("MOUSE", klawa)
-                .replace("TOUCH", dotyk)
-                .replace("GAME_PAD", pad)
-                .replace("MOTION_CONTROLLER", motion_controller);
-
-        return crt;
     }
 
     public static String getXp(Player p) {
