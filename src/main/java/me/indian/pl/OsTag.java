@@ -1,17 +1,16 @@
 package me.indian.pl;
 
-import cn.nukkit.Server;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.command.PluginCommand;
 import cn.nukkit.event.Listener;
 import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.plugin.PluginManager;
+import com.creeperface.nukkit.placeholderapi.api.PlaceholderAPI;
 import me.indian.pl.commands.OsTagCommand;
 import me.indian.pl.commands.TestttCommand;
 import me.indian.pl.listeners.Formater;
 import me.indian.pl.listeners.InputListener;
-import me.indian.pl.others.Metrics;
-import me.indian.pl.others.OsTagPlaceholderAPI;
+import me.indian.pl.others.OsTagMetrics;
 import me.indian.pl.utils.*;
 
 public class OsTag extends PluginBase implements Listener {
@@ -35,6 +34,7 @@ public class OsTag extends PluginBase implements Listener {
         //class instances that are not dependent on the user's choice
         new OtherUtils();
         new PlayerInfoUtil();
+
         //some informations
         /*
         None
@@ -59,13 +59,13 @@ public class OsTag extends PluginBase implements Listener {
 
         } else {
             papKot = true;
-            new OsTagPlaceholderAPI();
-            OsTagPlaceholderAPI.registerPlaceholders();
+
+            registerPlaceholders();
         }
 
         saveDefaultConfig();
 
-        sendOnEnableInfo("console", null);
+        sendOnEnableInfo("admin", getServer().getConsoleSender());
 
         pm.registerEvents(new InputListener(this), this);
 
@@ -81,38 +81,15 @@ public class OsTag extends PluginBase implements Listener {
         if (this.getConfig().getBoolean("ChatFormater")) {
             pm.registerEvents(new Formater(this), this);
         }
+        new OsTagMetrics();
+        OsTagMetrics.metricsStart();
 
-        metricsStart();
+
 
         long executionTime = System.currentTimeMillis() - millisActualTime;
         getLogger().info(ChatColor.replaceColorCode("&aStarted in &b" + executionTime + " &ams"));
     }
 
-    private void metricsStart(){
-        int pluginId = 16838;
-        Metrics metrics = new Metrics(this, pluginId);
-        metrics.addCustomChart(new Metrics.SimplePie("server_movement", () -> {
-            return String.valueOf(this.getConfig().getBoolean("PowerNukkiX-movement-server"));
-        }));
-        metrics.addCustomChart(new Metrics.SimplePie("nukkit_version", () -> {
-            return Server.getInstance().getNukkitVersion();
-        }));
-        metrics.addCustomChart(new Metrics.SimplePie("ostag_vs_chatformater", () -> {
-            String info = "";
-            boolean ostag = this.getConfig().getBoolean("OsTag");
-            boolean chatFormater = this.getConfig().getBoolean("ChatFormater");
-            if (ostag && chatFormater) {
-                info = "OsTag and ChatFormater";
-            }
-            if (ostag && !chatFormater) {
-                info = "OsTag";
-            }
-            if (!ostag && chatFormater) {
-                info = "ChatFormater";
-            }
-            return info;
-        }));
-    }
 
     public void sendOnEnableInfo(String s, CommandSender sender) {
 
@@ -123,27 +100,6 @@ public class OsTag extends PluginBase implements Listener {
         String apiVer = this.getServer().getApiVersion();
 
         switch (s) {
-            case "console":
-                this.getLogger().info(ChatColor.replaceColorCode("&b-------------------------------"));
-                this.getLogger().info(ChatColor.replaceColorCode("&aOsTag version:&3 " + ver));
-                this.getLogger().info(ChatColor.replaceColorCode("&aPlugin by:&6 " + aut.replace("[", "").replace("]", "")));
-                this.getLogger().info(ChatColor.replaceColorCode("&aNukkit Version:&3 " + verNuk));
-                this.getLogger().info(ChatColor.replaceColorCode("&aNukkit Api Version:&3 " + apiVer));
-                this.getLogger().info(ChatColor.replaceColorCode("&aServer Version:&3 " + servVer));
-                this.getLogger().info(ChatColor.replaceColorCode(" "));
-                this.getLogger().info(ChatColor.replaceColorCode("&1Modules"));
-                this.getLogger().info(ChatColor.replaceColorCode("&aFormater&3: " + OtherUtils.getFormaterStatus()));
-                this.getLogger().info(ChatColor.replaceColorCode("&aOsTag&3: " + OtherUtils.getOsTagStatus()));
-                this.getLogger().info(ChatColor.replaceColorCode(" "));
-                this.getLogger().info(ChatColor.replaceColorCode("&1Plugins&3"));
-                this.getLogger().info(ChatColor.replaceColorCode("&aDeathSkulls&3: " + OtherUtils.getDeathSkullsStatus()));
-                this.getLogger().info(ChatColor.replaceColorCode("&aLuckPerms&3: " + OtherUtils.getLuckPermStatus()));
-                this.getLogger().info(ChatColor.replaceColorCode("&aKotlinLib & PlaceholderAPI&3: " + OtherUtils.getKotOrPapiStatus()));
-
-
-                this.getLogger().info(ChatColor.replaceColorCode(" "));
-                this.getLogger().info(ChatColor.replaceColorCode("&b-------------------------------"));
-                break;
             case "admin":
                 sender.sendMessage(ChatColor.replaceColorCode("&b-------------------------------"));
                 sender.sendMessage(ChatColor.replaceColorCode("&aOsTag version:&3 " + ver));
@@ -160,7 +116,6 @@ public class OsTag extends PluginBase implements Listener {
                 sender.sendMessage(ChatColor.replaceColorCode("&aDeathSkulls&3: " + OtherUtils.getDeathSkullsStatus()));
                 sender.sendMessage(ChatColor.replaceColorCode("&aLuckPerms&3: " + OtherUtils.getLuckPermStatus()));
                 sender.sendMessage(ChatColor.replaceColorCode("&aKotlinLib & PlaceholderAPI&3: " + OtherUtils.getKotOrPapiStatus()));
-
 
                 sender.sendMessage(ChatColor.replaceColorCode(" "));
                 sender.sendMessage(ChatColor.replaceColorCode("&b-------------------------------"));
@@ -180,5 +135,49 @@ public class OsTag extends PluginBase implements Listener {
         }
     }
 
+    public void registerPlaceholders() {
+        PlaceholderAPI api = PlaceholderAPI.getInstance();
+        String prefix = "ostag_";
+        api.builder(prefix +"cps", Integer.class)
+                .visitorLoader(entry -> {
+                    return InputListener.getCPS(entry.getPlayer());
+                })
+                .build();
 
+        api.builder(prefix +"test", String.class)
+                .visitorLoader(entry -> {
+                    return "test placeholder";
+                })
+                .build();
+        api.builder(prefix +"device", String.class)
+                .visitorLoader(entry -> {
+                    return PlayerInfoUtil.getDevice(entry.getPlayer());
+                })
+                .build();
+        api.builder(prefix +"controler", String.class)
+                .visitorLoader(entry -> {
+                    return PlayerInfoUtil.getControler(entry.getPlayer());
+                })
+                .build();
+        api.builder(prefix +"skull", String.class)
+                .visitorLoader(entry -> {
+                    return PlayerInfoUtil.getSkulll(entry.getPlayer());
+                })
+                .build();
+        api.builder(prefix +"prefix", String.class)
+                .visitorLoader(entry -> {
+                    return PlayerInfoUtil.getLuckPermPrefix(entry.getPlayer());
+                })
+                .build();
+        api.builder(prefix +"suffix", String.class)
+                .visitorLoader(entry -> {
+                    return PlayerInfoUtil.getLuckPermSufix(entry.getPlayer());
+                })
+                .build();
+        api.builder(prefix +"version", String.class)
+                .visitorLoader(entry -> {
+                    return entry.getPlayer().getLoginChainData().getGameVersion();
+                })
+                .build();
+    }
 }

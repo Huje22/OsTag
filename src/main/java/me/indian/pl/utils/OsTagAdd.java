@@ -24,12 +24,12 @@ public class OsTagAdd {
 
         Config conf = plugin.getConfig();
 
-        if(plugin.papKot){
+        if (plugin.papKot) {
             PlaceholderAPI api = PlaceholderAPI.getInstance();
             subTag = api.translateString(ChatColor.replaceColorCode(conf.getString("subtag")), p);
-            nick = api.translateString(ChatColor.replaceColorCode(conf.getString("nick")),p);
+            nick = api.translateString(ChatColor.replaceColorCode(conf.getString("nick")), p);
         }
-
+        if (conf.getBoolean("ScoreTagOnly") == false) {
         p.setNameTag(nick
                 .replace("<name>", p.getDisplayName())
                 .replace("<suffix>", getLuckPermSufix(p))
@@ -38,24 +38,27 @@ public class OsTagAdd {
                 .replace("<deathskull>", getSkulll(p))
                 .replace("<xp>", getXp(p))
                 .replace("<unique-description>", getPlayerUnique(p))
-                + "\n" + subTag
-                .replace("<device>", getDevice(p))
-                .replace("<deathskull>", getSkulll(p))
-                .replace("§7", "§7")
-                .replace("<controler>", getControler(p))
-                .replace("<health>", p.getHealth() + "")
-                .replace("<max_health>", p.getMaxHealth() + "")
-                .replace("<model>", p.getLoginChainData().getDeviceModel() + "")
-                .replace("<version>", p.getLoginChainData().getGameVersion())
-                .replace("<xuid>", getXuid(p))
-                .replace("<language>", p.getLoginChainData().getLanguageCode())
-                .replace("<ping>", getPing(p))
-                .replace("<suffix>", getLuckPermSufix(p))
-                .replace("<preffix>", getLuckPermPrefix(p))
-                .replace("<xp>", getXp(p))
-                .replace("<cps>", String.valueOf(InputListener.getCPS(p)))
-                .replace("<gamemode>", getGameMode(p))
-                .replace("<unique-description>", getPlayerUnique(p))
+                .replace("\n", " this action not allowed here ")
+
+        );
+    }
+        p.setScoreTag(subTag
+                        .replace("<device>", getDevice(p))
+                        .replace("<deathskull>", getSkulll(p))
+                        .replace("<controler>", getControler(p))
+                        .replace("<health>", p.getHealth() + "")
+                        .replace("<max_health>", p.getMaxHealth() + "")
+                        .replace("<model>", p.getLoginChainData().getDeviceModel() + "")
+                        .replace("<version>", p.getLoginChainData().getGameVersion())
+                        .replace("<xuid>", getXuid(p))
+                        .replace("<language>", p.getLoginChainData().getLanguageCode())
+                        .replace("<ping>", getPing(p))
+                        .replace("<suffix>", getLuckPermSufix(p))
+                        .replace("<preffix>", getLuckPermPrefix(p))
+                        .replace("<xp>", getXp(p))
+                        .replace("<cps>", String.valueOf(InputListener.getCPS(p)))
+                        .replace("<gamemode>", getGameMode(p))
+                        .replace("<unique-description>", getPlayerUnique(p))
         );
     }
 
@@ -63,83 +66,26 @@ public class OsTagAdd {
 
         Config conf = plugin.getConfig();
 
-        if(plugin.papKot){
+        if (plugin.papKot) {
             PlaceholderAPI api = PlaceholderAPI.getInstance();
             aSubTag = api.translateString(ChatColor.replaceColorCode(conf.getString("a-subtag")), p);
-            aNick = api.translateString(ChatColor.replaceColorCode(conf.getString("a-nick")),p);
+            aNick = api.translateString(ChatColor.replaceColorCode(conf.getString("a-nick")), p);
         }
-
-        p.setNameTag(aNick
-                .replace("<suffix>", getLuckPermSufix(p))
-                .replace("<prefix>", getLuckPermPrefix(p))
-                .replace("<name>", p.getDisplayName())
-                .replace("<groupDisName>", getGroupDisName(p))
-                .replace("<deathskull>", getSkulll(p))
-                .replace("<xp>", getXp(p))
-                .replace("<unique-description>", getPlayerUnique(p))
-                + "\n" + aSubTag
-                .replace("<deathskull>", getSkulll(p))
-                .replace("<device>", getDevice(p))
-                .replace("§7", "§7")
-                .replace("<controler>", getControler(p))
-                .replace("<health>", p.getHealth() + "")
-                .replace("<max_health>", p.getMaxHealth() + "")
-                .replace("<model>", p.getLoginChainData().getDeviceModel() + "")
-                .replace("<version>", p.getLoginChainData().getGameVersion())
-                .replace("<xuid>", getXuid(p))
-                .replace("<language>", p.getLoginChainData().getLanguageCode())
-                .replace("<ping>", getPing(p))
-                .replace("<suffix>", getLuckPermSufix(p))
-                .replace("<preffix>", getLuckPermPrefix(p))
-                .replace("<xp>", getXp(p))
-                .replace("<cps>", String.valueOf(InputListener.getCPS(p)))
-                .replace("<gamemode>", getGameMode(p))
-                .replace("<unique-description>", getPlayerUnique(p))
-        );
-    }
-
-    public static void scoreTagNormal(Player p) {
-
-        Config conf = plugin.getConfig();
-
-        if(plugin.papKot){
-            PlaceholderAPI api = PlaceholderAPI.getInstance();
-            subTag = api.translateString(ChatColor.replaceColorCode(conf.getString("subtag")), p);
+        if (conf.getBoolean("ScoreTagOnly") == false) {
+            p.setNameTag(aNick
+                    .replace("<suffix>", getLuckPermSufix(p))
+                    .replace("<prefix>", getLuckPermPrefix(p))
+                    .replace("<name>", p.getDisplayName())
+                    .replace("<groupDisName>", getGroupDisName(p))
+                    .replace("<deathskull>", getSkulll(p))
+                    .replace("<xp>", getXp(p))
+                    .replace("<unique-description>", getPlayerUnique(p))
+                    .replace("\n", " this action not allowed here ")
+            );
         }
-
-        p.setScoreTag(subTag
-                .replace("<device>", getDevice(p))
-                .replace("<deathskull>", getSkulll(p))
-                .replace("§7", "§7")
-                .replace("<controler>", getControler(p))
-                .replace("<health>", p.getHealth() + "")
-                .replace("<max_health>", p.getMaxHealth() + "")
-                .replace("<model>", p.getLoginChainData().getDeviceModel() + "")
-                .replace("<version>", p.getLoginChainData().getGameVersion())
-                .replace("<xuid>", getXuid(p))
-                .replace("<language>", p.getLoginChainData().getLanguageCode())
-                .replace("<ping>", getPing(p))
-                .replace("<suffix>", getLuckPermSufix(p))
-                .replace("<preffix>", getLuckPermPrefix(p))
-                .replace("<xp>", getXp(p))
-                .replace("<cps>", String.valueOf(InputListener.getCPS(p)))
-                .replace("<gamemode>", getGameMode(p))
-                .replace("<unique-description>", getPlayerUnique(p))
-        );
-    }
-
-    public static void scoreTagAdvancd(Player p) {
-
-        Config conf = plugin.getConfig();
-        if(plugin.papKot){
-            PlaceholderAPI api = PlaceholderAPI.getInstance();
-            aSubTag = api.translateString(ChatColor.replaceColorCode(conf.getString("a-subtag")), p);
-        }
-
         p.setScoreTag(aSubTag
                 .replace("<deathskull>", getSkulll(p))
                 .replace("<device>", getDevice(p))
-                .replace("§7", "§7")
                 .replace("<controler>", getControler(p))
                 .replace("<health>", p.getHealth() + "")
                 .replace("<max_health>", p.getMaxHealth() + "")
@@ -156,4 +102,5 @@ public class OsTagAdd {
                 .replace("<unique-description>", getPlayerUnique(p))
         );
     }
+
 }

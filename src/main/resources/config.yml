@@ -16,17 +16,17 @@
 # <xp> - player xp lvl [OsTag \ ChatFormater] //name//
 # <gamemode> - player gamemode [OsTag]
 # <msg> - player message [ChatFormater]
-# <suffix> - player group sufix (Luck Perms Required) [OsTag \ ChatFormater] \\name\\
-# <prefix> - player group prefix (Luck Perms Required) [OsTag \ ChatFormater] \\name\\
+# <suffix> / %ostag_suffix% - player group sufix (Luck Perms Required) [OsTag \ ChatFormater] \\name\\
+# <prefix> / %ostag_prefix% - player group prefix (Luck Perms Required) [OsTag \ ChatFormater] \\name\\
 # <groupDisName> - player group dispalya mame (Luck Perms Required) [OsTag \ ChatFormater] \\name only\\
 # <model> - device model [OsTag \ ChatFormater]
-# <device> - player device [OsTag \ ChatFormater]
-# <controler> - Player controls [OsTag ]
-# <version> - Minecraft version [OsTag \ ChatFormater]
+# <device> / %ostag_device% - player device [OsTag \ ChatFormater]
+# <controler> / %ostag_controler%  - Player controls [OsTag ]
+# <version> / %ostag_version% - Minecraft version [OsTag \ ChatFormater]
 # <xuid> - get player xuid (DON'T WORKING WHEN PLAYER DONT XBOX ACCOUNT) [OsTag]
 # <language> - player Language [OsTag \ ChatFormater]
-# <cps> - left click per second counter [OsTag]
-# <deathskull> - player skull info (DeathSkull plugin required) [OsTag \ ChatFormater] \\name\\
+# <cps> / %ostag_cps% - left click per second counter [OsTag]
+# <deathskull> / %ostag_skull% - player skull info (DeathSkull plugin required) [OsTag \ ChatFormater] \\name\\
 # <unique-description> - player unique description from config [OsTag \ ChatFormater] \\name\\
 #if in the description of the placeholders any one contains \\name\\ it means that it can be used in the player's name in ostag
 # for better work dont use \ , only use \n
@@ -67,7 +67,7 @@ subtag: "%factions_faction% <device> | <controler> \n&eDevice Model: &r<model>\n
 #
 #Advanced Player
 a-nick: "%factions_faction% <unique-description><xp> <groupDisName> <name> <suffix> "
-a-subtag: "%factions_faction% <device> | <controler>\n&eCps: &r<cps>  &ePing: <ping>\n<health>/<max_health>&c❤\n&eXp: <xp>\n<deathskull>"
+a-subtag: "%factions_faction% <device> | <controler>\n&eCps: &r<cps>  &ePing: <ping>\n<health>/<max_health>&c❤\n&eXp: <xp>\n&eGame Version: &r<version>"
 advanced-players:
   - "JndjanBartonka"
   - "TheTwuj"
@@ -84,18 +84,18 @@ message-format: "%factions_faction% <unique-description><dimension> &r<xp>&r <de
 #
 #
 #If this option set to true everyone can use & by default instead of §
-and-for-all: true
+and-for-all: false
 #
 #
 #break between messages, why? so that the emotes you give players will be visible if they are 16x16 [exparimental]
 break-between-messages:
-  enable: true
+  enable: false
 #
 #
 #Censorship (remove all Upper words) [exparimental]
 censorship:
   word: "Bread"
-  enable: true
+  enable: false
 BlackWords:
   - "dupa"
   - "fuck"
@@ -106,7 +106,7 @@ BlackWords:
 #
 #Cooldown [exparimental]
 cooldown:
-  enable: true
+  enable: false
   delay: 10
   message: "&aYou must wait &b<left> &eSeconds&a!"
 #--------------------------
@@ -158,6 +158,7 @@ TvOs: "&f[&aTvOs&f]"
 PlayStation: "&f[&aPS&f]"
 Nintendo: "&f[&aNintendo&f]"
 Xbox: "&f[&aXbox&f]"
+WindowsPhone: "&f[&aWindowsPhone&f]"
 Unknow: "&f[&aUnknow&f]"
 #Controls
 touch: "Touch"
@@ -179,6 +180,7 @@ UnknowControler: "Unknow"
 #PlayStation: ''
 #Nintendo: ''
 #Xbox: ''
+#WindowsPhone: "&f[&aWindowsPhone&f]"
 #Unknow: '&f[&aUnknow&f]'
 #touch: Touch
 #keyboard: Keyboard

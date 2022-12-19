@@ -29,6 +29,7 @@ public class PlayerInfoUtil {
         String playstation = ChatColor.replaceColorCode(conf.getString("PlayStation"));
         String nintendo = ChatColor.replaceColorCode(conf.getString("Nintendo"));
         String xbox = ChatColor.replaceColorCode(conf.getString("Xbox"));
+        String winphone = ChatColor.replaceColorCode(conf.getString("WindowsPhone"));
         String unknow = ChatColor.replaceColorCode(conf.getString("Unknow"));
 
         switch (p.getLoginChainData().getDeviceOS()){
@@ -58,6 +59,8 @@ public class PlayerInfoUtil {
                 return nintendo;
             case 13:
                 return xbox;
+            case 14:
+                return winphone;
             default:
                 return unknow;
         }

@@ -67,5 +67,20 @@ want to use OsTag but don't want to use PlaceholderAPI? you can still use it wit
 1.5.1
 code improvments
 bug fixes (<device> placeholder)
+**Released on the day xx.12.2022**
+1.5.2
+big code improvments
+now add "Windows Phone" in <device> placeholder
+now when you move away from the player you only see the name line
+added placeholders that already existed but can now be used in other plugins using PlaceholderAPI
+%ostag_cps%
+%ostag_test%
+%ostag_device%
+%ostag_controler%
+%ostag_skull%
+%ostag_prefix%
+%ostag_suffix%
+
+
 
 
