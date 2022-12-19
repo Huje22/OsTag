@@ -16,7 +16,7 @@ __Discord__: https://discord.gg/8fk27Jc9DF </br>
 __CloudBurst page:__ https://cloudburstmc.org/resources/ostag.836/ </br>
 ## Some informations
 * If the configuration was not generated, use the plugin description
-* If you can't set something Indian will probably help you
+* If you can't set something Indian will probably help you (write in discord)
 
 ## Server using OsTag
 ![Server using ostag](https://bstats.org/signatures/bukkit/OsTagPNX-Nukkit.svg)
