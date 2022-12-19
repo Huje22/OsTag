@@ -4,7 +4,7 @@ import cn.nukkit.Player;
 import cn.nukkit.utils.Config;
 import com.creeperface.nukkit.placeholderapi.api.PlaceholderAPI;
 import me.indian.pl.OsTag;
-import me.indian.pl.listeners.InputListener;
+import me.indian.pl.listeners.CpsListener;
 
 import static me.indian.pl.utils.PlayerInfoUtil.*;
 
@@ -56,7 +56,7 @@ public class OsTagAdd {
                         .replace("<suffix>", getLuckPermSufix(p))
                         .replace("<preffix>", getLuckPermPrefix(p))
                         .replace("<xp>", getXp(p))
-                        .replace("<cps>", String.valueOf(InputListener.getCPS(p)))
+                        .replace("<cps>", String.valueOf(CpsListener.getCPS(p)))
                         .replace("<gamemode>", getGameMode(p))
                         .replace("<unique-description>", getPlayerUnique(p))
         );
@@ -97,7 +97,7 @@ public class OsTagAdd {
                 .replace("<suffix>", getLuckPermSufix(p))
                 .replace("<preffix>", getLuckPermPrefix(p))
                 .replace("<xp>", getXp(p))
-                .replace("<cps>", String.valueOf(InputListener.getCPS(p)))
+                .replace("<cps>", String.valueOf(CpsListener.getCPS(p)))
                 .replace("<gamemode>", getGameMode(p))
                 .replace("<unique-description>", getPlayerUnique(p))
         );

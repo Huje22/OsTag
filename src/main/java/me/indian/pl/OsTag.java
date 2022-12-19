@@ -8,6 +8,7 @@ import cn.nukkit.plugin.PluginManager;
 import com.creeperface.nukkit.placeholderapi.api.PlaceholderAPI;
 import me.indian.pl.commands.OsTagCommand;
 import me.indian.pl.commands.TestttCommand;
+import me.indian.pl.listeners.CpsListener;
 import me.indian.pl.listeners.Formater;
 import me.indian.pl.listeners.InputListener;
 import me.indian.pl.others.OsTagMetrics;
@@ -32,8 +33,6 @@ public class OsTag extends PluginBase implements Listener {
         long millisActualTime = System.currentTimeMillis();
         instance = this;
         //class instances that are not dependent on the user's choice
-        new OtherUtils();
-        new PlayerInfoUtil();
 
         //some informations
         /*
@@ -59,11 +58,18 @@ public class OsTag extends PluginBase implements Listener {
 
         } else {
             papKot = true;
-
             registerPlaceholders();
         }
 
         saveDefaultConfig();
+
+        new OtherUtils();
+        new PlayerInfoUtil();
+
+        //register some events
+
+        pm.registerEvents(new CpsListener(this) , this);
+
 
         sendOnEnableInfo("admin", getServer().getConsoleSender());
 
@@ -140,7 +146,7 @@ public class OsTag extends PluginBase implements Listener {
         String prefix = "ostag_";
         api.builder(prefix +"cps", Integer.class)
                 .visitorLoader(entry -> {
-                    return InputListener.getCPS(entry.getPlayer());
+                    return CpsListener.getCPS(entry.getPlayer());
                 })
                 .build();
 
