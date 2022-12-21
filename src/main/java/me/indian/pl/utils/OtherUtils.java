@@ -39,15 +39,6 @@ public class OtherUtils {
         return luck;
     }
 
-    public static String getDeathSkullsStatus() {
-        boolean ds = plugin.deathSkulls;
-        String deaths = fal;
-        if (ds) {
-            deaths = tru;
-        }
-        return deaths;
-    }
-
     public static String getKotOrPapiStatus() {
         boolean papko = plugin.papKot;
         String papkot = fal;

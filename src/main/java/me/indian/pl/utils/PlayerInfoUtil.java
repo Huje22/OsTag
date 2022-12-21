@@ -8,8 +8,6 @@ import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
 
-import static me.indian.deathskulls.listeners.PlayerDeathListener.skullPlayer;
-
 
 public class PlayerInfoUtil {
 
@@ -77,7 +75,7 @@ public class PlayerInfoUtil {
         String unknowcon = ChatColor.replaceColorCode(conf.getString("UnknowControler"));
 
         if (plugin.getConfig().getBoolean("PowerNukkiX-movement-server")) {
-            switch (InputListener.getControler(p)){
+            switch (InputListener.getControler(p)) {
                 case "MOUSE":
                     return klawa;
                 case "TOUCH":
@@ -90,7 +88,7 @@ public class PlayerInfoUtil {
                     return unknowcon;
             }
         } else {
-            switch (p.getLoginChainData().getCurrentInputMode()){
+            switch (p.getLoginChainData().getCurrentInputMode()) {
                 case 1:
                     return klawa;
                 case 2:
@@ -209,16 +207,6 @@ public class PlayerInfoUtil {
             xuid = p.getLoginChainData().getXUID();
         }
         return xuid;
-    }
-
-    public static String getSkulll(Player p) {
-        String skull = "";
-        if (plugin.getServer().getPluginManager().getPlugin("DeathSkulls") != null) {
-            if (skullPlayer.contains(p.getUniqueId())) {
-                skull = ChatColor.replaceColorCode(plugin.getConfig().getString("Skull-icon"));
-            }
-        }
-        return ChatColor.replaceColorCode(skull);
     }
 
     public static String getDimension(Player p) {

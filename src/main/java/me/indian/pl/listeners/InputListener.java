@@ -3,6 +3,7 @@ package me.indian.pl.listeners;
 import cn.nukkit.Player;
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;
+import cn.nukkit.event.player.PlayerJoinEvent;
 import cn.nukkit.event.player.PlayerQuitEvent;
 import cn.nukkit.event.server.DataPacketReceiveEvent;
 import cn.nukkit.network.protocol.PlayerAuthInputPacket;
@@ -42,6 +43,8 @@ public class InputListener implements Listener {
         String control = controler.get(p) + "";
         return control;
     }
+
+
 
 }
 

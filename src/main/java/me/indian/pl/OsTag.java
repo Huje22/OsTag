@@ -16,11 +16,9 @@ import me.indian.pl.utils.*;
 
 public class OsTag extends PluginBase implements Listener {
 
-    public static boolean luckPerm;
+    public static boolean luckPerm = false;
 
-    public static boolean deathSkulls;
-
-    public static boolean papKot;
+    public static boolean papKot = false;
 
     private static OsTag instance;
 
@@ -41,21 +39,12 @@ public class OsTag extends PluginBase implements Listener {
         PluginManager pm = getServer().getPluginManager();
         //plugins info
         if (pm.getPlugin("LuckPerms") == null) {
-            getLogger().warning(ChatColor.replaceColorCode("&4You don't have lucky perms , ChatFormating don't corectly work"));
-            luckPerm = false;
+            getLogger().warning(ChatColor.replaceColorCode("&cYou don't have lucky perms , ChatFormating don't corectly work"));
         } else {
             luckPerm = true;
         }
-        if (pm.getPlugin("DeathSkulls") == null) {
-            getLogger().info(ChatColor.replaceColorCode("&cYou don't have DeathSkulls plugin, <deathskull> placeholder will not working"));
-            deathSkulls = false;
-        } else {
-            deathSkulls = true;
-        }
         if (pm.getPlugin("PlaceholderAPI") == null && pm.getPlugin("KotlinLib") == null) {
-            getLogger().info(ChatColor.replaceColorCode("&cYou don't have PlaceholderAPI or kotlin lib,placeholders with \"PlaceholderAPI\" will not work"));
-            papKot = false;
-
+            getLogger().info(ChatColor.replaceColorCode("&cYou don't have PlaceholderAPI or kotlin lib,placeholders from \"PlaceholderAPI\" will not work"));
         } else {
             papKot = true;
             registerPlaceholders();
@@ -70,9 +59,6 @@ public class OsTag extends PluginBase implements Listener {
 
         pm.registerEvents(new CpsListener(this) , this);
 
-
-        sendOnEnableInfo("admin", getServer().getConsoleSender());
-
         pm.registerEvents(new InputListener(this), this);
 
         ((PluginCommand<?>) this.getCommand("ostag")).setExecutor(new OsTagCommand(this));
@@ -82,22 +68,33 @@ public class OsTag extends PluginBase implements Listener {
             new OsTagAdd();
             new OsTimer();
             pm.registerEvents(new OsTimer(), this);
-            this.getServer().getScheduler().scheduleRepeatingTask(new OsTimer(), 20 * this.getConfig().getInt("refresh-time"));
+
+            int refreshTime =  getConfig().getInt("refresh-time");
+
+            if(refreshTime <= 0){
+                refreshTime = 1;
+                getConfig().set("refresh-time", 1);
+                this.getConfig().save();
+                getLogger().warning(ChatColor.replaceColorCode("&cRefresh time must be higer than &b0 &c,we will set it up for you!"));
+            }
+
+            this.getServer().getScheduler().scheduleRepeatingTask(new OsTimer(), 20 * refreshTime);
         }
         if (this.getConfig().getBoolean("ChatFormater")) {
             pm.registerEvents(new Formater(this), this);
         }
+
         new OsTagMetrics();
         OsTagMetrics.metricsStart();
 
-
+        sendOnEnableInfo("admin", getServer().getConsoleSender());
 
         long executionTime = System.currentTimeMillis() - millisActualTime;
         getLogger().info(ChatColor.replaceColorCode("&aStarted in &b" + executionTime + " &ams"));
     }
 
 
-    public void sendOnEnableInfo(String s, CommandSender sender) {
+    public void sendOnEnableInfo(String type, CommandSender sender) {
 
         String ver = this.getDescription().getVersion();
         String aut = String.valueOf(this.getDescription().getAuthors());
@@ -105,7 +102,7 @@ public class OsTag extends PluginBase implements Listener {
         String servVer = this.getServer().getVersion();
         String apiVer = this.getServer().getApiVersion();
 
-        switch (s) {
+        switch (type) {
             case "admin":
                 sender.sendMessage(ChatColor.replaceColorCode("&b-------------------------------"));
                 sender.sendMessage(ChatColor.replaceColorCode("&aOsTag version:&3 " + ver));
@@ -119,7 +116,6 @@ public class OsTag extends PluginBase implements Listener {
                 sender.sendMessage(ChatColor.replaceColorCode("&aOsTag&3: " + OtherUtils.getOsTagStatus()));
                 sender.sendMessage(ChatColor.replaceColorCode(" "));
                 sender.sendMessage(ChatColor.replaceColorCode("&1Plugins"));
-                sender.sendMessage(ChatColor.replaceColorCode("&aDeathSkulls&3: " + OtherUtils.getDeathSkullsStatus()));
                 sender.sendMessage(ChatColor.replaceColorCode("&aLuckPerms&3: " + OtherUtils.getLuckPermStatus()));
                 sender.sendMessage(ChatColor.replaceColorCode("&aKotlinLib & PlaceholderAPI&3: " + OtherUtils.getKotOrPapiStatus()));
 
@@ -163,11 +159,6 @@ public class OsTag extends PluginBase implements Listener {
         api.builder(prefix +"controler", String.class)
                 .visitorLoader(entry -> {
                     return PlayerInfoUtil.getControler(entry.getPlayer());
-                })
-                .build();
-        api.builder(prefix +"skull", String.class)
-                .visitorLoader(entry -> {
-                    return PlayerInfoUtil.getSkulll(entry.getPlayer());
                 })
                 .build();
         api.builder(prefix +"prefix", String.class)

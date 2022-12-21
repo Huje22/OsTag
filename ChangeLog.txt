@@ -77,9 +77,9 @@ added placeholders that already existed but can now be used in other plugins usi
 %ostag_test%
 %ostag_device%
 %ostag_controler%
-%ostag_skull%
 %ostag_prefix%
 %ostag_suffix%
+Delated <deathskull> placeholder , now this placeholder is in DeathSkull plugin
 
 
 

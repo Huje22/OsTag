@@ -77,7 +77,6 @@ public class Formater implements Listener {
                             .replace("<version>", p.getLoginChainData().getGameVersion())
                             .replace("<language>", p.getLoginChainData().getLanguageCode())
                             .replace("<ping>", getPing(p))
-                            .replace("<deathskull>", getSkulll(p))
                             .replace("<xp>", getXp(p))
                             .replace("<dimension>", getDimension(p))
                             .replace("<unique-description>", getPlayerUnique(p))

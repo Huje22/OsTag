@@ -35,16 +35,13 @@ public class OsTagAdd {
                 .replace("<suffix>", getLuckPermSufix(p))
                 .replace("<prefix>", getLuckPermPrefix(p))
                 .replace("<groupDisName>", getGroupDisName(p))
-                .replace("<deathskull>", getSkulll(p))
                 .replace("<xp>", getXp(p))
                 .replace("<unique-description>", getPlayerUnique(p))
-                .replace("\n", " this action not allowed here ")
-
         );
     }
         p.setScoreTag(subTag
                         .replace("<device>", getDevice(p))
-                        .replace("<deathskull>", getSkulll(p))
+
                         .replace("<controler>", getControler(p))
                         .replace("<health>", p.getHealth() + "")
                         .replace("<max_health>", p.getMaxHealth() + "")
@@ -64,6 +61,7 @@ public class OsTagAdd {
 
     public static void addDevAdvanced(Player p) {
 
+
         Config conf = plugin.getConfig();
 
         if (plugin.papKot) {
@@ -77,14 +75,11 @@ public class OsTagAdd {
                     .replace("<prefix>", getLuckPermPrefix(p))
                     .replace("<name>", p.getDisplayName())
                     .replace("<groupDisName>", getGroupDisName(p))
-                    .replace("<deathskull>", getSkulll(p))
                     .replace("<xp>", getXp(p))
                     .replace("<unique-description>", getPlayerUnique(p))
-                    .replace("\n", " this action not allowed here ")
             );
         }
         p.setScoreTag(aSubTag
-                .replace("<deathskull>", getSkulll(p))
                 .replace("<device>", getDevice(p))
                 .replace("<controler>", getControler(p))
                 .replace("<health>", p.getHealth() + "")

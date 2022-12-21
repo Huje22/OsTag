@@ -38,6 +38,7 @@ public class OsTagMetrics {
         Code from https://github.com/CloudburstMC/Nukkit/blob/master/src/main/java/cn/nukkit/metrics/NukkitMetrics.java#L47
          */
 
+        metrics.addCustomChart(new Metrics.SimplePie("xbox_auth", () -> plugin.getServer().getPropertyBoolean("xbox-auth") ? "Required" : "Not required"));
 
         metrics.addCustomChart(new Metrics.AdvancedPie("player_platform", () -> {
             Map<String, Integer> valueMap = new HashMap<>();

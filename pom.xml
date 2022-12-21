@@ -43,36 +43,27 @@
         <scope>provided</scope>
     </dependency>
 
-        <dependency>
-            <groupId>me.indian.pl</groupId>
-            <artifactId>DeathSkulls</artifactId>
-            <version>1.1</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/libs/DeathSkulls.jar</systemPath>
-        </dependency>
     <dependency>
         <groupId>com.creeperface.nukkit.placeholderapi</groupId>
         <artifactId>PlaceholderAPI</artifactId>
         <version>1.4-SNAPSHOT</version>
         <scope>provided</scope>
     </dependency>
+
     </dependencies>
+
 
 
     <build>
         <defaultGoal>clean package</defaultGoal>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.10.0</version>
-                <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
-                    <encoding>${maven.compiler.encoding}</encoding>
-                </configuration>
-            </plugin>
-        </plugins>
+        <finalName>${project.name}-${project.version}</finalName>
+        <sourceDirectory>src/main/java</sourceDirectory>
+        <resources>
+            <resource>
+                <filtering>true</filtering>
+                <directory>src/main/resources/</directory>
+            </resource>
+        </resources>
     </build>
 
 </project>

@@ -26,7 +26,6 @@
 # <xuid> - get player xuid (DON'T WORKING WHEN PLAYER DONT XBOX ACCOUNT) [OsTag]
 # <language> - player Language [OsTag \ ChatFormater]
 # <cps> / %ostag_cps% - left click per second counter [OsTag]
-# <deathskull> / %ostag_skull% - player skull info (DeathSkull plugin required) [OsTag \ ChatFormater] \\name\\
 # <unique-description> - player unique description from config [OsTag \ ChatFormater] \\name\\
 #if in the description of the placeholders any one contains \\name\\ it means that it can be used in the player's name in ostag
 # for better work dont use \ , only use \n
@@ -114,8 +113,6 @@ cooldown:
 #
 #When player don't have xbox live account loged show this information in <xuid> placeholder
 guest: "&lGuest"
-#Skull icon for DeathSkulls
-Skull-icon: "&lSkull&r "
 #Gamemodes
 survival: "survival"
 creative: "creative"
