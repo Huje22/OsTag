@@ -37,6 +37,7 @@ public class OsTimer extends Task implements Runnable, Listener {
 
         for (String dis : disabledWorld) {
             if (p.getLevel().getName().equalsIgnoreCase(dis)) {
+                //disabled worlds is a experimental option, maybe not good working
                 return;
             }
         }

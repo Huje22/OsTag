@@ -39,12 +39,12 @@ public class OsTag extends PluginBase implements Listener {
         PluginManager pm = getServer().getPluginManager();
         //plugins info
         if (pm.getPlugin("LuckPerms") == null) {
-            getLogger().warning(ChatColor.replaceColorCode("&cYou don't have lucky perms , ChatFormating don't corectly work"));
+            getLogger().warning(ColorUtil.replaceColorCode("&cYou don't have lucky perms , ChatFormating don't corectly work"));
         } else {
             luckPerm = true;
         }
         if (pm.getPlugin("PlaceholderAPI") == null && pm.getPlugin("KotlinLib") == null) {
-            getLogger().info(ChatColor.replaceColorCode("&cYou don't have PlaceholderAPI or kotlin lib,placeholders from \"PlaceholderAPI\" will not work"));
+            getLogger().info(ColorUtil.replaceColorCode("&cYou don't have PlaceholderAPI or kotlin lib,placeholders from \"PlaceholderAPI\" will not work"));
         } else {
             papKot = true;
             registerPlaceholders();
@@ -75,7 +75,7 @@ public class OsTag extends PluginBase implements Listener {
                 refreshTime = 1;
                 getConfig().set("refresh-time", 1);
                 this.getConfig().save();
-                getLogger().warning(ChatColor.replaceColorCode("&cRefresh time must be higer than &b0 &c,we will set it up for you!"));
+                getLogger().warning(ColorUtil.replaceColorCode("&cRefresh time must be higer than &b0 &c,we will set it up for you!"));
             }
 
             this.getServer().getScheduler().scheduleRepeatingTask(new OsTimer(), 20 * refreshTime);
@@ -90,7 +90,7 @@ public class OsTag extends PluginBase implements Listener {
         sendOnEnableInfo("admin", getServer().getConsoleSender());
 
         long executionTime = System.currentTimeMillis() - millisActualTime;
-        getLogger().info(ChatColor.replaceColorCode("&aStarted in &b" + executionTime + " &ams"));
+        getLogger().info(ColorUtil.replaceColorCode("&aStarted in &b" + executionTime + " &ams"));
     }
 
 
@@ -104,35 +104,35 @@ public class OsTag extends PluginBase implements Listener {
 
         switch (type) {
             case "admin":
-                sender.sendMessage(ChatColor.replaceColorCode("&b-------------------------------"));
-                sender.sendMessage(ChatColor.replaceColorCode("&aOsTag version:&3 " + ver));
-                sender.sendMessage(ChatColor.replaceColorCode("&aPlugin by:&6 " + aut.replace("[", "").replace("]", "")));
-                sender.sendMessage(ChatColor.replaceColorCode("&aNukkit Version:&3 " + verNuk));
-                sender.sendMessage(ChatColor.replaceColorCode("&aNukkit Api Version:&3 " + apiVer));
-                sender.sendMessage(ChatColor.replaceColorCode("&aServer Version:&3 " + servVer));
-                sender.sendMessage(ChatColor.replaceColorCode(" "));
-                sender.sendMessage(ChatColor.replaceColorCode("&1Modules"));
-                sender.sendMessage(ChatColor.replaceColorCode("&aFormater&3: " + OtherUtils.getFormaterStatus()));
-                sender.sendMessage(ChatColor.replaceColorCode("&aOsTag&3: " + OtherUtils.getOsTagStatus()));
-                sender.sendMessage(ChatColor.replaceColorCode(" "));
-                sender.sendMessage(ChatColor.replaceColorCode("&1Plugins"));
-                sender.sendMessage(ChatColor.replaceColorCode("&aLuckPerms&3: " + OtherUtils.getLuckPermStatus()));
-                sender.sendMessage(ChatColor.replaceColorCode("&aKotlinLib & PlaceholderAPI&3: " + OtherUtils.getKotOrPapiStatus()));
+                sender.sendMessage(ColorUtil.replaceColorCode("&b-------------------------------"));
+                sender.sendMessage(ColorUtil.replaceColorCode("&aOsTag version:&3 " + ver));
+                sender.sendMessage(ColorUtil.replaceColorCode("&aPlugin by:&6 " + aut.replace("[", "").replace("]", "")));
+                sender.sendMessage(ColorUtil.replaceColorCode("&aNukkit Version:&3 " + verNuk));
+                sender.sendMessage(ColorUtil.replaceColorCode("&aNukkit Api Version:&3 " + apiVer));
+                sender.sendMessage(ColorUtil.replaceColorCode("&aServer Version:&3 " + servVer));
+                sender.sendMessage(ColorUtil.replaceColorCode(" "));
+                sender.sendMessage(ColorUtil.replaceColorCode("&1Modules"));
+                sender.sendMessage(ColorUtil.replaceColorCode("&aFormater&3: " + OtherUtils.getFormaterStatus()));
+                sender.sendMessage(ColorUtil.replaceColorCode("&aOsTag&3: " + OtherUtils.getOsTagStatus()));
+                sender.sendMessage(ColorUtil.replaceColorCode(" "));
+                sender.sendMessage(ColorUtil.replaceColorCode("&1Plugins"));
+                sender.sendMessage(ColorUtil.replaceColorCode("&aLuckPerms&3: " + OtherUtils.getLuckPermStatus()));
+                sender.sendMessage(ColorUtil.replaceColorCode("&aKotlinLib & PlaceholderAPI&3: " + OtherUtils.getKotOrPapiStatus()));
 
-                sender.sendMessage(ChatColor.replaceColorCode(" "));
-                sender.sendMessage(ChatColor.replaceColorCode("&b-------------------------------"));
+                sender.sendMessage(ColorUtil.replaceColorCode(" "));
+                sender.sendMessage(ColorUtil.replaceColorCode("&b-------------------------------"));
                 break;
             case "normal":
-                sender.sendMessage(ChatColor.replaceColorCode("&b-------------------------------"));
-                sender.sendMessage(ChatColor.replaceColorCode("&aOsTag version:&3 " + ver));
-                sender.sendMessage(ChatColor.replaceColorCode("&aPlugin by:&6 " + aut.replace("[", "").replace("]", "")));
-                sender.sendMessage(ChatColor.replaceColorCode("&aServer Version:&3 " + servVer));
-                sender.sendMessage(ChatColor.replaceColorCode(" "));
-                sender.sendMessage(ChatColor.replaceColorCode("&1Modules"));
-                sender.sendMessage(ChatColor.replaceColorCode("&aFormater&3: " + OtherUtils.getFormaterStatus()));
-                sender.sendMessage(ChatColor.replaceColorCode("&aOsTag&3: " + OtherUtils.getOsTagStatus()));
-                sender.sendMessage(ChatColor.replaceColorCode(" "));
-                sender.sendMessage(ChatColor.replaceColorCode("&b-------------------------------"));
+                sender.sendMessage(ColorUtil.replaceColorCode("&b-------------------------------"));
+                sender.sendMessage(ColorUtil.replaceColorCode("&aOsTag version:&3 " + ver));
+                sender.sendMessage(ColorUtil.replaceColorCode("&aPlugin by:&6 " + aut.replace("[", "").replace("]", "")));
+                sender.sendMessage(ColorUtil.replaceColorCode("&aServer Version:&3 " + servVer));
+                sender.sendMessage(ColorUtil.replaceColorCode(" "));
+                sender.sendMessage(ColorUtil.replaceColorCode("&1Modules"));
+                sender.sendMessage(ColorUtil.replaceColorCode("&aFormater&3: " + OtherUtils.getFormaterStatus()));
+                sender.sendMessage(ColorUtil.replaceColorCode("&aOsTag&3: " + OtherUtils.getOsTagStatus()));
+                sender.sendMessage(ColorUtil.replaceColorCode(" "));
+                sender.sendMessage(ColorUtil.replaceColorCode("&b-------------------------------"));
                 break;
         }
     }

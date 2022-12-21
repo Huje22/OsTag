@@ -12,13 +12,13 @@ public class OsTagAdd {
 
     private static OsTag plugin = OsTag.getInstance();
 
-    private static String subTag = ChatColor.replaceColorCode(plugin.getConfig().getString("subtag"));
+    private static String subTag = ColorUtil.replaceColorCode(plugin.getConfig().getString("subtag"));
 
-    private static String nick = ChatColor.replaceColorCode(plugin.getConfig().getString("nick"));
+    private static String nick = ColorUtil.replaceColorCode(plugin.getConfig().getString("nick"));
 
-    private static String aSubTag = ChatColor.replaceColorCode(plugin.getConfig().getString("a-subtag"));
+    private static String aSubTag = ColorUtil.replaceColorCode(plugin.getConfig().getString("a-subtag"));
 
-    private static String aNick = ChatColor.replaceColorCode(plugin.getConfig().getString("a-nick"));
+    private static String aNick = ColorUtil.replaceColorCode(plugin.getConfig().getString("a-nick"));
 
     public static void addDevNormal(Player p) {
 
@@ -26,8 +26,8 @@ public class OsTagAdd {
 
         if (plugin.papKot) {
             PlaceholderAPI api = PlaceholderAPI.getInstance();
-            subTag = api.translateString(ChatColor.replaceColorCode(conf.getString("subtag")), p);
-            nick = api.translateString(ChatColor.replaceColorCode(conf.getString("nick")), p);
+            subTag = api.translateString(ColorUtil.replaceColorCode(conf.getString("subtag")), p);
+            nick = api.translateString(ColorUtil.replaceColorCode(conf.getString("nick")), p);
         }
         if (conf.getBoolean("ScoreTagOnly") == false) {
         p.setNameTag(nick
@@ -66,8 +66,8 @@ public class OsTagAdd {
 
         if (plugin.papKot) {
             PlaceholderAPI api = PlaceholderAPI.getInstance();
-            aSubTag = api.translateString(ChatColor.replaceColorCode(conf.getString("a-subtag")), p);
-            aNick = api.translateString(ChatColor.replaceColorCode(conf.getString("a-nick")), p);
+            aSubTag = api.translateString(ColorUtil.replaceColorCode(conf.getString("a-subtag")), p);
+            aNick = api.translateString(ColorUtil.replaceColorCode(conf.getString("a-nick")), p);
         }
         if (conf.getBoolean("ScoreTagOnly") == false) {
             p.setNameTag(aNick

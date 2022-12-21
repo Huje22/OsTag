@@ -9,7 +9,7 @@ import cn.nukkit.utils.Config;
 import cn.nukkit.utils.TextFormat;
 import com.creeperface.nukkit.placeholderapi.api.PlaceholderAPI;
 import me.indian.pl.OsTag;
-import me.indian.pl.utils.ChatColor;
+import me.indian.pl.utils.ColorUtil;
 import me.indian.pl.utils.OtherUtils;
 
 import java.util.HashMap;
@@ -18,6 +18,7 @@ import java.util.UUID;
 import static me.indian.pl.utils.PlayerInfoUtil.*;
 
 public class Formater implements Listener {
+
     private HashMap<UUID, Long> cooldown = new HashMap<>();
     private final OsTag plugin;
 
@@ -37,8 +38,9 @@ public class Formater implements Listener {
         Config conf = plugin.getConfig();
         String wiad = e.getMessage();
 
-        String cenzura = plugin.getConfig().getString("censorship.word");
+        String cenzor = plugin.getConfig().getString("censorship.word");
 
+        //conzorship is a experimental option, maybe not good working
         for (String czarnalista : plugin.getConfig().getStringList("BlackWords")) {
             if (e.getMessage().toLowerCase().contains(czarnalista.toLowerCase())) {
                 if (e.getMessage().toLowerCase().contains("Huje22".toLowerCase())) {
@@ -47,7 +49,7 @@ public class Formater implements Listener {
             }
             if (plugin.getConfig().getBoolean("censorship.enable")) {
                 if (!(p.isOp())) {
-                    msg = e.getMessage().toLowerCase().replace(czarnalista.toLowerCase(), cenzura);
+                    msg = e.getMessage().toLowerCase().replace(czarnalista.toLowerCase(), cenzor);
                 }
                 e.setMessage(msg);
             }
@@ -58,12 +60,13 @@ public class Formater implements Listener {
             }
             e.setMessage(wiad);
 
-            String messageformat = ChatColor.replaceColorCode(plugin.getConfig().getString("message-format"));
+            String messageformat = ColorUtil.replaceColorCode(plugin.getConfig().getString("message-format"));
 
             if(plugin.papKot){
                 PlaceholderAPI api = PlaceholderAPI.getInstance();
-                messageformat = api.translateString(ChatColor.replaceColorCode(conf.getString("message-format")), p);
+                messageformat = api.translateString(ColorUtil.replaceColorCode(conf.getString("message-format")), p);
             }
+            
 
             e.setFormat(messageformat
                             .replace("<name>", p.getName())
@@ -92,6 +95,7 @@ public class Formater implements Listener {
 
     @EventHandler
     public void cooldownMessage(PlayerChatEvent e) {
+        //cooldown is a experimental option, maybe not good working
         Player p = (Player) e.getPlayer();
         Config conf = plugin.getConfig();
         Long time = conf.getLong("cooldown.delay") * 100;
@@ -110,7 +114,7 @@ public class Formater implements Listener {
                 if (conf.getBoolean("break-between-messages.enable")) {
                     p.sendMessage(" ");
                 }
-                p.sendMessage(ChatColor.replaceColorCode(conf.getString("cooldown.message")
+                p.sendMessage(ColorUtil.replaceColorCode(conf.getString("cooldown.message")
                         .replace("<left>", cooldownTime + "")));
             }
         }

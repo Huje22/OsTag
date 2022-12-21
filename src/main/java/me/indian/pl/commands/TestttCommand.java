@@ -17,7 +17,7 @@ public class TestttCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (sender.hasPermission("ostagpnx.admin")) {
+        if (sender.isOp()) {
             String input = "";
             Player p = (Player) sender;
 //            p.sendMessage(PlayerInfoUtil.getGroupDisName(p));

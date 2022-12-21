@@ -15,20 +15,20 @@ public class PlayerInfoUtil {
 
     public static String getDevice(Player p) {
         Config conf = plugin.getConfig();
-        String windows = ChatColor.replaceColorCode(conf.getString("Windows"));
-        String android = ChatColor.replaceColorCode(conf.getString("Android"));
-        String ios = ChatColor.replaceColorCode(conf.getString("Ios"));
-        String mac = ChatColor.replaceColorCode(conf.getString("Mac"));
-        String fire = ChatColor.replaceColorCode(conf.getString("Fire"));
-        String gearvr = ChatColor.replaceColorCode(conf.getString("Gearvr"));
-        String hololens = ChatColor.replaceColorCode(conf.getString("Hololens"));
-        String dedicated = ChatColor.replaceColorCode(conf.getString("Hedicated"));
-        String tvos = ChatColor.replaceColorCode(conf.getString("TvOs"));
-        String playstation = ChatColor.replaceColorCode(conf.getString("PlayStation"));
-        String nintendo = ChatColor.replaceColorCode(conf.getString("Nintendo"));
-        String xbox = ChatColor.replaceColorCode(conf.getString("Xbox"));
-        String winphone = ChatColor.replaceColorCode(conf.getString("WindowsPhone"));
-        String unknow = ChatColor.replaceColorCode(conf.getString("Unknow"));
+        String windows = ColorUtil.replaceColorCode(conf.getString("Windows"));
+        String android = ColorUtil.replaceColorCode(conf.getString("Android"));
+        String ios = ColorUtil.replaceColorCode(conf.getString("Ios"));
+        String mac = ColorUtil.replaceColorCode(conf.getString("Mac"));
+        String fire = ColorUtil.replaceColorCode(conf.getString("Fire"));
+        String gearvr = ColorUtil.replaceColorCode(conf.getString("Gearvr"));
+        String hololens = ColorUtil.replaceColorCode(conf.getString("Hololens"));
+        String dedicated = ColorUtil.replaceColorCode(conf.getString("Hedicated"));
+        String tvos = ColorUtil.replaceColorCode(conf.getString("TvOs"));
+        String playstation = ColorUtil.replaceColorCode(conf.getString("PlayStation"));
+        String nintendo = ColorUtil.replaceColorCode(conf.getString("Nintendo"));
+        String xbox = ColorUtil.replaceColorCode(conf.getString("Xbox"));
+        String winphone = ColorUtil.replaceColorCode(conf.getString("WindowsPhone"));
+        String unknow = ColorUtil.replaceColorCode(conf.getString("Unknow"));
 
         switch (p.getLoginChainData().getDeviceOS()){
             case 1:
@@ -68,11 +68,11 @@ public class PlayerInfoUtil {
     public static String getControler(Player p) {
         Config conf = plugin.getConfig();
 
-        String motion_controller = ChatColor.replaceColorCode(conf.getString("motion_controller"));
-        String dotyk = ChatColor.replaceColorCode(conf.getString("touch"));
-        String klawa = ChatColor.replaceColorCode(conf.getString("keyboard"));
-        String pad = ChatColor.replaceColorCode(conf.getString("gamepad"));
-        String unknowcon = ChatColor.replaceColorCode(conf.getString("UnknowControler"));
+        String motion_controller = ColorUtil.replaceColorCode(conf.getString("motion_controller"));
+        String dotyk = ColorUtil.replaceColorCode(conf.getString("touch"));
+        String klawa = ColorUtil.replaceColorCode(conf.getString("keyboard"));
+        String pad = ColorUtil.replaceColorCode(conf.getString("gamepad"));
+        String unknowcon = ColorUtil.replaceColorCode(conf.getString("UnknowControler"));
 
         if (plugin.getConfig().getBoolean("PowerNukkiX-movement-server")) {
             switch (InputListener.getControler(p)) {
@@ -107,25 +107,25 @@ public class PlayerInfoUtil {
         Config conf = plugin.getConfig();
         String xp = "0";
         if (p.getExperienceLevel() == 0) {
-            xp = ChatColor.replaceColorCode(conf.getString("1lvl") + p.getExperienceLevel());
+            xp = ColorUtil.replaceColorCode(conf.getString("1lvl") + p.getExperienceLevel());
         }
         if (p.getExperienceLevel() >= 1) {
-            xp = ChatColor.replaceColorCode(conf.getString("1lvl") + p.getExperienceLevel());
+            xp = ColorUtil.replaceColorCode(conf.getString("1lvl") + p.getExperienceLevel());
         }
         if (p.getExperienceLevel() >= 10) {
-            xp = ChatColor.replaceColorCode(conf.getString("10lvl") + p.getExperienceLevel());
+            xp = ColorUtil.replaceColorCode(conf.getString("10lvl") + p.getExperienceLevel());
         }
         if (p.getExperienceLevel() >= 15) {
-            xp = ChatColor.replaceColorCode(conf.getString("15lvl") + p.getExperienceLevel());
+            xp = ColorUtil.replaceColorCode(conf.getString("15lvl") + p.getExperienceLevel());
         }
         if (p.getExperienceLevel() >= 20) {
-            xp = ChatColor.replaceColorCode(conf.getString("20lvl") + p.getExperienceLevel());
+            xp = ColorUtil.replaceColorCode(conf.getString("20lvl") + p.getExperienceLevel());
         }
         if (p.getExperienceLevel() >= 25) {
-            xp = ChatColor.replaceColorCode(conf.getString("25lvl") + p.getExperienceLevel());
+            xp = ColorUtil.replaceColorCode(conf.getString("25lvl") + p.getExperienceLevel());
         }
         if (p.getExperienceLevel() >= 30) {
-            xp = ChatColor.replaceColorCode(conf.getString("30lvl") + p.getExperienceLevel());
+            xp = ColorUtil.replaceColorCode(conf.getString("30lvl") + p.getExperienceLevel());
         }
 
         return xp;
@@ -133,9 +133,9 @@ public class PlayerInfoUtil {
 
     public static String getGameMode(Player p) {
         Config conf = plugin.getConfig();
-        String survival = ChatColor.replaceColorCode(conf.getString("survival"));
-        String creative = ChatColor.replaceColorCode(conf.getString("creative"));
-        String adventure = ChatColor.replaceColorCode(conf.getString("adventure"));
+        String survival = ColorUtil.replaceColorCode(conf.getString("survival"));
+        String creative = ColorUtil.replaceColorCode(conf.getString("creative"));
+        String adventure = ColorUtil.replaceColorCode(conf.getString("adventure"));
 
         String gamemode = "" + p.getGamemode();
 
@@ -153,13 +153,13 @@ public class PlayerInfoUtil {
         String ping = "";
         Config conf = plugin.getConfig();
         if (p.getPing() >= 1) {
-            ping = ChatColor.replaceColorCode(conf.getString("low-ping")) + p.getPing();
+            ping = ColorUtil.replaceColorCode(conf.getString("low-ping")) + p.getPing();
         }
         if (p.getPing() >= 75) {
-            ping = ChatColor.replaceColorCode(conf.getString("medium-ping")) + p.getPing();
+            ping = ColorUtil.replaceColorCode(conf.getString("medium-ping")) + p.getPing();
         }
         if (p.getPing() >= 100) {
-            ping = ChatColor.replaceColorCode(conf.getString("high-ping")) + p.getPing();
+            ping = ColorUtil.replaceColorCode(conf.getString("high-ping")) + p.getPing();
         }
         return ping;
     }
@@ -174,7 +174,7 @@ public class PlayerInfoUtil {
             User user = luckPerms.getPlayerAdapter(Player.class).getUser(p);
             pref = LuckPermUtil.getPrefix(user);
         }
-        return ChatColor.replaceColorCode(pref);
+        return ColorUtil.replaceColorCode(pref);
     }
 
     public static String getLuckPermSufix(Player p) {
@@ -185,7 +185,7 @@ public class PlayerInfoUtil {
             suf = LuckPermUtil.getSuffix(user);
 
         }
-        return ChatColor.replaceColorCode(suf);
+        return ColorUtil.replaceColorCode(suf);
     }
 
     public static String getGroupDisName(Player p) {
@@ -197,12 +197,12 @@ public class PlayerInfoUtil {
                 group = luckPerms.getGroupManager().getGroup(user.getPrimaryGroup()).getDisplayName();
             }
         }
-        return ChatColor.replaceColorCode(group);
+        return ColorUtil.replaceColorCode(group);
     }
 
     public static String getXuid(Player p) {
         Config conf = plugin.getConfig();
-        String xuid = ChatColor.replaceColorCode(conf.getString("guest"));
+        String xuid = ColorUtil.replaceColorCode(conf.getString("guest"));
         if (p.getLoginChainData().getXUID() != null) {
             xuid = p.getLoginChainData().getXUID();
         }
@@ -222,7 +222,7 @@ public class PlayerInfoUtil {
                 .replace("2", end);
 
 
-        return ChatColor.replaceColorCode(dim);
+        return ColorUtil.replaceColorCode(dim);
     }
 
     public static String getPlayerUnique(Player p) {
