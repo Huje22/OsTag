@@ -11,7 +11,7 @@ import net.luckperms.api.model.user.User;
 
 public class PlayerInfoUtil {
 
-    private static OsTag plugin = OsTag.getInstance();
+    private static final OsTag plugin = OsTag.getInstance();
 
     public static String getDevice(Player p) {
         Config conf = plugin.getConfig();
@@ -44,7 +44,6 @@ public class PlayerInfoUtil {
             case 6:
                 return hololens;
             case 7:
-                return windows;
             case 8:
                 return windows;
             case 9:
@@ -136,21 +135,25 @@ public class PlayerInfoUtil {
         String survival = ColorUtil.replaceColorCode(conf.getString("survival"));
         String creative = ColorUtil.replaceColorCode(conf.getString("creative"));
         String adventure = ColorUtil.replaceColorCode(conf.getString("adventure"));
+        String spectator = ColorUtil.replaceColorCode(conf.getString("spectator"));
 
-        String gamemode = "" + p.getGamemode();
-
-        String gmf = gamemode
-                .replace("1", creative)
-                .replace("2", adventure)
-                .replace("0", survival);
-
-
-        return gmf;
+        switch (p.getGamemode()){
+            case 1:
+                return creative;
+            case 2:
+                return adventure;
+            case 3:
+                return spectator;
+            case 0:
+                return survival;
+            default:
+                return "Unknow";
+        }
     }
 
     public static String getPing(Player p) {
 
-        String ping = "";
+        String ping = ColorUtil.replaceColorCode("&r0");
         Config conf = plugin.getConfig();
         if (p.getPing() >= 1) {
             ping = ColorUtil.replaceColorCode(conf.getString("low-ping")) + p.getPing();
@@ -227,7 +230,7 @@ public class PlayerInfoUtil {
 
     public static String getPlayerUnique(Player p) {
         Config conf = plugin.getConfig();
-        String unique = "";
+        String unique;
         String name = p.getDisplayName();
 
         if (!(conf.getString("Players." + name + ".unique-description").isEmpty())) {

@@ -6,11 +6,11 @@ import me.indian.pl.OsTag;
 
 public class OtherUtils {
 
-    private static OsTag plugin = OsTag.getInstance();
+    private static final OsTag plugin = OsTag.getInstance();
 
-    private static String fal = "§cfalse";
+    private static final String fal = "§cfalse";
 
-    private static String tru = "§etrue";
+    private static final String tru = "§etrue";
 
     public static String getOsTagStatus() {
         boolean ostag = plugin.getConfig().getBoolean("OsTag");
@@ -31,7 +31,7 @@ public class OtherUtils {
     }
 
     public static String getLuckPermStatus() {
-        boolean lp = plugin.luckPerm;
+        boolean lp = OsTag.luckPerm;
         String luck = fal;
         if (lp) {
             luck = tru;
@@ -40,7 +40,7 @@ public class OtherUtils {
     }
 
     public static String getKotOrPapiStatus() {
-        boolean papko = plugin.papKot;
+        boolean papko = OsTag.papKot;
         String papkot = fal;
         if (papko) {
             papkot = tru;

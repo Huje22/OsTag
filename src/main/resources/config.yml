@@ -61,25 +61,24 @@ refresh-time: 1
 #
 #Normal Player
 nick: "%factions_faction% <unique-description><xp> <groupDisName> <name> <suffix> "
-subtag: "%factions_faction% <device> | <controler> \n&eDevice Model: &r<model>\n&eGamemode: &r<gamemode>\n&eCps: &r<cps>  &ePing: <ping> &eXp: <xp> \n&eGame Version: &r<version> \n\n&eXuid: &r<xuid>\n\n&eLanguage: &r<language>\n<health>/<max_health>&c❤\n<deathskull>"
+subtag: "%factions_faction% <device> | <controler> \n&eDevice Model: &r<model>\n&eGamemode: &r<gamemode>\n&eCps: &r<cps>  &ePing: <ping> &eXp: <xp> \n&eGame Version: &r<version> \n\n&eXuid: &r<xuid>\n\n&eLanguage: &r<language>\n<health>/<max_health>&c❤"
 #
 #
 #Advanced Player
 a-nick: "%factions_faction% <unique-description><xp> <groupDisName> <name> <suffix> "
 a-subtag: "%factions_faction% <device> | <controler>\n&eCps: &r<cps>  &ePing: <ping>\n<health>/<max_health>&c❤\n&eXp: <xp>\n&eGame Version: &r<version>"
 advanced-players:
-  - "JndjanBartonka"
-  - "TheTwuj"
+  - "ExamplePlayer"
 #
 #
 #Disabled worlds [Experimental]
 disabled-worlds:
-  - "test"
+  - "ExampleWorld"
 #--------------------------
 #    Formater options
 #
 #Message format
-message-format: "%factions_faction% <unique-description><dimension> &r<xp>&r <deathskull><groupDisName> <prefix> &r<name> <suffix> &r» <msg>"
+message-format: "%factions_faction% <prefix> &r<name> &r» <msg>"
 #
 #
 #If this option set to true everyone can use & by default instead of §
@@ -117,6 +116,7 @@ guest: "&lGuest"
 survival: "survival"
 creative: "creative"
 adventure: "adventure"
+spectator: "spectator"
 #Dimensions
 overworld: "&aOverWorld&r"
 nether: "&cNether&r"

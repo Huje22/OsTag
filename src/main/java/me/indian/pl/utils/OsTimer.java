@@ -12,19 +12,18 @@ import me.indian.pl.OsTag;
 import java.util.List;
 
 public class OsTimer extends Task implements Runnable, Listener {
-    private static OsTag plugin = OsTag.getInstance();
+    private static final OsTag plugin = OsTag.getInstance();
 
     @Override
     public void onRun(int i) {
         for (Player p : Server.getInstance().getOnlinePlayers().values()) {
             addOsTag(p);
-//            OsTagAdd.addDevNormal(p);
         }
     }
-
+    @SuppressWarnings("unused")
     @EventHandler
     public void playerJoin(PlayerJoinEvent e) {
-        Player p = (Player) e.getPlayer();
+        Player p = e.getPlayer();
         addOsTag(p);
     }
 

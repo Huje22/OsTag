@@ -30,8 +30,6 @@ public class OsTag extends PluginBase implements Listener {
     public void onEnable() {
         long millisActualTime = System.currentTimeMillis();
         instance = this;
-        //class instances that are not dependent on the user's choice
-
         //some informations
         /*
         None
@@ -57,12 +55,15 @@ public class OsTag extends PluginBase implements Listener {
 
         //register some events
 
-        pm.registerEvents(new CpsListener(this) , this);
+        pm.registerEvents(new CpsListener() , this);
+        pm.registerEvents(new InputListener(), this);
 
-        pm.registerEvents(new InputListener(this), this);
+        //register some commands
 
         ((PluginCommand<?>) this.getCommand("ostag")).setExecutor(new OsTagCommand(this));
         ((PluginCommand<?>) this.getCommand("tto")).setExecutor(new TestttCommand(this));
+
+
 
         if (this.getConfig().getBoolean("OsTag")) {
             new OsTagAdd();
@@ -140,6 +141,7 @@ public class OsTag extends PluginBase implements Listener {
     public void registerPlaceholders() {
         PlaceholderAPI api = PlaceholderAPI.getInstance();
         String prefix = "ostag_";
+
         api.builder(prefix +"cps", Integer.class)
                 .visitorLoader(entry -> {
                     return CpsListener.getCPS(entry.getPlayer());

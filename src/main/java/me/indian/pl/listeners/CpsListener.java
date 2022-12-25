@@ -6,7 +6,6 @@ import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerQuitEvent;
 import cn.nukkit.event.server.DataPacketReceiveEvent;
 import cn.nukkit.network.protocol.LevelSoundEventPacket;
-import me.indian.pl.OsTag;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,17 +13,11 @@ import java.util.List;
 
 public class CpsListener implements Listener {
 
-    private final OsTag plugin;
-
-    private static HashMap<Player, List<Long>> cps = new HashMap<Player, List<Long>>();
-
-    public CpsListener(OsTag plugin) {
-        this.plugin = plugin;
-    }
+    private static final HashMap<Player, List<Long>> cps = new HashMap<>();
 
     // cps counter from https://github.com/GommeAWM/CPSCounter
     // witch permisions from author
-
+    @SuppressWarnings("unused")
     @EventHandler
     public void onPacket(DataPacketReceiveEvent event) {
         if (!(event.getPacket() instanceof LevelSoundEventPacket)) return;
@@ -57,7 +50,7 @@ public class CpsListener implements Listener {
 
     // cps counter from https://github.com/GommeAWM/CPSCounter
     // witch permisions from author
-
+    @SuppressWarnings("unused")
     @EventHandler
     public void removeCps(PlayerQuitEvent e) {
         Player p = e.getPlayer();

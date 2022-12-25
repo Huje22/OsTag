@@ -10,7 +10,7 @@ import static me.indian.pl.utils.PlayerInfoUtil.*;
 
 public class OsTagAdd {
 
-    private static OsTag plugin = OsTag.getInstance();
+    private static final OsTag plugin = OsTag.getInstance();
 
     private static String subTag = ColorUtil.replaceColorCode(plugin.getConfig().getString("subtag"));
 
@@ -24,12 +24,12 @@ public class OsTagAdd {
 
         Config conf = plugin.getConfig();
 
-        if (plugin.papKot) {
+        if (OsTag.papKot) {
             PlaceholderAPI api = PlaceholderAPI.getInstance();
             subTag = api.translateString(ColorUtil.replaceColorCode(conf.getString("subtag")), p);
             nick = api.translateString(ColorUtil.replaceColorCode(conf.getString("nick")), p);
         }
-        if (conf.getBoolean("ScoreTagOnly") == false) {
+        if (!conf.getBoolean("ScoreTagOnly")) {
         p.setNameTag(nick
                 .replace("<name>", p.getDisplayName())
                 .replace("<suffix>", getLuckPermSufix(p))
@@ -64,12 +64,12 @@ public class OsTagAdd {
 
         Config conf = plugin.getConfig();
 
-        if (plugin.papKot) {
+        if (OsTag.papKot) {
             PlaceholderAPI api = PlaceholderAPI.getInstance();
             aSubTag = api.translateString(ColorUtil.replaceColorCode(conf.getString("a-subtag")), p);
             aNick = api.translateString(ColorUtil.replaceColorCode(conf.getString("a-nick")), p);
         }
-        if (conf.getBoolean("ScoreTagOnly") == false) {
+        if (!conf.getBoolean("ScoreTagOnly")) {
             p.setNameTag(aNick
                     .replace("<suffix>", getLuckPermSufix(p))
                     .replace("<prefix>", getLuckPermPrefix(p))

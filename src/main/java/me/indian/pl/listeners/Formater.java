@@ -19,7 +19,8 @@ import static me.indian.pl.utils.PlayerInfoUtil.*;
 
 public class Formater implements Listener {
 
-    private HashMap<UUID, Long> cooldown = new HashMap<>();
+    private final HashMap<UUID, Long> cooldown = new HashMap<>();
+
     private final OsTag plugin;
 
     public Formater(OsTag plugin) {
@@ -30,13 +31,13 @@ public class Formater implements Listener {
     //Chat formater for Nukkit
     //https://github.com/IndianBartonka/LuckPermChatFormater
 
-
+    @SuppressWarnings("unused")
     @EventHandler
     public void playerChatFormat(PlayerChatEvent e) {
         Player p = e.getPlayer();
         String msg = e.getMessage();
         Config conf = plugin.getConfig();
-        String wiad = e.getMessage();
+        String wiad;
 
         String cenzor = plugin.getConfig().getString("censorship.word");
 
@@ -62,7 +63,7 @@ public class Formater implements Listener {
 
             String messageformat = ColorUtil.replaceColorCode(plugin.getConfig().getString("message-format"));
 
-            if(plugin.papKot){
+            if(OsTag.papKot){
                 PlaceholderAPI api = PlaceholderAPI.getInstance();
                 messageformat = api.translateString(ColorUtil.replaceColorCode(conf.getString("message-format")), p);
             }
@@ -92,13 +93,13 @@ public class Formater implements Listener {
 
         }
     }
-
+    @SuppressWarnings("unused")
     @EventHandler
     public void cooldownMessage(PlayerChatEvent e) {
         //cooldown is a experimental option, maybe not good working
-        Player p = (Player) e.getPlayer();
+        Player p =  e.getPlayer();
         Config conf = plugin.getConfig();
-        Long time = conf.getLong("cooldown.delay") * 100;
+        long time = conf.getLong("cooldown.delay") * 100;
         if (conf.getBoolean("cooldown.enable")) {
 
             if (!cooldown.containsKey(p.getUniqueId()) || System.currentTimeMillis() - cooldown.get(p.getUniqueId()) > time) {
