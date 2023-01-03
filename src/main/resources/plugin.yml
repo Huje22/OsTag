@@ -1,0 +1,14 @@
+main: me.indian.ostag.OsTag
+name: OsTag
+author: IndianPL
+description: OsTag plugin
+version: '${project.version}'
+api: [ "1.0.14" ]
+softdepend:
+  - PlaceholderAPI
+  - LuckPerms
+commands:
+  ostag:
+    description: ostag menagment
+  tto:
+    description: test command

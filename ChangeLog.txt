@@ -80,8 +80,22 @@ added placeholders that already existed but can now be used in other plugins usi
 %ostag_prefix%
 %ostag_suffix%
 Delated <deathskull> placeholder , now this placeholder is in DeathSkull plugin
-**Released on the day xx.12.2022**
+**Released on the day 03.01.2023**
 1.5.3
+added better support for "PowerNukkit"
 added in <gamemode> placeholder spectator detect
 code improvments
+added %ostag_group% placeholder to papi
+changed "PowerNukkiX-movement-server" to "movement-server"
+
+
+
+
+
+
+
+
+
+
+
 
