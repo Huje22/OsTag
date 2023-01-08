@@ -32,6 +32,7 @@ public class OsTag extends PluginBase {
         long millisActualTime = System.currentTimeMillis();
         instance = this;
 
+
         PluginManager pm = getServer().getPluginManager();
         //plugins info
         if (pm.getPlugin("LuckPerms") == null) {

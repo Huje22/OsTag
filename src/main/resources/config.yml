@@ -152,14 +152,13 @@ Android: "&f[&aAndroid&f]"
 Ios: "&f[&bIos&f]"
 Mac: "&f[&cMac Os&f]"
 Fire: "&f[&6Fire Os&f]"
-Gearvr: "&f[&aGearVr&f]"
 Hololens: "&f[&aHoloLens&f]"
 Dedicated: "&f[&aDedicated&f]"
 TvOs: "&f[&aTvOs&f]"
 PlayStation: "&f[&aPS&f]"
 Nintendo: "&f[&aNintendo&f]"
 Xbox: "&f[&aXbox&f]"
-WindowsPhone: "&f[&aWindowsPhone&f]"
+Linux: "&f[&aLinux&f]"
 Unknow: "&f[&aUnknow&f]"
 #Controls
 touch: "Touch"
@@ -174,14 +173,13 @@ UnknowControler: "Unknow"
 #Ios: ''
 #Mac: ''
 #Fire: '&f[&6Fire Os&f]'
-#Gearvr: '&f[&aGearVr&f]'
 #Hololens: '&f[&aHoloLens&f]'
 #Dedicated: '&f[&aDedicated&f]'
 #TvOs: ''
 #PlayStation: ''
 #Nintendo: ''
 #Xbox: ''
-#WindowsPhone: "&f[&aWindowsPhone&f]"
+#Linux: "&f[&aLinux&f]"
 #Unknow: '&f[&aUnknow&f]'
 #touch: Touch
 #keyboard: Keyboard

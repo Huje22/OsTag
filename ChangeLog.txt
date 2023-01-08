@@ -87,9 +87,14 @@ added in <gamemode> placeholder spectator detect
 code improvments
 added %ostag_group% placeholder to papi
 changed "PowerNukkiX-movement-server" to "movement-server"
-
-
-
+**Released on the day xx.01.2023**
+1.5.4
+Windows phone and gear vr removed from <device> placeholder , because not suported by mojang
+``
+IMPORTANT NEWS:
+As of October 2020, Minecraft will no longer be updated or supported on Windows 10 Mobile, Gear VR, iOS 10 or lower & Android devices with less than 768MB of RAM.
+``
+added in <device> placeholder linux detect
 
 
 

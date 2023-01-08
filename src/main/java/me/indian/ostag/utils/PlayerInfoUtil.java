@@ -20,14 +20,13 @@ public class PlayerInfoUtil {
         String ios = ColorUtil.replaceColorCode(conf.getString("Ios"));
         String mac = ColorUtil.replaceColorCode(conf.getString("Mac"));
         String fire = ColorUtil.replaceColorCode(conf.getString("Fire"));
-        String gearvr = ColorUtil.replaceColorCode(conf.getString("Gearvr"));
         String hololens = ColorUtil.replaceColorCode(conf.getString("Hololens"));
         String dedicated = ColorUtil.replaceColorCode(conf.getString("Hedicated"));
         String tvos = ColorUtil.replaceColorCode(conf.getString("TvOs"));
         String playstation = ColorUtil.replaceColorCode(conf.getString("PlayStation"));
         String nintendo = ColorUtil.replaceColorCode(conf.getString("Nintendo"));
         String xbox = ColorUtil.replaceColorCode(conf.getString("Xbox"));
-        String winphone = ColorUtil.replaceColorCode(conf.getString("WindowsPhone"));
+        String linux = ColorUtil.replaceColorCode(conf.getString("Linux"));
         String unknow = ColorUtil.replaceColorCode(conf.getString("Unknow"));
 
         switch (p.getLoginChainData().getDeviceOS()) {
@@ -40,7 +39,7 @@ public class PlayerInfoUtil {
             case 4:
                 return fire;
             case 5:
-                return gearvr;
+                return "gearvr not supported as of 2020";
             case 6:
                 return hololens;
             case 7:
@@ -57,11 +56,20 @@ public class PlayerInfoUtil {
             case 13:
                 return xbox;
             case 14:
-                return winphone;
+                return "winphone not supported as of 2020";
+            case 15:
+                return linux;
             default:
                 return unknow;
         }
 
+        /*
+        Unsuported platform
+            case 5: not supported as of 2020
+                return gearvr;
+            case 14: not supported as of 2020
+                return winphone;
+         */
     }
 
     public static String getControler(Player p) {

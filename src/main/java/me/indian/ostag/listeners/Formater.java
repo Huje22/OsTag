@@ -71,7 +71,7 @@ public class Formater implements Listener {
 
 
             e.setFormat(messageformat
-                            .replace("<name>", p.getName())
+                            .replace("<name>", p.getDisplayName())
                             .replace("<suffix>", PlayerInfoUtil.getLuckPermSufix(p))
                             .replace("<prefix>", PlayerInfoUtil.getLuckPermPrefix(p))
                             .replace("<msg>", e.getMessage())
