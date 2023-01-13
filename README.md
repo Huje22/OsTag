@@ -1,4 +1,9 @@
 # OsTag Plugin for nukkit
+
+[![Discord](https://img.shields.io/discord/941850822885646366.svg)](https://discord.gg/8fk27Jc9DF)
+![version](https://img.shields.io/badge/Version-1.5.3-red)
+
+
 This plugin is used to display information under the player's nickname or nickname. And for chat formatting with LuckPerms plugin.<br/>
 Wiki https://github.com/IndianBartonka/OsTag/wiki
 ## Requitmens
