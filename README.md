@@ -7,7 +7,7 @@
 [![GitHub repo](https://img.shields.io/github/repo-size/IndianBartonka/OsTag?style=for-the-badge)](https://github.com/IndianBartonka/OsTag)
 [![GitHub stars](https://img.shields.io/github/stars/IndianBartonka/OsTag?style=for-the-badge)](https://github.com/IndianBartonka/OsTag/stargazers)    </br>
 ![JDK8](https://github.com/intergrav/devins-badges/blob/v2/assets/cozy/built-with/java8_vector.svg?raw=true)
-![Maven](https://github.com/intergrav/devins-badges/blob/v2/assets/cozy/built-with/maven_vector.svg)
+![Maven](https://github.com/intergrav/devins-badges/blob/v2/assets/cozy/built-with/maven_vector.svg)</br>
 [![PayPal](https://github.com/intergrav/devins-badges/blob/v2/assets/compact/donate/paypal-singular_vector.svg)](https://paypal.me/IndianPL)
 </br>
 This plugin is used to display information under the player's nickname or nickname. And for chat formatting with LuckPerms plugin.<br/>
