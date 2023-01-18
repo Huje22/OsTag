@@ -1,10 +1,18 @@
+<div align="center"> 
+
 # OsTag Plugin for nukkit
-[![Discord](https://img.shields.io/discord/941850822885646366?color=7289da&logo=discord&logoColor=white&style=for-the-badge)](https://discord.gg/mF3TehkeG3)</br>
+
+[![Discord](https://img.shields.io/discord/941850822885646366?color=7289da&logo=discord&logoColor=white&style=for-the-badge)](https://discord.gg/mF3TehkeG3)
+![Percentage of issues still open](https://img.shields.io/github/issues/IndianBartonka/OsTag?style=for-the-badge)
+[![GitHub repo](https://img.shields.io/github/repo-size/IndianBartonka/OsTag?style=for-the-badge)](https://github.com/IndianBartonka/OsTag)
+[![GitHub stars](https://img.shields.io/github/stars/IndianBartonka/OsTag?style=for-the-badge)](https://github.com/IndianBartonka/OsTag/stargazers)    </br>
 ![JDK8](https://github.com/intergrav/devins-badges/blob/v2/assets/cozy/built-with/java8_vector.svg?raw=true)
 ![Maven](https://github.com/intergrav/devins-badges/blob/v2/assets/cozy/built-with/maven_vector.svg)
 </br>
 This plugin is used to display information under the player's nickname or nickname. And for chat formatting with LuckPerms plugin.<br/>
-Wiki https://github.com/IndianBartonka/OsTag/wiki
+[Wiki](https://github.com/IndianBartonka/OsTag/wiki)
+</div>
+
 ## Requitmens
 Java 8 minimum</br>
 ## Optional (Plugins)
@@ -19,6 +27,7 @@ Java 8 minimum</br>
 ## Some links
 __Discord__: https://discord.gg/8fk27Jc9DF </br>
 __CloudBurst page:__ https://cloudburstmc.org/resources/ostag.836/ </br>
+__Wiki:__ https://github.com/IndianBartonka/OsTag/wiki
 ## Some informations
 * If the configuration was not generated, use the plugin description
 * If you can't set something Indian will probably help you (write on discord)
