@@ -7,6 +7,7 @@
 [![Percentage of issues still open](https://img.shields.io/github/issues/IndianBartonka/OsTag?style=for-the-badge)](https://github.com/IndianBartonka/OsTag/issues)
 [![License](https://img.shields.io/github/license/IndianBartonka/OsTag?style=for-the-badge)](LICENSE)
 [![Repo size](https://img.shields.io/github/repo-size/IndianBartonka/OsTag?style=for-the-badge)](https://github.com/IndianBartonka/OsTag)
+[![Code size](https://img.shields.io/github/languages/code-size/IndianBartonka/OsTag?style=for-the-badge)](https://github.com/IndianBartonka/OsTag)
 ![Latest Tag](https://img.shields.io/github/v/tag/IndianBartonka/OsTag?label=LATEST%20TAG&style=for-the-badge)
 [![GitHub stars](https://img.shields.io/github/stars/IndianBartonka/OsTag?style=for-the-badge)](https://github.com/IndianBartonka/OsTag/stargazers)   </br>
 ![JDK8](https://github.com/intergrav/devins-badges/blob/v2/assets/cozy/built-with/java8_vector.svg?raw=true)
