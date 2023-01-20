@@ -1,10 +1,5 @@
 <div align="center"> 
 
-<!--
-Unused
-[![Code size](https://img.shields.io/github/languages/code-size/IndianBartonka/OsTag?style=for-the-badge)](https://github.com/IndianBartonka/OsTag)
-
--->
 # OsTag Plugin for nukkit
 
 [![Discord](https://img.shields.io/discord/941850822885646366?color=7289da&logo=discord&logoColor=white&style=for-the-badge)](https://discord.gg/mF3TehkeG3)
@@ -52,3 +47,8 @@ https://github.com/mdisprgm/bdsx-ostag
 
 
 
+<!--
+Unused
+[![Code size](https://img.shields.io/github/languages/code-size/IndianBartonka/OsTag?style=for-the-badge)](https://github.com/IndianBartonka/OsTag)
+
+-->
