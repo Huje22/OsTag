@@ -2,9 +2,9 @@
 
 # OsTag Plugin for nukkit
 
-
 [![Discord](https://img.shields.io/discord/941850822885646366?color=7289da&logo=discord&logoColor=white&style=for-the-badge)](https://discord.gg/mF3TehkeG3)
-![Percentage of issues still open](https://img.shields.io/github/issues/IndianBartonka/OsTag?style=for-the-badge)
+[![Last Commit](https://img.shields.io/github/last-commit/IndianBartonka/OsTag?style=for-the-badge)](Last Commit)
+[![Percentage of issues still open](https://img.shields.io/github/issues/IndianBartonka/OsTag?style=for-the-badge)](https://github.com/IndianBartonka/OsTag/issues)
 [![License](https://img.shields.io/github/license/IndianBartonka/OsTag?style=for-the-badge)](LICENSE)
 [![Repo size](https://img.shields.io/github/repo-size/IndianBartonka/OsTag?style=for-the-badge)](https://github.com/IndianBartonka/OsTag)
 ![Latest Tag](https://img.shields.io/github/v/tag/IndianBartonka/OsTag?label=LATEST%20TAG&style=for-the-badge)
@@ -16,7 +16,7 @@
 This plugin is used to display information under the player's nickname or nickname. And for chat formatting with LuckPerms plugin.<br/>
 [Wiki](https://github.com/IndianBartonka/OsTag/wiki)
 </div>
-
+ 
 ## Requitmens
 Java 8 minimum</br>
 ## Optional (Plugins)
@@ -42,8 +42,7 @@ __Wiki:__ https://github.com/IndianBartonka/OsTag/wiki
 https://github.com/mdisprgm/bdsx-ostag
 
 ## Server using OsTag
-![Server using ostag](https://bstats.org/signatures/bukkit/OsTagPNX-Nukkit.svg)
-
+[![Server using ostag](https://bstats.org/signatures/bukkit/OsTagPNX-Nukkit.svg)](https://bstats.org/plugin/bukkit/OsTagPNX-Nukkit/16838)
 
 
 
