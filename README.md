@@ -14,7 +14,7 @@
 ![Maven](https://github.com/intergrav/devins-badges/blob/v2/assets/cozy/built-with/maven_vector.svg)</br>
 [![PayPal](https://github.com/intergrav/devins-badges/blob/v2/assets/compact/donate/paypal-singular_vector.svg)](https://paypal.me/IndianPL)
 </br>
-This plugin is used to display information under the player's nickname or nickname. And for chat formatting with LuckPerms plugin.<br/>
+This plugin is used to display information under the player's nickname. And for chat formatting with LuckPerms plugin.<br/>
 [Wiki](https://github.com/IndianBartonka/OsTag/wiki)
 </div>
  
