@@ -122,47 +122,29 @@ public class OsTag extends PluginBase {
     public void registerPlaceholders() {
         PlaceholderAPI api = PlaceholderAPI.getInstance();
         String prefix = "ostag_";
-
         api.builder(prefix + "cps", Integer.class)
-                .visitorLoader(entry -> {
-                    return CpsListener.getCPS(entry.getPlayer());
-                })
+                .visitorLoader(entry -> CpsListener.getCPS(entry.getPlayer()))
                 .build();
-
         api.builder(prefix + "test", String.class)
-                .visitorLoader(entry -> {
-                    return "test placeholder";
-                })
+                .visitorLoader(entry -> "test placeholder")
                 .build();
         api.builder(prefix + "device", String.class)
-                .visitorLoader(entry -> {
-                    return PlayerInfoUtil.getDevice(entry.getPlayer());
-                })
+                .visitorLoader(entry -> PlayerInfoUtil.getDevice(entry.getPlayer()))
                 .build();
         api.builder(prefix + "controler", String.class)
-                .visitorLoader(entry -> {
-                    return PlayerInfoUtil.getControler(entry.getPlayer());
-                })
+                .visitorLoader(entry -> PlayerInfoUtil.getControler(entry.getPlayer()))
                 .build();
         api.builder(prefix + "prefix", String.class)
-                .visitorLoader(entry -> {
-                    return PlayerInfoUtil.getLuckPermPrefix(entry.getPlayer());
-                })
+                .visitorLoader(entry -> PlayerInfoUtil.getLuckPermPrefix(entry.getPlayer()))
                 .build();
         api.builder(prefix + "suffix", String.class)
-                .visitorLoader(entry -> {
-                    return PlayerInfoUtil.getLuckPermSufix(entry.getPlayer());
-                })
+                .visitorLoader(entry -> PlayerInfoUtil.getLuckPermSufix(entry.getPlayer()))
                 .build();
         api.builder(prefix + "group", String.class)
-                .visitorLoader(entry -> {
-                    return PlayerInfoUtil.getLuckPermGroupDisName(entry.getPlayer());
-                })
+                .visitorLoader(entry -> PlayerInfoUtil.getLuckPermGroupDisName(entry.getPlayer()))
                 .build();
         api.builder(prefix + "version", String.class)
-                .visitorLoader(entry -> {
-                    return entry.getPlayer().getLoginChainData().getGameVersion();
-                })
+                .visitorLoader(entry -> entry.getPlayer().getLoginChainData().getGameVersion())
                 .build();
     }
 }
