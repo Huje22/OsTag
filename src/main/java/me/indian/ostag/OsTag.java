@@ -52,11 +52,7 @@ public class OsTag extends PluginBase {
         serverMovement = getConfig().getBoolean("movement-server");
 
         getConfig().set("PowerNukkiX-movement-server", "change this to movement-server and set to true or false, see wiki for more instructions https://github.com/IndianBartonka/OsTag/wiki/For-nukkit-forks");
-
         getLogger().info(ColorUtil.replaceColorCode("&aCheck &econfig.yml &anow &bPowerNukkiX-movement-server&a has been named &bmovement-server"));
-
-        new OtherUtils();
-        new PlayerInfoUtil();
 
         //register some events
 
