@@ -31,10 +31,7 @@ public class OsTag extends PluginBase {
     public void onEnable() {
         long millisActualTime = System.currentTimeMillis();
         instance = this;
-
-
         PluginManager pm = getServer().getPluginManager();
-        //plugins info
         if (pm.getPlugin("LuckPerms") == null) {
             getLogger().warning(ColorUtil.replaceColorCode("&cYou don't have lucky perms , ChatFormating don't corectly work"));
         } else {
@@ -46,34 +43,19 @@ public class OsTag extends PluginBase {
             papKot = true;
             registerPlaceholders();
         }
-
         saveDefaultConfig();
-
         serverMovement = getConfig().getBoolean("movement-server");
-
         getConfig().set("PowerNukkiX-movement-server", "change this to movement-server and set to true or false, see wiki for more instructions https://github.com/IndianBartonka/OsTag/wiki/For-nukkit-forks");
         getLogger().info(ColorUtil.replaceColorCode("&aCheck &econfig.yml &anow &bPowerNukkiX-movement-server&a has been named &bmovement-server"));
-
-        //register some events
-
         pm.registerEvents(new CpsListener(), this);
         if(serverMovement) {
             pm.registerEvents(new InputListener(), this);
         }
-
-        //register some commands
-
         ((PluginCommand<?>) getCommand("ostag")).setExecutor(new OsTagCommand(this));
         ((PluginCommand<?>) getCommand("tto")).setExecutor(new TestttCommand(this));
-
-
         if (getConfig().getBoolean("OsTag")) {
-            new OsTagAdd();
-            new OsTimer();
             pm.registerEvents(new OsTimer(), this);
-
             int refreshTime = getConfig().getInt("refresh-time");
-
             if (refreshTime <= 0) {
                 refreshTime = 1;
                 getConfig().set("refresh-time", 1);
@@ -86,25 +68,19 @@ public class OsTag extends PluginBase {
         if (this.getConfig().getBoolean("ChatFormater")) {
             pm.registerEvents(new Formater(this), this);
         }
-
-        new OsTagMetrics();
         OsTagMetrics.metricsStart();
-
         sendOnEnableInfo("admin", getServer().getConsoleSender());
-
         long executionTime = System.currentTimeMillis() - millisActualTime;
         getLogger().info(ColorUtil.replaceColorCode("&aStarted in &b" + executionTime + " &ams"));
     }
 
 
     public void sendOnEnableInfo(String type, CommandSender sender) {
-
         String ver = this.getDescription().getVersion();
         String aut = String.valueOf(this.getDescription().getAuthors());
         String verNuk = this.getServer().getNukkitVersion();
         String servVer = this.getServer().getVersion();
         String apiVer = this.getServer().getApiVersion();
-
         switch (type) {
             case "admin":
                 sender.sendMessage(ColorUtil.replaceColorCode("&b-------------------------------"));
