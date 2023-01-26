@@ -21,7 +21,8 @@ This plugin is used to display information under the player's nickname. And for 
 </div>
  
 ## Requitmens
-Java 8 minimum</br>
+Java **8** minimum</br>
+Nukkit api **1.0.14** </br>
 ## Optional (Plugins)
 [LuckPerms](https://luckperms.net/download)   </br>
 [DeathSkulls](https://cloudburstmc.org/resources/deathskulls.858/)</br>
