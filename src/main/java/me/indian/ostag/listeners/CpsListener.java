@@ -21,22 +21,17 @@ public class CpsListener implements Listener {
     @EventHandler
     public void onPacket(DataPacketReceiveEvent event) {
         if (!(event.getPacket() instanceof LevelSoundEventPacket)) return;
-
         LevelSoundEventPacket packet = (LevelSoundEventPacket) event.getPacket();
-
         if (packet.sound != LevelSoundEventPacket.SOUND_ATTACK && packet.sound != LevelSoundEventPacket.SOUND_ATTACK_NODAMAGE &&
                 packet.sound != LevelSoundEventPacket.SOUND_ATTACK_STRONG) return;
 
         List<Long> cpsList = cps.get(event.getPlayer());
-
         if (cpsList == null) {
             cpsList = new ArrayList<>();
         }
-
         cpsList.add(System.currentTimeMillis());
         cps.remove(event.getPlayer());
         cps.put(event.getPlayer(), cpsList);
-
     }
 
     public static int getCPS(Player player) {
@@ -50,7 +45,6 @@ public class CpsListener implements Listener {
 
     // cps counter from https://github.com/GommeAWM/CPSCounter
     // witch permisions from author
-
     @SuppressWarnings("unused")
     @EventHandler
     public void removeCps(PlayerQuitEvent e) {

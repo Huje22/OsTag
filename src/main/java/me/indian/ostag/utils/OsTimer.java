@@ -29,7 +29,6 @@ public class OsTimer extends Task implements Runnable, Listener {
     }
 
     private void addOsTag(Player p) {
-
         List<String> advancedPlayers = plugin.getConfig().getStringList("advanced-players");
         List<String> disabledWorld = plugin.getConfig().getStringList("disabled-worlds");
         for (String dis : disabledWorld) {

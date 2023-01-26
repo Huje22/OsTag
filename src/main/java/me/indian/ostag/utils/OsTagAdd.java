@@ -17,9 +17,7 @@ public class OsTagAdd {
     private static String aNick = ColorUtil.replaceColorCode(plugin.getConfig().getString("a-nick"));
 
     public static void addDevNormal(Player p) {
-
         Config conf = plugin.getConfig();
-
         if (OsTag.papKot) {
             PlaceholderAPI api = PlaceholderAPI.getInstance();
             subTag = api.translateString(ColorUtil.replaceColorCode(conf.getString("subtag")), p);
