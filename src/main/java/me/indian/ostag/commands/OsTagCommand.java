@@ -20,14 +20,11 @@ public class OsTagCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
         List<String> advancedPlayers = plugin.getConfig().getStringList("advanced-players");
-
         if (args.length == 0) {
             sender.sendMessage(ColorUtil.replaceColorCode("&aUsage &b/ostag &8[version , reload , add <player>]"));
             return false;
         }
-
         if (args[0].equalsIgnoreCase("ver") || args[0].equalsIgnoreCase("v")) {
             if (sender.hasPermission("ostag.admin")) {
                 OsTag.getInstance().sendOnEnableInfo("admin", sender);
@@ -36,7 +33,6 @@ public class OsTagCommand implements CommandExecutor {
             }
             return false;
         }
-
         if (sender.hasPermission("ostag.admin")) {
             if (args[0].equalsIgnoreCase("add")) {
                 Player cel = Server.getInstance().getPlayer(args[1]);
@@ -54,7 +50,6 @@ public class OsTagCommand implements CommandExecutor {
                     plugin.getConfig().set("advanced-players", advancedPlayers);
                 }
             }
-
             if (args[0].equalsIgnoreCase("reload") || args[0].equalsIgnoreCase("r")) {
                 try {
                     long millisActualTime = System.currentTimeMillis();

@@ -57,5 +57,4 @@ public class CpsListener implements Listener {
         Player p = e.getPlayer();
         cps.remove(p);
     }
-
 }

@@ -7,9 +7,7 @@ import me.indian.ostag.OsTag;
 public class OtherUtils {
 
     private static final OsTag plugin = OsTag.getInstance();
-
     private static final String fal = "§cfalse";
-
     private static final String tru = "§etrue";
 
     public static String getOsTagStatus() {
@@ -53,5 +51,4 @@ public class OtherUtils {
             all.sendMessage(msg);
         }
     }
-
 }

@@ -39,6 +39,4 @@ public class InputListener implements Listener {
         return controler.get(p) + "";
     }
 
-
 }
-

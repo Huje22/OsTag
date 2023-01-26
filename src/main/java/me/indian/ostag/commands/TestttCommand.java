@@ -19,12 +19,8 @@ public class TestttCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender.isOp()) {
             Player cel = Server.getInstance().getPlayer(args[0]);
-
             cel.setDisplayName("Test");
-
         }
         return false;
     }
-
-
 }

@@ -11,13 +11,9 @@ import static me.indian.ostag.utils.PlayerInfoUtil.*;
 public class OsTagAdd {
 
     private static final OsTag plugin = OsTag.getInstance();
-
     private static String subTag = ColorUtil.replaceColorCode(plugin.getConfig().getString("subtag"));
-
     private static String nick = ColorUtil.replaceColorCode(plugin.getConfig().getString("nick"));
-
     private static String aSubTag = ColorUtil.replaceColorCode(plugin.getConfig().getString("a-subtag"));
-
     private static String aNick = ColorUtil.replaceColorCode(plugin.getConfig().getString("a-nick"));
 
     public static void addDevNormal(Player p) {
@@ -60,9 +56,7 @@ public class OsTagAdd {
     }
 
     public static void addDevAdvanced(Player p) {
-
         Config conf = plugin.getConfig();
-
         if (OsTag.papKot) {
             PlaceholderAPI api = PlaceholderAPI.getInstance();
             aSubTag = api.translateString(ColorUtil.replaceColorCode(conf.getString("a-subtag")), p);
@@ -96,5 +90,4 @@ public class OsTagAdd {
                 .replace("<unique-description>", getPlayerUnique(p))
         );
     }
-
 }
