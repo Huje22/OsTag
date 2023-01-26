@@ -19,9 +19,7 @@ import java.util.UUID;
 public class Formater implements Listener {
 
     private final HashMap<UUID, Long> cooldown = new HashMap<>();
-
     private final OtherUtils otherUtils = new OtherUtils();
-
     private final OsTag plugin;
 
     public Formater(OsTag plugin) {
@@ -39,9 +37,7 @@ public class Formater implements Listener {
         String msg = e.getMessage();
         Config conf = plugin.getConfig();
         String wiad;
-
         String cenzor = plugin.getConfig().getString("censorship.word");
-
         //conzorship is a experimental option, maybe not good working
         for (String czarnalista : plugin.getConfig().getStringList("BlackWords")) {
             if (e.getMessage().toLowerCase().contains(czarnalista.toLowerCase())) {
@@ -61,15 +57,11 @@ public class Formater implements Listener {
                 wiad = e.getMessage();
             }
             e.setMessage(wiad);
-
             String messageformat = ColorUtil.replaceColorCode(plugin.getConfig().getString("message-format"));
-
             if (OsTag.papKot) {
                 PlaceholderAPI api = PlaceholderAPI.getInstance();
                 messageformat = api.translateString(ColorUtil.replaceColorCode(conf.getString("message-format")), p);
             }
-
-
             e.setFormat(messageformat
                             .replace("<name>", p.getDisplayName())
                             .replace("<suffix>", PlayerInfoUtil.getLuckPermSufix(p))
@@ -89,7 +81,6 @@ public class Formater implements Listener {
 
                             .replace("\n", " this action not allowed here ")
                     //message.format: "<prefix> <player> <suffix> >> <msg>
-
             );
 
         }

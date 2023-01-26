@@ -62,14 +62,6 @@ public class PlayerInfoUtil {
             default:
                 return unknow;
         }
-
-        /*
-        Unsuported platform
-            case 5: not supported as of 2020
-                return gearvr;
-            case 14: not supported as of 2020
-                return winphone;
-         */
     }
 
     public static String getControler(Player p) {
@@ -255,6 +247,5 @@ public class PlayerInfoUtil {
         }
         return ColorUtil.replaceColorCode(unique);
     }
-
 
 }
