@@ -11,7 +11,8 @@
 ![Commits since latest release (by date)](https://img.shields.io/github/commits-since/IndianBartonka/OsTag/latest?style=for-the-badge)
 [![Contributors](https://img.shields.io/github/contributors/IndianBartonka/OsTag?color=blue&style=for-the-badge)](https://github.com/IndianBartonka/OsTag/graphs/contributors)
 ![Latest Tag](https://img.shields.io/github/v/tag/IndianBartonka/OsTag?label=LATEST%20TAG&style=for-the-badge)
-[![GitHub stars](https://img.shields.io/github/stars/IndianBartonka/OsTag?style=for-the-badge)](https://github.com/IndianBartonka/OsTag/stargazers)   </br>
+[![Forks](https://img.shields.io/github/forks/IndianBartonka/OsTag?style=for-the-badge)](https://github.com/IndianBartonka/OsTag/network/members)
+[![Stars](https://img.shields.io/github/stars/IndianBartonka/OsTag?style=for-the-badge)](https://github.com/IndianBartonka/OsTag/stargazers)   </br>
 ![JDK8](https://github.com/intergrav/devins-badges/blob/v2/assets/cozy/built-with/java8_vector.svg?raw=true)
 ![Maven](https://github.com/intergrav/devins-badges/blob/v2/assets/cozy/built-with/maven_vector.svg)</br>
 [![PayPal](https://github.com/intergrav/devins-badges/blob/v2/assets/compact/donate/paypal-singular_vector.svg)](https://paypal.me/IndianPL)
