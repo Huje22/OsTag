@@ -16,11 +16,8 @@ import me.indian.ostag.utils.*;
 public class OsTag extends PluginBase {
 
     public static boolean luckPerm = false;
-
     public static boolean papKot = false;
-
     public static boolean serverMovement;
-
     private static OsTag instance;
 
     public static OsTag getInstance() {
