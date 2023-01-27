@@ -192,6 +192,7 @@ public class PlayerInfoUtil {
         return ColorUtil.replaceColorCode(suf);
     }
 
+    @SuppressWarnings("ConstantConditions")
     public static String getLuckPermGroupDisName(Player p) {
         String group = "";
         if (plugin.getServer().getPluginManager().getPlugin("LuckPerms") != null) {
