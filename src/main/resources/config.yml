@@ -14,6 +14,8 @@
 # <ping> - player ping [OsTag | ChatFormater]
 # <health> - player health [OsTag | ChatFormater]
 # <max_health> - player max health [OsTag]
+# <food> - player food [OsTag]
+# <max_food> - player max food [OsTag]
 # <dimension> - player current dimension [ChatFormater]
 # <xp> - player xp lvl [OsTag | ChatFormater] //name//
 # <gamemode> - player gamemode [OsTag]
@@ -70,7 +72,7 @@ subtag: "%factions_faction% <device> | <controler> \n&eDevice Model: &r<model>\n
 #
 #Advanced Player
 a-nick: "%factions_faction% <unique-description><xp> <groupDisName> <name> <suffix> "
-a-subtag: "%factions_faction% <device> | <controler>\n&eCps: &r<cps>  &ePing: <ping>\n<health>/<max_health>&c❤\n&eXp: <xp>\n&eGame Version: &r<version>"
+a-subtag: "<food>/<max_food> \n%factions_faction% <device> | <controler>\n&eCps: &r<cps>  &ePing: <ping>\n<health>/<max_health>&c❤\n&eXp: <xp>\n&eGame Version: &r<version>"
 advanced-players:
   - "ExamplePlayer"
 #
