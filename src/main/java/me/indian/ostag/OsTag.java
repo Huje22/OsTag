@@ -115,7 +115,6 @@ public class OsTag extends PluginBase {
                 break;
         }
     }
-
     public void registerPlaceholders() {
         PlaceholderAPI api = PlaceholderAPI.getInstance();
         String prefix = "ostag_";
