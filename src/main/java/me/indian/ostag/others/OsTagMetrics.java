@@ -18,19 +18,34 @@ public class OsTagMetrics {
             metrics.addCustomChart(new Metrics.SimplePie("server_movement", () -> String.valueOf(plugin.getConfig().getBoolean("PowerNukkiX-movement-server"))));
             metrics.addCustomChart(new Metrics.SimplePie("nukkit_version", () -> Server.getInstance().getNukkitVersion()));
             metrics.addCustomChart(new Metrics.SimplePie("ostag_vs_chatformater", () -> {
-                String info = "";
+                String info1 = "";
                 boolean ostag = plugin.getConfig().getBoolean("OsTag");
                 boolean chatFormater = plugin.getConfig().getBoolean("ChatFormater");
                 if (ostag && chatFormater) {
-                    info = "OsTag and ChatFormater";
+                    info1 = "OsTag and ChatFormater";
                 }
                 if (ostag && !chatFormater) {
-                    info = "OsTag";
+                    info1 = "OsTag";
                 }
                 if (!ostag && chatFormater) {
-                    info = "ChatFormater";
+                    info1 = "ChatFormater";
                 }
-                return info;
+                return info1;
+            }));
+            metrics.addCustomChart(new Metrics.SimplePie("scoretag_vs_nametag", () -> {
+                String info2 = "";
+                boolean nametag = plugin.getConfig().getBoolean("NameTag");
+                boolean scoreTag = plugin.getConfig().getBoolean("ScoreTag");
+                if (nametag && scoreTag) {
+                    info2 = "NameTag and ScoreTag";
+                }
+                if (nametag && !scoreTag) {
+                    info2 = "NameTag";
+                }
+                if (!nametag && scoreTag) {
+                    info2 = "ScoreTag";
+                }
+                return info2;
             }));
         /*
         Code from https://github.com/CloudburstMC/Nukkit/blob/master/src/main/java/cn/nukkit/metrics/NukkitMetrics.java#L47

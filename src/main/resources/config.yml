@@ -53,9 +53,9 @@ ChatFormater: true
 movement-server: true
 #
 #
-#Score Tag (When true name don't change)
-#May be buged when player is not new player (DON'T RELOAD SERVER OR PLUGIN ,when you change this restart server)
-ScoreTagOnly: false
+#Choose what is should be displayed
+ScoreTag: true
+NameTag: true
 #--------------------------
 #   OsTag options
 #

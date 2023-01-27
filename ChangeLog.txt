@@ -89,6 +89,7 @@ added %ostag_group% placeholder to papi
 changed "PowerNukkiX-movement-server" to "movement-server"
 **Released on the day xx.01.2023**
 1.5.4
+If you used old versions, remove config to generate a new one!!!
 Some code improvments
 Windows phone and gear vr removed from <device> placeholder , because not suported by mojang
 ``
@@ -97,7 +98,7 @@ As of October 2020, Minecraft will no longer be updated or supported on Windows 
 ``
 added in <device> placeholder linux detect
 Smal naming changes , check new config in github (https://github.com/IndianBartonka/OsTag/blob/main/src/main/resources/config.yml)
-
+you can choose whether to display name or score tag
 
 
 

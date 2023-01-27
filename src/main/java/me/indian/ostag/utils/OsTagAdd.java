@@ -23,7 +23,7 @@ public class OsTagAdd {
             subTag = api.translateString(ColorUtil.replaceColorCode(conf.getString("subtag")), p);
             nick = api.translateString(ColorUtil.replaceColorCode(conf.getString("nick")), p);
         }
-        if (!conf.getBoolean("ScoreTagOnly")) {
+        if (conf.getBoolean("NameTag")) {
             p.setNameTag(nick
                     .replace("<name>", p.getDisplayName())
                     .replace("<suffix>", getLuckPermSufix(p))
@@ -33,24 +33,25 @@ public class OsTagAdd {
                     .replace("<unique-description>", getPlayerUnique(p))
             );
         }
-        p.setScoreTag(subTag
-                .replace("<device>", getDevice(p))
-
-                .replace("<controler>", getControler(p))
-                .replace("<health>", p.getHealth() + "")
-                .replace("<max_health>", p.getMaxHealth() + "")
-                .replace("<model>", p.getLoginChainData().getDeviceModel() + "")
-                .replace("<version>", p.getLoginChainData().getGameVersion())
-                .replace("<xuid>", getXuid(p))
-                .replace("<language>", p.getLoginChainData().getLanguageCode())
-                .replace("<ping>", getPing(p))
-                .replace("<suffix>", getLuckPermSufix(p))
-                .replace("<preffix>", getLuckPermPrefix(p))
-                .replace("<xp>", getXp(p))
-                .replace("<cps>", String.valueOf(CpsListener.getCPS(p)))
-                .replace("<gamemode>", getGameMode(p))
-                .replace("<unique-description>", getPlayerUnique(p))
-        );
+        if (conf.getBoolean("ScoreTag")) {
+            p.setScoreTag(subTag
+                    .replace("<device>", getDevice(p))
+                    .replace("<controler>", getControler(p))
+                    .replace("<health>", p.getHealth() + "")
+                    .replace("<max_health>", p.getMaxHealth() + "")
+                    .replace("<model>", p.getLoginChainData().getDeviceModel() + "")
+                    .replace("<version>", p.getLoginChainData().getGameVersion())
+                    .replace("<xuid>", getXuid(p))
+                    .replace("<language>", p.getLoginChainData().getLanguageCode())
+                    .replace("<ping>", getPing(p))
+                    .replace("<suffix>", getLuckPermSufix(p))
+                    .replace("<preffix>", getLuckPermPrefix(p))
+                    .replace("<xp>", getXp(p))
+                    .replace("<cps>", String.valueOf(CpsListener.getCPS(p)))
+                    .replace("<gamemode>", getGameMode(p))
+                    .replace("<unique-description>", getPlayerUnique(p))
+            );
+        }
     }
 
     public static void addDevAdvanced(Player p) {
@@ -60,7 +61,8 @@ public class OsTagAdd {
             aSubTag = api.translateString(ColorUtil.replaceColorCode(conf.getString("a-subtag")), p);
             aNick = api.translateString(ColorUtil.replaceColorCode(conf.getString("a-nick")), p);
         }
-        if (!conf.getBoolean("ScoreTagOnly")) {
+
+        if (conf.getBoolean("NameTag")) {
             p.setNameTag(aNick
                     .replace("<suffix>", getLuckPermSufix(p))
                     .replace("<prefix>", getLuckPermPrefix(p))
@@ -70,22 +72,24 @@ public class OsTagAdd {
                     .replace("<unique-description>", getPlayerUnique(p))
             );
         }
-        p.setScoreTag(aSubTag
-                .replace("<device>", getDevice(p))
-                .replace("<controler>", getControler(p))
-                .replace("<health>", p.getHealth() + "")
-                .replace("<max_health>", p.getMaxHealth() + "")
-                .replace("<model>", p.getLoginChainData().getDeviceModel() + "")
-                .replace("<version>", p.getLoginChainData().getGameVersion())
-                .replace("<xuid>", getXuid(p))
-                .replace("<language>", p.getLoginChainData().getLanguageCode())
-                .replace("<ping>", getPing(p))
-                .replace("<suffix>", getLuckPermSufix(p))
-                .replace("<preffix>", getLuckPermPrefix(p))
-                .replace("<xp>", getXp(p))
-                .replace("<cps>", String.valueOf(CpsListener.getCPS(p)))
-                .replace("<gamemode>", getGameMode(p))
-                .replace("<unique-description>", getPlayerUnique(p))
-        );
+        if (conf.getBoolean("ScoreTag")) {
+            p.setScoreTag(aSubTag
+                    .replace("<device>", getDevice(p))
+                    .replace("<controler>", getControler(p))
+                    .replace("<health>", p.getHealth() + "")
+                    .replace("<max_health>", p.getMaxHealth() + "")
+                    .replace("<model>", p.getLoginChainData().getDeviceModel() + "")
+                    .replace("<version>", p.getLoginChainData().getGameVersion())
+                    .replace("<xuid>", getXuid(p))
+                    .replace("<language>", p.getLoginChainData().getLanguageCode())
+                    .replace("<ping>", getPing(p))
+                    .replace("<suffix>", getLuckPermSufix(p))
+                    .replace("<preffix>", getLuckPermPrefix(p))
+                    .replace("<xp>", getXp(p))
+                    .replace("<cps>", String.valueOf(CpsListener.getCPS(p)))
+                    .replace("<gamemode>", getGameMode(p))
+                    .replace("<unique-description>", getPlayerUnique(p))
+            );
+        }
     }
 }
