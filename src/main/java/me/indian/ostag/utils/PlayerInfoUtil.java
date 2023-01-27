@@ -27,7 +27,7 @@ public class PlayerInfoUtil {
         String nintendo = ColorUtil.replaceColorCode(conf.getString("Nintendo"));
         String xbox = ColorUtil.replaceColorCode(conf.getString("Xbox"));
         String linux = ColorUtil.replaceColorCode(conf.getString("Linux"));
-        String unknow = ColorUtil.replaceColorCode(conf.getString("Unknow"));
+        String unknow = ColorUtil.replaceColorCode(conf.getString("Unknown"));
 
         switch (p.getLoginChainData().getDeviceOS()) {
             case 1:
@@ -144,7 +144,7 @@ public class PlayerInfoUtil {
             case 0:
                 return survival;
             default:
-                return "Unknow";
+                return "Unknown";
         }
     }
 
@@ -226,7 +226,7 @@ public class PlayerInfoUtil {
             case 2:
                 return end;
             default:
-                return "Unknow";
+                return "Unknown";
         }
     }
 

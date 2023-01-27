@@ -96,7 +96,7 @@ IMPORTANT NEWS:
 As of October 2020, Minecraft will no longer be updated or supported on Windows 10 Mobile, Gear VR, iOS 10 or lower & Android devices with less than 768MB of RAM.
 ``
 added in <device> placeholder linux detect
-
+Smal naming changes , check new config in github (https://github.com/IndianBartonka/OsTag/blob/main/src/main/resources/config.yml)
 
 
 

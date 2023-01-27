@@ -30,7 +30,7 @@ public class OsTag extends PluginBase {
         instance = this;
         PluginManager pm = getServer().getPluginManager();
         if (pm.getPlugin("LuckPerms") == null) {
-            getLogger().warning(ColorUtil.replaceColorCode("&cYou don't have lucky perms , ChatFormating don't corectly work"));
+            getLogger().warning(ColorUtil.replaceColorCode("&cYou don't have lucky perms , ChatFormating don't correctly work"));
         } else {
             luckPerm = true;
         }
@@ -115,7 +115,7 @@ public class OsTag extends PluginBase {
                 break;
         }
     }
-    
+
     public void registerPlaceholders() {
         PlaceholderAPI api = PlaceholderAPI.getInstance();
         String prefix = "ostag_";
