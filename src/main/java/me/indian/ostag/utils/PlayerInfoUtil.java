@@ -12,9 +12,9 @@ import net.luckperms.api.model.user.User;
 public class PlayerInfoUtil {
 
     private static final OsTag plugin = OsTag.getInstance();
+    private static final Config conf = plugin.getConfig();
 
     public static String getDevice(Player p) {
-        Config conf = plugin.getConfig();
         String windows = ColorUtil.replaceColorCode(conf.getString("Windows"));
         String android = ColorUtil.replaceColorCode(conf.getString("Android"));
         String ios = ColorUtil.replaceColorCode(conf.getString("Ios"));
@@ -65,7 +65,6 @@ public class PlayerInfoUtil {
     }
 
     public static String getControler(Player p) {
-        Config conf = plugin.getConfig();
 
         String motion_controller = ColorUtil.replaceColorCode(conf.getString("motion_controller"));
         String dotyk = ColorUtil.replaceColorCode(conf.getString("touch"));
@@ -103,7 +102,6 @@ public class PlayerInfoUtil {
     }
 
     public static String getXp(Player p) {
-        Config conf = plugin.getConfig();
         String xp = "0";
         if (p.getExperienceLevel() == 0) {
             xp = ColorUtil.replaceColorCode(conf.getString("1lvl") + p.getExperienceLevel());
@@ -131,7 +129,6 @@ public class PlayerInfoUtil {
     }
 
     public static String getGameMode(Player p) {
-        Config conf = plugin.getConfig();
         String survival = ColorUtil.replaceColorCode(conf.getString("survival"));
         String creative = ColorUtil.replaceColorCode(conf.getString("creative"));
         String adventure = ColorUtil.replaceColorCode(conf.getString("adventure"));
@@ -154,7 +151,6 @@ public class PlayerInfoUtil {
     public static String getPing(Player p) {
 
         String ping = ColorUtil.replaceColorCode("&r0");
-        Config conf = plugin.getConfig();
         if (p.getPing() >= 1) {
             ping = ColorUtil.replaceColorCode(conf.getString("low-ping")) + p.getPing();
         }
@@ -209,7 +205,6 @@ public class PlayerInfoUtil {
     }
 
     public static String getXuid(Player p) {
-        Config conf = plugin.getConfig();
         String xuid = ColorUtil.replaceColorCode(conf.getString("guest"));
         if (p.getLoginChainData().getXUID() != null) {
             xuid = p.getLoginChainData().getXUID();
@@ -218,7 +213,6 @@ public class PlayerInfoUtil {
     }
 
     public static String getDimension(Player p) {
-        Config conf = plugin.getConfig();
         String overworld = ColorUtil.replaceColorCode(conf.getString("overworld"));
         String nether = ColorUtil.replaceColorCode(conf.getString("nether"));
         String end = ColorUtil.replaceColorCode(conf.getString("end"));
@@ -236,7 +230,6 @@ public class PlayerInfoUtil {
     }
 
     public static String getPlayerUnique(Player p) {
-        Config conf = plugin.getConfig();
         String unique;
         String name = p.getDisplayName();
 
