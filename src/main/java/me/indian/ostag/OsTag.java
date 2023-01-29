@@ -67,6 +67,7 @@ public class OsTag extends PluginBase {
         }
         OsTagMetrics.metricsStart();
         sendOnEnableInfo("admin", getServer().getConsoleSender());
+        betaDetect();
         long executionTime = System.currentTimeMillis() - millisActualTime;
         getLogger().info(ColorUtil.replaceColorCode("&aStarted in &b" + executionTime + " &ams"));
     }
@@ -143,5 +144,11 @@ public class OsTag extends PluginBase {
         api.builder(prefix + "version", String.class)
                 .visitorLoader(entry -> entry.getPlayer().getLoginChainData().getGameVersion())
                 .build();
+    }
+
+    public void betaDetect(){
+        if (this.getDescription().getVersion().contains("Beta")){
+            getLogger().warning(ColorUtil.replaceColorCode("&4You are running beta version, it may not be stable"));
+        }
     }
 }
