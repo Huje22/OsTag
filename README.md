@@ -19,8 +19,8 @@
 </br>
 This plugin is used to display information under the player's nickname. And for chat formatting with LuckPerms plugin.<br/>
 [Wiki](https://github.com/IndianBartonka/OsTag/wiki)
-</div>
- 
+</div> 
+
 ## Requitmens
 Java **8** minimum</br>
 Nukkit api **1.0.14+** </br>
@@ -32,7 +32,8 @@ Nukkit api **1.0.14+** </br>
 [Nukkit](https://github.com/CloudburstMC/Nukkit) [Working good] </br>
 [Nukkit PetteriM1 Edition](https://github.com/PetteriM1/NukkitPetteriM1Edition/releases) [Working good]</br>
 [Power Nukkit X](https://github.com/PowerNukkitX/PowerNukkitX) [Working good]</br>
-
+# Beta  version
+[Beta 1.4.5](https://github.com/IndianBartonka/OsTag/releases/tag/1.5.4-Beta)
 ## Some links
 __Discord__: https://discord.gg/8fk27Jc9DF </br>
 __CloudBurst page:__ https://cloudburstmc.org/resources/ostag.836/ </br>
