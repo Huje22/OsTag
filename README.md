@@ -5,7 +5,7 @@
 [![Discord](https://img.shields.io/discord/941850822885646366?color=7289da&logo=discord&logoColor=white&style=for-the-badge)](https://discord.gg/mF3TehkeG3)
 [![License](https://img.shields.io/github/license/IndianBartonka/OsTag?style=for-the-badge)](LICENSE) </br>
 [![Open issues](https://img.shields.io/github/issues/IndianBartonka/OsTag?style=for-the-badge)](https://github.com/IndianBartonka/OsTag/issues)
-[![Open pull requests](https://img.shields.io/github/issues-pr/IndianBartonka/OsTag?style=for-the-badge)](https://github.com/IndianBartonka/OsTag)
+[![Open pull requests](https://img.shields.io/github/issues-pr/IndianBartonka/OsTag?style=for-the-badge)](https://github.com/IndianBartonka/OsTag/pulls)
 [![Last Commit](https://img.shields.io/github/last-commit/IndianBartonka/OsTag?style=for-the-badge)](https://github.com/IndianBartonka/OsTag/commits/main)</br>
 [![Repo size](https://img.shields.io/github/repo-size/IndianBartonka/OsTag?style=for-the-badge)](https://github.com/IndianBartonka/OsTag)
 ![Commits since latest release (by date)](https://img.shields.io/github/commits-since/IndianBartonka/OsTag/latest?style=for-the-badge)
