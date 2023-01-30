@@ -95,7 +95,6 @@ public class OsTag extends PluginBase {
                 sender.sendMessage(ColorUtil.replaceColorCode("&1Plugins"));
                 sender.sendMessage(ColorUtil.replaceColorCode("&aLuckPerms&3: " + OtherUtils.getLuckPermStatus()));
                 sender.sendMessage(ColorUtil.replaceColorCode("&aKotlinLib & PlaceholderAPI&3: " + OtherUtils.getKotOrPapiStatus()));
-
                 sender.sendMessage(ColorUtil.replaceColorCode(" "));
                 sender.sendMessage(ColorUtil.replaceColorCode("&b-------------------------------"));
                 break;
