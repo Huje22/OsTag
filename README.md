@@ -52,7 +52,6 @@ https://github.com/mdisprgm/bdsx-ostag
 [![Server using ostag](https://bstats.org/signatures/bukkit/OsTagPNX-Nukkit.svg)](https://bstats.org/plugin/bukkit/OsTagPNX-Nukkit/16838)
 
 
-
 <!--
 Unused
 [![Code size](https://img.shields.io/github/languages/code-size/IndianBartonka/OsTag?style=for-the-badge)](https://github.com/IndianBartonka/OsTag)
