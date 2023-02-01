@@ -3,7 +3,7 @@
 # OsTag Plugin for nukkit
 
 [![Discord](https://img.shields.io/discord/941850822885646366?color=7289da&logo=discord&logoColor=white&style=for-the-badge)](https://discord.gg/mF3TehkeG3)
-[![License](https://img.shields.io/github/license/IndianBartonka/OsTag?style=for-the-badge)](LICENSE) </br>
+[![License](https://img.shields.io/github/license/IndianBartonka/OsTag?style=for-the-badge)](https://github.com/IndianBartonka/OsTag/blob/main/License) </br>
 ![Libraries.io dependency status for GitHub repo](https://img.shields.io/librariesio/github/IndianBartonka/OsTag?style=for-the-badge)
 [![Open issues](https://img.shields.io/github/issues/IndianBartonka/OsTag?style=for-the-badge)](https://github.com/IndianBartonka/OsTag/issues)
 [![Open pull requests](https://img.shields.io/github/issues-pr/IndianBartonka/OsTag?style=for-the-badge)](https://github.com/IndianBartonka/OsTag/pulls)
