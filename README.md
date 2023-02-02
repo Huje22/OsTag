@@ -49,9 +49,13 @@ __Wiki:__ https://github.com/IndianBartonka/OsTag/wiki
 https://github.com/mdisprgm/bdsx-ostag
 
 ## Server using OsTag
+
+<div align="center"> 
+
 [![bStats Servers](https://img.shields.io/bstats/servers/16838?style=for-the-badge)](https://bstats.org/plugin/bukkit/OsTagPNX-Nukkit/16838)
 [![bStats Players](https://img.shields.io/bstats/players/16838?style=for-the-badge)](https://bstats.org/plugin/bukkit/OsTagPNX-Nukkit/16838)
 [![Server using ostag](https://bstats.org/signatures/bukkit/OsTagPNX-Nukkit.svg)](https://bstats.org/plugin/bukkit/OsTagPNX-Nukkit/16838)
+</div> 
 
 
 <!--
