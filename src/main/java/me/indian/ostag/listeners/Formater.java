@@ -95,23 +95,23 @@ public class Formater implements Listener {
         long time = conf.getLong("cooldown.delay") * 100;
 
 
-            if (!cooldown.containsKey(p.getUniqueId()) || System.currentTimeMillis() - cooldown.get(p.getUniqueId()) > time) {
-                if (!(p.isOp())) {
-                    if (conf.getBoolean("cooldown.enable")) {
-                        cooldown.put(p.getUniqueId(), System.currentTimeMillis());
-                    }
+        if (!cooldown.containsKey(p.getUniqueId()) || System.currentTimeMillis() - cooldown.get(p.getUniqueId()) > time) {
+            if (!(p.isOp())) {
+                if (conf.getBoolean("cooldown.enable")) {
+                    cooldown.put(p.getUniqueId(), System.currentTimeMillis());
                 }
-                if (conf.getBoolean("break-between-messages.enable")) {
-                    Server.getInstance().getScheduler().scheduleDelayedTask(null, () -> otherUtils.sendMessageToAll(" "), 1);
-                }
-            } else {
-                long cooldownTime = (time - (System.currentTimeMillis() - cooldown.get(p.getUniqueId()))) / 100;
-                e.setCancelled(true);
-                if (conf.getBoolean("break-between-messages.enable")) {
-                    p.sendMessage(" ");
-                }
-                p.sendMessage(ColorUtil.replaceColorCode(conf.getString("cooldown.message")
-                        .replace("<left>", cooldownTime + "")));
+            }
+            if (conf.getBoolean("break-between-messages.enable")) {
+                Server.getInstance().getScheduler().scheduleDelayedTask(null, () -> otherUtils.sendMessageToAll(" "), 1);
+            }
+        } else {
+            long cooldownTime = (time - (System.currentTimeMillis() - cooldown.get(p.getUniqueId()))) / 100;
+            e.setCancelled(true);
+            if (conf.getBoolean("break-between-messages.enable")) {
+                p.sendMessage(" ");
+            }
+            p.sendMessage(ColorUtil.replaceColorCode(conf.getString("cooldown.message")
+                    .replace("<left>", cooldownTime + "")));
         }
     }
 }
