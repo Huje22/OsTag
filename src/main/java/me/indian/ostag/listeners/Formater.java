@@ -129,7 +129,7 @@ public class Formater implements Listener {
         if (cooldown.containsKey(uuid)) {
             cooldownTime = (time - (System.currentTimeMillis() - cooldown.get(uuid))) / 1000;
         }
-        if (cooldownTime <= 0 ) {
+        if (cooldownTime <= 0) {
             cooldown.remove(uuid);
             return ColorUtil.replaceColorCode(plugin.getConfig().getString("cooldown.over"));
         }

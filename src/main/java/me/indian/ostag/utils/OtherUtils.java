@@ -11,7 +11,7 @@ public class OtherUtils {
     private static final String tru = "§etrue";
 
     public static String getOsTagStatus() {
-        boolean ostag = plugin.getConfig().getBoolean("OsTag");
+        final boolean ostag = plugin.getConfig().getBoolean("OsTag");
         String os = fal;
         if (ostag) {
             os = tru;
@@ -20,7 +20,7 @@ public class OtherUtils {
     }
 
     public static String getFormaterStatus() {
-        boolean chatFormater = plugin.getConfig().getBoolean("ChatFormater");
+        final boolean chatFormater = plugin.getConfig().getBoolean("ChatFormater");
         String forma = fal;
         if (chatFormater) {
             forma = tru;
@@ -29,7 +29,7 @@ public class OtherUtils {
     }
 
     public static String getLuckPermStatus() {
-        boolean lp = OsTag.luckPerm;
+        final boolean lp = OsTag.luckPerm;
         String luck = fal;
         if (lp) {
             luck = tru;
@@ -38,7 +38,7 @@ public class OtherUtils {
     }
 
     public static String getKotOrPapiStatus() {
-        boolean papko = OsTag.papKot;
+        final boolean papko = OsTag.papKot;
         String papkot = fal;
         if (papko) {
             papkot = tru;

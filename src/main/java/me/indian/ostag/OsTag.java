@@ -24,7 +24,8 @@ public class OsTag extends PluginBase {
     public static OsTag getInstance() {
         return instance;
     }
-    public Formater getFormater(){
+
+    public Formater getFormater() {
         return this.formater;
     }
 
@@ -50,7 +51,7 @@ public class OsTag extends PluginBase {
         getConfig().set("PowerNukkiX-movement-server", "change this to movement-server and set to true or false, see wiki for more instructions https://github.com/IndianBartonka/OsTag/wiki/For-nukkit-forks");
         getLogger().info(ColorUtil.replaceColorCode("&4If you used old versions, remove config to generate a new one!!!"));
         pm.registerEvents(new CpsListener(), this);
-        if(serverMovement) {
+        if (serverMovement) {
             pm.registerEvents(new InputListener(), this);
         }
         ((PluginCommand<?>) getCommand("ostag")).setExecutor(new OsTagCommand(this));
@@ -150,8 +151,8 @@ public class OsTag extends PluginBase {
                 .build();
     }
 
-    public void betaDetect(){
-        if (this.getDescription().getVersion().contains("Beta")){
+    public void betaDetect() {
+        if (this.getDescription().getVersion().contains("Beta")) {
             getLogger().warning(ColorUtil.replaceColorCode("&4You are running beta version, it may not be stable"));
         }
     }

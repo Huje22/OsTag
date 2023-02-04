@@ -24,7 +24,7 @@ public class OsTimer extends Task implements Runnable, Listener {
     @SuppressWarnings("unused")
     @EventHandler
     public void playerJoin(PlayerJoinEvent e) {
-        Player p = e.getPlayer();
+        final Player p = e.getPlayer();
         addOsTag(p);
     }
 

@@ -48,7 +48,7 @@ public class CpsListener implements Listener {
     @SuppressWarnings("unused")
     @EventHandler
     public void removeCps(PlayerQuitEvent e) {
-        Player p = e.getPlayer();
+        final Player p = e.getPlayer();
         cps.remove(p);
     }
 }

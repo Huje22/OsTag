@@ -35,7 +35,7 @@ public class OsTagCommand implements CommandExecutor {
         }
         if (sender.hasPermission("ostag.admin")) {
             if (args[0].equalsIgnoreCase("add")) {
-                Player cel = Server.getInstance().getPlayer(args[1]);
+                final Player cel = Server.getInstance().getPlayer(args[1]);
                 if (cel == null) {
                     sender.sendMessage(ColorUtil.replaceColorCode("&cplayer &6" + args[1] + "&c does not exist"));
                     return false;
