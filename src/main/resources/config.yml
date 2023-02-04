@@ -55,11 +55,13 @@ ChatFormater: true
 movement-server: true
 #
 #
+#--------------------------
+#   OsTag options
+#
 #Choose what is should be displayed
 ScoreTag: true
 NameTag: true
-#--------------------------
-#   OsTag options
+#
 #
 #Information refresh time in seconds
 refresh-time: 1
