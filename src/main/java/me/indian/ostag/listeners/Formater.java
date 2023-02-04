@@ -5,6 +5,7 @@ import cn.nukkit.Server;
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerChatEvent;
+import cn.nukkit.event.player.PlayerQuitEvent;
 import cn.nukkit.utils.Config;
 import cn.nukkit.utils.TextFormat;
 import com.creeperface.nukkit.placeholderapi.api.PlaceholderAPI;
@@ -18,7 +19,7 @@ import java.util.UUID;
 
 public class Formater implements Listener {
 
-    private final HashMap<UUID, Long> cooldown = new HashMap<>();
+    private static final HashMap<UUID, Long> cooldown = new HashMap<>();
     private final OtherUtils otherUtils = new OtherUtils();
     private final OsTag plugin;
 
@@ -112,6 +113,14 @@ public class Formater implements Listener {
             }
             p.sendMessage(ColorUtil.replaceColorCode(conf.getString("cooldown.message")
                     .replace("<left>", cooldownTime + "")));
+        }
+    }
+
+    @EventHandler
+    public void removeFromMap(PlayerQuitEvent e){
+        Player p = e.getPlayer();
+        if(cooldown.containsKey(p.getUniqueId())){
+            cooldown.remove(p.getUniqueId());
         }
     }
 }
