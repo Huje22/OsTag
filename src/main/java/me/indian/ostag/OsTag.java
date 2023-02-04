@@ -18,16 +18,21 @@ public class OsTag extends PluginBase {
     public static boolean luckPerm = false;
     public static boolean papKot = false;
     public static boolean serverMovement;
+    private Formater formater;
     private static OsTag instance;
 
     public static OsTag getInstance() {
         return instance;
+    }
+    public Formater getFormater(){
+        return this.formater;
     }
 
     @Override
     public void onEnable() {
         long millisActualTime = System.currentTimeMillis();
         instance = this;
+        this.formater = new Formater(this);
         PluginManager pm = getServer().getPluginManager();
         if (pm.getPlugin("LuckPerms") == null) {
             getLogger().warning(ColorUtil.replaceColorCode("&cYou don't have lucky perms , ChatFormating don't correctly work"));
@@ -122,8 +127,8 @@ public class OsTag extends PluginBase {
         api.builder(prefix + "cps", Integer.class)
                 .visitorLoader(entry -> CpsListener.getCPS(entry.getPlayer()))
                 .build();
-        api.builder(prefix + "test", String.class)
-                .visitorLoader(entry -> "test placeholder")
+        api.builder(prefix + "cooldown", String.class)
+                .visitorLoader(entry -> this.formater.cooldown(entry.getPlayer()))
                 .build();
         api.builder(prefix + "device", String.class)
                 .visitorLoader(entry -> PlayerInfoUtil.getDevice(entry.getPlayer()))

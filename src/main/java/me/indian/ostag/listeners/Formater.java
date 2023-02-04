@@ -34,9 +34,9 @@ public class Formater implements Listener {
     @SuppressWarnings("unused")
     @EventHandler
     public void playerChatFormat(PlayerChatEvent e) {
-        Player p = e.getPlayer();
+        final Player p = e.getPlayer();
         String msg = e.getMessage();
-        Config conf = plugin.getConfig();
+        final Config conf = plugin.getConfig();
         String wiad;
         String cenzor = plugin.getConfig().getString("censorship.word");
         //conzorship is a experimental option, maybe not good working
@@ -83,7 +83,6 @@ public class Formater implements Listener {
                             .replace("\n", " this action not allowed here ")
                     //message.format: "<prefix> <player> <suffix> >> <msg>
             );
-
         }
     }
 
@@ -91,10 +90,9 @@ public class Formater implements Listener {
     @EventHandler
     public void cooldownMessage(PlayerChatEvent e) {
         //cooldown is a experimental option, maybe not good working
-        Player p = e.getPlayer();
-        Config conf = plugin.getConfig();
-        long time = conf.getLong("cooldown.delay") * 100;
-
+        final Player p = e.getPlayer();
+        final Config conf = plugin.getConfig();
+        long time = conf.getLong("cooldown.delay") * 1000;
 
         if (!cooldown.containsKey(p.getUniqueId()) || System.currentTimeMillis() - cooldown.get(p.getUniqueId()) > time) {
             if (!(p.isOp())) {
@@ -106,7 +104,7 @@ public class Formater implements Listener {
                 Server.getInstance().getScheduler().scheduleDelayedTask(null, () -> otherUtils.sendMessageToAll(" "), 1);
             }
         } else {
-            long cooldownTime = (time - (System.currentTimeMillis() - cooldown.get(p.getUniqueId()))) / 100;
+            long cooldownTime = (time - (System.currentTimeMillis() - cooldown.get(p.getUniqueId()))) / 1000;
             e.setCancelled(true);
             if (conf.getBoolean("break-between-messages.enable")) {
                 p.sendMessage(" ");
@@ -117,10 +115,24 @@ public class Formater implements Listener {
     }
 
     @EventHandler
-    public void removeFromMap(PlayerQuitEvent e){
-        Player p = e.getPlayer();
-        if(cooldown.containsKey(p.getUniqueId())){
+    public void removeFromMap(PlayerQuitEvent e) {
+        final Player p = e.getPlayer();
+        if (cooldown.containsKey(p.getUniqueId())) {
             cooldown.remove(p.getUniqueId());
         }
+    }
+
+    public String cooldown(Player p) {
+        final UUID uuid = p.getUniqueId();
+        long time = plugin.getConfig().getLong("cooldown.delay") * 1000;
+        long cooldownTime = 0;
+        if (cooldown.containsKey(uuid)) {
+            cooldownTime = (time - (System.currentTimeMillis() - cooldown.get(uuid))) / 1000;
+        }
+        if (cooldownTime <= 0 ) {
+            cooldown.remove(uuid);
+            return ColorUtil.replaceColorCode(plugin.getConfig().getString("cooldown.over"));
+        }
+        return cooldownTime + "";
     }
 }

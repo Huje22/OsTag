@@ -101,7 +101,7 @@ Smal naming changes , check new config in github (https://github.com/IndianBarto
 you can choose whether to display name or score tag
 added food placeholders <food> and <food_max>
 now "breaks between messages" don't require enable cooldown
-
+Cooldown fix and cooldown placeholder %ostag_cooldown%
 
 
 

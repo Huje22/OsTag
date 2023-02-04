@@ -115,6 +115,7 @@ cooldown:
   enable: false
   delay: 10
   message: "&aYou must wait &b<left> &eSeconds&a!"
+  over: "&aYou can chat now"
 #--------------------------
 #     Messages and informations
 #
