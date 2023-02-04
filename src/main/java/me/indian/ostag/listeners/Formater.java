@@ -93,11 +93,13 @@ public class Formater implements Listener {
         Player p = e.getPlayer();
         Config conf = plugin.getConfig();
         long time = conf.getLong("cooldown.delay") * 100;
-        if (conf.getBoolean("cooldown.enable")) {
+
 
             if (!cooldown.containsKey(p.getUniqueId()) || System.currentTimeMillis() - cooldown.get(p.getUniqueId()) > time) {
                 if (!(p.isOp())) {
-                    cooldown.put(p.getUniqueId(), System.currentTimeMillis());
+                    if (conf.getBoolean("cooldown.enable")) {
+                        cooldown.put(p.getUniqueId(), System.currentTimeMillis());
+                    }
                 }
                 if (conf.getBoolean("break-between-messages.enable")) {
                     Server.getInstance().getScheduler().scheduleDelayedTask(null, () -> otherUtils.sendMessageToAll(" "), 1);
@@ -110,7 +112,6 @@ public class Formater implements Listener {
                 }
                 p.sendMessage(ColorUtil.replaceColorCode(conf.getString("cooldown.message")
                         .replace("<left>", cooldownTime + "")));
-            }
         }
     }
 }

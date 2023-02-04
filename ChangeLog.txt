@@ -100,7 +100,7 @@ added in <device> placeholder linux detect
 Smal naming changes , check new config in github (https://github.com/IndianBartonka/OsTag/blob/main/src/main/resources/config.yml)
 you can choose whether to display name or score tag
 added food placeholders <food> and <food_max>
-
+now "breaks between messages" don't require enable cooldown
 
 
 
