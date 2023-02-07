@@ -26,31 +26,39 @@ plugin.<br/>
 
 ## Requitmens
 
-Java **8** minimum</br>
-Nukkit api **1.0.14+** </br>
+  * Java **8** minimum</br>
+  * Nukkit api **1.0.14+** </br>
 
 ## Optional (Plugins)
 
-[LuckPerms](https://luckperms.net/download)   </br>
-[DeathSkulls](https://cloudburstmc.org/resources/deathskulls.858/)</br>
-[PlaceholderAPI](https://cloudburstmc.org/resources/placeholderapi.104/)
-& [KotlinLib](https://cloudburstmc.org/resources/kotlinlib.48/) </br>
+  * [LuckPerms](https://luckperms.net/download)   </br>
+  * [DeathSkulls](https://cloudburstmc.org/resources/deathskulls.858/)</br>
+  * [PlaceholderAPI](https://cloudburstmc.org/resources/placeholderapi.104/)
+with [KotlinLib](https://cloudburstmc.org/resources/kotlinlib.48/) </br>
 
-## Tested softwares
 
-[Nukkit](https://github.com/CloudburstMC/Nukkit) [Working good] </br>
-[Nukkit PetteriM1 Edition](https://github.com/PetteriM1/NukkitPetteriM1Edition/releases) [Working good]</br>
-[Power Nukkit X](https://github.com/PowerNukkitX/PowerNukkitX) [Working good]</br>
-
-# Beta  version
-
-[Beta 1.4.5](https://github.com/IndianBartonka/OsTag/releases/tag/1.5.4-Beta)
+## Features
+  * OsTag (name and scoretag)
+  * Chat formating (with luckperms plugin support)
+  * So many placeholders and PlaceholderAPI support
+  * So easy to configure
 
 ## Some links
 
-__Discord__: https://discord.gg/8fk27Jc9DF </br>
-__CloudBurst page:__ https://cloudburstmc.org/resources/ostag.836/ </br>
-__Wiki:__ https://github.com/IndianBartonka/OsTag/wiki
+  * __Discord__: https://discord.gg/Jfjhn4VXa7 </br>
+  * __CloudBurst page:__ https://cloudburstmc.org/resources/ostag.836/ </br>
+  * __Wiki:__ https://github.com/IndianBartonka/OsTag/wiki
+
+## Tested softwares
+
+  * [Nukkit](https://github.com/CloudburstMC/Nukkit) [Working good] </br>
+  * [Nukkit PetteriM1 Edition](https://github.com/PetteriM1/NukkitPetteriM1Edition/releases) [Working good]</br>
+  * [Power Nukkit X](https://github.com/PowerNukkitX/PowerNukkitX) [Working good]</br>
+
+# Beta  version
+
+  * [Beta 1.4.5](https://github.com/IndianBartonka/OsTag/releases/tag/1.5.4-Beta)
+
 
 ## Some informations
 
