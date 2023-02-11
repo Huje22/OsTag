@@ -1,8 +1,9 @@
-<div align="center"> 
+<div align="center">
 
-# OsTag Plugin for nukkit
+## OsTag Plugin for nukkit
 
-[![Discord](https://img.shields.io/discord/941850822885646366?color=7289da&logo=discord&logoColor=white&style=for-the-badge)](https://discord.gg/mF3TehkeG3)
+
+[![Discord](https://img.shields.io/discord/941850822885646366?color=7289da&logo=discord&logoColor=white&style=for-the-badge)](https://discord.gg/BkRHdxZrvM)
 [![License](https://img.shields.io/github/license/IndianBartonka/OsTag?style=for-the-badge)](https://github.com/IndianBartonka/OsTag/blob/main/License)
 ![Nukkit API support](https://img.shields.io/badge/Nukkit%20API-1.0.14-blueviolet?style=for-the-badge)</br>
 ![Libraries.io dependency status for GitHub repo](https://img.shields.io/librariesio/github/IndianBartonka/OsTag?style=for-the-badge)
@@ -18,74 +19,54 @@
 ![JDK8](https://github.com/intergrav/devins-badges/blob/v2/assets/cozy/built-with/java8_vector.svg?raw=true)
 ![Maven](https://github.com/intergrav/devins-badges/blob/v2/assets/cozy/built-with/maven_vector.svg)</br>
 [![PayPal](https://github.com/intergrav/devins-badges/blob/v2/assets/compact/donate/paypal-singular_vector.svg)](https://paypal.me/IndianPL)
-</br>
-This plugin is used to display information under the player's nickname. And for chat formatting with LuckPerms
-plugin.<br/>
-[Wiki](https://github.com/IndianBartonka/OsTag/wiki)
-</div> 
 
-## Requitmens
+This plugin is used to display information under the player's nickname. And for chat formatting with LuckPerms plugin.
 
-  * Java **8** minimum</br>
-  * Nukkit api **1.0.14+** </br>
+Don't know how to start? Just check the [wiki](https://github.com/OpenPlugins-Minecraft/OsTag/wiki) page!
 
-## Optional (Plugins)
+**[Join our Discord Server](https://discord.gg/BkRHdxZrvM) in progress**
 
-  * [LuckPerms](https://luckperms.net/download)   </br>
-  * [DeathSkulls](https://cloudburstmc.org/resources/deathskulls.858/)</br>
-  * [PlaceholderAPI](https://cloudburstmc.org/resources/placeholderapi.104/)
-with [KotlinLib](https://cloudburstmc.org/resources/kotlinlib.48/) </br>
+</div>
 
-
+----
 ## Features
   * OsTag (name and scoretag)
   * Chat formating (with luckperms plugin support)
-  * So many placeholders and PlaceholderAPI support
-  * So easy to configure
+  * Many placeholders and PlaceholderAPI support
+  * Easy to configure
+  * and many more...
 
-## Some links
+----
+## Requirements
+  * Java 8 minimum
+  * Nukkit api 1.0.14+
 
-  * __Discord__: https://discord.gg/Jfjhn4VXa7 </br>
-  * __CloudBurst page:__ https://cloudburstmc.org/resources/ostag.836/ </br>
-  * __Wiki:__ https://github.com/IndianBartonka/OsTag/wiki
-
+----
 ## Tested softwares
+  * Nukkit
+  * Nukkit PetteriM1's Edition 
+  * PowerNukkit X
 
-  * [Nukkit](https://github.com/CloudburstMC/Nukkit) [Working good] </br>
-  * [Nukkit PetteriM1 Edition](https://github.com/PetteriM1/NukkitPetteriM1Edition/releases) [Working good]</br>
-  * [Power Nukkit X](https://github.com/PowerNukkitX/PowerNukkitX) [Working good]</br>
+----
+## Informations
 
-# Beta  version
+  * Issues / bugs or suggestions please report on discord or in github issues
+  * If the configuration was not generated, use the plugin description
+  * If you can't set something Indian will probably help you (write on discord)
+  * I don't recomend building jar from this code , i recomend download latest version from releases , if in releases not contains version that would be compatible with the pom.xml version, I do not recommend building it this means that a new version is already in the works, but this may not always be the case, but if you need you can try to build it yourself
 
+----
+## Beta versions
   * [Beta 1.4.5](https://github.com/IndianBartonka/OsTag/releases/tag/1.5.4-Beta)
 
+----
+## Links
+* [Discord Server](https://discord.gg/BkRHdxZrvM)
+* [CloudBurst](https://cloudburstmc.org/resources/ostag.836/)
+* [Wiki](https://github.com/OpenPlugins-Minecraft/OsTag/wiki)
 
-## Some informations
+----
+## Inspirations
+  * https://github.com/mdisprgm/bdsx-ostag
 
-* Issues / bugs or suggestions please report on discord or in github issues
-* If the configuration was not generated, use the plugin description
-* If you can't set something Indian will probably help you (write on discord)
-* I don't recomend building jar from this code , i recomend download latest version from releases , if in releases not
-  contains version that would be compatible with the pom.xml version, I do not recommend building it this means that a
-  new version is already in the works, but this may not always be the case, but if you need you can try to build it
-  yourself
-
-## Inspration
-
-https://github.com/mdisprgm/bdsx-ostag
-
-## Server using OsTag
-
-<div align="center"> 
-
-[![bStats Servers](https://img.shields.io/bstats/servers/16838?style=for-the-badge)](https://bstats.org/plugin/bukkit/OsTagPNX-Nukkit/16838)
-[![bStats Players](https://img.shields.io/bstats/players/16838?style=for-the-badge)](https://bstats.org/plugin/bukkit/OsTagPNX-Nukkit/16838)
-[![Server using ostag](https://bstats.org/signatures/bukkit/OsTagPNX-Nukkit.svg)](https://bstats.org/plugin/bukkit/OsTagPNX-Nukkit/16838)
-</div> 
-
-
-<!--
-Unused
-[![Code size](https://img.shields.io/github/languages/code-size/IndianBartonka/OsTag?style=for-the-badge)](https://github.com/IndianBartonka/OsTag)
-
--->
+----
