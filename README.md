@@ -3,7 +3,7 @@
 ## OsTag Plugin for nukkit
 
 
-[![Discord](https://img.shields.io/discord/941850822885646366?color=7289da&logo=discord&logoColor=white&style=for-the-badge)](https://discord.gg/BkRHdxZrvM)
+[![Discord](https://img.shields.io/discord/1071413512414449666?color=7289da&logo=discord&logoColor=white&style=for-the-badge)](https://discord.gg/k69htTFCVk)
 [![License](https://img.shields.io/github/license/IndianBartonka/OsTag?style=for-the-badge)](https://github.com/IndianBartonka/OsTag/blob/main/License)
 ![Nukkit API support](https://img.shields.io/badge/Nukkit%20API-1.0.14-blueviolet?style=for-the-badge)</br>
 ![Libraries.io dependency status for GitHub repo](https://img.shields.io/librariesio/github/IndianBartonka/OsTag?style=for-the-badge)
@@ -24,7 +24,7 @@ This plugin is used to display information under the player's nickname. And for 
 
 Don't know how to start? Just check the [wiki](https://github.com/OpenPlugins-Minecraft/OsTag/wiki) page!
 
-**[Join our Discord Server](https://discord.gg/BkRHdxZrvM) in progress**
+**[Join our Discord Server](https://discord.gg/k69htTFCVk)
 
 </div>
 
@@ -61,7 +61,7 @@ Don't know how to start? Just check the [wiki](https://github.com/OpenPlugins-Mi
 
 ----
 ## Links
-* [Discord Server](https://discord.gg/BkRHdxZrvM)
+* [Discord Server](https://discord.gg/k69htTFCVk)
 * [CloudBurst](https://cloudburstmc.org/resources/ostag.836/)
 * [Wiki](https://github.com/OpenPlugins-Minecraft/OsTag/wiki)
 
