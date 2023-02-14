@@ -33,41 +33,41 @@ public class Formater implements Listener {
 
     @SuppressWarnings("unused")
     @EventHandler
-    public void playerChatFormat(PlayerChatEvent e) {
-        final Player p = e.getPlayer();
-        String msg = e.getMessage();
+    public void playerChatFormat(PlayerChatEvent event) {
+        final Player p =event.getPlayer();
+        String msg =event.getMessage();
         final Config conf = plugin.getConfig();
-        String wiad;
+        String mess;
         String cenzor = plugin.getConfig().getString("censorship.word");
         //conzorship is a experimental option, maybe not good working
         for (String czarnalista : plugin.getConfig().getStringList("BlackWords")) {
-            if (e.getMessage().toLowerCase().contains(czarnalista.toLowerCase())) {
-                if (e.getMessage().toLowerCase().contains("Huje22".toLowerCase())) {
+            if (event.getMessage().toLowerCase().contains(czarnalista.toLowerCase())) {
+                if (event.getMessage().toLowerCase().contains("Huje22".toLowerCase())) {
                     return;
                 }
             }
             if (plugin.getConfig().getBoolean("censorship.enable")) {
                 if (!(p.isOp())) {
-                    msg = e.getMessage().toLowerCase().replace(czarnalista.toLowerCase(), cenzor);
+                    msg =event.getMessage().toLowerCase().replace(czarnalista.toLowerCase(), cenzor);
                 }
-                e.setMessage(msg);
+               event.setMessage(msg);
             }
             if (p.hasPermission("ostag.admin") || p.hasPermission("ostag.colors") || conf.getBoolean("and-for-all")) {
-                wiad = TextFormat.colorize('&', e.getMessage());
+                mess = TextFormat.colorize('&',event.getMessage());
             } else {
-                wiad = e.getMessage();
+                mess =event.getMessage();
             }
-            e.setMessage(wiad);
+           event.setMessage(mess);
             String messageformat = ColorUtil.replaceColorCode(plugin.getConfig().getString("message-format"));
             if (OsTag.papKot) {
                 PlaceholderAPI api = PlaceholderAPI.getInstance();
                 messageformat = api.translateString(ColorUtil.replaceColorCode(conf.getString("message-format")), p);
             }
-            e.setFormat(messageformat
+           event.setFormat(messageformat
                             .replace("<name>", p.getDisplayName())
                             .replace("<suffix>", PlayerInfoUtil.getLuckPermSufix(p))
                             .replace("<prefix>", PlayerInfoUtil.getLuckPermPrefix(p))
-                            .replace("<msg>", e.getMessage())
+                            .replace("<msg>",event.getMessage())
                             .replace("<groupDisName>", PlayerInfoUtil.getLuckPermGroupDisName(p))
                             .replace("<device>", PlayerInfoUtil.getDevice(p))
                             .replace("<health>", p.getHealth() + "")
@@ -88,9 +88,9 @@ public class Formater implements Listener {
 
     @SuppressWarnings("unused")
     @EventHandler
-    public void cooldownMessage(PlayerChatEvent e) {
+    public void cooldownMessage(PlayerChatEvent event) {
         //cooldown is a experimental option, maybe not good working
-        final Player p = e.getPlayer();
+        final Player p =event.getPlayer();
         final Config conf = plugin.getConfig();
         long time = conf.getLong("cooldown.delay") * 1000;
 
@@ -105,7 +105,7 @@ public class Formater implements Listener {
             }
         } else {
             long cooldownTime = (time - (System.currentTimeMillis() - cooldown.get(p.getUniqueId()))) / 1000;
-            e.setCancelled(true);
+           event.setCancelled(true);
             if (conf.getBoolean("break-between-messages.enable")) {
                 p.sendMessage(" ");
             }
@@ -113,17 +113,17 @@ public class Formater implements Listener {
                     .replace("<left>", cooldownTime + "")));
         }
     }
-
+    @SuppressWarnings("unused")
     @EventHandler
-    public void removeFromMap(PlayerQuitEvent e) {
-        final Player p = e.getPlayer();
-        if (cooldown.containsKey(p.getUniqueId())) {
-            cooldown.remove(p.getUniqueId());
+    public void removeFromMap(PlayerQuitEvent event) {
+        final Player player = event.getPlayer();
+        if (cooldown.containsKey(player.getUniqueId())) {
+            cooldown.remove(player.getUniqueId());
         }
     }
 
-    public String cooldown(Player p) {
-        final UUID uuid = p.getUniqueId();
+    public String cooldown(Player player) {
+        final UUID uuid = player.getUniqueId();
         long time = plugin.getConfig().getLong("cooldown.delay") * 1000;
         long cooldownTime = 0;
         if (cooldown.containsKey(uuid)) {
@@ -133,6 +133,6 @@ public class Formater implements Listener {
             cooldown.remove(uuid);
             return ColorUtil.replaceColorCode(plugin.getConfig().getString("cooldown.over"));
         }
-        return cooldownTime + "";
+        return String.valueOf(cooldownTime);
     }
 }

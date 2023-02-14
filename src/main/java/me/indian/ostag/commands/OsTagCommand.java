@@ -35,18 +35,18 @@ public class OsTagCommand implements CommandExecutor {
         }
         if (sender.hasPermission("ostag.admin")) {
             if (args[0].equalsIgnoreCase("add")) {
-                final Player cel = Server.getInstance().getPlayer(args[1]);
-                if (cel == null) {
+                final Player target = Server.getInstance().getPlayer(args[1]);
+                if (target == null) {
                     sender.sendMessage(ColorUtil.replaceColorCode("&cplayer &6" + args[1] + "&c does not exist"));
                     return false;
                 }
-                if (advancedPlayers.contains(cel.getDisplayName())) {
-                    advancedPlayers.remove(cel.getDisplayName());
-                    sender.sendMessage(ColorUtil.replaceColorCode("&6" + cel.getDisplayName() + " &chas been removed from advanced player list"));
+                if (advancedPlayers.contains(target.getDisplayName())) {
+                    advancedPlayers.remove(target.getDisplayName());
+                    sender.sendMessage(ColorUtil.replaceColorCode("&6" + target.getDisplayName() + " &chas been removed from advanced player list"));
                     plugin.getConfig().set("advanced-players", advancedPlayers);
                 } else {
-                    advancedPlayers.add(cel.getDisplayName());
-                    sender.sendMessage(ColorUtil.replaceColorCode("&6" + cel.getDisplayName() + " &ahas been added to advanced player list"));
+                    advancedPlayers.add(target.getDisplayName());
+                    sender.sendMessage(ColorUtil.replaceColorCode("&6" + target.getDisplayName() + " &ahas been added to advanced player list"));
                     plugin.getConfig().set("advanced-players", advancedPlayers);
                 }
             }
@@ -57,11 +57,11 @@ public class OsTagCommand implements CommandExecutor {
                     sender.sendMessage(ColorUtil.replaceColorCode("&aConfig Reloaded"));
                     long executionTime = System.currentTimeMillis() - millisActualTime;
                     sender.sendMessage(ColorUtil.replaceColorCode("&aReloaded in &b" + executionTime + " &ams"));
-                } catch (Exception e) {
+                } catch (Exception exception) {
                     String error = ColorUtil.replaceColorCode("&cCan't reload config , check console to see error");
                     sender.sendMessage(error);
                     plugin.getLogger().warning(error);
-                    System.out.println(e + "");
+                    System.out.println(exception + "");
                 }
             }
             plugin.getConfig().save();

@@ -14,7 +14,7 @@ public class PlayerInfoUtil {
     private static final OsTag plugin = OsTag.getInstance();
     private static final Config conf = plugin.getConfig();
 
-    public static String getDevice(Player p) {
+    public static String getDevice(Player player) {
         String windows = ColorUtil.replaceColorCode(conf.getString("Windows"));
         String android = ColorUtil.replaceColorCode(conf.getString("Android"));
         String ios = ColorUtil.replaceColorCode(conf.getString("Ios"));
@@ -29,7 +29,7 @@ public class PlayerInfoUtil {
         String linux = ColorUtil.replaceColorCode(conf.getString("Linux"));
         String unknow = ColorUtil.replaceColorCode(conf.getString("Unknown"));
 
-        switch (p.getLoginChainData().getDeviceOS()) {
+        switch (player.getLoginChainData().getDeviceOS()) {
             case 1:
                 return android;
             case 2:
@@ -64,7 +64,7 @@ public class PlayerInfoUtil {
         }
     }
 
-    public static String getControler(Player p) {
+    public static String getControler(Player player) {
 
         String motion_controller = ColorUtil.replaceColorCode(conf.getString("motion_controller"));
         String dotyk = ColorUtil.replaceColorCode(conf.getString("touch"));
@@ -73,7 +73,7 @@ public class PlayerInfoUtil {
         String unknowcon = ColorUtil.replaceColorCode(conf.getString("UnknowControler"));
 
         if (OsTag.serverMovement) {
-            switch (InputListener.getControler(p)) {
+            switch (InputListener.getControler(player)) {
                 case "MOUSE":
                     return klawa;
                 case "TOUCH":
@@ -86,7 +86,7 @@ public class PlayerInfoUtil {
                     return unknowcon;
             }
         } else {
-            switch (p.getLoginChainData().getCurrentInputMode()) {
+            switch (player.getLoginChainData().getCurrentInputMode()) {
                 case 1:
                     return klawa;
                 case 2:
@@ -101,40 +101,40 @@ public class PlayerInfoUtil {
         }
     }
 
-    public static String getXp(Player p) {
+    public static String getXp(Player player) {
         String xp = "0";
-        if (p.getExperienceLevel() == 0) {
-            xp = ColorUtil.replaceColorCode(conf.getString("1lvl") + p.getExperienceLevel());
+        if (player.getExperienceLevel() == 0) {
+            xp = ColorUtil.replaceColorCode(conf.getString("1lvl") + player.getExperienceLevel());
         }
-        if (p.getExperienceLevel() >= 1) {
-            xp = ColorUtil.replaceColorCode(conf.getString("1lvl") + p.getExperienceLevel());
+        if (player.getExperienceLevel() >= 1) {
+            xp = ColorUtil.replaceColorCode(conf.getString("1lvl") + player.getExperienceLevel());
         }
-        if (p.getExperienceLevel() >= 10) {
-            xp = ColorUtil.replaceColorCode(conf.getString("10lvl") + p.getExperienceLevel());
+        if (player.getExperienceLevel() >= 10) {
+            xp = ColorUtil.replaceColorCode(conf.getString("10lvl") + player.getExperienceLevel());
         }
-        if (p.getExperienceLevel() >= 15) {
-            xp = ColorUtil.replaceColorCode(conf.getString("15lvl") + p.getExperienceLevel());
+        if (player.getExperienceLevel() >= 15) {
+            xp = ColorUtil.replaceColorCode(conf.getString("15lvl") + player.getExperienceLevel());
         }
-        if (p.getExperienceLevel() >= 20) {
-            xp = ColorUtil.replaceColorCode(conf.getString("20lvl") + p.getExperienceLevel());
+        if (player.getExperienceLevel() >= 20) {
+            xp = ColorUtil.replaceColorCode(conf.getString("20lvl") + player.getExperienceLevel());
         }
-        if (p.getExperienceLevel() >= 25) {
-            xp = ColorUtil.replaceColorCode(conf.getString("25lvl") + p.getExperienceLevel());
+        if (player.getExperienceLevel() >= 25) {
+            xp = ColorUtil.replaceColorCode(conf.getString("25lvl") + player.getExperienceLevel());
         }
-        if (p.getExperienceLevel() >= 30) {
-            xp = ColorUtil.replaceColorCode(conf.getString("30lvl") + p.getExperienceLevel());
+        if (player.getExperienceLevel() >= 30) {
+            xp = ColorUtil.replaceColorCode(conf.getString("30lvl") + player.getExperienceLevel());
         }
 
         return xp;
     }
 
-    public static String getGameMode(Player p) {
+    public static String getGameMode(Player player) {
         String survival = ColorUtil.replaceColorCode(conf.getString("survival"));
         String creative = ColorUtil.replaceColorCode(conf.getString("creative"));
         String adventure = ColorUtil.replaceColorCode(conf.getString("adventure"));
         String spectator = ColorUtil.replaceColorCode(conf.getString("spectator"));
 
-        switch (p.getGamemode()) {
+        switch (player.getGamemode()) {
             case 1:
                 return creative;
             case 2:
@@ -148,29 +148,29 @@ public class PlayerInfoUtil {
         }
     }
 
-    public static String getPing(Player p) {
+    public static String getPing(Player player) {
 
         String ping = ColorUtil.replaceColorCode("&r0");
-        if (p.getPing() >= 1) {
-            ping = ColorUtil.replaceColorCode(conf.getString("low-ping")) + p.getPing();
+        if (player.getPing() >= 1) {
+            ping = ColorUtil.replaceColorCode(conf.getString("low-ping")) + player.getPing();
         }
-        if (p.getPing() >= 75) {
-            ping = ColorUtil.replaceColorCode(conf.getString("medium-ping")) + p.getPing();
+        if (player.getPing() >= 75) {
+            ping = ColorUtil.replaceColorCode(conf.getString("medium-ping")) + player.getPing();
         }
-        if (p.getPing() >= 100) {
-            ping = ColorUtil.replaceColorCode(conf.getString("high-ping")) + p.getPing();
+        if (player.getPing() >= 100) {
+            ping = ColorUtil.replaceColorCode(conf.getString("high-ping")) + player.getPing();
         }
         return ping;
     }
 
-    public static String getLuckPermPrefix(Player p) {
+    public static String getLuckPermPrefix(Player player) {
 
         String pref = "";
 
         if (plugin.getServer().getPluginManager().getPlugin("LuckPerms") != null) {
 
             LuckPerms luckPerms = LuckPermsProvider.get();
-            User user = luckPerms.getPlayerAdapter(Player.class).getUser(p);
+            User user = luckPerms.getPlayerAdapter(Player.class).getUser(player);
 
             if (user.getCachedData().getMetaData().getPrefix() != null) {
                 pref = user.getCachedData().getMetaData().getPrefix();
@@ -179,11 +179,11 @@ public class PlayerInfoUtil {
         return ColorUtil.replaceColorCode(pref);
     }
 
-    public static String getLuckPermSufix(Player p) {
+    public static String getLuckPermSufix(Player player) {
         String suf = "";
         if (plugin.getServer().getPluginManager().getPlugin("LuckPerms") != null) {
             LuckPerms luckPerms = LuckPermsProvider.get();
-            User user = luckPerms.getPlayerAdapter(Player.class).getUser(p);
+            User user = luckPerms.getPlayerAdapter(Player.class).getUser(player);
             if (user.getCachedData().getMetaData().getSuffix() != null) {
                 suf = user.getCachedData().getMetaData().getSuffix();
             }
@@ -193,11 +193,11 @@ public class PlayerInfoUtil {
     }
 
     @SuppressWarnings("ConstantConditions")
-    public static String getLuckPermGroupDisName(Player p) {
+    public static String getLuckPermGroupDisName(Player player) {
         String group = "";
         if (plugin.getServer().getPluginManager().getPlugin("LuckPerms") != null) {
             LuckPerms luckPerms = LuckPermsProvider.get();
-            User user = luckPerms.getPlayerAdapter(Player.class).getUser(p);
+            User user = luckPerms.getPlayerAdapter(Player.class).getUser(player);
             if (luckPerms.getGroupManager().getGroup(user.getPrimaryGroup()).getDisplayName() != null) {
                 group = luckPerms.getGroupManager().getGroup(user.getPrimaryGroup()).getDisplayName();
             }
@@ -205,20 +205,20 @@ public class PlayerInfoUtil {
         return ColorUtil.replaceColorCode(group);
     }
 
-    public static String getXuid(Player p) {
+    public static String getXuid(Player player) {
         String xuid = ColorUtil.replaceColorCode(conf.getString("guest"));
-        if (p.getLoginChainData().getXUID() != null) {
-            xuid = p.getLoginChainData().getXUID();
+        if (player.getLoginChainData().getXUID() != null) {
+            xuid = player.getLoginChainData().getXUID();
         }
         return xuid;
     }
 
-    public static String getDimension(Player p) {
+    public static String getDimension(Player player) {
         String overworld = ColorUtil.replaceColorCode(conf.getString("overworld"));
         String nether = ColorUtil.replaceColorCode(conf.getString("nether"));
         String end = ColorUtil.replaceColorCode(conf.getString("end"));
 
-        switch (p.getLevel().getDimension()) {
+        switch (player.getLevel().getDimension()) {
             case 0:
                 return overworld;
             case 1:
@@ -230,9 +230,9 @@ public class PlayerInfoUtil {
         }
     }
 
-    public static String getPlayerUnique(Player p) {
+    public static String getPlayerUnique(Player player) {
         String unique;
-        String name = p.getDisplayName();
+        String name = player.getDisplayName();
 
         if (!(conf.getString("Players." + name + ".unique-description").isEmpty())) {
             unique = conf.getString("Players." + name + ".unique-description");

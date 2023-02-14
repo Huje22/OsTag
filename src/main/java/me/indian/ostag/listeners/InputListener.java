@@ -17,10 +17,10 @@ public class InputListener implements Listener {
 
     @SuppressWarnings("unused")
     @EventHandler
-    public void inputListener(DataPacketReceiveEvent e) {
-        if (e.getPacket() instanceof PlayerAuthInputPacket) {
-            InputMode inputMode = ((PlayerAuthInputPacket) e.getPacket()).getInputMode();
-            final Player player = e.getPlayer();
+    public void inputListener(DataPacketReceiveEvent event) {
+        if (event.getPacket() instanceof PlayerAuthInputPacket) {
+            InputMode inputMode = ((PlayerAuthInputPacket) event.getPacket()).getInputMode();
+            final Player player = event.getPlayer();
             //thanks to Petterim
             //https://github.com/PetteriM1
             controler.put(player, inputMode);
@@ -29,9 +29,9 @@ public class InputListener implements Listener {
 
     @SuppressWarnings("unused")
     @EventHandler
-    public void removeControl(PlayerQuitEvent e) {
-        final Player p = e.getPlayer();
-        controler.remove(p);
+    public void removeControl(PlayerQuitEvent event) {
+        final Player player = event.getPlayer();
+        controler.remove(player);
     }
 
     public static String getControler(Player p) {

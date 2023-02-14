@@ -17,81 +17,81 @@ public class OsTagAdd {
     private static String aSubTag = ColorUtil.replaceColorCode(plugin.getConfig().getString("a-subtag"));
     private static String aNick = ColorUtil.replaceColorCode(plugin.getConfig().getString("a-nick"));
 
-    public static void addDevNormal(Player p) {
+    public static void addDevNormal(Player player) {
         if (OsTag.papKot) {
             PlaceholderAPI api = PlaceholderAPI.getInstance();
-            subTag = api.translateString(ColorUtil.replaceColorCode(conf.getString("subtag")), p);
-            nick = api.translateString(ColorUtil.replaceColorCode(conf.getString("nick")), p);
+            subTag = api.translateString(ColorUtil.replaceColorCode(conf.getString("subtag")), player);
+            nick = api.translateString(ColorUtil.replaceColorCode(conf.getString("nick")), player);
         }
         if (conf.getBoolean("NameTag")) {
-            p.setNameTag(nick
-                    .replace("<name>", p.getDisplayName())
-                    .replace("<suffix>", getLuckPermSufix(p))
-                    .replace("<prefix>", getLuckPermPrefix(p))
-                    .replace("<groupDisName>", getLuckPermGroupDisName(p))
-                    .replace("<xp>", getXp(p))
-                    .replace("<unique-description>", getPlayerUnique(p))
+            player.setNameTag(nick
+                    .replace("<name>", player.getDisplayName())
+                    .replace("<suffix>", getLuckPermSufix(player))
+                    .replace("<prefix>", getLuckPermPrefix(player))
+                    .replace("<groupDisName>", getLuckPermGroupDisName(player))
+                    .replace("<xp>", getXp(player))
+                    .replace("<unique-description>", getPlayerUnique(player))
             );
         }
         if (conf.getBoolean("ScoreTag")) {
-            p.setScoreTag(subTag
-                    .replace("<device>", getDevice(p))
-                    .replace("<controler>", getControler(p))
-                    .replace("<health>", p.getHealth() + "")
-                    .replace("<max_health>", p.getMaxHealth() + "")
-                    .replace("<model>", p.getLoginChainData().getDeviceModel() + "")
-                    .replace("<food>", p.getFoodData().getLevel() / 2 + "")
-                    .replace("<max_food>", p.getFoodData().getMaxLevel() / 2 + "")
-                    .replace("<version>", p.getLoginChainData().getGameVersion())
-                    .replace("<xuid>", getXuid(p))
-                    .replace("<language>", p.getLoginChainData().getLanguageCode())
-                    .replace("<ping>", getPing(p))
-                    .replace("<suffix>", getLuckPermSufix(p))
-                    .replace("<preffix>", getLuckPermPrefix(p))
-                    .replace("<xp>", getXp(p))
-                    .replace("<cps>", String.valueOf(CpsListener.getCPS(p)))
-                    .replace("<gamemode>", getGameMode(p))
-                    .replace("<unique-description>", getPlayerUnique(p))
+            player.setScoreTag(subTag
+                    .replace("<device>", getDevice(player))
+                    .replace("<controler>", getControler(player))
+                    .replace("<health>", player.getHealth() + "")
+                    .replace("<max_health>", player.getMaxHealth() + "")
+                    .replace("<model>", player.getLoginChainData().getDeviceModel() + "")
+                    .replace("<food>", player.getFoodData().getLevel() / 2 + "")
+                    .replace("<max_food>", player.getFoodData().getMaxLevel() / 2 + "")
+                    .replace("<version>", player.getLoginChainData().getGameVersion())
+                    .replace("<xuid>", getXuid(player))
+                    .replace("<language>", player.getLoginChainData().getLanguageCode())
+                    .replace("<ping>", getPing(player))
+                    .replace("<suffix>", getLuckPermSufix(player))
+                    .replace("<preffix>", getLuckPermPrefix(player))
+                    .replace("<xp>", getXp(player))
+                    .replace("<cps>", String.valueOf(CpsListener.getCPS(player)))
+                    .replace("<gamemode>", getGameMode(player))
+                    .replace("<unique-description>", getPlayerUnique(player))
             );
         }
     }
 
-    public static void addDevAdvanced(Player p) {
+    public static void addDevAdvanced(Player player) {
         if (OsTag.papKot) {
             PlaceholderAPI api = PlaceholderAPI.getInstance();
-            aSubTag = api.translateString(ColorUtil.replaceColorCode(conf.getString("a-subtag")), p);
-            aNick = api.translateString(ColorUtil.replaceColorCode(conf.getString("a-nick")), p);
+            aSubTag = api.translateString(ColorUtil.replaceColorCode(conf.getString("a-subtag")), player);
+            aNick = api.translateString(ColorUtil.replaceColorCode(conf.getString("a-nick")), player);
         }
 
         if (conf.getBoolean("NameTag")) {
-            p.setNameTag(aNick
-                    .replace("<suffix>", getLuckPermSufix(p))
-                    .replace("<prefix>", getLuckPermPrefix(p))
-                    .replace("<name>", p.getDisplayName())
-                    .replace("<groupDisName>", getLuckPermGroupDisName(p))
-                    .replace("<xp>", getXp(p))
-                    .replace("<unique-description>", getPlayerUnique(p))
+            player.setNameTag(aNick
+                    .replace("<suffix>", getLuckPermSufix(player))
+                    .replace("<prefix>", getLuckPermPrefix(player))
+                    .replace("<name>", player.getDisplayName())
+                    .replace("<groupDisName>", getLuckPermGroupDisName(player))
+                    .replace("<xp>", getXp(player))
+                    .replace("<unique-description>", getPlayerUnique(player))
             );
         }
         if (conf.getBoolean("ScoreTag")) {
-            p.setScoreTag(aSubTag
-                    .replace("<device>", getDevice(p))
-                    .replace("<controler>", getControler(p))
-                    .replace("<health>", p.getHealth() + "")
-                    .replace("<max_health>", p.getMaxHealth() + "")
-                    .replace("<food>", p.getFoodData().getLevel() / 2 + "")
-                    .replace("<max_food>", p.getFoodData().getMaxLevel() / 2 + "")
-                    .replace("<model>", p.getLoginChainData().getDeviceModel() + "")
-                    .replace("<version>", p.getLoginChainData().getGameVersion())
-                    .replace("<xuid>", getXuid(p))
-                    .replace("<language>", p.getLoginChainData().getLanguageCode())
-                    .replace("<ping>", getPing(p))
-                    .replace("<suffix>", getLuckPermSufix(p))
-                    .replace("<preffix>", getLuckPermPrefix(p))
-                    .replace("<xp>", getXp(p))
-                    .replace("<cps>", String.valueOf(CpsListener.getCPS(p)))
-                    .replace("<gamemode>", getGameMode(p))
-                    .replace("<unique-description>", getPlayerUnique(p))
+            player.setScoreTag(aSubTag
+                    .replace("<device>", getDevice(player))
+                    .replace("<controler>", getControler(player))
+                    .replace("<health>", player.getHealth() + "")
+                    .replace("<max_health>", player.getMaxHealth() + "")
+                    .replace("<food>", player.getFoodData().getLevel() / 2 + "")
+                    .replace("<max_food>", player.getFoodData().getMaxLevel() / 2 + "")
+                    .replace("<model>", player.getLoginChainData().getDeviceModel() + "")
+                    .replace("<version>", player.getLoginChainData().getGameVersion())
+                    .replace("<xuid>", getXuid(player))
+                    .replace("<language>", player.getLoginChainData().getLanguageCode())
+                    .replace("<ping>", getPing(player))
+                    .replace("<suffix>", getLuckPermSufix(player))
+                    .replace("<preffix>", getLuckPermPrefix(player))
+                    .replace("<xp>", getXp(player))
+                    .replace("<cps>", String.valueOf(CpsListener.getCPS(player)))
+                    .replace("<gamemode>", getGameMode(player))
+                    .replace("<unique-description>", getPlayerUnique(player))
             );
         }
     }

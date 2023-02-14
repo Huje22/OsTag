@@ -16,31 +16,31 @@ public class OsTimer extends Task implements Runnable, Listener {
 
     @Override
     public void onRun(int i) {
-        for (Player p : Server.getInstance().getOnlinePlayers().values()) {
-            addOsTag(p);
+        for (Player all : Server.getInstance().getOnlinePlayers().values()) {
+            addOsTag(all);
         }
     }
 
     @SuppressWarnings("unused")
     @EventHandler
-    public void playerJoin(PlayerJoinEvent e) {
-        final Player p = e.getPlayer();
-        addOsTag(p);
+    public void playerJoin(PlayerJoinEvent event) {
+        final Player player = event.getPlayer();
+        addOsTag(player);
     }
 
-    private void addOsTag(Player p) {
+    private void addOsTag(Player player) {
         List<String> advancedPlayers = plugin.getConfig().getStringList("advanced-players");
         List<String> disabledWorld = plugin.getConfig().getStringList("disabled-worlds");
         for (String dis : disabledWorld) {
-            if (p.getLevel().getName().equalsIgnoreCase(dis)) {
+            if (player.getLevel().getName().equalsIgnoreCase(dis)) {
                 //disabled worlds is a experimental option, maybe not good working
                 return;
             }
         }
-        if (advancedPlayers.contains(p.getDisplayName())) {
-            OsTagAdd.addDevAdvanced(p);
+        if (advancedPlayers.contains(player.getDisplayName())) {
+            OsTagAdd.addDevAdvanced(player);
         } else {
-            OsTagAdd.addDevNormal(p);
+            OsTagAdd.addDevNormal(player);
         }
     }
 }
