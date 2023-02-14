@@ -34,8 +34,8 @@ public class Formater implements Listener {
     @SuppressWarnings("unused")
     @EventHandler
     public void playerChatFormat(PlayerChatEvent event) {
-        final Player p =event.getPlayer();
-        String msg =event.getMessage();
+        final Player p = event.getPlayer();
+        String msg = event.getMessage();
         final Config conf = plugin.getConfig();
         String mess;
         String cenzor = plugin.getConfig().getString("censorship.word");
@@ -48,26 +48,26 @@ public class Formater implements Listener {
             }
             if (plugin.getConfig().getBoolean("censorship.enable")) {
                 if (!(p.isOp())) {
-                    msg =event.getMessage().toLowerCase().replace(czarnalista.toLowerCase(), cenzor);
+                    msg = event.getMessage().toLowerCase().replace(czarnalista.toLowerCase(), cenzor);
                 }
-               event.setMessage(msg);
+                event.setMessage(msg);
             }
             if (p.hasPermission("ostag.admin") || p.hasPermission("ostag.colors") || conf.getBoolean("and-for-all")) {
-                mess = TextFormat.colorize('&',event.getMessage());
+                mess = TextFormat.colorize('&', event.getMessage());
             } else {
-                mess =event.getMessage();
+                mess = event.getMessage();
             }
-           event.setMessage(mess);
+            event.setMessage(mess);
             String messageformat = ColorUtil.replaceColorCode(plugin.getConfig().getString("message-format"));
             if (OsTag.papKot) {
                 PlaceholderAPI api = PlaceholderAPI.getInstance();
                 messageformat = api.translateString(ColorUtil.replaceColorCode(conf.getString("message-format")), p);
             }
-           event.setFormat(messageformat
+            event.setFormat(messageformat
                             .replace("<name>", p.getDisplayName())
                             .replace("<suffix>", PlayerInfoUtil.getLuckPermSufix(p))
                             .replace("<prefix>", PlayerInfoUtil.getLuckPermPrefix(p))
-                            .replace("<msg>",event.getMessage())
+                            .replace("<msg>", event.getMessage())
                             .replace("<groupDisName>", PlayerInfoUtil.getLuckPermGroupDisName(p))
                             .replace("<device>", PlayerInfoUtil.getDevice(p))
                             .replace("<health>", p.getHealth() + "")
@@ -90,7 +90,7 @@ public class Formater implements Listener {
     @EventHandler
     public void cooldownMessage(PlayerChatEvent event) {
         //cooldown is a experimental option, maybe not good working
-        final Player p =event.getPlayer();
+        final Player p = event.getPlayer();
         final Config conf = plugin.getConfig();
         long time = conf.getLong("cooldown.delay") * 1000;
 
@@ -105,7 +105,7 @@ public class Formater implements Listener {
             }
         } else {
             long cooldownTime = (time - (System.currentTimeMillis() - cooldown.get(p.getUniqueId()))) / 1000;
-           event.setCancelled(true);
+            event.setCancelled(true);
             if (conf.getBoolean("break-between-messages.enable")) {
                 p.sendMessage(" ");
             }
@@ -113,6 +113,7 @@ public class Formater implements Listener {
                     .replace("<left>", cooldownTime + "")));
         }
     }
+
     @SuppressWarnings("unused")
     @EventHandler
     public void removeFromMap(PlayerQuitEvent event) {
