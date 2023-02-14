@@ -1,6 +1,6 @@
 main: me.indian.ostag.OsTag
 name: OsTag
-author: IndianPL
+authors: [IndianPL , Techno Neziw]
 description: OsTag plugin
 version: '${project.version}'
 api: [ "1.0.14" ]
