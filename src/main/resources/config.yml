@@ -116,6 +116,7 @@ cooldown:
   delay: 10
   message: "&aYou must wait &b<left> &eSeconds&a!"
   over: "&aYou can chat now"
+  bypass: "&aYou have immune to cooldown"
 #--------------------------
 #     Messages and informations
 #
