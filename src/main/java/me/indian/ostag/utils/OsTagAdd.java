@@ -58,7 +58,7 @@ public class OsTagAdd {
 
     public static void addDevAdvanced(Player player) {
         if (OsTag.papKot) {
-            PlaceholderAPI api = PlaceholderAPI.getInstance();
+            final PlaceholderAPI api = PlaceholderAPI.getInstance();
             aSubTag = api.translateString(ColorUtil.replaceColorCode(conf.getString("a-subtag")), player);
             aNick = api.translateString(ColorUtil.replaceColorCode(conf.getString("a-nick")), player);
         }

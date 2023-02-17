@@ -46,7 +46,7 @@ public class OtherUtils {
         return papkot;
     }
 
-    public void sendMessageToAll(String msg) {
+    public static void sendMessageToAll(String msg) {
         for (Player all : Server.getInstance().getOnlinePlayers().values()) {
             all.sendMessage(msg);
         }

@@ -20,7 +20,6 @@ import java.util.UUID;
 public class Formater implements Listener {
 
     private static final HashMap<UUID, Long> cooldown = new HashMap<>();
-    private final OtherUtils otherUtils = new OtherUtils();
     private final OsTag plugin;
 
     public Formater(OsTag plugin) {
@@ -33,7 +32,7 @@ public class Formater implements Listener {
 
     @SuppressWarnings("unused")
     @EventHandler
-    public void playerChatFormat(PlayerChatEvent event) {
+    public void playerChatFormat(final PlayerChatEvent event) {
         final Player p = event.getPlayer();
         String msg = event.getMessage();
         final Config conf = plugin.getConfig();
@@ -88,7 +87,7 @@ public class Formater implements Listener {
 
     @SuppressWarnings("unused")
     @EventHandler
-    public void cooldownMessage(PlayerChatEvent event) {
+    public void cooldownMessage(final PlayerChatEvent event) {
         //cooldown is a experimental option, maybe not good working
         final Player player = event.getPlayer();
         final Config conf = plugin.getConfig();
@@ -101,7 +100,7 @@ public class Formater implements Listener {
                 }
             }
             if (conf.getBoolean("break-between-messages.enable")) {
-                Server.getInstance().getScheduler().scheduleDelayedTask(null, () -> otherUtils.sendMessageToAll(" "), 1);
+                Server.getInstance().getScheduler().scheduleDelayedTask(null, () -> OtherUtils.sendMessageToAll(" "), 1);
             }
         } else {
             long cooldownTime = (time - (System.currentTimeMillis() - cooldown.get(player.getUniqueId()))) / 1000;
@@ -116,21 +115,21 @@ public class Formater implements Listener {
 
     @SuppressWarnings("unused")
     @EventHandler
-    public void removeFromMap(PlayerQuitEvent event) {
+    public void removeFromMap(final PlayerQuitEvent event) {
         final Player player = event.getPlayer();
         if (cooldown.containsKey(player.getUniqueId())) {
             cooldown.remove(player.getUniqueId());
         }
     }
 
-    public String cooldown(Player player) {
+    public String cooldown(final Player player) {
         final UUID uuid = player.getUniqueId();
-        long time = plugin.getConfig().getLong("cooldown.delay") * 1000;
+        final long time = plugin.getConfig().getLong("cooldown.delay") * 1000;
         long cooldownTime = 0;
         if (cooldown.containsKey(uuid)) {
             cooldownTime = (time - (System.currentTimeMillis() - cooldown.get(uuid))) / 1000;
         }
-        if(player.isOp() || player.hasPermission("ostag.admin")){
+        if (player.isOp() || player.hasPermission("ostag.admin")) {
             return ColorUtil.replaceColorCode(plugin.getConfig().getString("cooldown.bypass"));
         }
         if (cooldownTime <= 0) {

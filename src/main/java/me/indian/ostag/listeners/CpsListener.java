@@ -19,7 +19,7 @@ public class CpsListener implements Listener {
     // witch permisions from author
     @SuppressWarnings("unused")
     @EventHandler
-    public void onPacket(DataPacketReceiveEvent event) {
+    public void onPacket(final DataPacketReceiveEvent event) {
         if (!(event.getPacket() instanceof LevelSoundEventPacket)) return;
         LevelSoundEventPacket packet = (LevelSoundEventPacket) event.getPacket();
         if (packet.sound != LevelSoundEventPacket.SOUND_ATTACK && packet.sound != LevelSoundEventPacket.SOUND_ATTACK_NODAMAGE &&
@@ -47,7 +47,7 @@ public class CpsListener implements Listener {
     // witch permisions from author
     @SuppressWarnings("unused")
     @EventHandler
-    public void removeCps(PlayerQuitEvent event) {
+    public void removeCps(final PlayerQuitEvent event) {
         final Player player = event.getPlayer();
         cps.remove(player);
     }

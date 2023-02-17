@@ -20,7 +20,7 @@ public class OsTagCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        List<String> advancedPlayers = plugin.getConfig().getStringList("advanced-players");
+        final List<String> advancedPlayers = plugin.getConfig().getStringList("advanced-players");
         if (args.length == 0) {
             sender.sendMessage(ColorUtil.replaceColorCode("&aUsage &b/ostag &8[version , reload , add <player>]"));
             return false;
@@ -52,12 +52,12 @@ public class OsTagCommand implements CommandExecutor {
             }
             if (args[0].equalsIgnoreCase("reload") || args[0].equalsIgnoreCase("r")) {
                 try {
-                    long millisActualTime = System.currentTimeMillis();
+                    final long millisActualTime = System.currentTimeMillis();
                     plugin.getConfig().reload();
                     sender.sendMessage(ColorUtil.replaceColorCode("&aConfig Reloaded"));
-                    long executionTime = System.currentTimeMillis() - millisActualTime;
+                    final long executionTime = System.currentTimeMillis() - millisActualTime;
                     sender.sendMessage(ColorUtil.replaceColorCode("&aReloaded in &b" + executionTime + " &ams"));
-                } catch (Exception exception) {
+                } catch (final Exception exception) {
                     String error = ColorUtil.replaceColorCode("&cCan't reload config , check console to see error");
                     sender.sendMessage(error);
                     plugin.getLogger().warning(error);

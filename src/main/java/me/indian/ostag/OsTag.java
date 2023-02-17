@@ -31,10 +31,10 @@ public class OsTag extends PluginBase {
 
     @Override
     public void onEnable() {
-        long millisActualTime = System.currentTimeMillis();
+        final long millisActualTime = System.currentTimeMillis();
         instance = this;
         this.formater = new Formater(this);
-        PluginManager pm = getServer().getPluginManager();
+        final PluginManager pm = getServer().getPluginManager();
         if (pm.getPlugin("LuckPerms") == null) {
             getLogger().warning(ColorUtil.replaceColorCode("&cYou don't have lucky perms , ChatFormating don't correctly work"));
         } else {
@@ -47,10 +47,10 @@ public class OsTag extends PluginBase {
             registerPlaceholders();
         }
         saveDefaultConfig();
-        if(getConfig().getBoolean("Disable")){
+        if (getConfig().getBoolean("Disable")) {
             getLogger().warning(ColorUtil.replaceColorCode("&4Disabling plugin due to disable in config"));
             this.getServer().getPluginManager().disablePlugin(this);
-        return;
+            return;
         }
         serverMovement = getConfig().getBoolean("movement-server");
         getLogger().info(ColorUtil.replaceColorCode("&4If you used old versions, remove config to generate a new one!!!"));
@@ -69,7 +69,6 @@ public class OsTag extends PluginBase {
                 getConfig().save();
                 getLogger().warning(ColorUtil.replaceColorCode("&cRefresh time must be higer than &b0 &c,we will set it up for you!"));
             }
-
             getServer().getScheduler().scheduleRepeatingTask(new OsTimer(), 20 * refreshTime);
         }
         if (this.getConfig().getBoolean("ChatFormater")) {
