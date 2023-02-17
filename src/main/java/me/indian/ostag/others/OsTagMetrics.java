@@ -112,6 +112,8 @@ public class OsTagMetrics {
                 return "Xbox One";
             case 14:
                 return "Windows Phone";
+            case 15:
+                return "Linux";
         }
         return "Unknown";
     }
