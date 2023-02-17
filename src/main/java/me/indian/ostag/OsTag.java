@@ -53,7 +53,6 @@ public class OsTag extends PluginBase {
         return;
         }
         serverMovement = getConfig().getBoolean("movement-server");
-        getConfig().set("PowerNukkiX-movement-server", "change this to movement-server and set to true or false, see wiki for more instructions https://github.com/IndianBartonka/OsTag/wiki/For-nukkit-forks");
         getLogger().info(ColorUtil.replaceColorCode("&4If you used old versions, remove config to generate a new one!!!"));
         pm.registerEvents(new CpsListener(), this);
         if (serverMovement) {
