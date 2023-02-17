@@ -38,11 +38,15 @@
 #--------------------------
 #       Modules
 #
+#If you don't want to remove the plugin but you don't want it to work enable this option
+Disable: false
+#
 #OsTag module
 OsTag: true
 #
 #ChatFormating module
 ChatFormater: true
+#
 #
 #when turn off some module restart server
 #--------------------------
