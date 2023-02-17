@@ -67,17 +67,17 @@ public class PlayerInfoUtil {
     public static String getControler(Player player) {
 
         String motion_controller = ColorUtil.replaceColorCode(conf.getString("motion_controller"));
-        String dotyk = ColorUtil.replaceColorCode(conf.getString("touch"));
-        String klawa = ColorUtil.replaceColorCode(conf.getString("keyboard"));
+        String touch = ColorUtil.replaceColorCode(conf.getString("touch"));
+        String keyboard = ColorUtil.replaceColorCode(conf.getString("keyboard"));
         String pad = ColorUtil.replaceColorCode(conf.getString("gamepad"));
         String unknowcon = ColorUtil.replaceColorCode(conf.getString("UnknowControler"));
 
         if (OsTag.serverMovement) {
             switch (InputListener.getControler(player)) {
                 case "MOUSE":
-                    return klawa;
+                    return keyboard;
                 case "TOUCH":
-                    return dotyk;
+                    return touch;
                 case "GAME_PAD":
                     return pad;
                 case "MOTION_CONTROLLER":
@@ -88,9 +88,9 @@ public class PlayerInfoUtil {
         } else {
             switch (player.getLoginChainData().getCurrentInputMode()) {
                 case 1:
-                    return klawa;
+                    return keyboard;
                 case 2:
-                    return dotyk;
+                    return touch;
                 case 3:
                     return pad;
                 case 4:
@@ -187,7 +187,6 @@ public class PlayerInfoUtil {
             if (user.getCachedData().getMetaData().getSuffix() != null) {
                 suf = user.getCachedData().getMetaData().getSuffix();
             }
-
         }
         return ColorUtil.replaceColorCode(suf);
     }
@@ -241,5 +240,4 @@ public class PlayerInfoUtil {
         }
         return ColorUtil.replaceColorCode(unique);
     }
-
 }
