@@ -13,6 +13,7 @@ public class PlayerInfoUtil {
 
     private static final OsTag plugin = OsTag.getInstance();
     private static final Config conf = plugin.getConfig();
+    private static final LuckPerms luckPerms = LuckPermsProvider.get();
 
     public static String getDevice(Player player) {
         String windows = ColorUtil.replaceColorCode(conf.getString("Windows"));
@@ -65,7 +66,6 @@ public class PlayerInfoUtil {
     }
 
     public static String getControler(Player player) {
-
         String motion_controller = ColorUtil.replaceColorCode(conf.getString("motion_controller"));
         String touch = ColorUtil.replaceColorCode(conf.getString("touch"));
         String keyboard = ColorUtil.replaceColorCode(conf.getString("keyboard"));
@@ -103,6 +103,7 @@ public class PlayerInfoUtil {
 
     public static String getXp(Player player) {
         String xp = "0";
+
         if (player.getExperienceLevel() == 0) {
             xp = ColorUtil.replaceColorCode(conf.getString("1lvl") + player.getExperienceLevel());
         }
@@ -149,8 +150,8 @@ public class PlayerInfoUtil {
     }
 
     public static String getPing(Player player) {
-
         String ping = ColorUtil.replaceColorCode("&r0");
+
         if (player.getPing() >= 1) {
             ping = ColorUtil.replaceColorCode(conf.getString("low-ping")) + player.getPing();
         }
@@ -164,14 +165,10 @@ public class PlayerInfoUtil {
     }
 
     public static String getLuckPermPrefix(Player player) {
-
         String pref = "";
 
         if (plugin.getServer().getPluginManager().getPlugin("LuckPerms") != null) {
-
-            LuckPerms luckPerms = LuckPermsProvider.get();
             User user = luckPerms.getPlayerAdapter(Player.class).getUser(player);
-
             if (user.getCachedData().getMetaData().getPrefix() != null) {
                 pref = user.getCachedData().getMetaData().getPrefix();
             }
@@ -181,8 +178,8 @@ public class PlayerInfoUtil {
 
     public static String getLuckPermSufix(Player player) {
         String suf = "";
+
         if (plugin.getServer().getPluginManager().getPlugin("LuckPerms") != null) {
-            LuckPerms luckPerms = LuckPermsProvider.get();
             User user = luckPerms.getPlayerAdapter(Player.class).getUser(player);
             if (user.getCachedData().getMetaData().getSuffix() != null) {
                 suf = user.getCachedData().getMetaData().getSuffix();
@@ -194,8 +191,8 @@ public class PlayerInfoUtil {
     @SuppressWarnings("ConstantConditions")
     public static String getLuckPermGroupDisName(Player player) {
         String group = "";
+
         if (plugin.getServer().getPluginManager().getPlugin("LuckPerms") != null) {
-            LuckPerms luckPerms = LuckPermsProvider.get();
             User user = luckPerms.getPlayerAdapter(Player.class).getUser(player);
             if (luckPerms.getGroupManager().getGroup(user.getPrimaryGroup()).getDisplayName() != null) {
                 group = luckPerms.getGroupManager().getGroup(user.getPrimaryGroup()).getDisplayName();
@@ -206,6 +203,7 @@ public class PlayerInfoUtil {
 
     public static String getXuid(Player player) {
         String xuid = ColorUtil.replaceColorCode(conf.getString("guest"));
+
         if (player.getLoginChainData().getXUID() != null) {
             xuid = player.getLoginChainData().getXUID();
         }
