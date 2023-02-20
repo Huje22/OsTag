@@ -90,7 +90,7 @@ changed "PowerNukkiX-movement-server" to "movement-server"
 **Released on the day xx.01.2023**
 1.5.4
 If you used old versions, remove config to generate a new one!!!
-Some code improvments
+Some code improvments and so many code style fixes
 Windows phone and gear vr removed from <device> placeholder , because not suported by mojang
 ``
 IMPORTANT NEWS:
