@@ -68,7 +68,7 @@ Don't know how to start? Just check the [wiki](https://github.com/OpenPlugins-Mi
 
 ## Beta versions
 
-* [Beta 1.4.5](https://github.com/OpenPlugins-Minecraft/OsTag/releases/tag/1.5.4-Beta)
+* [currently we not have some public or private beta versions](currently we not have some public or private beta versions)
 
 ----
 
