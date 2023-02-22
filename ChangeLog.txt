@@ -87,7 +87,7 @@ added in <gamemode> placeholder spectator detect
 code improvments
 added %ostag_group% placeholder to papi
 changed "PowerNukkiX-movement-server" to "movement-server"
-**Released on the day xx.01.2023**
+**Released on the day 22.02.2023**
 1.5.4
 If you used old versions, remove config to generate a new one!!!
 Some code improvments and so many code style fixes
