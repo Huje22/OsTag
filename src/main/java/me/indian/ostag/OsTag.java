@@ -49,7 +49,7 @@ public class OsTag extends PluginBase {
         saveDefaultConfig();
         if (getConfig().getBoolean("Disable")) {
             getLogger().warning(ColorUtil.replaceColorCode("&4Disabling plugin due to disable in config"));
-            this.getServer().getPluginManager().disablePlugin(this);
+            pm.disablePlugin(this);
             return;
         }
         serverMovement = getConfig().getBoolean("movement-server");
@@ -125,7 +125,7 @@ public class OsTag extends PluginBase {
         }
     }
 
-    public void registerPlaceholders() {
+    private void registerPlaceholders() {
         PlaceholderAPI api = PlaceholderAPI.getInstance();
         String prefix = "ostag_";
         api.builder(prefix + "cps", Integer.class)
@@ -154,8 +154,8 @@ public class OsTag extends PluginBase {
                 .build();
     }
 
-    public void betaDetect() {
-        if (this.getDescription().getVersion().contains("Beta")) {
+    private void betaDetect() {
+        if (this.getDescription().getVersion().contains("Beta") || this.getDescription().getVersion().contains("beta")) {
             getLogger().warning(ColorUtil.replaceColorCode("&4You are running beta version, it may not be stable"));
         }
     }
