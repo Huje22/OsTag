@@ -6,7 +6,7 @@
 
     <groupId>me.indian.pl</groupId>
     <artifactId>OsTag</artifactId>
-    <version>1.5.4</version>
+    <version>1.5.5-Beta</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
