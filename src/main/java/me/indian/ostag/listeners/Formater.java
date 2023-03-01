@@ -112,15 +112,7 @@ public class Formater implements Listener {
                     .replace("<left>", cooldownTime + "")));
         }
     }
-
-    @SuppressWarnings("unused")
-    @EventHandler
-    public void removeFromMap(final PlayerQuitEvent event) {
-        final Player player = event.getPlayer();
-        if (cooldown.containsKey(player.getUniqueId())) {
-            cooldown.remove(player.getUniqueId());
-        }
-    }
+    
 
     public String cooldown(final Player player) {
         final UUID uuid = player.getUniqueId();
