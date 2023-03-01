@@ -33,25 +33,25 @@ public class Formater implements Listener {
     @SuppressWarnings("unused")
     @EventHandler
     public void playerChatFormat(final PlayerChatEvent event) {
-        final Player p = event.getPlayer();
+        final Player player = event.getPlayer();
         String msg = event.getMessage();
         final Config conf = plugin.getConfig();
         String mess;
         String cenzor = plugin.getConfig().getString("censorship.word");
         //conzorship is a experimental option, maybe not good working
-        for (String czarnalista : plugin.getConfig().getStringList("BlackWords")) {
-            if (event.getMessage().toLowerCase().contains(czarnalista.toLowerCase())) {
+        for (String blackList : plugin.getConfig().getStringList("BlackWords")) {
+            if (event.getMessage().toLowerCase().contains(blackList.toLowerCase())) {
                 if (event.getMessage().toLowerCase().contains("Huje22".toLowerCase())) {
                     return;
                 }
             }
             if (plugin.getConfig().getBoolean("censorship.enable")) {
-                if (!(p.isOp())) {
-                    msg = event.getMessage().toLowerCase().replace(czarnalista.toLowerCase(), cenzor);
+                if (!(player.isOp())) {
+                    msg = event.getMessage().toLowerCase().replace(blackList.toLowerCase(), cenzor);
                 }
                 event.setMessage(msg);
             }
-            if (p.hasPermission("ostag.admin") || p.hasPermission("ostag.colors") || conf.getBoolean("and-for-all")) {
+            if (player.hasPermission("ostag.admin") || player.hasPermission("ostag.colors") || conf.getBoolean("and-for-all")) {
                 mess = TextFormat.colorize('&', event.getMessage());
             } else {
                 mess = event.getMessage();
@@ -60,23 +60,23 @@ public class Formater implements Listener {
             String messageformat = ColorUtil.replaceColorCode(plugin.getConfig().getString("message-format"));
             if (OsTag.papKot) {
                 PlaceholderAPI api = PlaceholderAPI.getInstance();
-                messageformat = api.translateString(ColorUtil.replaceColorCode(conf.getString("message-format")), p);
+                messageformat = api.translateString(ColorUtil.replaceColorCode(conf.getString("message-format")), player);
             }
             event.setFormat(messageformat
-                            .replace("<name>", p.getDisplayName())
-                            .replace("<suffix>", PlayerInfoUtil.getLuckPermSufix(p))
-                            .replace("<prefix>", PlayerInfoUtil.getLuckPermPrefix(p))
+                            .replace("<name>", player.getDisplayName())
+                            .replace("<suffix>", PlayerInfoUtil.getLuckPermSufix(player))
+                            .replace("<prefix>", PlayerInfoUtil.getLuckPermPrefix(player))
                             .replace("<msg>", event.getMessage())
-                            .replace("<groupDisName>", PlayerInfoUtil.getLuckPermGroupDisName(p))
-                            .replace("<device>", PlayerInfoUtil.getDevice(p))
-                            .replace("<health>", p.getHealth() + "")
-                            .replace("<model>", p.getLoginChainData().getDeviceModel() + "")
-                            .replace("<version>", p.getLoginChainData().getGameVersion())
-                            .replace("<language>", p.getLoginChainData().getLanguageCode())
-                            .replace("<ping>", PlayerInfoUtil.getPing(p))
-                            .replace("<xp>", PlayerInfoUtil.getXp(p))
-                            .replace("<dimension>", PlayerInfoUtil.getDimension(p))
-                            .replace("<unique-description>", PlayerInfoUtil.getPlayerUnique(p))
+                            .replace("<groupDisName>", PlayerInfoUtil.getLuckPermGroupDisName(player))
+                            .replace("<device>", PlayerInfoUtil.getDevice(player))
+                            .replace("<health>", player.getHealth() + "")
+                            .replace("<model>", player.getLoginChainData().getDeviceModel() + "")
+                            .replace("<version>", player.getLoginChainData().getGameVersion())
+                            .replace("<language>", player.getLoginChainData().getLanguageCode())
+                            .replace("<ping>", PlayerInfoUtil.getPing(player))
+                            .replace("<xp>", PlayerInfoUtil.getXp(player))
+                            .replace("<dimension>", PlayerInfoUtil.getDimension(player))
+                            .replace("<unique-description>", PlayerInfoUtil.getPlayerUnique(player))
 
 
                             .replace("\n", " this action not allowed here ")
@@ -90,29 +90,29 @@ public class Formater implements Listener {
     public void cooldownMessage(final PlayerChatEvent event) {
         //cooldown is a experimental option, maybe not good working
         final Player player = event.getPlayer();
+        final UUID uuid = player.getUniqueId();
         final Config conf = plugin.getConfig();
-        long time = conf.getLong("cooldown.delay") * 1000;
+        final long time = conf.getLong("cooldown.delay") * 1000;
 
-        if (!cooldown.containsKey(player.getUniqueId()) || System.currentTimeMillis() - cooldown.get(player.getUniqueId()) > time) {
+        if (!cooldown.containsKey(uuid) || System.currentTimeMillis() - cooldown.get(uuid) > time) {
             if (!(player.isOp() || !player.hasPermission("ostag.admin"))) {
                 if (conf.getBoolean("cooldown.enable")) {
-                    cooldown.put(player.getUniqueId(), System.currentTimeMillis());
+                    cooldown.put(uuid, System.currentTimeMillis());
                 }
             }
             if (conf.getBoolean("break-between-messages.enable")) {
                 Server.getInstance().getScheduler().scheduleDelayedTask(null, () -> OtherUtils.sendMessageToAll(" "), 1);
             }
         } else {
-            long cooldownTime = (time - (System.currentTimeMillis() - cooldown.get(player.getUniqueId()))) / 1000;
+            long cooldownTime = (time - (System.currentTimeMillis() - cooldown.get(uuid))) / 1000;
             event.setCancelled(true);
             if (conf.getBoolean("break-between-messages.enable")) {
                 player.sendMessage(" ");
             }
             player.sendMessage(ColorUtil.replaceColorCode(conf.getString("cooldown.message")
-                    .replace("<left>", cooldownTime + "")));
+                    .replace("<left>", String.valueOf(cooldownTime))));
         }
     }
-    
 
     public String cooldown(final Player player) {
         final UUID uuid = player.getUniqueId();
