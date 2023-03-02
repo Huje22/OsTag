@@ -1,6 +1,6 @@
 package me.indian.ostag.utils;
 
-public interface PrefixesUtil {
+public interface Prefixes {
     String NAME = "<name>";
     String PING = "<ping>";
     String HEALTH = "<health>";

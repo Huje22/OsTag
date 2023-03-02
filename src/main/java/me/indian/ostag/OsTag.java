@@ -13,7 +13,10 @@ import me.indian.ostag.listeners.CpsListener;
 import me.indian.ostag.listeners.Formater;
 import me.indian.ostag.listeners.InputListener;
 import me.indian.ostag.others.OsTagMetrics;
-import me.indian.ostag.utils.*;
+import me.indian.ostag.utils.ColorUtil;
+import me.indian.ostag.utils.OsTimer;
+import me.indian.ostag.utils.OtherUtils;
+import me.indian.ostag.utils.PlayerInfoUtil;
 
 public class OsTag extends PluginBase {
 
@@ -164,7 +167,8 @@ public class OsTag extends PluginBase {
             getLogger().warning(ColorUtil.replaceColorCode("&4You are running beta version, it may not be stable"));
         }
     }
-    private void someNewInfo(){
+
+    private void someNewInfo() {
         getLogger().warning(ColorUtil.replaceColorCode("&4If you used old versions, remove config to generate a new one!!!"));
         getLogger().info(ColorUtil.replaceColorCode("&aNow we have so many naming fixes, see changelog "));
     }

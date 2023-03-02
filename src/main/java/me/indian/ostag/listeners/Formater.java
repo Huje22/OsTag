@@ -11,7 +11,7 @@ import me.indian.ostag.OsTag;
 import me.indian.ostag.utils.ColorUtil;
 import me.indian.ostag.utils.OtherUtils;
 import me.indian.ostag.utils.PlayerInfoUtil;
-import me.indian.ostag.utils.PrefixesUtil;
+import me.indian.ostag.utils.Prefixes;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -62,20 +62,20 @@ public class Formater implements Listener {
                 messageformat = api.translateString(ColorUtil.replaceColorCode(conf.getString("message-format")), player);
             }
             event.setFormat(messageformat
-                            .replace(PrefixesUtil.NAME, player.getDisplayName())
-                            .replace(PrefixesUtil.SUFFIX, PlayerInfoUtil.getLuckPermSuffix(player))
-                            .replace(PrefixesUtil.PREFFIX, PlayerInfoUtil.getLuckPermPreffix(player))
-                            .replace(PrefixesUtil.MSG, event.getMessage())
-                            .replace(PrefixesUtil.GROUPDISPLAYNAME, PlayerInfoUtil.getLuckPermGroupDisName(player))
-                            .replace(PrefixesUtil.DEVICE, PlayerInfoUtil.getDevice(player))
-                            .replace(PrefixesUtil.HEALTH,String.valueOf(player.getHealth()))
-                            .replace(PrefixesUtil.MODEL, player.getLoginChainData().getDeviceModel())
-                            .replace(PrefixesUtil.VERSION, player.getLoginChainData().getGameVersion())
-                            .replace(PrefixesUtil.LANGUAGE, player.getLoginChainData().getLanguageCode())
-                            .replace(PrefixesUtil.PING, PlayerInfoUtil.getPing(player))
-                            .replace(PrefixesUtil.XP, PlayerInfoUtil.getXp(player))
-                            .replace(PrefixesUtil.DIMENSION, PlayerInfoUtil.getDimension(player))
-                            .replace(PrefixesUtil.UNIQUE_DESCRIPTION, PlayerInfoUtil.getPlayerUnique(player))
+                            .replace(Prefixes.NAME, player.getDisplayName())
+                            .replace(Prefixes.SUFFIX, PlayerInfoUtil.getLuckPermSuffix(player))
+                            .replace(Prefixes.PREFFIX, PlayerInfoUtil.getLuckPermPreffix(player))
+                            .replace(Prefixes.MSG, event.getMessage())
+                            .replace(Prefixes.GROUPDISPLAYNAME, PlayerInfoUtil.getLuckPermGroupDisName(player))
+                            .replace(Prefixes.DEVICE, PlayerInfoUtil.getDevice(player))
+                            .replace(Prefixes.HEALTH, String.valueOf(player.getHealth()))
+                            .replace(Prefixes.MODEL, player.getLoginChainData().getDeviceModel())
+                            .replace(Prefixes.VERSION, player.getLoginChainData().getGameVersion())
+                            .replace(Prefixes.LANGUAGE, player.getLoginChainData().getLanguageCode())
+                            .replace(Prefixes.PING, PlayerInfoUtil.getPing(player))
+                            .replace(Prefixes.XP, PlayerInfoUtil.getXp(player))
+                            .replace(Prefixes.DIMENSION, PlayerInfoUtil.getDimension(player))
+                            .replace(Prefixes.UNIQUE_DESCRIPTION, PlayerInfoUtil.getPlayerUnique(player))
 
 
                             .replace("\n", " this action not allowed here ")

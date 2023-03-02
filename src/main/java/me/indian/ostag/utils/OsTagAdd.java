@@ -25,33 +25,33 @@ public class OsTagAdd {
         }
         if (conf.getBoolean("NameTag")) {
             player.setNameTag(nick
-                    .replace(PrefixesUtil.NAME, player.getDisplayName())
-                    .replace(PrefixesUtil.SUFFIX, getLuckPermSuffix(player))
-                    .replace(PrefixesUtil.PREFFIX, getLuckPermPreffix(player))
-                    .replace(PrefixesUtil.GROUPDISPLAYNAME, getLuckPermGroupDisName(player))
-                    .replace(PrefixesUtil.XP, getXp(player))
-                    .replace(PrefixesUtil.UNIQUE_DESCRIPTION, getPlayerUnique(player))
+                    .replace(Prefixes.NAME, player.getDisplayName())
+                    .replace(Prefixes.SUFFIX, getLuckPermSuffix(player))
+                    .replace(Prefixes.PREFFIX, getLuckPermPreffix(player))
+                    .replace(Prefixes.GROUPDISPLAYNAME, getLuckPermGroupDisName(player))
+                    .replace(Prefixes.XP, getXp(player))
+                    .replace(Prefixes.UNIQUE_DESCRIPTION, getPlayerUnique(player))
             );
         }
         if (conf.getBoolean("ScoreTag")) {
             player.setScoreTag(subTag
-                    .replace(PrefixesUtil.DEVICE, getDevice(player))
-                    .replace(PrefixesUtil.CONTROLLER, getController(player))
-                    .replace(PrefixesUtil.HEALTH, player.getHealth() + "")
-                    .replace(PrefixesUtil.MAX_HEALTH, player.getMaxHealth() + "")
-                    .replace(PrefixesUtil.MODEL, player.getLoginChainData().getDeviceModel() + "")
-                    .replace(PrefixesUtil.FOOD, player.getFoodData().getLevel() / 2 + "")
-                    .replace(PrefixesUtil.MAX_FOOD, player.getFoodData().getMaxLevel() / 2 + "")
-                    .replace(PrefixesUtil.VERSION, player.getLoginChainData().getGameVersion())
-                    .replace(PrefixesUtil.XUID, getXuid(player))
-                    .replace(PrefixesUtil.LANGUAGE, player.getLoginChainData().getLanguageCode())
-                    .replace(PrefixesUtil.PING, getPing(player))
-                    .replace(PrefixesUtil.SUFFIX, getLuckPermSuffix(player))
-                    .replace(PrefixesUtil.PREFFIX, getLuckPermPreffix(player))
-                    .replace(PrefixesUtil.XP, getXp(player))
-                    .replace(PrefixesUtil.CPS, String.valueOf(CpsListener.getCPS(player)))
-                    .replace(PrefixesUtil.GAMEMODE, getGameMode(player))
-                    .replace(PrefixesUtil.UNIQUE_DESCRIPTION, getPlayerUnique(player))
+                    .replace(Prefixes.DEVICE, getDevice(player))
+                    .replace(Prefixes.CONTROLLER, getController(player))
+                    .replace(Prefixes.HEALTH, player.getHealth() + "")
+                    .replace(Prefixes.MAX_HEALTH, player.getMaxHealth() + "")
+                    .replace(Prefixes.MODEL, player.getLoginChainData().getDeviceModel() + "")
+                    .replace(Prefixes.FOOD, player.getFoodData().getLevel() / 2 + "")
+                    .replace(Prefixes.MAX_FOOD, player.getFoodData().getMaxLevel() / 2 + "")
+                    .replace(Prefixes.VERSION, player.getLoginChainData().getGameVersion())
+                    .replace(Prefixes.XUID, getXuid(player))
+                    .replace(Prefixes.LANGUAGE, player.getLoginChainData().getLanguageCode())
+                    .replace(Prefixes.PING, getPing(player))
+                    .replace(Prefixes.SUFFIX, getLuckPermSuffix(player))
+                    .replace(Prefixes.PREFFIX, getLuckPermPreffix(player))
+                    .replace(Prefixes.XP, getXp(player))
+                    .replace(Prefixes.CPS, String.valueOf(CpsListener.getCPS(player)))
+                    .replace(Prefixes.GAMEMODE, getGameMode(player))
+                    .replace(Prefixes.UNIQUE_DESCRIPTION, getPlayerUnique(player))
             );
         }
     }
@@ -65,33 +65,33 @@ public class OsTagAdd {
 
         if (conf.getBoolean("NameTag")) {
             player.setNameTag(aNick
-                    .replace(PrefixesUtil.SUFFIX, getLuckPermSuffix(player))
-                    .replace(PrefixesUtil.PREFFIX, getLuckPermPreffix(player))
-                    .replace(PrefixesUtil.NAME, player.getDisplayName())
-                    .replace(PrefixesUtil.GROUPDISPLAYNAME, getLuckPermGroupDisName(player))
-                    .replace(PrefixesUtil.XP, getXp(player))
-                    .replace(PrefixesUtil.UNIQUE_DESCRIPTION, getPlayerUnique(player))
+                    .replace(Prefixes.SUFFIX, getLuckPermSuffix(player))
+                    .replace(Prefixes.PREFFIX, getLuckPermPreffix(player))
+                    .replace(Prefixes.NAME, player.getDisplayName())
+                    .replace(Prefixes.GROUPDISPLAYNAME, getLuckPermGroupDisName(player))
+                    .replace(Prefixes.XP, getXp(player))
+                    .replace(Prefixes.UNIQUE_DESCRIPTION, getPlayerUnique(player))
             );
         }
         if (conf.getBoolean("ScoreTag")) {
             player.setScoreTag(aSubTag
-                    .replace(PrefixesUtil.DEVICE, getDevice(player))
-                    .replace(PrefixesUtil.CONTROLLER, getController(player))
-                    .replace(PrefixesUtil.HEALTH, player.getHealth() + "")
-                    .replace(PrefixesUtil.MAX_HEALTH, player.getMaxHealth() + "")
-                    .replace(PrefixesUtil.FOOD, player.getFoodData().getLevel() / 2 + "")
-                    .replace(PrefixesUtil.MAX_FOOD, player.getFoodData().getMaxLevel() / 2 + "")
-                    .replace(PrefixesUtil.MODEL, player.getLoginChainData().getDeviceModel() + "")
-                    .replace(PrefixesUtil.VERSION, player.getLoginChainData().getGameVersion())
-                    .replace(PrefixesUtil.XUID, getXuid(player))
-                    .replace(PrefixesUtil.LANGUAGE, player.getLoginChainData().getLanguageCode())
-                    .replace(PrefixesUtil.PING, getPing(player))
-                    .replace(PrefixesUtil.SUFFIX, getLuckPermSuffix(player))
-                    .replace(PrefixesUtil.PREFFIX, getLuckPermPreffix(player))
-                    .replace(PrefixesUtil.XP, getXp(player))
-                    .replace(PrefixesUtil.CPS, String.valueOf(CpsListener.getCPS(player)))
-                    .replace(PrefixesUtil.GAMEMODE, getGameMode(player))
-                    .replace(PrefixesUtil.UNIQUE_DESCRIPTION, getPlayerUnique(player))
+                    .replace(Prefixes.DEVICE, getDevice(player))
+                    .replace(Prefixes.CONTROLLER, getController(player))
+                    .replace(Prefixes.HEALTH, player.getHealth() + "")
+                    .replace(Prefixes.MAX_HEALTH, player.getMaxHealth() + "")
+                    .replace(Prefixes.FOOD, player.getFoodData().getLevel() / 2 + "")
+                    .replace(Prefixes.MAX_FOOD, player.getFoodData().getMaxLevel() / 2 + "")
+                    .replace(Prefixes.MODEL, player.getLoginChainData().getDeviceModel() + "")
+                    .replace(Prefixes.VERSION, player.getLoginChainData().getGameVersion())
+                    .replace(Prefixes.XUID, getXuid(player))
+                    .replace(Prefixes.LANGUAGE, player.getLoginChainData().getLanguageCode())
+                    .replace(Prefixes.PING, getPing(player))
+                    .replace(Prefixes.SUFFIX, getLuckPermSuffix(player))
+                    .replace(Prefixes.PREFFIX, getLuckPermPreffix(player))
+                    .replace(Prefixes.XP, getXp(player))
+                    .replace(Prefixes.CPS, String.valueOf(CpsListener.getCPS(player)))
+                    .replace(Prefixes.GAMEMODE, getGameMode(player))
+                    .replace(Prefixes.UNIQUE_DESCRIPTION, getPlayerUnique(player))
             );
         }
     }
