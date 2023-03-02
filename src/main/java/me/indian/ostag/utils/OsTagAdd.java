@@ -26,8 +26,8 @@ public class OsTagAdd {
         if (conf.getBoolean("NameTag")) {
             player.setNameTag(nick
                     .replace("<name>", player.getDisplayName())
-                    .replace("<suffix>", getLuckPermSufix(player))
-                    .replace("<prefix>", getLuckPermPrefix(player))
+                    .replace("<suffix>", getLuckPermSuffix(player))
+                    .replace("<preffix>", getLuckPermPreffix(player))
                     .replace("<groupDisName>", getLuckPermGroupDisName(player))
                     .replace("<xp>", getXp(player))
                     .replace("<unique-description>", getPlayerUnique(player))
@@ -36,7 +36,7 @@ public class OsTagAdd {
         if (conf.getBoolean("ScoreTag")) {
             player.setScoreTag(subTag
                     .replace("<device>", getDevice(player))
-                    .replace("<controler>", getControler(player))
+                    .replace("<controller>", getController(player))
                     .replace("<health>", player.getHealth() + "")
                     .replace("<max_health>", player.getMaxHealth() + "")
                     .replace("<model>", player.getLoginChainData().getDeviceModel() + "")
@@ -46,8 +46,8 @@ public class OsTagAdd {
                     .replace("<xuid>", getXuid(player))
                     .replace("<language>", player.getLoginChainData().getLanguageCode())
                     .replace("<ping>", getPing(player))
-                    .replace("<suffix>", getLuckPermSufix(player))
-                    .replace("<preffix>", getLuckPermPrefix(player))
+                    .replace("<suffix>", getLuckPermSuffix(player))
+                    .replace("<preffix>", getLuckPermPreffix(player))
                     .replace("<xp>", getXp(player))
                     .replace("<cps>", String.valueOf(CpsListener.getCPS(player)))
                     .replace("<gamemode>", getGameMode(player))
@@ -65,8 +65,8 @@ public class OsTagAdd {
 
         if (conf.getBoolean("NameTag")) {
             player.setNameTag(aNick
-                    .replace("<suffix>", getLuckPermSufix(player))
-                    .replace("<prefix>", getLuckPermPrefix(player))
+                    .replace("<suffix>", getLuckPermSuffix(player))
+                    .replace("<preffix>", getLuckPermPreffix(player))
                     .replace("<name>", player.getDisplayName())
                     .replace("<groupDisName>", getLuckPermGroupDisName(player))
                     .replace("<xp>", getXp(player))
@@ -76,7 +76,7 @@ public class OsTagAdd {
         if (conf.getBoolean("ScoreTag")) {
             player.setScoreTag(aSubTag
                     .replace("<device>", getDevice(player))
-                    .replace("<controler>", getControler(player))
+                    .replace("<controller>", getController(player))
                     .replace("<health>", player.getHealth() + "")
                     .replace("<max_health>", player.getMaxHealth() + "")
                     .replace("<food>", player.getFoodData().getLevel() / 2 + "")
@@ -86,8 +86,8 @@ public class OsTagAdd {
                     .replace("<xuid>", getXuid(player))
                     .replace("<language>", player.getLoginChainData().getLanguageCode())
                     .replace("<ping>", getPing(player))
-                    .replace("<suffix>", getLuckPermSufix(player))
-                    .replace("<preffix>", getLuckPermPrefix(player))
+                    .replace("<suffix>", getLuckPermSuffix(player))
+                    .replace("<preffix>", getLuckPermPreffix(player))
                     .replace("<xp>", getXp(player))
                     .replace("<cps>", String.valueOf(CpsListener.getCPS(player)))
                     .replace("<gamemode>", getGameMode(player))

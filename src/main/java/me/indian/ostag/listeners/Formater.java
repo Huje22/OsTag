@@ -5,7 +5,6 @@ import cn.nukkit.Server;
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerChatEvent;
-import cn.nukkit.event.player.PlayerQuitEvent;
 import cn.nukkit.utils.Config;
 import cn.nukkit.utils.TextFormat;
 import com.creeperface.nukkit.placeholderapi.api.PlaceholderAPI;
@@ -52,7 +51,7 @@ public class Formater implements Listener {
                 event.setMessage(msg);
             }
             if (player.hasPermission("ostag.admin") || player.hasPermission("ostag.colors") || conf.getBoolean("and-for-all")) {
-                mess = TextFormat.colorize('&', event.getMessage());
+                mess = ColorUtil.replaceColorCode(event.getMessage());
             } else {
                 mess = event.getMessage();
             }
@@ -64,8 +63,8 @@ public class Formater implements Listener {
             }
             event.setFormat(messageformat
                             .replace("<name>", player.getDisplayName())
-                            .replace("<suffix>", PlayerInfoUtil.getLuckPermSufix(player))
-                            .replace("<prefix>", PlayerInfoUtil.getLuckPermPrefix(player))
+                            .replace("<suffix>", PlayerInfoUtil.getLuckPermSuffix(player))
+                            .replace("<preffix>", PlayerInfoUtil.getLuckPermPreffix(player))
                             .replace("<msg>", event.getMessage())
                             .replace("<groupDisName>", PlayerInfoUtil.getLuckPermGroupDisName(player))
                             .replace("<device>", PlayerInfoUtil.getDevice(player))
@@ -92,10 +91,10 @@ public class Formater implements Listener {
         final Player player = event.getPlayer();
         final UUID uuid = player.getUniqueId();
         final Config conf = plugin.getConfig();
-        final long time = conf.getLong("cooldown.delay") * 1000;
+         long time = conf.getLong("cooldown.delay") * 1000;
 
         if (!cooldown.containsKey(uuid) || System.currentTimeMillis() - cooldown.get(uuid) > time) {
-            if (!(player.isOp() || !player.hasPermission("ostag.admin"))) {
+            if (!player.isOp() || !player.hasPermission("ostag.admin")) {
                 if (conf.getBoolean("cooldown.enable")) {
                     cooldown.put(uuid, System.currentTimeMillis());
                 }

@@ -65,7 +65,7 @@ public class PlayerInfoUtil {
         }
     }
 
-    public static String getControler(Player player) {
+    public static String getController(Player player) {
         String motion_controller = ColorUtil.replaceColorCode(conf.getString("motion_controller"));
         String touch = ColorUtil.replaceColorCode(conf.getString("touch"));
         String keyboard = ColorUtil.replaceColorCode(conf.getString("keyboard"));
@@ -164,7 +164,7 @@ public class PlayerInfoUtil {
         return ping;
     }
 
-    public static String getLuckPermPrefix(Player player) {
+    public static String getLuckPermPreffix(Player player) {
         String pref = "";
 
         if (plugin.getServer().getPluginManager().getPlugin("LuckPerms") != null) {
@@ -176,7 +176,7 @@ public class PlayerInfoUtil {
         return ColorUtil.replaceColorCode(pref);
     }
 
-    public static String getLuckPermSufix(Player player) {
+    public static String getLuckPermSuffix(Player player) {
         String suf = "";
 
         if (plugin.getServer().getPluginManager().getPlugin("LuckPerms") != null) {

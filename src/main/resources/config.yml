@@ -21,11 +21,11 @@
 # <gamemode> - player gamemode [OsTag]
 # <msg> - player message [ChatFormater]
 # <suffix> | %ostag_suffix% - player group sufix (Luck Perms Required) [OsTag | ChatFormater] \\name\\
-# <prefix> | %ostag_prefix% - player group prefix (Luck Perms Required) [OsTag | ChatFormater] \\name\\
-# <groupDisName> | %ostag_group% - player group dispalya mame (Luck Perms Required) [OsTag | ChatFormater] \\name only\\
+# <preffix> | %ostag_preffix% - player group prefix (Luck Perms Required) [OsTag | ChatFormater] \\name\\
+# <groupDisName> | %ostag_group% - player group display mame (Luck Perms Required) [OsTag | ChatFormater] \\name only\\
 # <model> - device model [OsTag | ChatFormater]
 # <device> | %ostag_device% - player device [OsTag | ChatFormater]
-# <controler> | %ostag_controler%  - Player controls [OsTag ]
+# <controller> | %ostag_controller%  - Player controls [OsTag ]
 # <version> | %ostag_version% - Player game version version [OsTag | ChatFormater]
 # <xuid> - get player xuid [OsTag]
 # <language> - player Language [OsTag | ChatFormater]
@@ -73,12 +73,12 @@ refresh-time: 1
 #
 #Normal Player
 nick: "%factions_faction% <unique-description><xp> <groupDisName> <name> <suffix> "
-subtag: "%factions_faction% <device> | <controler> \n&eDevice Model: &r<model>\n&eGamemode: &r<gamemode>\n&eCps: &r<cps>  &ePing: <ping> &eXp: <xp> \n&eGame Version: &r<version> \n\n&eXuid: &r<xuid>\n\n&eLanguage: &r<language>\n<health>/<max_health>&c❤"
+subtag: "%factions_faction% <device> | <controller> \n&eDevice Model: &r<model>\n&eGamemode: &r<gamemode>\n&eCps: &r<cps>  &ePing: <ping> &eXp: <xp> \n&eGame Version: &r<version> \n\n&eXuid: &r<xuid>\n\n&eLanguage: &r<language>\n<health>/<max_health>&c❤"
 #
 #
 #Advanced Player
 a-nick: "%factions_faction% <unique-description><xp> <groupDisName> <name> <suffix> "
-a-subtag: "<food>/<max_food> \n%factions_faction% <device> | <controler>\n&eCps: &r<cps>  &ePing: <ping>\n<health>/<max_health>&c❤\n&eXp: <xp>\n&eGame Version: &r<version>"
+a-subtag: "<food>/<max_food> \n%factions_faction% <device> | <controller>\n&eCps: &r<cps>  &ePing: <ping>\n<health>/<max_health>&c❤\n&eXp: <xp>\n&eGame Version: &r<version>"
 advanced-players:
   - "ExamplePlayer"
 #
@@ -90,7 +90,7 @@ disabled-worlds:
 #    Formater options
 #
 #Message format
-message-format: "%factions_faction% <prefix> &r<name> &r» <msg>"
+message-format: "%factions_faction% <preffix> &r<name> &r» <msg>"
 #
 #
 #If this option set to true everyone can use & by default instead of §

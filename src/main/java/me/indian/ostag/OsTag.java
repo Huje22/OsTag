@@ -1,8 +1,10 @@
 package me.indian.ostag;
 
+import cn.nukkit.Server;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.command.PluginCommand;
 import cn.nukkit.plugin.PluginBase;
+import cn.nukkit.plugin.PluginDescription;
 import cn.nukkit.plugin.PluginManager;
 import com.creeperface.nukkit.placeholderapi.api.PlaceholderAPI;
 import me.indian.ostag.commands.OsTagCommand;
@@ -36,7 +38,7 @@ public class OsTag extends PluginBase {
         this.formater = new Formater(this);
         final PluginManager pm = getServer().getPluginManager();
         if (pm.getPlugin("LuckPerms") == null) {
-            getLogger().warning(ColorUtil.replaceColorCode("&cYou don't have lucky perms , ChatFormating don't correctly work"));
+            getLogger().warning(ColorUtil.replaceColorCode("&cYou don't have lucky perms , ChatFormatting don't correctly work"));
         } else {
             luckPerm = true;
         }
@@ -53,7 +55,7 @@ public class OsTag extends PluginBase {
             return;
         }
         serverMovement = getConfig().getBoolean("movement-server");
-        getLogger().info(ColorUtil.replaceColorCode("&4If you used old versions, remove config to generate a new one!!!"));
+        someNewInfo();
         pm.registerEvents(new CpsListener(), this);
         if (serverMovement) {
             pm.registerEvents(new InputListener(), this);
@@ -83,19 +85,22 @@ public class OsTag extends PluginBase {
 
 
     public void sendOnEnableInfo(String type, CommandSender sender) {
-        String ver = this.getDescription().getVersion();
-        String aut = String.valueOf(this.getDescription().getAuthors());
-        String verNuk = this.getServer().getNukkitVersion();
-        String servVer = this.getServer().getVersion();
-        String apiVer = this.getServer().getApiVersion();
+        PluginDescription descriptor = this.getDescription();
+        Server server = this.getServer();
+
+        String pluginVersion = descriptor.getVersion();
+        String authors = String.valueOf(descriptor.getAuthors()).replace("[", "").replace("]", "");
+        String nukkitVersion = server.getNukkitVersion();
+        String serverVersion = server.getVersion();
+        String apiVersion = server.getApiVersion();
         switch (type) {
             case "admin":
                 sender.sendMessage(ColorUtil.replaceColorCode("&b-------------------------------"));
-                sender.sendMessage(ColorUtil.replaceColorCode("&aOsTag version:&3 " + ver));
-                sender.sendMessage(ColorUtil.replaceColorCode("&aPlugin by:&6 " + aut.replace("[", "").replace("]", "")));
-                sender.sendMessage(ColorUtil.replaceColorCode("&aNukkit Version:&3 " + verNuk));
-                sender.sendMessage(ColorUtil.replaceColorCode("&aNukkit Api Version:&3 " + apiVer));
-                sender.sendMessage(ColorUtil.replaceColorCode("&aServer Version:&3 " + servVer));
+                sender.sendMessage(ColorUtil.replaceColorCode("&aOsTag version:&3 " + pluginVersion));
+                sender.sendMessage(ColorUtil.replaceColorCode("&aPlugin by:&6 " + authors));
+                sender.sendMessage(ColorUtil.replaceColorCode("&aNukkit Version:&3 " + nukkitVersion));
+                sender.sendMessage(ColorUtil.replaceColorCode("&aNukkit Api Version:&3 " + apiVersion));
+                sender.sendMessage(ColorUtil.replaceColorCode("&aServer Version:&3 " + serverVersion));
                 sender.sendMessage(ColorUtil.replaceColorCode(" "));
                 sender.sendMessage(ColorUtil.replaceColorCode("&1Modules"));
                 sender.sendMessage(ColorUtil.replaceColorCode("&aFormater&3: " + OtherUtils.getFormaterStatus()));
@@ -109,9 +114,9 @@ public class OsTag extends PluginBase {
                 break;
             case "normal":
                 sender.sendMessage(ColorUtil.replaceColorCode("&b-------------------------------"));
-                sender.sendMessage(ColorUtil.replaceColorCode("&aOsTag version:&3 " + ver));
-                sender.sendMessage(ColorUtil.replaceColorCode("&aPlugin by:&6 " + aut.replace("[", "").replace("]", "")));
-                sender.sendMessage(ColorUtil.replaceColorCode("&aServer Version:&3 " + servVer));
+                sender.sendMessage(ColorUtil.replaceColorCode("&aOsTag version:&3 " + pluginVersion));
+                sender.sendMessage(ColorUtil.replaceColorCode("&aPlugin by:&6 " + authors));
+                sender.sendMessage(ColorUtil.replaceColorCode("&aServer Version:&3 " + serverVersion));
                 sender.sendMessage(ColorUtil.replaceColorCode(" "));
                 sender.sendMessage(ColorUtil.replaceColorCode("&1Modules"));
                 sender.sendMessage(ColorUtil.replaceColorCode("&aFormater&3: " + OtherUtils.getFormaterStatus()));
@@ -120,7 +125,7 @@ public class OsTag extends PluginBase {
                 sender.sendMessage(ColorUtil.replaceColorCode("&b-------------------------------"));
                 break;
             default:
-                sender.sendMessage("Unknow OnEnableInfo type");
+                sender.sendMessage("Unknown OnEnableInfo type");
                 break;
         }
     }
@@ -132,19 +137,19 @@ public class OsTag extends PluginBase {
                 .visitorLoader(entry -> CpsListener.getCPS(entry.getPlayer()))
                 .build();
         api.builder(prefix + "cooldown", String.class)
-                .visitorLoader(entry -> this.formater.cooldown(entry.getPlayer()))
+                .visitorLoader(entry -> getFormater().cooldown(entry.getPlayer()))
                 .build();
         api.builder(prefix + "device", String.class)
                 .visitorLoader(entry -> PlayerInfoUtil.getDevice(entry.getPlayer()))
                 .build();
-        api.builder(prefix + "controler", String.class)
-                .visitorLoader(entry -> PlayerInfoUtil.getControler(entry.getPlayer()))
+        api.builder(prefix + "controller", String.class)
+                .visitorLoader(entry -> PlayerInfoUtil.getController(entry.getPlayer()))
                 .build();
-        api.builder(prefix + "prefix", String.class)
-                .visitorLoader(entry -> PlayerInfoUtil.getLuckPermPrefix(entry.getPlayer()))
+        api.builder(prefix + "preffix", String.class)
+                .visitorLoader(entry -> PlayerInfoUtil.getLuckPermPreffix(entry.getPlayer()))
                 .build();
         api.builder(prefix + "suffix", String.class)
-                .visitorLoader(entry -> PlayerInfoUtil.getLuckPermSufix(entry.getPlayer()))
+                .visitorLoader(entry -> PlayerInfoUtil.getLuckPermSuffix(entry.getPlayer()))
                 .build();
         api.builder(prefix + "group", String.class)
                 .visitorLoader(entry -> PlayerInfoUtil.getLuckPermGroupDisName(entry.getPlayer()))
@@ -158,5 +163,9 @@ public class OsTag extends PluginBase {
         if (this.getDescription().getVersion().contains("Beta") || this.getDescription().getVersion().contains("beta")) {
             getLogger().warning(ColorUtil.replaceColorCode("&4You are running beta version, it may not be stable"));
         }
+    }
+    private void someNewInfo(){
+        getLogger().warning(ColorUtil.replaceColorCode("&4If you used old versions, remove config to generate a new one!!!"));
+        getLogger().info(ColorUtil.replaceColorCode("&aNow we have so many naming fixes, see changelog "));
     }
 }
