@@ -31,6 +31,7 @@
 # <language> - player Language [OsTag | ChatFormater]
 # <cps> | %ostag_cps% - left click per second counter [OsTag]
 # <unique_description> - player unique description from config [OsTag | ChatFormater] \\name\\
+# %ostag_cooldown% - chat cooldown seconds info
 #if in the description of the placeholders any one contains \\name\\ it means that it can be used in the player's name in ostag
 # for better work dont use | , only use \n
 #placeholders with <> have a specific place of use but those with %% can be used everywhere and outside the plugin, of course if you have the placeholder api
@@ -119,6 +120,7 @@ cooldown:
   delay: 10
   message: "&aYou must wait &b<left> &eSeconds&a!"
   over: "&aYou can chat now"
+  disabled: "&aCooldown now is disabled"
   bypass: "&aYou have immune to cooldown"
 #--------------------------
 #     Messages and informations

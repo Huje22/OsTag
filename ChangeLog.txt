@@ -105,5 +105,9 @@ Cooldown fix and cooldown placeholder %ostag_cooldown%
 **Released on the day xx.02.2023**
 1.5.5
 Code style fixes and efficency
-Fixed naming <controler> and %ostag_controler% to <controller> %ostag_controller% and also fixed <preffix> and %ostag_preffix%
+Fixed naming <controler> and %ostag_controler% to <controller> %ostag_controller% and also fixed <preffix> and %ostag_preffix% and <unique_description>
 Cooldown fix
+Added "PrefixesUtil" interface to faster changing plugin placeholder naming (my first interface ~IndianPL)
+Cooldown disable info
+
+
