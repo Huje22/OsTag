@@ -5,6 +5,7 @@ import cn.nukkit.Server;
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandExecutor;
 import cn.nukkit.command.CommandSender;
+import cn.nukkit.utils.Config;
 import me.indian.ostag.OsTag;
 import me.indian.ostag.utils.ColorUtil;
 
@@ -20,7 +21,8 @@ public class OsTagCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        final List<String> advancedPlayers = plugin.getConfig().getStringList("advanced-players");
+        final Config conf = plugin.getConfig();
+        final List<String> advancedPlayers = conf.getStringList("advanced-players");
         if (args.length == 0) {
             sender.sendMessage(ColorUtil.replaceColorCode("&aUsage &b/ostag &8[version , reload , add <player>]"));
             return false;
@@ -43,17 +45,17 @@ public class OsTagCommand implements CommandExecutor {
                 if (advancedPlayers.contains(target.getDisplayName())) {
                     advancedPlayers.remove(target.getDisplayName());
                     sender.sendMessage(ColorUtil.replaceColorCode("&6" + target.getDisplayName() + " &chas been removed from advanced player list"));
-                    plugin.getConfig().set("advanced-players", advancedPlayers);
+                    conf.set("advanced-players", advancedPlayers);
                 } else {
                     advancedPlayers.add(target.getDisplayName());
                     sender.sendMessage(ColorUtil.replaceColorCode("&6" + target.getDisplayName() + " &ahas been added to advanced player list"));
-                    plugin.getConfig().set("advanced-players", advancedPlayers);
+                    conf.set("advanced-players", advancedPlayers);
                 }
             }
             if (args[0].equalsIgnoreCase("reload") || args[0].equalsIgnoreCase("r")) {
                 try {
                     final long millisActualTime = System.currentTimeMillis();
-                    plugin.getConfig().reload();
+                    conf.reload();
                     sender.sendMessage(ColorUtil.replaceColorCode("&aConfig Reloaded"));
                     final long executionTime = System.currentTimeMillis() - millisActualTime;
                     sender.sendMessage(ColorUtil.replaceColorCode("&aReloaded in &b" + executionTime + " &ams"));
@@ -64,7 +66,7 @@ public class OsTagCommand implements CommandExecutor {
                     System.out.println(exception + "");
                 }
             }
-            plugin.getConfig().save();
+            conf.save();
         } else {
             sender.sendMessage(ColorUtil.replaceColorCode("&cYou don't have permisions"));
         }
