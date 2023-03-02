@@ -30,8 +30,7 @@
 # <xuid> - get player xuid [OsTag]
 # <language> - player Language [OsTag | ChatFormater]
 # <cps> | %ostag_cps% - left click per second counter [OsTag]
-# <dimension> - get player dimension [ChatFormater]
-# <unique-description> - player unique description from config [OsTag | ChatFormater] \\name\\
+# <unique_description> - player unique description from config [OsTag | ChatFormater] \\name\\
 #if in the description of the placeholders any one contains \\name\\ it means that it can be used in the player's name in ostag
 # for better work dont use | , only use \n
 #placeholders with <> have a specific place of use but those with %% can be used everywhere and outside the plugin, of course if you have the placeholder api
@@ -72,13 +71,13 @@ refresh-time: 1
 #
 #
 #Normal Player
-nick: "%factions_faction% <unique-description><xp> <groupDisName> <name> <suffix> "
-subtag: "%factions_faction% <device> | <controller> \n&eDevice Model: &r<model>\n&eGamemode: &r<gamemode>\n&eCps: &r<cps>  &ePing: <ping> &eXp: <xp> \n&eGame Version: &r<version> \n\n&eXuid: &r<xuid>\n\n&eLanguage: &r<language>\n<health>/<max_health>&c❤"
+nick: "%factions_faction% <unique_description><xp> <groupDisName> <name> <suffix> "
+subtag: "%factions_faction% <device> | <controller> \n&eDevice Model: &r<model> \n&eGamemode: &r<gamemode>\n &eCooldown: &r%ostag_cooldown% \n&eCps: &r<cps>  &ePing: <ping> &eXp: <xp> \n&eGame Version: &r<version> \n\n&eXuid: &r<xuid>\n&eLanguage: &r<language>\n<health>/<max_health>&c❤"
 #
 #
 #Advanced Player
-a-nick: "%factions_faction% <unique-description><xp> <groupDisName> <name> <suffix> "
-a-subtag: "<food>/<max_food> \n%factions_faction% <device> | <controller>\n&eCps: &r<cps>  &ePing: <ping>\n<health>/<max_health>&c❤\n&eXp: <xp>\n&eGame Version: &r<version>"
+a-nick: "%factions_faction% <unique_description><xp> <groupDisName> <name> <suffix> "
+a-subtag: "<food>/<max_food> \n%factions_faction% <device> | <controller> \n &eCooldown: &r%ostag_cooldown% \n&eCps: &r<cps>  &ePing: <ping>\n<health>/<max_health>&c❤\n&eXp: <xp>\n&eGame Version: &r<version>"
 advanced-players:
   - "ExamplePlayer"
 #
