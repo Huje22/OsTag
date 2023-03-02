@@ -21,10 +21,6 @@
             <id>opencollab-repo-snapshot</id>
             <url>https://repo.opencollab.dev/main</url>
         </repository>
-       <repository>
-          <id>opencollab-repo-snapshot</id>
-          <url>https://repo.opencollab.dev/maven-snapshots</url>
-        </repository>
     </repositories>
 
 
