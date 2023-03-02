@@ -6,7 +6,6 @@ import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerChatEvent;
 import cn.nukkit.utils.Config;
-import cn.nukkit.utils.TextFormat;
 import com.creeperface.nukkit.placeholderapi.api.PlaceholderAPI;
 import me.indian.ostag.OsTag;
 import me.indian.ostag.utils.ColorUtil;
@@ -37,15 +36,15 @@ public class Formater implements Listener {
         String msg = event.getMessage();
         final Config conf = plugin.getConfig();
         String mess;
-        String cenzor = plugin.getConfig().getString("censorship.word");
+        String cenzor = conf.getString("censorship.word");
         //conzorship is a experimental option, maybe not good working
-        for (String blackList : plugin.getConfig().getStringList("BlackWords")) {
+        for (String blackList : conf.getStringList("BlackWords")) {
             if (event.getMessage().toLowerCase().contains(blackList.toLowerCase())) {
                 if (event.getMessage().toLowerCase().contains("Huje22".toLowerCase())) {
                     return;
                 }
             }
-            if (plugin.getConfig().getBoolean("censorship.enable")) {
+            if (conf.getBoolean("censorship.enable")) {
                 if (!(player.isOp())) {
                     msg = event.getMessage().toLowerCase().replace(blackList.toLowerCase(), cenzor);
                 }
@@ -57,7 +56,7 @@ public class Formater implements Listener {
                 mess = event.getMessage();
             }
             event.setMessage(mess);
-            String messageformat = ColorUtil.replaceColorCode(plugin.getConfig().getString("message-format"));
+            String messageformat = ColorUtil.replaceColorCode(conf.getString("message-format"));
             if (OsTag.papKot) {
                 PlaceholderAPI api = PlaceholderAPI.getInstance();
                 messageformat = api.translateString(ColorUtil.replaceColorCode(conf.getString("message-format")), player);
@@ -69,8 +68,8 @@ public class Formater implements Listener {
                             .replace(PrefixesUtil.MSG, event.getMessage())
                             .replace(PrefixesUtil.GROUPDISPLAYNAME, PlayerInfoUtil.getLuckPermGroupDisName(player))
                             .replace(PrefixesUtil.DEVICE, PlayerInfoUtil.getDevice(player))
-                            .replace(PrefixesUtil.HEALTH, player.getHealth() + "")
-                            .replace(PrefixesUtil.MODEL, player.getLoginChainData().getDeviceModel() + "")
+                            .replace(PrefixesUtil.HEALTH,String.valueOf(player.getHealth()))
+                            .replace(PrefixesUtil.MODEL, player.getLoginChainData().getDeviceModel())
                             .replace(PrefixesUtil.VERSION, player.getLoginChainData().getGameVersion())
                             .replace(PrefixesUtil.LANGUAGE, player.getLoginChainData().getLanguageCode())
                             .replace(PrefixesUtil.PING, PlayerInfoUtil.getPing(player))
@@ -92,7 +91,7 @@ public class Formater implements Listener {
         final Player player = event.getPlayer();
         final UUID uuid = player.getUniqueId();
         final Config conf = plugin.getConfig();
-         long time = conf.getLong("cooldown.delay") * 1000;
+        long time = conf.getLong("cooldown.delay") * 1000;
 
         if (!cooldown.containsKey(uuid) || System.currentTimeMillis() - cooldown.get(uuid) > time) {
             if (!player.isOp() || !player.hasPermission("ostag.admin")) {
@@ -109,24 +108,35 @@ public class Formater implements Listener {
             if (conf.getBoolean("break-between-messages.enable")) {
                 player.sendMessage(" ");
             }
-            player.sendMessage(ColorUtil.replaceColorCode(conf.getString("cooldown.message")
-                    .replace("<left>", String.valueOf(cooldownTime))));
+
+            String cooldownMessage = ColorUtil.replaceColorCode(conf.getString("cooldown.message")
+                    .replace("<left>", String.valueOf(cooldownTime)));
+            if (OsTag.papKot) {
+                PlaceholderAPI api = PlaceholderAPI.getInstance();
+                cooldownMessage = api.translateString(ColorUtil.replaceColorCode(conf.getString("cooldown.message")
+                        .replace("<left>", String.valueOf(cooldownTime))), player);
+            }
+            player.sendMessage(cooldownMessage);
         }
     }
 
     public String cooldown(final Player player) {
+        final Config conf = plugin.getConfig();
         final UUID uuid = player.getUniqueId();
         final long time = plugin.getConfig().getLong("cooldown.delay") * 1000;
         long cooldownTime = 0;
+        if (!conf.getBoolean("cooldown.enable")) {
+            return ColorUtil.replaceColorCode(conf.getString("cooldown.disabled"));
+        }
         if (cooldown.containsKey(uuid)) {
             cooldownTime = (time - (System.currentTimeMillis() - cooldown.get(uuid))) / 1000;
         }
         if (player.isOp() || player.hasPermission("ostag.admin")) {
-            return ColorUtil.replaceColorCode(plugin.getConfig().getString("cooldown.bypass"));
+            return ColorUtil.replaceColorCode(conf.getString("cooldown.bypass"));
         }
         if (cooldownTime <= 0) {
             cooldown.remove(uuid);
-            return ColorUtil.replaceColorCode(plugin.getConfig().getString("cooldown.over"));
+            return ColorUtil.replaceColorCode(conf.getString("cooldown.over"));
         }
         return String.valueOf(cooldownTime);
     }
