@@ -16,7 +16,7 @@ public class CpsListener implements Listener {
     private static final HashMap<Player, List<Long>> cps = new HashMap<>();
 
     // cps counter from https://github.com/GommeAWM/CPSCounter
-    // witch permisions from author
+    // witch permissions from author
     @SuppressWarnings("unused")
     @EventHandler
     public void onPacket(final DataPacketReceiveEvent event) {

@@ -56,12 +56,12 @@ public class Formater implements Listener {
                 mess = event.getMessage();
             }
             event.setMessage(mess);
-            String messageformat = ColorUtil.replaceColorCode(conf.getString("message-format"));
+            String messageFormat = ColorUtil.replaceColorCode(conf.getString("message-format"));
             if (OsTag.papKot) {
                 PlaceholderAPI api = PlaceholderAPI.getInstance();
-                messageformat = api.translateString(ColorUtil.replaceColorCode(conf.getString("message-format")), player);
+                messageFormat = api.translateString(ColorUtil.replaceColorCode(conf.getString("message-format")), player);
             }
-            event.setFormat(messageformat
+            event.setFormat(messageFormat
                             .replace(Prefixes.NAME, player.getDisplayName())
                             .replace(Prefixes.SUFFIX, PlayerInfoUtil.getLuckPermSuffix(player))
                             .replace(Prefixes.PREFFIX, PlayerInfoUtil.getLuckPermPreffix(player))
