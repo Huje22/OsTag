@@ -82,20 +82,20 @@ public class OsTag extends PluginBase {
         OsTagMetrics.metricsStart();
         sendOnEnableInfo("admin", getServer().getConsoleSender());
         betaDetect();
-        long executionTime = System.currentTimeMillis() - millisActualTime;
+        final long executionTime = System.currentTimeMillis() - millisActualTime;
         getLogger().info(ColorUtil.replaceColorCode("&aStarted in &b" + executionTime + " &ams"));
     }
 
 
     public void sendOnEnableInfo(String type, CommandSender sender) {
-        PluginDescription descriptor = this.getDescription();
-        Server server = this.getServer();
+        final PluginDescription descriptor = this.getDescription();
+        final Server server = this.getServer();
 
-        String pluginVersion = descriptor.getVersion();
-        String authors = String.valueOf(descriptor.getAuthors()).replace("[", "").replace("]", "");
-        String nukkitVersion = server.getNukkitVersion();
-        String serverVersion = server.getVersion();
-        String apiVersion = server.getApiVersion();
+        final String pluginVersion = descriptor.getVersion();
+        final String authors = String.valueOf(descriptor.getAuthors()).replace("[", "").replace("]", "");
+        final String nukkitVersion = server.getNukkitVersion();
+        final String serverVersion = server.getVersion();
+        final String apiVersion = server.getApiVersion();
         switch (type) {
             case "admin":
                 sender.sendMessage(ColorUtil.replaceColorCode("&b-------------------------------"));
@@ -134,8 +134,8 @@ public class OsTag extends PluginBase {
     }
 
     private void registerPlaceholders() {
-        PlaceholderAPI api = PlaceholderAPI.getInstance();
-        String prefix = "ostag_";
+        final PlaceholderAPI api = PlaceholderAPI.getInstance();
+        final String prefix = "ostag_";
         api.builder(prefix + "cps", Integer.class)
                 .visitorLoader(entry -> CpsListener.getCPS(entry.getPlayer()))
                 .build();
