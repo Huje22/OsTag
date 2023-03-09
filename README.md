@@ -25,7 +25,7 @@ This plugin is used to display information under the player's nickname. And for 
 
 Don't know how to start? Just check the [wiki](https://github.com/OpenPlugins-Minecraft/OsTag/wiki) page!
 
-**[Join our Discord Server](https://discord.gg/k69htTFCVk)
+**[Join our Discord Server](https://discord.gg/aXDs6qtDCV)
 
 </div>
 
