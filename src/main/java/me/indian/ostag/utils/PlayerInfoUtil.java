@@ -72,7 +72,7 @@ public class PlayerInfoUtil {
         String touch = ColorUtil.replaceColorCode(conf.getString("Touch"));
         String keyboard = ColorUtil.replaceColorCode(conf.getString("Keyboard"));
         String pad = ColorUtil.replaceColorCode(conf.getString("Gamepad"));
-        String unknowcon = ColorUtil.replaceColorCode(conf.getString("UnknowControler"));
+        String unknowcon = ColorUtil.replaceColorCode(conf.getString("UnknownController"));
 
         if (OsTag.serverMovement) {
             switch (InputListener.getControler(player)) {

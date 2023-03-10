@@ -176,7 +176,7 @@ Touch: "Touch"
 Keyboard: "Keyboard"
 Gamepad: "GamePad"
 Motion_controller: "motion_controller"
-UnknownControler: "Unknown"
+UnknownController: "Unknown"
 
 #When you use indian emoji pack can use this emoijs
 #Windows: ''
