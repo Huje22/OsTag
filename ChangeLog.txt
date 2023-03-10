@@ -109,5 +109,6 @@ Fixed naming <controler> and %ostag_controler% to <controller> %ostag_controller
 Cooldown fix
 Added "PrefixesUtil" interface to faster changing plugin placeholder naming (my first interface ~IndianPL)
 Cooldown disable info
-
+fixed "Dedicated" in <device> placeholder
+fixed decimals in <health> placeholder
 
