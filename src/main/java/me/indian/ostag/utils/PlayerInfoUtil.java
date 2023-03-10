@@ -22,7 +22,7 @@ public class PlayerInfoUtil {
         String mac = ColorUtil.replaceColorCode(conf.getString("Mac"));
         String fire = ColorUtil.replaceColorCode(conf.getString("Fire"));
         String hololens = ColorUtil.replaceColorCode(conf.getString("Hololens"));
-        String dedicated = ColorUtil.replaceColorCode(conf.getString("Hedicated"));
+        String dedicated = ColorUtil.replaceColorCode(conf.getString("Dedicated"));
         String tvos = ColorUtil.replaceColorCode(conf.getString("TvOs"));
         String playstation = ColorUtil.replaceColorCode(conf.getString("PlayStation"));
         String nintendo = ColorUtil.replaceColorCode(conf.getString("Nintendo"));
@@ -66,10 +66,10 @@ public class PlayerInfoUtil {
     }
 
     public static String getController(Player player) {
-        String motion_controller = ColorUtil.replaceColorCode(conf.getString("motion_controller"));
-        String touch = ColorUtil.replaceColorCode(conf.getString("touch"));
-        String keyboard = ColorUtil.replaceColorCode(conf.getString("keyboard"));
-        String pad = ColorUtil.replaceColorCode(conf.getString("gamepad"));
+        String motion_controller = ColorUtil.replaceColorCode(conf.getString("Motion_controller"));
+        String touch = ColorUtil.replaceColorCode(conf.getString("Touch"));
+        String keyboard = ColorUtil.replaceColorCode(conf.getString("Keyboard"));
+        String pad = ColorUtil.replaceColorCode(conf.getString("Gamepad"));
         String unknowcon = ColorUtil.replaceColorCode(conf.getString("UnknowControler"));
 
         if (OsTag.serverMovement) {
