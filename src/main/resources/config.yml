@@ -172,10 +172,10 @@ Xbox: "&f[&aXbox&f]"
 Linux: "&f[&aLinux&f]"
 Unknown: "&f[&aUnknown&f]"
 #Controls
-touch: "Touch"
-keyboard: "Keyboard"
-gamepad: "GamePad"
-motion_controller: "motion_controller"
+Touch: "Touch"
+Keyboard: "Keyboard"
+Gamepad: "GamePad"
+Motion_controller: "motion_controller"
 UnknownControler: "Unknown"
 
 #When you use indian emoji pack can use this emoijs
