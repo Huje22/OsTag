@@ -8,6 +8,8 @@ import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
 
+import java.text.DecimalFormat;
+
 
 public class PlayerInfoUtil {
 
@@ -237,5 +239,12 @@ public class PlayerInfoUtil {
             unique = conf.getString("Players.default.description");
         }
         return ColorUtil.replaceColorCode(unique);
+    }
+
+    public static String getHealth(Player player){
+        DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(0);
+
+        return df.format(player.getHealth());
     }
 }

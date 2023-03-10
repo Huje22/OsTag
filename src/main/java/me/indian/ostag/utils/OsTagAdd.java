@@ -37,7 +37,7 @@ public class OsTagAdd {
             player.setScoreTag(subTag
                     .replace(Prefixes.DEVICE, getDevice(player))
                     .replace(Prefixes.CONTROLLER, getController(player))
-                    .replace(Prefixes.HEALTH, player.getHealth() + "")
+                    .replace(Prefixes.HEALTH, getHealth(player))
                     .replace(Prefixes.MAX_HEALTH, player.getMaxHealth() + "")
                     .replace(Prefixes.MODEL, player.getLoginChainData().getDeviceModel() + "")
                     .replace(Prefixes.FOOD, player.getFoodData().getLevel() / 2 + "")
@@ -77,7 +77,7 @@ public class OsTagAdd {
             player.setScoreTag(aSubTag
                     .replace(Prefixes.DEVICE, getDevice(player))
                     .replace(Prefixes.CONTROLLER, getController(player))
-                    .replace(Prefixes.HEALTH, player.getHealth() + "")
+                    .replace(Prefixes.HEALTH, getHealth(player))
                     .replace(Prefixes.MAX_HEALTH, player.getMaxHealth() + "")
                     .replace(Prefixes.FOOD, player.getFoodData().getLevel() / 2 + "")
                     .replace(Prefixes.MAX_FOOD, player.getFoodData().getMaxLevel() / 2 + "")

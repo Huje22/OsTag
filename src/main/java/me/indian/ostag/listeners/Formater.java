@@ -10,11 +10,12 @@ import com.creeperface.nukkit.placeholderapi.api.PlaceholderAPI;
 import me.indian.ostag.OsTag;
 import me.indian.ostag.utils.ColorUtil;
 import me.indian.ostag.utils.OtherUtils;
-import me.indian.ostag.utils.PlayerInfoUtil;
 import me.indian.ostag.utils.Prefixes;
 
 import java.util.HashMap;
 import java.util.UUID;
+
+import static me.indian.ostag.utils.PlayerInfoUtil.*;
 
 public class Formater implements Listener {
 
@@ -63,19 +64,19 @@ public class Formater implements Listener {
             }
             event.setFormat(messageFormat
                             .replace(Prefixes.NAME, player.getDisplayName())
-                            .replace(Prefixes.SUFFIX, PlayerInfoUtil.getLuckPermSuffix(player))
-                            .replace(Prefixes.PREFFIX, PlayerInfoUtil.getLuckPermPreffix(player))
+                            .replace(Prefixes.SUFFIX, getLuckPermSuffix(player))
+                            .replace(Prefixes.PREFFIX, getLuckPermPreffix(player))
                             .replace(Prefixes.MSG, event.getMessage())
-                            .replace(Prefixes.GROUPDISPLAYNAME, PlayerInfoUtil.getLuckPermGroupDisName(player))
-                            .replace(Prefixes.DEVICE, PlayerInfoUtil.getDevice(player))
-                            .replace(Prefixes.HEALTH, String.valueOf(player.getHealth()))
+                            .replace(Prefixes.GROUPDISPLAYNAME, getLuckPermGroupDisName(player))
+                            .replace(Prefixes.DEVICE, getDevice(player))
+                            .replace(Prefixes.HEALTH, getHealth(player))
                             .replace(Prefixes.MODEL, player.getLoginChainData().getDeviceModel())
                             .replace(Prefixes.VERSION, player.getLoginChainData().getGameVersion())
                             .replace(Prefixes.LANGUAGE, player.getLoginChainData().getLanguageCode())
-                            .replace(Prefixes.PING, PlayerInfoUtil.getPing(player))
-                            .replace(Prefixes.XP, PlayerInfoUtil.getXp(player))
-                            .replace(Prefixes.DIMENSION, PlayerInfoUtil.getDimension(player))
-                            .replace(Prefixes.UNIQUE_DESCRIPTION, PlayerInfoUtil.getUnique(player))
+                            .replace(Prefixes.PING, getPing(player))
+                            .replace(Prefixes.XP, getXp(player))
+                            .replace(Prefixes.DIMENSION, getDimension(player))
+                            .replace(Prefixes.UNIQUE_DESCRIPTION, getUnique(player))
 
 
                             .replace("\n", " this action not allowed here ")
