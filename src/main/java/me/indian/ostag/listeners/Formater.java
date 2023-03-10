@@ -75,7 +75,7 @@ public class Formater implements Listener {
                             .replace(Prefixes.PING, PlayerInfoUtil.getPing(player))
                             .replace(Prefixes.XP, PlayerInfoUtil.getXp(player))
                             .replace(Prefixes.DIMENSION, PlayerInfoUtil.getDimension(player))
-                            .replace(Prefixes.UNIQUE_DESCRIPTION, PlayerInfoUtil.getPlayerUnique(player))
+                            .replace(Prefixes.UNIQUE_DESCRIPTION, PlayerInfoUtil.getUnique(player))
 
 
                             .replace("\n", " this action not allowed here ")

@@ -30,7 +30,7 @@ public class OsTagAdd {
                     .replace(Prefixes.PREFFIX, getLuckPermPreffix(player))
                     .replace(Prefixes.GROUPDISPLAYNAME, getLuckPermGroupDisName(player))
                     .replace(Prefixes.XP, getXp(player))
-                    .replace(Prefixes.UNIQUE_DESCRIPTION, getPlayerUnique(player))
+                    .replace(Prefixes.UNIQUE_DESCRIPTION, getUnique(player))
             );
         }
         if (conf.getBoolean("ScoreTag")) {
@@ -51,7 +51,7 @@ public class OsTagAdd {
                     .replace(Prefixes.XP, getXp(player))
                     .replace(Prefixes.CPS, String.valueOf(CpsListener.getCPS(player)))
                     .replace(Prefixes.GAMEMODE, getGameMode(player))
-                    .replace(Prefixes.UNIQUE_DESCRIPTION, getPlayerUnique(player))
+                    .replace(Prefixes.UNIQUE_DESCRIPTION, getUnique(player))
             );
         }
     }
@@ -70,7 +70,7 @@ public class OsTagAdd {
                     .replace(Prefixes.NAME, player.getDisplayName())
                     .replace(Prefixes.GROUPDISPLAYNAME, getLuckPermGroupDisName(player))
                     .replace(Prefixes.XP, getXp(player))
-                    .replace(Prefixes.UNIQUE_DESCRIPTION, getPlayerUnique(player))
+                    .replace(Prefixes.UNIQUE_DESCRIPTION, getUnique(player))
             );
         }
         if (conf.getBoolean("ScoreTag")) {
@@ -91,7 +91,7 @@ public class OsTagAdd {
                     .replace(Prefixes.XP, getXp(player))
                     .replace(Prefixes.CPS, String.valueOf(CpsListener.getCPS(player)))
                     .replace(Prefixes.GAMEMODE, getGameMode(player))
-                    .replace(Prefixes.UNIQUE_DESCRIPTION, getPlayerUnique(player))
+                    .replace(Prefixes.UNIQUE_DESCRIPTION, getUnique(player))
             );
         }
     }

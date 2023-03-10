@@ -227,7 +227,7 @@ public class PlayerInfoUtil {
         }
     }
 
-    public static String getPlayerUnique(Player player) {
+    public static String getUnique(Player player) {
         String unique;
         String name = player.getDisplayName();
 
