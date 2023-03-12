@@ -21,6 +21,7 @@ public class Formater implements Listener {
 
     private static final HashMap<UUID, Long> cooldown = new HashMap<>();
     private final OsTag plugin;
+    private final int miliSeconds = 1000;
 
     public Formater(OsTag plugin) {
         this.plugin = plugin;
@@ -92,7 +93,7 @@ public class Formater implements Listener {
         final Player player = event.getPlayer();
         final UUID uuid = player.getUniqueId();
         final Config conf = plugin.getConfig();
-        long time = conf.getLong("cooldown.delay") * 1000;
+        long time = conf.getLong("cooldown.delay") * miliSeconds;
 
         if (!cooldown.containsKey(uuid) || System.currentTimeMillis() - cooldown.get(uuid) > time) {
             if (!player.isOp() || !player.hasPermission("ostag.admin")) {
@@ -104,7 +105,7 @@ public class Formater implements Listener {
                 Server.getInstance().getScheduler().scheduleDelayedTask(null, () -> OtherUtils.sendMessageToAll(" "), 1);
             }
         } else {
-            long cooldownTime = (time - (System.currentTimeMillis() - cooldown.get(uuid))) / 1000;
+            long cooldownTime = (time - (System.currentTimeMillis() - cooldown.get(uuid))) / miliSeconds;
             event.setCancelled(true);
             if (conf.getBoolean("break-between-messages.enable")) {
                 player.sendMessage(" ");
@@ -124,13 +125,13 @@ public class Formater implements Listener {
     public String cooldown(final Player player) {
         final Config conf = plugin.getConfig();
         final UUID uuid = player.getUniqueId();
-        final long time = plugin.getConfig().getLong("cooldown.delay") * 1000;
+        final long time = plugin.getConfig().getLong("cooldown.delay") * miliSeconds;
         long cooldownTime = 0;
         if (!conf.getBoolean("cooldown.enable")) {
             return ColorUtil.replaceColorCode(conf.getString("cooldown.disabled"));
         }
         if (cooldown.containsKey(uuid)) {
-            cooldownTime = (time - (System.currentTimeMillis() - cooldown.get(uuid))) / 1000;
+            cooldownTime = (time - (System.currentTimeMillis() - cooldown.get(uuid))) / miliSeconds;
         }
         if (player.isOp() || player.hasPermission("ostag.admin")) {
             return ColorUtil.replaceColorCode(conf.getString("cooldown.bypass"));
