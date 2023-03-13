@@ -5,7 +5,6 @@ import cn.nukkit.utils.Config;
 import me.indian.ostag.OsTag;
 import me.indian.ostag.listeners.InputListener;
 import net.luckperms.api.LuckPerms;
-import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
 
 import java.text.DecimalFormat;
@@ -15,7 +14,7 @@ public class PlayerInfoUtil {
 
     private static final OsTag plugin = OsTag.getInstance();
     private static final Config conf = plugin.getConfig();
-    private static final LuckPerms luckPerms = LuckPermsProvider.get();
+    private static final LuckPerms luckPerms = plugin.getLuckperms();
 
     public static String getDevice(Player player) {
         String windows = ColorUtil.replaceColorCode(conf.getString("Windows"));
@@ -75,7 +74,7 @@ public class PlayerInfoUtil {
         String unknowcon = ColorUtil.replaceColorCode(conf.getString("UnknownController"));
 
         if (OsTag.serverMovement) {
-            switch (InputListener.getControler(player)) {
+            switch (InputListener.getController(player)) {
                 case "MOUSE":
                     return keyboard;
                 case "TOUCH":

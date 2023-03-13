@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class InputListener implements Listener {
 
-    public static final Map<Player, InputMode> controler = new HashMap<>();
+    public static final Map<Player, InputMode> controller = new HashMap<>();
 
     @SuppressWarnings("unused")
     @EventHandler
@@ -25,7 +25,7 @@ public class InputListener implements Listener {
             final Player player = event.getPlayer();
             //thanks to Petterim
             //https://github.com/PetteriM1
-            controler.put(player, inputMode);
+            controller.put(player, inputMode);
         }
     }
 
@@ -33,10 +33,10 @@ public class InputListener implements Listener {
     @EventHandler
     public void removeControl(PlayerQuitEvent event) {
         final Player player = event.getPlayer();
-        controler.remove(player);
+        controller.remove(player);
     }
 
-    public static String getControler(Player player) {
-        return controler.get(player) + "";
+    public static String getController(Player player) {
+        return controller.get(player) + "";
     }
 }

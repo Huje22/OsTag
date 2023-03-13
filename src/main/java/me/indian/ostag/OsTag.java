@@ -17,12 +17,16 @@ import me.indian.ostag.utils.ColorUtil;
 import me.indian.ostag.utils.OsTimer;
 import me.indian.ostag.utils.OtherUtils;
 import me.indian.ostag.utils.PlayerInfoUtil;
+import net.luckperms.api.LuckPerms;
+import net.luckperms.api.LuckPermsProvider;
 
 public class OsTag extends PluginBase {
 
     public static boolean luckPerm = false;
     public static boolean papKot = false;
     public static boolean serverMovement;
+    private LuckPerms luckPerms;
+    private PlaceholderAPI placeholderApi;
     private Formater formater;
     private static OsTag instance;
 
@@ -34,23 +38,33 @@ public class OsTag extends PluginBase {
         return this.formater;
     }
 
+    public LuckPerms getLuckperms(){
+        return this.luckPerms;
+    }
+
+    public PlaceholderAPI getPlaceholderApi(){
+        return this.placeholderApi;
+    }
+
     @Override
     public void onEnable() {
         final long millisActualTime = System.currentTimeMillis();
         instance = this;
-        this.formater = new Formater(this);
         final PluginManager pm = getServer().getPluginManager();
         if (pm.getPlugin("LuckPerms") == null) {
             getLogger().warning(ColorUtil.replaceColorCode("&cYou don't have lucky perms , ChatFormatting don't correctly work"));
         } else {
+            this.luckPerms = LuckPermsProvider.get();
             luckPerm = true;
         }
-        if (pm.getPlugin("PlaceholderAPI") == null && pm.getPlugin("KotlinLib") == null) {
-            getLogger().info(ColorUtil.replaceColorCode("&cYou don't have PlaceholderAPI or kotlin lib,placeholders from &b\"PlaceholderAPI\"&c will not work"));
+        if (pm.getPlugin("PlaceholderAPI") == null || pm.getPlugin("KotlinLib") == null) {
+            getLogger().warning(ColorUtil.replaceColorCode("&cYou don't have PlaceholderAPI or kotlin lib,placeholders from &b\"PlaceholderAPI\"&c will not work"));
         } else {
+            this.placeholderApi = PlaceholderAPI.getInstance();
             papKot = true;
             registerPlaceholders();
         }
+        this.formater = new Formater(this, this.getPlaceholderApi());
         saveDefaultConfig();
         if (getConfig().getBoolean("Disable")) {
             getLogger().warning(ColorUtil.replaceColorCode("&4Disabling plugin due to disable in config"));
@@ -77,7 +91,7 @@ public class OsTag extends PluginBase {
             getServer().getScheduler().scheduleRepeatingTask(new OsTimer(), 20 * refreshTime);
         }
         if (this.getConfig().getBoolean("ChatFormater")) {
-            pm.registerEvents(new Formater(this), this);
+            pm.registerEvents(new Formater(this, this.getPlaceholderApi()), this);
         }
         OsTagMetrics.metricsStart();
         sendOnEnableInfo("admin", getServer().getConsoleSender());
@@ -134,7 +148,7 @@ public class OsTag extends PluginBase {
     }
 
     private void registerPlaceholders() {
-        final PlaceholderAPI api = PlaceholderAPI.getInstance();
+        final PlaceholderAPI api = this.getPlaceholderApi();
         final String prefix = "ostag_";
         api.builder(prefix + "cps", Integer.class)
                 .visitorLoader(entry -> CpsListener.getCPS(entry.getPlayer()))

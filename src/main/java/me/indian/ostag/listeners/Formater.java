@@ -21,10 +21,12 @@ public class Formater implements Listener {
 
     private static final HashMap<UUID, Long> cooldown = new HashMap<>();
     private final OsTag plugin;
+    private final PlaceholderAPI api;
     private final int miliSeconds = 1000;
 
-    public Formater(OsTag plugin) {
+    public Formater(OsTag plugin, PlaceholderAPI api) {
         this.plugin = plugin;
+        this.api = api;
     }
 
     // IndianPL
@@ -60,7 +62,6 @@ public class Formater implements Listener {
             event.setMessage(mess);
             String messageFormat = ColorUtil.replaceColorCode(conf.getString("message-format"));
             if (OsTag.papKot) {
-                PlaceholderAPI api = PlaceholderAPI.getInstance();
                 messageFormat = api.translateString(ColorUtil.replaceColorCode(conf.getString("message-format")), player);
             }
             event.setFormat(messageFormat
@@ -114,7 +115,6 @@ public class Formater implements Listener {
             String cooldownMessage = ColorUtil.replaceColorCode(conf.getString("cooldown.message")
                     .replace("<left>", String.valueOf(cooldownTime)));
             if (OsTag.papKot) {
-                PlaceholderAPI api = PlaceholderAPI.getInstance();
                 cooldownMessage = api.translateString(ColorUtil.replaceColorCode(conf.getString("cooldown.message")
                         .replace("<left>", String.valueOf(cooldownTime))), player);
             }
