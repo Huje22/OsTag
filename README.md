@@ -5,7 +5,6 @@
 [![Discord](https://img.shields.io/discord/1071413512414449666?color=7289da&logo=discord&logoColor=white&style=for-the-badge)](https://discord.gg/k69htTFCVk)
 [![License](https://img.shields.io/github/license/OpenPlugins-Minecraft/OsTag?style=for-the-badge)](https://github.com/OpenPlugins-Minecraft/OsTag/blob/main/License)
 ![Nukkit API support](https://img.shields.io/badge/Nukkit%20API-1.0.14-blueviolet?style=for-the-badge)</br>
-![Libraries.io dependency status for GitHub repo](https://img.shields.io/librariesio/github/OpenPlugins-Minecraft/OsTag?style=for-the-badge)
 [![Open issues](https://img.shields.io/github/issues/OpenPlugins-Minecraft/OsTag?style=for-the-badge)](https://github.com/OpenPlugins-Minecraft/OsTag/issues)
 [![Open pull requests](https://img.shields.io/github/issues-pr/OpenPlugins-Minecraft/OsTag?style=for-the-badge)](https://github.com/OpenPlugins-Minecraft/OsTag/pulls)
 [![Last Commit](https://img.shields.io/github/last-commit/OpenPlugins-Minecraft/OsTag?style=for-the-badge)](https://github.com/OpenPlugins-Minecraft/OsTag/commits/main)</br>
