@@ -142,11 +142,13 @@ medium-ping: "&e"
 high-ping: "&c"
 #Xp colors (Why? use this as it is used on hive if you want)
 1lvl: "&r"
+5lvl: "&r6"
 10lvl: "&e"
 15lvl: "&a"
 20lvl: "&2"
 25lvl: "&c"
 30lvl: "&4"
+35lvl: "&d"
 #Players (here you can add a unique description or icon from your texture pack for a given player) [exparimental]
 Players:
   default:
@@ -192,10 +194,10 @@ UnknownController: "Unknown"
 #Xbox: ''
 #Linux: "&f[&aLinux&f]"
 #Unknown: '&f[&aUnknown&f]'
-#touch: Touch
-#keyboard: Keyboard
-#gamepad: GamePad
-#motion_controller: motion_controller
-#UnknownControler: Unknown
+#Touch: Touch
+#Keyboard: Keyboard
+#Gamepad: GamePad
+#Motion_controller: motion_controller
+#UnknownController: "Unknown"
 
 #--------------------------

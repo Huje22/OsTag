@@ -112,6 +112,6 @@ Cooldown disable info
 fixed "Dedicated" in <device> placeholder
 fixed decimals in <health> placeholder
 Better code optymalization
-
+Added 35 and 5 levels in <xp> placeholder
 
 

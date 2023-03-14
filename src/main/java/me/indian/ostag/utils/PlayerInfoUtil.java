@@ -29,7 +29,7 @@ public class PlayerInfoUtil {
         String nintendo = ColorUtil.replaceColorCode(conf.getString("Nintendo"));
         String xbox = ColorUtil.replaceColorCode(conf.getString("Xbox"));
         String linux = ColorUtil.replaceColorCode(conf.getString("Linux"));
-        String unknow = ColorUtil.replaceColorCode(conf.getString("Unknown"));
+        String unknown = ColorUtil.replaceColorCode(conf.getString("Unknown"));
 
         switch (player.getLoginChainData().getDeviceOS()) {
             case 1:
@@ -62,7 +62,7 @@ public class PlayerInfoUtil {
             case 15:
                 return linux;
             default:
-                return unknow;
+                return unknown;
         }
     }
 
@@ -106,28 +106,34 @@ public class PlayerInfoUtil {
         String xp = "0";
 
         if (player.getExperienceLevel() == 0) {
-            xp = ColorUtil.replaceColorCode(conf.getString("1lvl") + player.getExperienceLevel());
+            xp = conf.getString("1lvl") + player.getExperienceLevel();
         }
         if (player.getExperienceLevel() >= 1) {
-            xp = ColorUtil.replaceColorCode(conf.getString("1lvl") + player.getExperienceLevel());
+            xp = conf.getString("1lvl") + player.getExperienceLevel();
+        }
+        if (player.getExperienceLevel() >= 5) {
+            xp = conf.getString("5lvl") + player.getExperienceLevel();
         }
         if (player.getExperienceLevel() >= 10) {
-            xp = ColorUtil.replaceColorCode(conf.getString("10lvl") + player.getExperienceLevel());
+            xp = conf.getString("10lvl") + player.getExperienceLevel();
         }
         if (player.getExperienceLevel() >= 15) {
-            xp = ColorUtil.replaceColorCode(conf.getString("15lvl") + player.getExperienceLevel());
+            xp = conf.getString("15lvl") + player.getExperienceLevel();
         }
         if (player.getExperienceLevel() >= 20) {
-            xp = ColorUtil.replaceColorCode(conf.getString("20lvl") + player.getExperienceLevel());
+            xp = conf.getString("20lvl") + player.getExperienceLevel();
         }
         if (player.getExperienceLevel() >= 25) {
-            xp = ColorUtil.replaceColorCode(conf.getString("25lvl") + player.getExperienceLevel());
+            xp = conf.getString("25lvl") + player.getExperienceLevel();
         }
         if (player.getExperienceLevel() >= 30) {
-            xp = ColorUtil.replaceColorCode(conf.getString("30lvl") + player.getExperienceLevel());
+            xp = conf.getString("30lvl") + player.getExperienceLevel();
+        }
+        if (player.getExperienceLevel() >= 35) {
+            xp = conf.getString("35lvl") + player.getExperienceLevel();
         }
 
-        return xp;
+        return ColorUtil.replaceColorCode(xp);
     }
 
     public static String getGameMode(Player player) {
@@ -229,14 +235,13 @@ public class PlayerInfoUtil {
     }
 
     public static String getUnique(Player player) {
-        String unique;
+        String unique = conf.getString("Players.default.description");
         String name = player.getDisplayName();
 
         if (!(conf.getString("Players." + name + ".unique-description").isEmpty())) {
             unique = conf.getString("Players." + name + ".unique-description");
-        } else {
-            unique = conf.getString("Players.default.description");
         }
+
         return ColorUtil.replaceColorCode(unique);
     }
 
