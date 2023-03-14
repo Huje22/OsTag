@@ -17,7 +17,7 @@
 # <food> - player food [OsTag]
 # <max_food> - player max food [OsTag]
 # <dimension> - player current dimension [ChatFormater]
-# <xp> - player xp lvl [OsTag | ChatFormater] //name//
+# <xp> | %ostag_xp%  - player xp lvl [OsTag | ChatFormater] //name//
 # <gamemode> - player gamemode [OsTag]
 # <msg> - player message [ChatFormater]
 # <suffix> | %ostag_suffix% - player group sufix (Luck Perms Required) [OsTag | ChatFormater] \\name\\

@@ -174,6 +174,9 @@ public class OsTag extends PluginBase {
         api.builder(prefix + "version", String.class)
                 .visitorLoader(entry -> entry.getPlayer().getLoginChainData().getGameVersion())
                 .build();
+        api.builder(prefix + "xp", String.class)
+                .visitorLoader(entry -> PlayerInfoUtil.getXp(entry.getPlayer()))
+                .build();
     }
 
     private void betaDetect() {
