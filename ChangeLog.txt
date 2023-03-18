@@ -104,8 +104,13 @@ now "breaks between messages" don't require enable cooldown
 Cooldown fix and cooldown placeholder %ostag_cooldown%
 **Released on the day xx.02.2023**
 1.5.5
-Code style fixes and efficency
+
+Naming changes:
 Fixed naming <controler> and %ostag_controler% to <controller> %ostag_controller% and also fixed <preffix> and %ostag_preffix% and <unique_description>
+Changed in Modules section  "ChatFormater" to "ChatFormatter" in config
+
+Others:
+Code style fixes and efficency
 Cooldown fix
 Added "PrefixesUtil" interface to faster changing plugin placeholder naming (my first interface ~IndianPL)
 Cooldown disable info
@@ -114,4 +119,6 @@ fixed decimals in <health> placeholder
 Better code optymalization
 Added 35 and 5 levels in <xp> placeholder
 Added %ostag_xp% placeholder for PlaceholderApi
+
+
 
