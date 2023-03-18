@@ -93,9 +93,13 @@ public class OsTag extends PluginBase {
                 getLogger().warning(ColorUtil.replaceColorCode("&cRefresh time must be higer than &b0 &c,we will set it up for you!"));
             }
             getServer().getScheduler().scheduleRepeatingTask(new OsTimer(), 20 * refreshTime);
+        } else {
+            getLogger().info(ColorUtil.replaceColorCode("&bOsTag module is disabled "));
         }
         if (chatFormatter) {
             pm.registerEvents(new Formater(this, this.getPlaceholderApi()), this);
+        } else {
+            getLogger().info(ColorUtil.replaceColorCode("&bChatFormatter module is disabled"));
         }
         OsTagMetrics.metricsStart();
         sendOnEnableInfo("admin", getServer().getConsoleSender());
@@ -124,7 +128,7 @@ public class OsTag extends PluginBase {
                 sender.sendMessage(ColorUtil.replaceColorCode("&aServer Version:&3 " + serverVersion));
                 sender.sendMessage(ColorUtil.replaceColorCode(" "));
                 sender.sendMessage(ColorUtil.replaceColorCode("&1Modules"));
-                sender.sendMessage(ColorUtil.replaceColorCode("&aFormater&3: " + OtherUtils.getFormaterStatus()));
+                sender.sendMessage(ColorUtil.replaceColorCode("&aFormatter&3: " + OtherUtils.getFormaterStatus()));
                 sender.sendMessage(ColorUtil.replaceColorCode("&aOsTag&3: " + OtherUtils.getOsTagStatus()));
                 sender.sendMessage(ColorUtil.replaceColorCode(" "));
                 sender.sendMessage(ColorUtil.replaceColorCode("&1Plugins"));
@@ -140,7 +144,7 @@ public class OsTag extends PluginBase {
                 sender.sendMessage(ColorUtil.replaceColorCode("&aServer Version:&3 " + serverVersion));
                 sender.sendMessage(ColorUtil.replaceColorCode(" "));
                 sender.sendMessage(ColorUtil.replaceColorCode("&1Modules"));
-                sender.sendMessage(ColorUtil.replaceColorCode("&aFormater&3: " + OtherUtils.getFormaterStatus()));
+                sender.sendMessage(ColorUtil.replaceColorCode("&aFormatter&3: " + OtherUtils.getFormaterStatus()));
                 sender.sendMessage(ColorUtil.replaceColorCode("&aOsTag&3: " + OtherUtils.getOsTagStatus()));
                 sender.sendMessage(ColorUtil.replaceColorCode(" "));
                 sender.sendMessage(ColorUtil.replaceColorCode("&b-------------------------------"));
