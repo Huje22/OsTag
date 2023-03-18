@@ -61,7 +61,7 @@ public class Formater implements Listener {
             }
             event.setMessage(mess);
             String messageFormat = ColorUtil.replaceColorCode(conf.getString("message-format"));
-            if (OsTag.papKot) {
+            if (OsTag.papiAndKotlinLib) {
                 messageFormat = api.translateString(ColorUtil.replaceColorCode(conf.getString("message-format")), player);
             }
             event.setFormat(messageFormat
@@ -114,7 +114,7 @@ public class Formater implements Listener {
 
             String cooldownMessage = ColorUtil.replaceColorCode(conf.getString("cooldown.message")
                     .replace("<left>", String.valueOf(cooldownTime)));
-            if (OsTag.papKot) {
+            if (OsTag.papiAndKotlinLib) {
                 cooldownMessage = api.translateString(ColorUtil.replaceColorCode(conf.getString("cooldown.message")
                         .replace("<left>", String.valueOf(cooldownTime))), player);
             }

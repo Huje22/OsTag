@@ -45,7 +45,7 @@ Disable: false
 OsTag: true
 #
 #ChatFormating module
-ChatFormater: true
+ChatFormatter: true
 #
 #
 #when turn off some module restart server
