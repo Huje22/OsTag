@@ -6,44 +6,39 @@ import me.indian.ostag.OsTag;
 
 public class OtherUtils {
 
-    private static final OsTag plugin = OsTag.getInstance();
     private static final String fal = "§cfalse";
     private static final String tru = "§etrue";
 
     public static String getOsTagStatus() {
-        final boolean ostag = plugin.getConfig().getBoolean("OsTag");
-        String os = fal;
-        if (ostag) {
-            os = tru;
+        String osTag = fal;
+        if (OsTag.osTag) {
+            osTag = tru;
         }
-        return os;
+        return osTag;
     }
 
     public static String getFormaterStatus() {
-        final boolean chatFormater = plugin.getConfig().getBoolean("ChatFormater");
-        String forma = fal;
-        if (chatFormater) {
-            forma = tru;
+        String formatter = fal;
+        if (OsTag.chatFormatter) {
+            formatter = tru;
         }
-        return forma;
+        return formatter;
     }
 
     public static String getLuckPermStatus() {
-        final boolean lp = OsTag.luckPerm;
-        String luck = fal;
-        if (lp) {
-            luck = tru;
+        String luckPerms = fal;
+        if (OsTag.luckPerm) {
+            luckPerms = tru;
         }
-        return luck;
+        return luckPerms;
     }
 
     public static String getKotOrPapiStatus() {
-        final boolean papko = OsTag.papKot;
-        String papkot = fal;
-        if (papko) {
-            papkot = tru;
+        String papiAndKotlinLib = fal;
+        if (OsTag.papiAndKotlinLib) {
+            papiAndKotlinLib = tru;
         }
-        return papkot;
+        return papiAndKotlinLib;
     }
 
     public static void sendMessageToAll(String msg) {

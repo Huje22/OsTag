@@ -23,8 +23,10 @@ import net.luckperms.api.LuckPermsProvider;
 public class OsTag extends PluginBase {
 
     public static boolean luckPerm = false;
-    public static boolean papKot = false;
+    public static boolean papiAndKotlinLib = false;
     public static boolean serverMovement;
+    public static boolean osTag;
+    public static boolean chatFormatter;
     private LuckPerms luckPerms;
     private PlaceholderAPI placeholderApi;
     private Formater formater;
@@ -58,10 +60,10 @@ public class OsTag extends PluginBase {
             luckPerm = true;
         }
         if (pm.getPlugin("PlaceholderAPI") == null || pm.getPlugin("KotlinLib") == null) {
-            getLogger().warning(ColorUtil.replaceColorCode("&cYou don't have PlaceholderAPI or kotlin lib,placeholders from &b\"PlaceholderAPI\"&c will not work"));
+            getLogger().warning(ColorUtil.replaceColorCode("&cYou don't have PlaceholderAPI or kotlin lib,placeholders from &bPlaceholderAPI&c will not work"));
         } else {
             this.placeholderApi = PlaceholderAPI.getInstance();
-            papKot = true;
+            papiAndKotlinLib = true;
             registerPlaceholders();
         }
         this.formater = new Formater(this, this.getPlaceholderApi());
@@ -72,6 +74,8 @@ public class OsTag extends PluginBase {
             return;
         }
         serverMovement = getConfig().getBoolean("movement-server");
+        osTag = getConfig().getBoolean("OsTag");
+        chatFormatter = getConfig().getBoolean("ChatFormatter");
         someNewInfo();
         pm.registerEvents(new CpsListener(), this);
         if (serverMovement) {
@@ -79,7 +83,7 @@ public class OsTag extends PluginBase {
         }
         ((PluginCommand<?>) getCommand("ostag")).setExecutor(new OsTagCommand(this));
         ((PluginCommand<?>) getCommand("tto")).setExecutor(new TestttCommand(this));
-        if (getConfig().getBoolean("OsTag")) {
+        if (osTag) {
             pm.registerEvents(new OsTimer(), this);
             int refreshTime = getConfig().getInt("refresh-time");
             if (refreshTime <= 0) {
@@ -90,7 +94,7 @@ public class OsTag extends PluginBase {
             }
             getServer().getScheduler().scheduleRepeatingTask(new OsTimer(), 20 * refreshTime);
         }
-        if (this.getConfig().getBoolean("ChatFormater")) {
+        if (chatFormatter) {
             pm.registerEvents(new Formater(this, this.getPlaceholderApi()), this);
         }
         OsTagMetrics.metricsStart();
