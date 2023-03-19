@@ -20,9 +20,11 @@
 ![Maven](https://github.com/intergrav/devins-badges/blob/v2/assets/cozy/built-with/maven_vector.svg)</br>
 [![PayPal](https://github.com/intergrav/devins-badges/blob/v2/assets/compact/donate/paypal-singular_vector.svg)](https://paypal.me/IndianPL)
 
-This plugin is used to display information under the player's nickname. And for chat formatting with LuckPerms plugin.
+This plugin is used to display information under the player's heads. And for chat formatting with LuckPerms plugin.
 
 Don't know how to start? Just check the [wiki](https://github.com/OpenPlugins-Minecraft/OsTag/wiki) page!
+
+If you wanna be contributor look [Contributing wiki page](https://github.com/OpenPlugins-Minecraft/OsTag/wiki/Concributing) <br/>
 
 **[Join our Discord Server](https://discord.gg/aXDs6qtDCV)
 
@@ -58,9 +60,9 @@ Don't know how to start? Just check the [wiki](https://github.com/OpenPlugins-Mi
 ## Informations
 
 * Issues / bugs or suggestions please report on discord or in github issues
-* If the configuration was not generated, use the plugin description
+* If the configuration was not generated, use configuration from github
 * If you can't set something Indian will probably help you (write on discord)
-* I don't recomend building jar from this code , i recomend download latest version from releases , if in releases not
+* I don't recommend building jar from this code , i recommend download latest version from releases , if in releases not
   contains version that would be compatible with the pom.xml version, I do not recommend building it this means that a
   new version is already in the works, but this may not always be the case, but if you need you can try to build it
   yourself
@@ -69,13 +71,14 @@ Don't know how to start? Just check the [wiki](https://github.com/OpenPlugins-Mi
 
 ## Beta versions
 
-* [currently we not have some public or private beta versions](currently we not have some public or private beta versions)
+* [1.5.5-Beta](https://github.com/OpenPlugins-Minecraft/OsTag/releases/tag/1.5.5-Beta)
+* [1.5.4-Beta](https://github.com/OpenPlugins-Minecraft/OsTag/releases/tag/1.5.4-Beta) (Outdated)
 
 ----
 
 ## Links
 
-* [Discord Server](https://discord.gg/k69htTFCVk)
+* [Discord Server](https://discord.gg/aXDs6qtDCV)
 * [CloudBurst](https://cloudburstmc.org/resources/ostag.836/)
 * [Wiki](https://github.com/OpenPlugins-Minecraft/OsTag/wiki)
 
