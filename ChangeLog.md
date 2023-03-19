@@ -16,7 +16,8 @@ Added showing plugin activation speed <br/>
 Now you can use `/ostag r` for reload plugin <br/>
 Now you can use `&` for colors in config <br/>
 Now you can use `&` for colors in chat if you have `ostag.colors` and disable `§` in chat <br/>
-When the plugin encounters an error while reloading the config, it will inform about it and show an error in the console <br/>
+When the plugin encounters an error while reloading the config, it will inform about it and show an error in the
+console <br/>
 ------------------------------------------------------------------------
 **11.12.2022** <br/>
 **Version: 1.4.8.01** <br/>
@@ -31,33 +32,42 @@ Changed `message.format` to `message-format` <br/>
 **Version: 1.4.9** <br/>
 Config look improvements <br/>
 When you just type only `/ostag` it will bring up a list of parameters you can use <br/>
-Added `<unique-description>` using it in the `Players` section you can add an emoji or some text for this player only <br/>
+Added `<unique-description>` using it in the `Players` section you can add an emoji or some text for this player
+only <br/>
 How to create custom emojis? Visit this page https://wiki.bedrock.dev/concepts/emojis.html#custom-emoji <br/>
 How to make player face emoji? Visit this page https://mcskins.top/avatar-maker <br/>
 Changed some naming in config again! <br/>
+
 ```yml
 cooldown.enable: true
-cooldown.delay: 10 
+cooldown.delay: 10
 cooldown.message: "aYou must wait &b<left> &eSeconds&a"
 ```
+
 Changed to <br/>
+
 ```yml
-cooldown: 
-  enable: true 
-  delay: 10 
+cooldown:
+  enable: true
+  delay: 10
   message: "aYou must wait &b<left> &eSeconds&a!"
 ```
+
 And <br/>
+
 ```yml
-enable-censorship: true 
+enable-censorship: true
 censorship: "Bread" 
 ```
-Changed to 
+
+Changed to
+
 ```yml
-censorship: 
-  word: "Bread" 
+censorship:
+  word: "Bread"
   enable: true 
 ```
+
 Added breaks between messages <br/>
 
 -----------------------------------
@@ -70,7 +80,8 @@ some improvements in code <br/>
 **1.4.9.02** <br/>
 Code improvements <br/>
 Now `§` working in chat :D <br/>
-Added disable ostag in a given world! if the player logs into a world where it is allowed, the name and information will remain until no other plugin changes it or enters a allowed world <br/>
+Added disable ostag in a given world! if the player logs into a world where it is allowed, the name and information will
+remain until no other plugin changes it or enters a allowed world <br/>
 Factions plugin support (Placeholder `<faction>`) <br/>
 ---------------------------------
 **Released on the day 18.12.2022** <br/>
@@ -90,11 +101,11 @@ Big code improvements <br/>
 Now add `Windows Phone` in <device> placeholder <br/>
 Now when you move away from the player you only see the name line <br/>
 Added placeholders that already existed but can now be used in other plugins using PlaceholderAPI <br/>
-`%ostag_cps%` 
-`%ostag_test%` 
-`%ostag_device%` 
-`%ostag_controler%` 
-`%ostag_prefix%` 
+`%ostag_cps%`
+`%ostag_test%`
+`%ostag_device%`
+`%ostag_controler%`
+`%ostag_prefix%`
 `%ostag_suffix%`  <br/>
 Delated <deathskull> placeholder , now this placeholder is in DeathSkull plugin <br/>
 -----------------------------------------------
@@ -116,7 +127,8 @@ IMPORTANT NEWS:
 As of October 2020, Minecraft will no longer be updated or supported on Windows 10 Mobile, Gear VR, iOS 10 or lower & Android devices with less than 768MB of RAM.
 `<br/>
 Added in `<device>` placeholder `Linux` detect <br/>
-Smal naming changes , check new config in github (https://github.com/IndianBartonka/OsTag/blob/main/src/main/resources/config.yml) <br/>
+Smal naming changes , check new config in
+github (https://github.com/IndianBartonka/OsTag/blob/main/src/main/resources/config.yml) <br/>
 You can choose whether to display name or score tag <br/>
 Added food placeholders `<food>` and `<food_max>` <br/>
 now `breaks between messages` don't require enable cooldown <br/>
@@ -125,7 +137,8 @@ Cooldown fix and cooldown placeholder `%ostag_cooldown%` <br/>
 **Released on the day xx.03.2023** <br/>
 **1.5.5** <br/>
 __Naming changes__: <br/>
-Fixed naming `<controler>` and `%ostag_controler%` to `<controller>` `%ostag_controller%` and also fixed `<preffix>` and `%ostag_preffix%` and `<unique_description>` <br/>
+Fixed naming `<controler>` and `%ostag_controler%` to `<controller>` `%ostag_controller%` and also fixed `<preffix>`
+and `%ostag_preffix%` and `<unique_description>` <br/>
 Changed in Modules section  `ChatFormater`to `ChatFormatter` in config <br/>
 
 __New things__: <br/>
