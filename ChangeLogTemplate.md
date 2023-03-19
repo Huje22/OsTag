@@ -26,7 +26,7 @@ Also check the raw version of this file
 
 Any information, such as a placeholder (and more), is written like this: `Placeholder` , `&` , `§`, `/minecraft command`, `Any plugin or software name`, `Any cnofig sections`, `Any class and another file names`<br/>
 
-Show whole links, don't use `[Comment] (Link)` <br/>
+Show whole links, don't use `[Comment](Link)` <br/>
 
 If you correct the style of the code, you don't have to write what you corrected, unless it's the naming used in the config
 
