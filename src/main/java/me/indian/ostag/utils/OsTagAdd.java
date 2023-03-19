@@ -11,19 +11,19 @@ import static me.indian.ostag.utils.PlayerInfoUtil.*;
 public class OsTagAdd {
 
     private static final OsTag plugin = OsTag.getInstance();
-    private static final Config conf = plugin.getConfig();
+    private static final Config config = plugin.getConfig();
     private static final PlaceholderAPI api = plugin.getPlaceholderApi();
-    private static String subTag = ColorUtil.replaceColorCode(plugin.getConfig().getString("subtag"));
-    private static String nick = ColorUtil.replaceColorCode(plugin.getConfig().getString("nick"));
-    private static String aSubTag = ColorUtil.replaceColorCode(plugin.getConfig().getString("a-subtag"));
-    private static String aNick = ColorUtil.replaceColorCode(plugin.getConfig().getString("a-nick"));
+    private static String subTag = ColorUtil.replaceColorCode(config.getString("subtag"));
+    private static String nick = ColorUtil.replaceColorCode(config.getString("nick"));
+    private static String aSubTag = ColorUtil.replaceColorCode(config.getString("a-subtag"));
+    private static String aNick = ColorUtil.replaceColorCode(config.getString("a-nick"));
 
     public static void addDevNormal(Player player) {
         if (plugin.papiAndKotlinLib) {
-            subTag = api.translateString(ColorUtil.replaceColorCode(conf.getString("subtag")), player);
-            nick = api.translateString(ColorUtil.replaceColorCode(conf.getString("nick")), player);
+            subTag = api.translateString(ColorUtil.replaceColorCode(config.getString("subtag")), player);
+            nick = api.translateString(ColorUtil.replaceColorCode(config.getString("nick")), player);
         }
-        if (conf.getBoolean("NameTag")) {
+        if (config.getBoolean("NameTag")) {
             player.setNameTag(nick
                     .replace(Prefixes.NAME, player.getDisplayName())
                     .replace(Prefixes.SUFFIX, getLuckPermSuffix(player))
@@ -33,7 +33,7 @@ public class OsTagAdd {
                     .replace(Prefixes.UNIQUE_DESCRIPTION, getUnique(player))
             );
         }
-        if (conf.getBoolean("ScoreTag")) {
+        if (config.getBoolean("ScoreTag")) {
             player.setScoreTag(subTag
                     .replace(Prefixes.DEVICE, getDevice(player))
                     .replace(Prefixes.CONTROLLER, getController(player))
@@ -58,11 +58,11 @@ public class OsTagAdd {
 
     public static void addDevAdvanced(Player player) {
         if (plugin.papiAndKotlinLib) {
-            aSubTag = api.translateString(ColorUtil.replaceColorCode(conf.getString("a-subtag")), player);
-            aNick = api.translateString(ColorUtil.replaceColorCode(conf.getString("a-nick")), player);
+            aSubTag = api.translateString(ColorUtil.replaceColorCode(config.getString("a-subtag")), player);
+            aNick = api.translateString(ColorUtil.replaceColorCode(config.getString("a-nick")), player);
         }
 
-        if (conf.getBoolean("NameTag")) {
+        if (config.getBoolean("NameTag")) {
             player.setNameTag(aNick
                     .replace(Prefixes.SUFFIX, getLuckPermSuffix(player))
                     .replace(Prefixes.PREFFIX, getLuckPermPreffix(player))
@@ -72,7 +72,7 @@ public class OsTagAdd {
                     .replace(Prefixes.UNIQUE_DESCRIPTION, getUnique(player))
             );
         }
-        if (conf.getBoolean("ScoreTag")) {
+        if (config.getBoolean("ScoreTag")) {
             player.setScoreTag(aSubTag
                     .replace(Prefixes.DEVICE, getDevice(player))
                     .replace(Prefixes.CONTROLLER, getController(player))

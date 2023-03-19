@@ -14,7 +14,7 @@ import java.util.List;
 public class OsTimer extends Task implements Runnable, Listener {
 
     private static final OsTag plugin = OsTag.getInstance();
-    private static final Config conf = plugin.getConfig();
+    private static final Config config = plugin.getConfig();
 
     @Override
     public void onRun(final int i) {
@@ -31,8 +31,8 @@ public class OsTimer extends Task implements Runnable, Listener {
     }
 
     private void addOsTag(final Player player) {
-        final List<String> advancedPlayers = conf.getStringList("advanced-players");
-        final List<String> disabledWorld = conf.getStringList("disabled-worlds");
+        final List<String> advancedPlayers = config.getStringList("advanced-players");
+        final List<String> disabledWorld = config.getStringList("disabled-worlds");
         for (String dis : disabledWorld) {
             if (player.getLevel().getName().equalsIgnoreCase(dis)) {
                 //disabled worlds is a experimental option, maybe not good working

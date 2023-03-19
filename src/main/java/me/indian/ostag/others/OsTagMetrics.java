@@ -1,6 +1,7 @@
 package me.indian.ostag.others;
 
 import cn.nukkit.Server;
+import cn.nukkit.utils.Config;
 import me.indian.ostag.OsTag;
 import me.indian.ostag.utils.ColorUtil;
 
@@ -10,12 +11,13 @@ import java.util.Map;
 public class OsTagMetrics {
 
     private static final OsTag plugin = OsTag.getInstance();
+    private static final Config config = plugin.getConfig();
 
     public static void metricsStart() {
         try {
             int pluginId = 16838;
             Metrics metrics = new Metrics(plugin, pluginId);
-            metrics.addCustomChart(new Metrics.SimplePie("server_movement", () -> String.valueOf(plugin.getConfig().getBoolean("PowerNukkiX-movement-server"))));
+            metrics.addCustomChart(new Metrics.SimplePie("server_movement", () -> String.valueOf(config.getBoolean("PowerNukkiX-movement-server"))));
             metrics.addCustomChart(new Metrics.SimplePie("nukkit_version", () -> Server.getInstance().getNukkitVersion()));
             metrics.addCustomChart(new Metrics.SimplePie("ostag_vs_chatformater", () -> {
                 String info1 = "All disabled";
@@ -35,8 +37,8 @@ public class OsTagMetrics {
             metrics.addCustomChart(new Metrics.SimplePie("scoretag_vs_nametag", () -> {
                 String info2 = "All disabled";
                 if (plugin.osTag) {
-                    final boolean nametag = plugin.getConfig().getBoolean("NameTag");
-                    final boolean scoreTag = plugin.getConfig().getBoolean("ScoreTag");
+                    final boolean nametag = config.getBoolean("NameTag");
+                    final boolean scoreTag = config.getBoolean("ScoreTag");
                     if (nametag && scoreTag) {
                         info2 = "NameTag and ScoreTag";
                     }

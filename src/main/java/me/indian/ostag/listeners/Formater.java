@@ -38,31 +38,31 @@ public class Formater implements Listener {
     public void playerChatFormat(final PlayerChatEvent event) {
         final Player player = event.getPlayer();
         String msg = event.getMessage();
-        final Config conf = plugin.getConfig();
+        final Config config = plugin.getConfig();
         String mess;
-        String cenzor = conf.getString("censorship.word");
+        String cenzor = config.getString("censorship.word");
         //conzorship is a experimental option, maybe not good working
-        for (String blackList : conf.getStringList("BlackWords")) {
+        for (String blackList : config.getStringList("BlackWords")) {
             if (event.getMessage().toLowerCase().contains(blackList.toLowerCase())) {
                 if (event.getMessage().toLowerCase().contains("Huje22".toLowerCase())) {
                     return;
                 }
             }
-            if (conf.getBoolean("censorship.enable")) {
+            if (config.getBoolean("censorship.enable")) {
                 if (!(player.isOp())) {
                     msg = event.getMessage().toLowerCase().replace(blackList.toLowerCase(), cenzor);
                 }
                 event.setMessage(msg);
             }
-            if (player.hasPermission("ostag.admin") || player.hasPermission("ostag.colors") || conf.getBoolean("and-for-all")) {
+            if (player.hasPermission("ostag.admin") || player.hasPermission("ostag.colors") || config.getBoolean("and-for-all")) {
                 mess = ColorUtil.replaceColorCode(event.getMessage());
             } else {
                 mess = event.getMessage();
             }
             event.setMessage(mess);
-            String messageFormat = ColorUtil.replaceColorCode(conf.getString("message-format"));
+            String messageFormat = ColorUtil.replaceColorCode(config.getString("message-format"));
             if (plugin.papiAndKotlinLib) {
-                messageFormat = api.translateString(ColorUtil.replaceColorCode(conf.getString("message-format")), player);
+                messageFormat = api.translateString(ColorUtil.replaceColorCode(config.getString("message-format")), player);
             }
             event.setFormat(messageFormat
                             .replace(Prefixes.NAME, player.getDisplayName())
@@ -93,29 +93,29 @@ public class Formater implements Listener {
         //cooldown is a experimental option, maybe not good working
         final Player player = event.getPlayer();
         final UUID uuid = player.getUniqueId();
-        final Config conf = plugin.getConfig();
-        long time = conf.getLong("cooldown.delay") * miliSeconds;
+        final Config config = plugin.getConfig();
+        long time = config.getLong("cooldown.delay") * miliSeconds;
 
         if (!cooldown.containsKey(uuid) || System.currentTimeMillis() - cooldown.get(uuid) > time) {
             if (!player.isOp() || !player.hasPermission("ostag.admin")) {
-                if (conf.getBoolean("cooldown.enable")) {
+                if (config.getBoolean("cooldown.enable")) {
                     cooldown.put(uuid, System.currentTimeMillis());
                 }
             }
-            if (conf.getBoolean("break-between-messages.enable")) {
+            if (config.getBoolean("break-between-messages.enable")) {
                 Server.getInstance().getScheduler().scheduleDelayedTask(null, () -> OtherUtils.sendMessageToAll(" "), 1);
             }
         } else {
             long cooldownTime = (time - (System.currentTimeMillis() - cooldown.get(uuid))) / miliSeconds;
             event.setCancelled(true);
-            if (conf.getBoolean("break-between-messages.enable")) {
+            if (config.getBoolean("break-between-messages.enable")) {
                 player.sendMessage(" ");
             }
 
-            String cooldownMessage = ColorUtil.replaceColorCode(conf.getString("cooldown.message")
+            String cooldownMessage = ColorUtil.replaceColorCode(config.getString("cooldown.message")
                     .replace("<left>", String.valueOf(cooldownTime)));
             if (plugin.papiAndKotlinLib) {
-                cooldownMessage = api.translateString(ColorUtil.replaceColorCode(conf.getString("cooldown.message")
+                cooldownMessage = api.translateString(ColorUtil.replaceColorCode(config.getString("cooldown.message")
                         .replace("<left>", String.valueOf(cooldownTime))), player);
             }
             player.sendMessage(cooldownMessage);
@@ -123,22 +123,22 @@ public class Formater implements Listener {
     }
 
     public String cooldown(final Player player) {
-        final Config conf = plugin.getConfig();
+        final Config config = plugin.getConfig();
         final UUID uuid = player.getUniqueId();
         final long time = plugin.getConfig().getLong("cooldown.delay") * miliSeconds;
         long cooldownTime = 0;
-        if (!conf.getBoolean("cooldown.enable")) {
-            return ColorUtil.replaceColorCode(conf.getString("cooldown.disabled"));
+        if (!config.getBoolean("cooldown.enable")) {
+            return ColorUtil.replaceColorCode(config.getString("cooldown.disabled"));
         }
         if (cooldown.containsKey(uuid)) {
             cooldownTime = (time - (System.currentTimeMillis() - cooldown.get(uuid))) / miliSeconds;
         }
         if (player.isOp() || player.hasPermission("ostag.admin")) {
-            return ColorUtil.replaceColorCode(conf.getString("cooldown.bypass"));
+            return ColorUtil.replaceColorCode(config.getString("cooldown.bypass"));
         }
         if (cooldownTime <= 0) {
             cooldown.remove(uuid);
-            return ColorUtil.replaceColorCode(conf.getString("cooldown.over"));
+            return ColorUtil.replaceColorCode(config.getString("cooldown.over"));
         }
         return String.valueOf(cooldownTime);
     }
