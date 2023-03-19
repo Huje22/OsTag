@@ -19,7 +19,7 @@ public class OsTagAdd {
     private static String aNick = ColorUtil.replaceColorCode(plugin.getConfig().getString("a-nick"));
 
     public static void addDevNormal(Player player) {
-        if (OsTag.papiAndKotlinLib) {
+        if (plugin.papiAndKotlinLib) {
             subTag = api.translateString(ColorUtil.replaceColorCode(conf.getString("subtag")), player);
             nick = api.translateString(ColorUtil.replaceColorCode(conf.getString("nick")), player);
         }
@@ -57,7 +57,7 @@ public class OsTagAdd {
     }
 
     public static void addDevAdvanced(Player player) {
-        if (OsTag.papiAndKotlinLib) {
+        if (plugin.papiAndKotlinLib) {
             aSubTag = api.translateString(ColorUtil.replaceColorCode(conf.getString("a-subtag")), player);
             aNick = api.translateString(ColorUtil.replaceColorCode(conf.getString("a-nick")), player);
         }

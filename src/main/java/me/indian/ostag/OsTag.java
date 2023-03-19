@@ -22,11 +22,11 @@ import net.luckperms.api.LuckPermsProvider;
 
 public class OsTag extends PluginBase {
 
-    public static boolean luckPerm = false;
-    public static boolean papiAndKotlinLib = false;
-    public static boolean serverMovement;
-    public static boolean osTag;
-    public static boolean chatFormatter;
+    public boolean luckPerm = false;
+    public boolean papiAndKotlinLib = false;
+    public boolean serverMovement;
+    public boolean osTag;
+    public boolean chatFormatter;
     private LuckPerms luckPerms;
     private PlaceholderAPI placeholderApi;
     private Formater formater;
@@ -40,11 +40,11 @@ public class OsTag extends PluginBase {
         return this.formater;
     }
 
-    public LuckPerms getLuckperms(){
+    public LuckPerms getLuckperms() {
         return this.luckPerms;
     }
 
-    public PlaceholderAPI getPlaceholderApi(){
+    public PlaceholderAPI getPlaceholderApi() {
         return this.placeholderApi;
     }
 

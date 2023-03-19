@@ -19,8 +19,8 @@ public class OsTagMetrics {
             metrics.addCustomChart(new Metrics.SimplePie("nukkit_version", () -> Server.getInstance().getNukkitVersion()));
             metrics.addCustomChart(new Metrics.SimplePie("ostag_vs_chatformater", () -> {
                 String info1 = "All disabled";
-                final boolean ostag = OsTag.osTag;
-                final boolean chatFormater = OsTag.chatFormatter;
+                final boolean ostag = plugin.osTag;
+                final boolean chatFormater = plugin.chatFormatter;
                 if (ostag && chatFormater) {
                     info1 = "OsTag and ChatFormater";
                 }
@@ -34,9 +34,9 @@ public class OsTagMetrics {
             }));
             metrics.addCustomChart(new Metrics.SimplePie("scoretag_vs_nametag", () -> {
                 String info2 = "All disabled";
-                if (OsTag.osTag) {
-                    boolean nametag = plugin.getConfig().getBoolean("NameTag");
-                    boolean scoreTag = plugin.getConfig().getBoolean("ScoreTag");
+                if (plugin.osTag) {
+                    final boolean nametag = plugin.getConfig().getBoolean("NameTag");
+                    final boolean scoreTag = plugin.getConfig().getBoolean("ScoreTag");
                     if (nametag && scoreTag) {
                         info2 = "NameTag and ScoreTag";
                     }

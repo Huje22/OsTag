@@ -73,7 +73,7 @@ public class PlayerInfoUtil {
         String pad = ColorUtil.replaceColorCode(conf.getString("Gamepad"));
         String unknowcon = ColorUtil.replaceColorCode(conf.getString("UnknownController"));
 
-        if (OsTag.serverMovement) {
+        if (plugin.serverMovement) {
             switch (InputListener.getController(player)) {
                 case "MOUSE":
                     return keyboard;
@@ -245,7 +245,7 @@ public class PlayerInfoUtil {
         return ColorUtil.replaceColorCode(unique);
     }
 
-    public static String getHealth(Player player){
+    public static String getHealth(Player player) {
         DecimalFormat df = new DecimalFormat();
         df.setMaximumFractionDigits(0);
 
