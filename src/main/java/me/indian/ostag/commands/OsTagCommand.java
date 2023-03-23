@@ -9,8 +9,6 @@ import cn.nukkit.utils.Config;
 import me.indian.ostag.OsTag;
 import me.indian.ostag.utils.ColorUtil;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.List;
 
 public class OsTagCommand implements CommandExecutor {
