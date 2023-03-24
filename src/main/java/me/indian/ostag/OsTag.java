@@ -49,9 +49,17 @@ public class OsTag extends PluginBase {
     }
 
     @Override
+    public void onLoad() {
+        instance = this;
+        saveDefaultConfig();
+        serverMovement = getConfig().getBoolean("movement-server");
+        osTag = getConfig().getBoolean("OsTag");
+        chatFormatter = getConfig().getBoolean("ChatFormatter");
+    }
+
+    @Override
     public void onEnable() {
         final long millisActualTime = System.currentTimeMillis();
-        instance = this;
         final PluginManager pm = getServer().getPluginManager();
         if (pm.getPlugin("LuckPerms") == null) {
             getLogger().warning(ColorUtil.replaceColorCode("&cYou don't have lucky perms , ChatFormatting don't correctly work"));
@@ -67,15 +75,11 @@ public class OsTag extends PluginBase {
             registerPlaceholders();
         }
         this.formater = new Formater(this, this.getPlaceholderApi());
-        saveDefaultConfig();
         if (getConfig().getBoolean("Disable")) {
             getLogger().warning(ColorUtil.replaceColorCode("&4Disabling plugin due to disable in config"));
             pm.disablePlugin(this);
             return;
         }
-        serverMovement = getConfig().getBoolean("movement-server");
-        osTag = getConfig().getBoolean("OsTag");
-        chatFormatter = getConfig().getBoolean("ChatFormatter");
         someNewInfo();
         pm.registerEvents(new CpsListener(), this);
         if (serverMovement) {
