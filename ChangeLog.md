@@ -143,7 +143,7 @@ now `breaks between messages` don't require enable cooldown <br/>
 Cooldown fix and cooldown placeholder `%ostag_cooldown%` <br/>
 
 ---------------------------
-**Released on the day xx.03.2023** <br/>
+**Released on the day 28.03.2023** <br/>
 **1.5.5** <br/>
 __Naming changes__: <br/>
 Fixed naming `<controler>` and `%ostag_controler%` to `<controller>` `%ostag_controller%` and also fixed `<preffix>`

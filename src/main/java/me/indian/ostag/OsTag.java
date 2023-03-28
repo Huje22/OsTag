@@ -112,7 +112,6 @@ public class OsTag extends PluginBase {
         getLogger().info(ColorUtil.replaceColorCode("&aStarted in &b" + executionTime + " &ams"));
     }
 
-
     public void sendOnEnableInfo(String type, CommandSender sender) {
         final PluginDescription descriptor = this.getDescription();
         final Server server = this.getServer();
