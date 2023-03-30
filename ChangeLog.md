@@ -173,7 +173,8 @@ __Naming changes__: <br/>
 
 __New things__: <br/>
 
-__Fixes__: <br/>
+__Fixes__:  <br/>
+Code optymalization (since 1.5.6.1-1.5.6.x) </br>
 
 __Others__: <br/>
 
