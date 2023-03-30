@@ -25,13 +25,13 @@ public class InputListener implements Listener {
             final Player player = event.getPlayer();
             //thanks to Petterim
             //https://github.com/PetteriM1
-          if(controller.containsKey(player)){
-      controller.put(player, inputMode);
-      return;
-}
-if(controller.get(player) != inputMode)}
-controller.put(player, inputMode);
-} 
+            if (!controller.containsKey(player)) {
+                controller.put(player, inputMode);
+                return;
+            }
+            if (controller.get(player) != inputMode) {
+                controller.put(player, inputMode);
+            }
         }
     }
 
