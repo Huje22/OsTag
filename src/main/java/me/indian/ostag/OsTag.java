@@ -12,8 +12,10 @@ import me.indian.ostag.commands.TestttCommand;
 import me.indian.ostag.listeners.CpsListener;
 import me.indian.ostag.listeners.Formater;
 import me.indian.ostag.listeners.InputListener;
+import me.indian.ostag.listeners.PlayerJoinListener;
 import me.indian.ostag.others.OsTagMetrics;
 import me.indian.ostag.utils.ColorUtil;
+import me.indian.ostag.utils.GithubUtil;
 import me.indian.ostag.utils.OsTimer;
 import me.indian.ostag.utils.OtherUtils;
 import me.indian.ostag.utils.PlayerInfoUtil;
@@ -22,6 +24,7 @@ import net.luckperms.api.LuckPermsProvider;
 
 public class OsTag extends PluginBase {
 
+    public static String prefix = ColorUtil.replaceColorCode("&f[&bOsTag&f]");
     public boolean luckPerm = false;
     public boolean papiAndKotlinLib = false;
     public boolean serverMovement;
@@ -105,9 +108,11 @@ public class OsTag extends PluginBase {
         } else {
             getLogger().info(ColorUtil.replaceColorCode("&bChatFormatter module is disabled"));
         }
+        pm.registerEvents(new PlayerJoinListener(this), this);
         OsTagMetrics.metricsStart();
         sendOnEnableInfo("admin", getServer().getConsoleSender());
         betaDetect();
+        getLogger().info(GithubUtil.checkTagCompatibility());
         final long executionTime = System.currentTimeMillis() - millisActualTime;
         getLogger().info(ColorUtil.replaceColorCode("&aStarted in &b" + executionTime + " &ams"));
     }
@@ -125,6 +130,7 @@ public class OsTag extends PluginBase {
             case "admin":
                 sender.sendMessage(ColorUtil.replaceColorCode("&b-------------------------------"));
                 sender.sendMessage(ColorUtil.replaceColorCode("&aOsTag version:&3 " + pluginVersion));
+                sender.sendMessage(ColorUtil.replaceColorCode("&aLatest version:&3 " + GithubUtil.getFastTagInfo()));
                 sender.sendMessage(ColorUtil.replaceColorCode("&aPlugin by:&6 " + authors));
                 sender.sendMessage(ColorUtil.replaceColorCode("&aNukkit Version:&3 " + nukkitVersion));
                 sender.sendMessage(ColorUtil.replaceColorCode("&aNukkit Api Version:&3 " + apiVersion));
@@ -143,6 +149,7 @@ public class OsTag extends PluginBase {
             case "normal":
                 sender.sendMessage(ColorUtil.replaceColorCode("&b-------------------------------"));
                 sender.sendMessage(ColorUtil.replaceColorCode("&aOsTag version:&3 " + pluginVersion));
+                sender.sendMessage(ColorUtil.replaceColorCode("&aLatest version:&3 " + GithubUtil.getFastTagInfo()));
                 sender.sendMessage(ColorUtil.replaceColorCode("&aPlugin by:&6 " + authors));
                 sender.sendMessage(ColorUtil.replaceColorCode("&aServer Version:&3 " + serverVersion));
                 sender.sendMessage(ColorUtil.replaceColorCode(" "));

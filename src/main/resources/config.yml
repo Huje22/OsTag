@@ -41,6 +41,9 @@
 #If you don't want to remove the plugin but you don't want it to work enable this option
 Disable: false
 #
+#UpDate checker on player join (only players with ostag.admin permission)
+UpdateChecker: true
+#
 #OsTag module
 OsTag: true
 #
