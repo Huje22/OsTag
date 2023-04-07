@@ -10,6 +10,7 @@ import com.creeperface.nukkit.placeholderapi.api.PlaceholderAPI;
 import me.indian.ostag.OsTag;
 import me.indian.ostag.utils.ColorUtil;
 import me.indian.ostag.utils.OtherUtils;
+import me.indian.ostag.utils.Permissions;
 import me.indian.ostag.utils.Prefixes;
 
 import java.util.HashMap;
@@ -54,7 +55,7 @@ public class Formater implements Listener {
                 }
                 event.setMessage(msg);
             }
-            if (player.hasPermission("ostag.admin") || player.hasPermission("ostag.colors") || config.getBoolean("and-for-all")) {
+            if (player.hasPermission(Permissions.ADMIN) || player.hasPermission(Permissions.COLORS) || config.getBoolean("and-for-all")) {
                 mess = ColorUtil.replaceColorCode(event.getMessage());
             } else {
                 mess = event.getMessage();

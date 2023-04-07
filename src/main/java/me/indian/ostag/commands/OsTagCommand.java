@@ -10,6 +10,7 @@ import me.indian.ostag.OsTag;
 import me.indian.ostag.utils.ColorUtil;
 
 import java.util.List;
+import me.indian.ostag.utils.Permissions;
 
 public class OsTagCommand implements CommandExecutor {
 
@@ -29,14 +30,14 @@ public class OsTagCommand implements CommandExecutor {
             return false;
         }
         if (args[0].equalsIgnoreCase("ver") || args[0].equalsIgnoreCase("v")) {
-            if (sender.hasPermission("ostag.admin")) {
+            if (sender.hasPermission(Permissions.ADMIN)) {
                 OsTag.getInstance().sendOnEnableInfo("admin", sender);
             } else {
                 OsTag.getInstance().sendOnEnableInfo("normal", sender);
             }
             return false;
         }
-        if (sender.hasPermission("ostag.admin")) {
+        if (sender.hasPermission(Permissions.ADMIN)) {
             if (args[0].equalsIgnoreCase("add")) {
                 final Player target = Server.getInstance().getPlayer(args[1]);
                 if (target == null) {
