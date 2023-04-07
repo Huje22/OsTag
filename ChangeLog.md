@@ -172,12 +172,13 @@ Better code optymalization <br/>
 __Naming changes__: <br/>
 
 __New things__: <br/>
+Update checker (you can disable the update information when entering the player in config) (since 1.5.6.1) </br>
 
 __Fixes__:  <br/>
 Code optymalization (since 1.5.6.1-1.5.6.x) </br>
 
 __Others__: <br/>
-
+Permissions interface (since 1.5.6.1) </br>
 
 -------------------------------------------------
 <div align="center">
