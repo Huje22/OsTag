@@ -21,12 +21,12 @@ public class PlayerJoinListener implements Listener {
     @SuppressWarnings("unused")
     @EventHandler
     public void onPlayerJoin(final PlayerJoinEvent event) {
-       final Player player = event.getPlayer();
-       final Config config = plugin.getConfig();
-       final String compatibility = GithubUtil.checkTagCompatibility();
+        final Player player = event.getPlayer();
+        final Config config = plugin.getConfig();
+        final String compatibility = GithubUtil.checkTagCompatibility();
 
         if (player.hasPermission(Permissions.ADMIN) || player.isOp()) {
-            if(config.getBoolean("UpdateChecker")) {
+            if (config.getBoolean("UpdateChecker")) {
                 player.sendMessage(plugin.prefix + " " + compatibility);
             }
         }
