@@ -10,31 +10,30 @@
 #
 # Support PlaceholderAPI
 #
-# <name> - player name [OsTag | ChatFormater] \\name\\
-# <ping> - player ping [OsTag | ChatFormater]
-# <health> - player health [OsTag | ChatFormater]
-# <max_health> - player max health [OsTag]
-# <food> - player food [OsTag]
-# <max_food> - player max food [OsTag]
-# <dimension> - player current dimension [ChatFormater]
-# <xp> | %ostag_xp%  - player xp lvl [OsTag | ChatFormater] //name//
-# <gamemode> - player gamemode [OsTag]
+# <name> - player name
+# <ping> - player ping
+# <health> - player health
+# <max_health> - player max health
+# <food> - player food
+# <max_food> - player max food
+# <dimension> - player current dimension
+# <xp> | %ostag_xp%  - player xp lvl
+# <gamemode> - player gamemode
 # <msg> - player message [ChatFormater]
-# <suffix> | %ostag_suffix% - player group sufix (Luck Perms Required) [OsTag | ChatFormater] \\name\\
-# <preffix> | %ostag_preffix% - player group prefix (Luck Perms Required) [OsTag | ChatFormater] \\name\\
-# <groupDisName> | %ostag_group% - player group display mame (Luck Perms Required) [OsTag | ChatFormater] \\name only\\
-# <model> - device model [OsTag | ChatFormater]
-# <device> | %ostag_device% - player device [OsTag | ChatFormater]
+# <suffix> | %ostag_suffix% - player group sufix (Luck Perms Required)
+# <preffix> | %ostag_preffix% - player group prefix (Luck Perms Required)
+# <groupDisName> | %ostag_group% - player group display mame (Luck Perms Required)
+# <model> - device model
+# <device> | %ostag_device% - player device
 # <controller> | %ostag_controller%  - Player controls [OsTag ]
-# <version> | %ostag_version% - Player game version version [OsTag | ChatFormater]
-# <xuid> - get player xuid [OsTag]
-# <language> - player Language [OsTag | ChatFormater]
-# <cps> | %ostag_cps% - left click per second counter [OsTag]
-# <unique_description> - player unique description from config [OsTag | ChatFormater] \\name\\
-# %ostag_cooldown% - chat cooldown seconds info
-#if in the description of the placeholders any one contains \\name\\ it means that it can be used in the player's name in ostag
-# for better work dont use | , only use \n
-#placeholders with <> have a specific place of use but those with %% can be used everywhere and outside the plugin, of course if you have the placeholder api
+# <version> | %ostag_version% - Player game version version
+# <xuid> - get player xuid
+# <language> - player Language
+# <cps> | %ostag_cps% - left click per second counter
+# <unique_description> - player unique description from config
+# <cooldown> | %ostag_cooldown% - chat cooldown seconds info
+#Now you can use (almost) any placeholder anywhere you want (except <msg>)
+# for better work dont use / and \ , only use \n
 #--------------------------
 #       Modules
 #
@@ -75,13 +74,13 @@ refresh-time: 1
 #
 #
 #Normal Player
-nick: "%factions_faction% <unique_description><xp> <groupDisName> <name> <suffix> "
-subtag: "%factions_faction% <device> | <controller> \n&eDevice Model: &r<model> \n&eGamemode: &r<gamemode>\n &eCooldown: &r%ostag_cooldown% \n&eCps: &r<cps>  &ePing: <ping> &eXp: <xp> \n&eGame Version: &r<version> \n\n&eXuid: &r<xuid>\n&eLanguage: &r<language>\n<health>/<max_health>&c❤"
+nick: "%factions_faction% <unique_description><xp> <groupDisName> <name> <suffix> <dimension> <version> "
+subtag: "%factions_faction% <device> | <controller> \n&eGroup display name: <groupDisName>\n&eDimension: <dimension>\n&eDevice Model: &r<model> \n&eGamemode: &r<gamemode>\n &eCooldown: &r<cooldown> \n&eCps: &r<cps>  &ePing: <ping> &eXp: <xp> \n&eGame Version: &r<version> \n\n&eXuid: &r<xuid>\n&eLanguage: &r<language>\n<health>/<max_health>&c❤"
 #
 #
 #Advanced Player
-a-nick: "%factions_faction% <unique_description><xp> <groupDisName> <name> <suffix> "
-a-subtag: "<food>/<max_food> \n%factions_faction% <device> | <controller> \n &eCooldown: &r%ostag_cooldown% \n&eCps: &r<cps>  &ePing: <ping>\n<health>/<max_health>&c❤\n&eXp: <xp>\n&eGame Version: &r<version>"
+a-nick: "%factions_faction% <unique_description><xp> <groupDisName> <name> <suffix> <dimension> <version> "
+a-subtag: "%factions_faction% <device> | <controller> \n&eGroup display name: <groupDisName>\n&eDimension: <dimension> \n&eDevice Model: &r<model> \n&eGamemode: &r<gamemode>\n &eCooldown: &r<cooldown> \n&eCps: &r<cps>  &ePing: <ping> &eXp: <xp> \n&eGame Version: &r<version> \n\n&eXuid: &r<xuid>\n&eLanguage: &r<language>\n<health>/<max_health>&c❤"
 advanced-players:
   - "ExamplePlayer"
 #
@@ -93,7 +92,7 @@ disabled-worlds:
 #    Formater options
 #
 #Message format
-message-format: "%factions_faction% <preffix> &r<name> &r» <msg>"
+message-format: "%factions_faction% <dimension> <cps> <food>/<max_food> <preffix> &r<name> &r» <msg> "
 #
 #
 #If this option set to true everyone can use & by default instead of §
