@@ -11,12 +11,10 @@ import me.indian.ostag.OsTag;
 import me.indian.ostag.utils.ColorUtil;
 import me.indian.ostag.utils.OtherUtils;
 import me.indian.ostag.utils.Permissions;
-import me.indian.ostag.utils.Prefixes;
 
 import java.util.HashMap;
 import java.util.UUID;
-
-import static me.indian.ostag.utils.PlayerInfoUtil.*;
+import me.indian.ostag.utils.ReplaceUtil;
 
 public class Formater implements Listener {
 
@@ -65,26 +63,9 @@ public class Formater implements Listener {
             if (plugin.papiAndKotlinLib) {
                 messageFormat = api.translateString(ColorUtil.replaceColorCode(config.getString("message-format")), player);
             }
-            event.setFormat(messageFormat
-                            .replace(Prefixes.NAME, player.getDisplayName())
-                            .replace(Prefixes.SUFFIX, getLuckPermSuffix(player))
-                            .replace(Prefixes.PREFFIX, getLuckPermPreffix(player))
-                            .replace(Prefixes.MSG, event.getMessage())
-                            .replace(Prefixes.GROUPDISPLAYNAME, getLuckPermGroupDisName(player))
-                            .replace(Prefixes.DEVICE, getDevice(player))
-                            .replace(Prefixes.HEALTH, getHealth(player))
-                            .replace(Prefixes.MODEL, player.getLoginChainData().getDeviceModel())
-                            .replace(Prefixes.VERSION, player.getLoginChainData().getGameVersion())
-                            .replace(Prefixes.LANGUAGE, player.getLoginChainData().getLanguageCode())
-                            .replace(Prefixes.PING, getPing(player))
-                            .replace(Prefixes.XP, getXp(player))
-                            .replace(Prefixes.DIMENSION, getDimension(player))
-                            .replace(Prefixes.UNIQUE_DESCRIPTION, getUnique(player))
-
-
-                            .replace("\n", " this action not allowed here ")
-                    //message.format: "<prefix> <player> <suffix> >> <msg>
-            );
+            event.setFormat(ReplaceUtil.replace(player, messageFormat
+                    .replace("<msg>", event.getMessage())
+                    .replace("\n", " this action not allowed here ")));
         }
     }
 
