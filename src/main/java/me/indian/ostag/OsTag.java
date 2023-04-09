@@ -83,7 +83,6 @@ public class OsTag extends PluginBase {
             pm.disablePlugin(this);
             return;
         }
-        someNewInfo();
         pm.registerEvents(new CpsListener(), this);
         if (serverMovement) {
             pm.registerEvents(new InputListener(), this);
@@ -110,14 +109,13 @@ public class OsTag extends PluginBase {
         }
         pm.registerEvents(new PlayerJoinListener(this), this);
         OsTagMetrics.metricsStart();
-        sendOnEnableInfo("admin", getServer().getConsoleSender());
-        betaDetect();
-        getLogger().info(GithubUtil.checkTagCompatibility());
+        pluginInfo("admin", getServer().getConsoleSender());
+        info();
         final long executionTime = System.currentTimeMillis() - millisActualTime;
         getLogger().info(ColorUtil.replaceColorCode("&aStarted in &b" + executionTime + " &ams"));
     }
 
-    public void sendOnEnableInfo(String type, CommandSender sender) {
+    public void pluginInfo(String type, CommandSender sender) {
         final PluginDescription descriptor = this.getDescription();
         final Server server = this.getServer();
 
@@ -166,45 +164,47 @@ public class OsTag extends PluginBase {
     }
 
     private void registerPlaceholders() {
-        final PlaceholderAPI api = this.getPlaceholderApi();
-        final String prefix = "ostag_";
-        api.builder(prefix + "cps", Integer.class)
-                .visitorLoader(entry -> CpsListener.getCPS(entry.getPlayer()))
-                .build();
-        api.builder(prefix + "cooldown", String.class)
-                .visitorLoader(entry -> getFormater().cooldown(entry.getPlayer()))
-                .build();
-        api.builder(prefix + "device", String.class)
-                .visitorLoader(entry -> PlayerInfoUtil.getDevice(entry.getPlayer()))
-                .build();
-        api.builder(prefix + "controller", String.class)
-                .visitorLoader(entry -> PlayerInfoUtil.getController(entry.getPlayer()))
-                .build();
-        api.builder(prefix + "preffix", String.class)
-                .visitorLoader(entry -> PlayerInfoUtil.getLuckPermPreffix(entry.getPlayer()))
-                .build();
-        api.builder(prefix + "suffix", String.class)
-                .visitorLoader(entry -> PlayerInfoUtil.getLuckPermSuffix(entry.getPlayer()))
-                .build();
-        api.builder(prefix + "group", String.class)
-                .visitorLoader(entry -> PlayerInfoUtil.getLuckPermGroupDisName(entry.getPlayer()))
-                .build();
-        api.builder(prefix + "version", String.class)
-                .visitorLoader(entry -> entry.getPlayer().getLoginChainData().getGameVersion())
-                .build();
-        api.builder(prefix + "xp", String.class)
-                .visitorLoader(entry -> PlayerInfoUtil.getXp(entry.getPlayer()))
-                .build();
-    }
-
-    private void betaDetect() {
-        if (this.getDescription().getVersion().contains("Beta") || this.getDescription().getVersion().contains("beta")) {
-            getLogger().warning(ColorUtil.replaceColorCode("&4You are running beta version, it may not be stable"));
+        try {
+            final PlaceholderAPI api = this.getPlaceholderApi();
+            final String prefix = "ostag_";
+            api.builder(prefix + "cps", Integer.class)
+                    .visitorLoader(entry -> CpsListener.getCPS(entry.getPlayer()))
+                    .build();
+            api.builder(prefix + "cooldown", String.class)
+                    .visitorLoader(entry -> getFormater().cooldown(entry.getPlayer()))
+                    .build();
+            api.builder(prefix + "device", String.class)
+                    .visitorLoader(entry -> PlayerInfoUtil.getDevice(entry.getPlayer()))
+                    .build();
+            api.builder(prefix + "controller", String.class)
+                    .visitorLoader(entry -> PlayerInfoUtil.getController(entry.getPlayer()))
+                    .build();
+            api.builder(prefix + "preffix", String.class)
+                    .visitorLoader(entry -> PlayerInfoUtil.getLuckPermPreffix(entry.getPlayer()))
+                    .build();
+            api.builder(prefix + "suffix", String.class)
+                    .visitorLoader(entry -> PlayerInfoUtil.getLuckPermSuffix(entry.getPlayer()))
+                    .build();
+            api.builder(prefix + "group", String.class)
+                    .visitorLoader(entry -> PlayerInfoUtil.getLuckPermGroupDisName(entry.getPlayer()))
+                    .build();
+            api.builder(prefix + "version", String.class)
+                    .visitorLoader(entry -> entry.getPlayer().getLoginChainData().getGameVersion())
+                    .build();
+            api.builder(prefix + "xp", String.class)
+                    .visitorLoader(entry -> PlayerInfoUtil.getXp(entry.getPlayer()))
+                    .build();
+            getLogger().info(ColorUtil.replaceColorCode("&aLoaded placeholderapi placeholders"));
+        } catch (Exception exception){
+            getLogger().error(ColorUtil.replaceColorCode("&cLoading placeholders failed "));
+            System.out.println(exception.getMessage());
         }
     }
 
-    private void someNewInfo() {
-        getLogger().warning(ColorUtil.replaceColorCode("&4If you used old versions, remove config to generate a new one!!!"));
-        getLogger().info(ColorUtil.replaceColorCode("&aNow we have so many naming fixes, see changelog "));
+    private void info() {
+        if (this.getDescription().getVersion().contains("Beta") || this.getDescription().getVersion().contains("beta")) {
+            getLogger().warning(ColorUtil.replaceColorCode("&4You are running beta version, it may not be stable"));
+        }
+        getLogger().info(GithubUtil.checkTagCompatibility());
     }
 }
