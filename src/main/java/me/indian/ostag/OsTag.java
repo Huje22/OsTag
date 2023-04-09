@@ -24,7 +24,7 @@ import net.luckperms.api.LuckPermsProvider;
 
 public class OsTag extends PluginBase {
 
-    public String prefix = ColorUtil.replaceColorCode("&f[&bOsTag&f]");
+    public String pluginPrefix = ColorUtil.replaceColorCode("&f[&bOsTag&f]");
     public boolean luckPerm = false;
     public boolean papiAndKotlinLib = false;
     public boolean serverMovement;
