@@ -9,6 +9,6 @@ softdepend:
   - LuckPerms
 commands:
   ostag:
-    description: ostag menagment
+    description: ostag management
   tto:
     description: test command
