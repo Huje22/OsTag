@@ -31,9 +31,9 @@ public class OsTagCommand implements CommandExecutor {
         }
         if (args[0].equalsIgnoreCase("ver") || args[0].equalsIgnoreCase("v")) {
             if (sender.hasPermission(Permissions.ADMIN)) {
-                OsTag.getInstance().sendOnEnableInfo("admin", sender);
+                OsTag.getInstance().pluginInfo("admin", sender);
             } else {
-                OsTag.getInstance().sendOnEnableInfo("normal", sender);
+                OsTag.getInstance().pluginInfo("normal", sender);
             }
             return false;
         }
