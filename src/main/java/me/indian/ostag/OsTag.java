@@ -14,7 +14,7 @@ import me.indian.ostag.listeners.Formater;
 import me.indian.ostag.listeners.InputListener;
 import me.indian.ostag.listeners.PlayerJoinListener;
 import me.indian.ostag.others.OsTagMetrics;
-import me.indian.ostag.others.AutoUpDate;
+import me.indian.ostag.utils.UpDateUtil;
 import me.indian.ostag.utils.ColorUtil;
 import me.indian.ostag.utils.GithubUtil;
 import me.indian.ostag.utils.OsTimer;
@@ -115,7 +115,7 @@ public class OsTag extends PluginBase {
         OsTagMetrics.metricsStart();
         pluginInfo("admin", getServer().getConsoleSender());
         info();
-        AutoUpDate.start();
+        UpDateUtil.autoUpDate();
 
         final long executionTime = System.currentTimeMillis() - millisActualTime;
         getLogger().info(ColorUtil.replaceColorCode("&aStarted in &b" + executionTime + " &ams"));

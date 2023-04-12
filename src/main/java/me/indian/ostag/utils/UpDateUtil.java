@@ -1,4 +1,4 @@
-package me.indian.ostag.others;
+package me.indian.ostag.utils;
 
 import cn.nukkit.Server;
 import cn.nukkit.utils.Config;
@@ -8,10 +8,8 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import me.indian.ostag.OsTag;
-import me.indian.ostag.utils.ColorUtil;
-import me.indian.ostag.utils.GithubUtil;
 
-public class AutoUpDate {
+public class UpDateUtil {
 
     private static final OsTag plugin = OsTag.getInstance();
     private static final Config config = plugin.getConfig();
@@ -23,38 +21,46 @@ public class AutoUpDate {
     private static final String latestFileName = "OsTag-" + latestVersion + ".jar";
     private static final String currentFileName = "Ostag-" + currentVersion + ".jar";
 
-    public static void start() {
-        new Thread(() -> {
-            if (config.getBoolean("AutoUpdate")) {
-                if (GithubUtil.getFastTagInfo().contains("false")) {
-                    File latest = new File(pluginsPath + "/" + latestFileName);
-                    File current = new File(pluginsPath + "/" + currentFileName);
+    public static void autoUpDate() {
+        if (config.getBoolean("AutoUpdate")) {
+            upDate();
+        }
+    }
 
-                    if (current.exists() && latest.exists()) {
-                        if (!currentVersion.equals(latestVersion)) {
-                            plugin.getLogger().info(ColorUtil.replaceColorCode("&cYou have downloaded the latest version but you are not using it"));
-                            return;
-                        }
+    public static void manualUpDate() {
+        upDate();
+    }
+
+    private static void upDate() {
+        new Thread(() -> {
+            if (GithubUtil.getFastTagInfo().contains("false")) {
+                File latest = new File(pluginsPath + "/" + latestFileName);
+                File current = new File(pluginsPath + "/" + currentFileName);
+
+                if (current.exists() && latest.exists()) {
+                    if (!currentVersion.equals(latestVersion)) {
+                        plugin.getLogger().info(ColorUtil.replaceColorCode("&cYou have downloaded the latest version but you are not using it"));
+                        return;
                     }
-                    if (!latest.exists()) {
-                        plugin.getLogger().info(ColorUtil.replaceColorCode("&aDownloading latest ostag version..."));
-                        if (plugin.debug) {
-                            plugin.getLogger().info(ColorUtil.replaceColorCode(debugPrefix + "&b" + latestUrl));
-                        }
-                        downloadLatestVersion();
-                    }
-                } else {
+                }
+                if (!latest.exists()) {
+                    plugin.getLogger().info(ColorUtil.replaceColorCode("&aDownloading latest ostag version..."));
                     if (plugin.debug) {
-                        plugin.getLogger().info(ColorUtil.replaceColorCode(debugPrefix + "&aDownloading the latest version is unnecessary or not possible"));
+                        plugin.getLogger().info(ColorUtil.replaceColorCode(debugPrefix + "&b" + latestUrl));
                     }
+                    downloadLatestVersion();
+                }
+            } else {
+                if (plugin.debug) {
+                    plugin.getLogger().info(ColorUtil.replaceColorCode(debugPrefix + "&aDownloading the latest version is unnecessary or not possible"));
                 }
             }
         }).start();
     }
 
-
     private static void downloadLatestVersion() {
         try {
+            final long millisActualTime = System.currentTimeMillis();
             URL url = new URL(latestUrl);
             HttpURLConnection httpConnection = (HttpURLConnection) url.openConnection();
             int responseCode = httpConnection.getResponseCode();
@@ -84,11 +90,11 @@ public class AutoUpDate {
                     outputStream.write(buffer, 0, bytesRead);
                 }
 
-                plugin.getLogger().info(ColorUtil.replaceColorCode("&aDownload completed."));
-
                 // zwalnianie zasobów
                 outputStream.close();
                 inputStream.close();
+                final long executionTime = System.currentTimeMillis() - millisActualTime;
+                plugin.getLogger().info(ColorUtil.replaceColorCode("&aDownload completed in &b" + executionTime + " &ams"));
             } else {
                 plugin.getLogger().warning(ColorUtil.replaceColorCode("&cThe file could not be used. HTTP response code:" + responseCode));
             }
