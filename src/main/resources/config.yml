@@ -43,6 +43,9 @@ Disable: false
 #UpDate checker on player join (only players with ostag.admin permission)
 UpdateChecker: true
 #
+#Download the latest version automatically if possible
+AutoUpdate: true
+#
 #OsTag module
 OsTag: true
 #
@@ -60,6 +63,8 @@ ChatFormatter: true
 #if you use server-authoritative-movement=client-auth in powernukkitx, set this to false
 movement-server: true
 #
+#Public plugin debug
+Debug: false
 #
 #--------------------------
 #   OsTag options

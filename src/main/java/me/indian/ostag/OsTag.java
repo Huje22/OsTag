@@ -14,6 +14,7 @@ import me.indian.ostag.listeners.Formater;
 import me.indian.ostag.listeners.InputListener;
 import me.indian.ostag.listeners.PlayerJoinListener;
 import me.indian.ostag.others.OsTagMetrics;
+import me.indian.ostag.utils.AutoUpDate;
 import me.indian.ostag.utils.ColorUtil;
 import me.indian.ostag.utils.GithubUtil;
 import me.indian.ostag.utils.OsTimer;
@@ -25,11 +26,13 @@ import net.luckperms.api.LuckPermsProvider;
 public class OsTag extends PluginBase {
 
     public String pluginPrefix = ColorUtil.replaceColorCode("&f[&bOsTag&f]");
+    public String publicDebugPrefix = ColorUtil.replaceColorCode("&7[&8Debug&7] ");
     public boolean luckPerm = false;
     public boolean papiAndKotlinLib = false;
     public boolean serverMovement;
     public boolean osTag;
     public boolean chatFormatter;
+    public boolean debug;
     private LuckPerms luckPerms;
     private PlaceholderAPI placeholderApi;
     private Formater formater;
@@ -58,6 +61,7 @@ public class OsTag extends PluginBase {
         serverMovement = getConfig().getBoolean("movement-server");
         osTag = getConfig().getBoolean("OsTag");
         chatFormatter = getConfig().getBoolean("ChatFormatter");
+        debug = getConfig().getBoolean("Debug");
     }
 
     @Override
@@ -111,6 +115,7 @@ public class OsTag extends PluginBase {
         OsTagMetrics.metricsStart();
         pluginInfo("admin", getServer().getConsoleSender());
         info();
+        AutoUpDate.start();
         final long executionTime = System.currentTimeMillis() - millisActualTime;
         getLogger().info(ColorUtil.replaceColorCode("&aStarted in &b" + executionTime + " &ams"));
     }
@@ -195,7 +200,7 @@ public class OsTag extends PluginBase {
                     .visitorLoader(entry -> PlayerInfoUtil.getXp(entry.getPlayer()))
                     .build();
             getLogger().info(ColorUtil.replaceColorCode("&aLoaded placeholderapi placeholders"));
-        } catch (Exception exception){
+        } catch (Exception exception) {
             getLogger().error(ColorUtil.replaceColorCode("&cLoading placeholders failed "));
             System.out.println(exception.getMessage());
         }
