@@ -6,15 +6,18 @@ import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandExecutor;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.utils.Config;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import me.indian.ostag.OsTag;
 import me.indian.ostag.utils.ColorUtil;
-
-import java.util.List;
 import me.indian.ostag.utils.Permissions;
+import me.indian.ostag.utils.UpDateUtil;
 
 public class OsTagCommand implements CommandExecutor {
 
     private final OsTag plugin;
+    private final Map<String, Boolean> confirmations = new HashMap<>();
 
     public OsTagCommand(OsTag plugin) {
         this.plugin = plugin;
@@ -54,6 +57,18 @@ public class OsTagCommand implements CommandExecutor {
                     config.set("advanced-players", advancedPlayers);
                 }
             }
+            if (args[0].equalsIgnoreCase("update")) {
+                if (confirmations.getOrDefault(sender.getName(), false)) {
+                    confirmations.remove(sender.getName());
+                    sender.sendMessage(ColorUtil.replaceColorCode("&aAction confirmed"));
+                    UpDateUtil.manualUpDate();
+                    if (sender instanceof Player)
+                        sender.sendMessage(ColorUtil.replaceColorCode("&aCheck console for results"));
+                } else {
+                    confirmations.put(sender.getName(), true);
+                    sender.sendMessage(ColorUtil.replaceColorCode("&cAre you sure you want to confirm this action? enter the command again to confirm"));
+                }
+            }
             if (args[0].equalsIgnoreCase("reload") || args[0].equalsIgnoreCase("r")) {
                 try {
                     final long millisActualTime = System.currentTimeMillis();
@@ -70,7 +85,7 @@ public class OsTagCommand implements CommandExecutor {
             }
             config.save();
         } else {
-            sender.sendMessage(ColorUtil.replaceColorCode("&cYou don't have permisions"));
+            sender.sendMessage(ColorUtil.replaceColorCode("&cYou don't have permissions"));
         }
         return false;
     }
