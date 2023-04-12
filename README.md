@@ -72,7 +72,7 @@ look [Contributing wiki page](https://github.com/OpenPlugins-Minecraft/OsTag/wik
 
 ## Beta versions
 
-* [1.5.6.1-Beta](https://github.com/OpenPlugins-Minecraft/OsTag/releases/tag/1.5.6.1-Beta)
+* [1.5.6-Beta](https://github.com/OpenPlugins-Minecraft/OsTag/releases/tag/1.5.6.1-Beta)
 * [1.5.5-Beta](https://github.com/OpenPlugins-Minecraft/OsTag/releases/tag/1.5.5-Beta) (Outdated)
 * [1.5.4-Beta](https://github.com/OpenPlugins-Minecraft/OsTag/releases/tag/1.5.4-Beta) (Outdated)
 
