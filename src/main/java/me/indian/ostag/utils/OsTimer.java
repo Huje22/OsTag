@@ -18,9 +18,11 @@ public class OsTimer extends Task implements Runnable, Listener {
 
     @Override
     public void onRun(final int i) {
-        for (Player all : Server.getInstance().getOnlinePlayers().values()) {
-            addOsTag(all);
-        }
+        new Thread(() -> {
+            for (Player all : Server.getInstance().getOnlinePlayers().values()) {
+                addOsTag(all);
+            }
+        }).start();
     }
 
     @SuppressWarnings("unused")
