@@ -1,6 +1,7 @@
 package me.indian.ostag.utils;
 
 import cn.nukkit.Server;
+import cn.nukkit.plugin.PluginLogger;
 import cn.nukkit.utils.Config;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -12,6 +13,7 @@ import me.indian.ostag.OsTag;
 public class UpDateUtil {
 
     private static final OsTag plugin = OsTag.getInstance();
+    private static final PluginLogger logger = plugin.getLogger();
     private static final Config config = plugin.getConfig();
     private static final String debugPrefix = ColorUtil.replaceColorCode(plugin.publicDebugPrefix + "&8[&dAutoUpdate&8] ");
     private static final String pluginsPath = Server.getInstance().getPluginPath();
@@ -39,20 +41,20 @@ public class UpDateUtil {
 
                 if (current.exists() && latest.exists()) {
                     if (!currentVersion.equals(latestVersion)) {
-                        plugin.getLogger().info(ColorUtil.replaceColorCode("&cYou have downloaded the latest version but you are not using it"));
+                        logger.info(ColorUtil.replaceColorCode("&cYou have downloaded the latest version but you are not using it"));
                         return;
                     }
                 }
                 if (!latest.exists()) {
-                    plugin.getLogger().info(ColorUtil.replaceColorCode("&aDownloading latest ostag version..."));
+                    logger.info(ColorUtil.replaceColorCode("&aDownloading latest ostag version..."));
                     if (plugin.debug) {
-                        plugin.getLogger().info(ColorUtil.replaceColorCode(debugPrefix + "&b" + latestUrl));
+                        logger.info(ColorUtil.replaceColorCode(debugPrefix + "&b" + latestUrl));
                     }
                     downloadLatestVersion();
                 }
             } else {
                 if (plugin.debug) {
-                    plugin.getLogger().info(ColorUtil.replaceColorCode(debugPrefix + "&aDownloading the latest version is unnecessary or not possible"));
+                    logger.info(ColorUtil.replaceColorCode(debugPrefix + "&aDownloading the latest version is unnecessary or not possible"));
                 }
             }
         }).start();
@@ -72,9 +74,9 @@ public class UpDateUtil {
                 int contentLength = httpConnection.getContentLength();
 
                 if (plugin.debug) {
-                    plugin.getLogger().info(ColorUtil.replaceColorCode(debugPrefix + "&aFile download: &b" + latestFileName));
-                    plugin.getLogger().info(ColorUtil.replaceColorCode(debugPrefix + "&aContent type: &b" + contentType));
-                    plugin.getLogger().info(ColorUtil.replaceColorCode(debugPrefix + "&aContent length: &b" + contentLength));
+                    logger.info(ColorUtil.replaceColorCode(debugPrefix + "&aFile download: &b" + latestFileName));
+                    logger.info(ColorUtil.replaceColorCode(debugPrefix + "&aContent type: &b" + contentType));
+                    logger.info(ColorUtil.replaceColorCode(debugPrefix + "&aContent length: &b" + contentLength));
                 }
                 // otwieranie strumienia wejściowego z połączenia HTTP
                 InputStream inputStream = httpConnection.getInputStream();
@@ -94,13 +96,13 @@ public class UpDateUtil {
                 outputStream.close();
                 inputStream.close();
                 final long executionTime = System.currentTimeMillis() - millisActualTime;
-                plugin.getLogger().info(ColorUtil.replaceColorCode("&aDownload completed in &b" + executionTime + " &ams"));
+                logger.info(ColorUtil.replaceColorCode("&aDownload completed in &b" + executionTime + " &ams"));
             } else {
-                plugin.getLogger().warning(ColorUtil.replaceColorCode("&cThe file could not be used. HTTP response code:" + responseCode));
+                logger.warning(ColorUtil.replaceColorCode("&cThe file could not be used. HTTP response code:" + responseCode));
             }
             httpConnection.disconnect();
         } catch (Exception e) {
-            plugin.getLogger().warning(ColorUtil.replaceColorCode("&cCan't download latest ostag version!"));
+            logger.warning(ColorUtil.replaceColorCode("&cCan't download latest ostag version!"));
         }
     }
 }
