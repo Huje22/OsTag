@@ -35,7 +35,7 @@ public class GithubUtil {
         return ColorUtil.replaceColorCode(tag);
     }
 
-    private static String getLatestTag() {
+    public static String getLatestTag() {
         try {
             URL url = new URL("https://api.github.com/repos/OpenPlugins-Minecraft/OsTag/tags");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
