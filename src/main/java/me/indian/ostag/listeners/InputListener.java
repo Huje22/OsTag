@@ -37,6 +37,6 @@ public class InputListener implements Listener {
     }
 
     public static String getController(Player player) {
-        return controller.get(player) + "";
+        return String.valueOf(controller.get(player));
     }
 }
