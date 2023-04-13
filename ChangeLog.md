@@ -175,8 +175,10 @@ __New things__: <br/>
 Update checker (you can disable the update information when entering the player in config) (since 1.5.6.1) </br>
 Now you can use (almost) any placeholder anywhere you want (except <msg>) (since 1.5.6.1) </br>
 AutoUpdate - Download the latest version automatically if it possible (since 1.5.6.2) </br>
-/ostag update - You can update the plugin manually (since 1.5.6.3) </br>
+`/ostag update` - You can update the plugin manually (since 1.5.6.3) </br>
 New metrics update system (since 1.5.6.3) </br>
+Behind version counter in `/ostag v` (since 1.5.6.3) </br>
+
 
 __Fixes__:  <br/>
 Code optymalization (since 1.5.6.1-1.5.6.x) </br>
