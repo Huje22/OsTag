@@ -8,10 +8,12 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import me.indian.ostag.OsTag;
 
 public class UpDateUtil {
-
+    
     private static final OsTag plugin = OsTag.getInstance();
     private static final PluginLogger logger = plugin.getLogger();
     private static final Config config = plugin.getConfig();
@@ -22,6 +24,7 @@ public class UpDateUtil {
     private static final String latestUrl = "https://github.com/OpenPlugins-Minecraft/OsTag/releases/download/" + latestVersion + "/OsTag-" + latestVersion + ".jar";
     private static final String latestFileName = "OsTag-" + latestVersion + ".jar";
     private static final String currentFileName = "Ostag-" + currentVersion + ".jar";
+    private static final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     public static void autoUpDate() {
         if (config.getBoolean("AutoUpdate")) {
@@ -34,7 +37,7 @@ public class UpDateUtil {
     }
 
     private static void upDate() {
-        new Thread(() -> {
+        executorService.execute(() -> {
             if (GithubUtil.getFastTagInfo().contains("false")) {
                 File latest = new File(pluginsPath + "/" + latestFileName);
                 File current = new File(pluginsPath + "/" + currentFileName);
@@ -57,7 +60,7 @@ public class UpDateUtil {
                     logger.info(ColorUtil.replaceColorCode(debugPrefix + "&aDownloading the latest version is unnecessary or not possible"));
                 }
             }
-        }).start();
+        });
     }
 
     private static void downloadLatestVersion() {

@@ -5,6 +5,8 @@ import cn.nukkit.scheduler.Task;
 import cn.nukkit.utils.Config;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import me.indian.ostag.OsTag;
 import me.indian.ostag.util.ColorUtil;
 
@@ -13,11 +15,12 @@ public class OsTagMetrics extends Task implements Runnable {
     private final OsTag plugin = OsTag.getInstance();
     private final Config config = plugin.getConfig();
     private final Metrics metrics = new Metrics(plugin, 16838);
+    private static final ExecutorService executorService = Executors.newSingleThreadExecutor();
     private boolean notRunned = true;
 
     @Override
     public void onRun(int i) {
-        new Thread(() -> {
+        executorService.execute(() -> {
             try {
                 if (!metrics.isEnabled()) {
                     plugin.getLogger().info(ColorUtil.replaceColorCode("&aMetrics is disabled"));
@@ -34,7 +37,7 @@ public class OsTagMetrics extends Task implements Runnable {
                 System.out.println(e.getMessage());
                 this.cancel();
             }
-        }).start();
+        });
     }
 
     private void metrics() throws Exception {

@@ -7,6 +7,9 @@ import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerJoinEvent;
 import cn.nukkit.scheduler.Task;
 import cn.nukkit.utils.Config;
+import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import me.indian.ostag.OsTag;
 
 import java.util.List;
@@ -15,14 +18,15 @@ public class OsTimer extends Task implements Runnable, Listener {
 
     private static final OsTag plugin = OsTag.getInstance();
     private static final Config config = plugin.getConfig();
+    private static final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     @Override
     public void onRun(final int i) {
-        new Thread(() -> {
+        executorService.execute(() -> {
             for (Player all : Server.getInstance().getOnlinePlayers().values()) {
                 addOsTag(all);
             }
-        }).start();
+        });
     }
 
     @SuppressWarnings("unused")
