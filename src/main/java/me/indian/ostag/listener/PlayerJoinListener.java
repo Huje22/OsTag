@@ -1,4 +1,4 @@
-package me.indian.ostag.listeners;
+package me.indian.ostag.listener;
 
 import cn.nukkit.Player;
 import cn.nukkit.event.EventHandler;
@@ -6,8 +6,8 @@ import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerJoinEvent;
 import cn.nukkit.utils.Config;
 import me.indian.ostag.OsTag;
-import me.indian.ostag.utils.GithubUtil;
-import me.indian.ostag.utils.Permissions;
+import me.indian.ostag.util.GithubUtil;
+import me.indian.ostag.util.Permissions;
 
 public class PlayerJoinListener implements Listener {
 

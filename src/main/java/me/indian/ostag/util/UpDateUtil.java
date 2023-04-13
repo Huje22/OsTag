@@ -1,4 +1,4 @@
-package me.indian.ostag.utils;
+package me.indian.ostag.util;
 
 import cn.nukkit.Server;
 import cn.nukkit.plugin.PluginLogger;

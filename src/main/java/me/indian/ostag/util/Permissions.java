@@ -1,4 +1,4 @@
-package me.indian.ostag.utils;
+package me.indian.ostag.util;
 
 public interface Permissions {
     String ADMIN = "ostag.admin";

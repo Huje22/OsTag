@@ -1,4 +1,4 @@
-package me.indian.ostag.listeners;
+package me.indian.ostag.listener;
 
 import cn.nukkit.Player;
 import cn.nukkit.Server;
@@ -8,13 +8,13 @@ import cn.nukkit.event.player.PlayerChatEvent;
 import cn.nukkit.utils.Config;
 import com.creeperface.nukkit.placeholderapi.api.PlaceholderAPI;
 import me.indian.ostag.OsTag;
-import me.indian.ostag.utils.ColorUtil;
-import me.indian.ostag.utils.OtherUtils;
-import me.indian.ostag.utils.Permissions;
+import me.indian.ostag.util.ColorUtil;
+import me.indian.ostag.util.OtherUtils;
+import me.indian.ostag.util.Permissions;
 
 import java.util.HashMap;
 import java.util.UUID;
-import me.indian.ostag.utils.ReplaceUtil;
+import me.indian.ostag.util.ReplaceUtil;
 
 public class Formater implements Listener {
 

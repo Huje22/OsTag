@@ -1,4 +1,4 @@
-package me.indian.ostag.utils;
+package me.indian.ostag.util;
 
 import me.indian.ostag.OsTag;
 import java.io.BufferedReader;

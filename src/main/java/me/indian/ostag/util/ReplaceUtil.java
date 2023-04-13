@@ -1,10 +1,10 @@
-package me.indian.ostag.utils;
+package me.indian.ostag.util;
 
 import cn.nukkit.Player;
 import me.indian.ostag.OsTag;
-import me.indian.ostag.listeners.CpsListener;
+import me.indian.ostag.listener.CpsListener;
 
-import static me.indian.ostag.utils.PlayerInfoUtil.*;
+import static me.indian.ostag.util.PlayerInfoUtil.*;
 
 public class ReplaceUtil {
 
