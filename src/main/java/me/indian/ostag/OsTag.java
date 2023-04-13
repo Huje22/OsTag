@@ -112,10 +112,10 @@ public class OsTag extends PluginBase {
             getLogger().info(ColorUtil.replaceColorCode("&bChatFormatter module is disabled"));
         }
         pm.registerEvents(new PlayerJoinListener(this), this);
-        OsTagMetrics.metricsStart();
         pluginInfo("admin", getServer().getConsoleSender());
         info();
         UpDateUtil.autoUpDate();
+        getServer().getScheduler().scheduleRepeatingTask(new OsTagMetrics(), 60 * 20);
 
         final long executionTime = System.currentTimeMillis() - millisActualTime;
         getLogger().info(ColorUtil.replaceColorCode("&aStarted in &b" + executionTime + " &ams"));
