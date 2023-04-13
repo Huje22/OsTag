@@ -196,7 +196,8 @@ __**General info**__  <br/>
 
 * After beta 1.5.5 each beta version will have additional numbering for example : **1.5.6.01** <br/>
 * Since 1.5.5 `ChangeLod.md` gets a new information format
-*
+* Beta will be based on 5 phases (maybe more if something bigger is planned)
+* 
 
 
 
