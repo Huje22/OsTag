@@ -17,7 +17,7 @@ public class OsTagMetrics {
         try {
             int pluginId = 16838;
             Metrics metrics = new Metrics(plugin, pluginId);
-            metrics.addCustomChart(new Metrics.SimplePie("server_movement", () -> String.valueOf(config.getBoolean("PowerNukkiX-movement-server"))));
+            metrics.addCustomChart(new Metrics.SimplePie("server_movement", () -> String.valueOf(plugin.serverMovement)));
             metrics.addCustomChart(new Metrics.SimplePie("nukkit_version", () -> Server.getInstance().getNukkitVersion()));
             metrics.addCustomChart(new Metrics.SimplePie("ostag_vs_chatformater", () -> {
                 String info1 = "All disabled";
