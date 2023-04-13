@@ -10,9 +10,9 @@ import me.indian.ostag.utils.ColorUtil;
 
 public class OsTagMetrics extends Task implements Runnable {
 
-    private static final OsTag plugin = OsTag.getInstance();
-    private static final Config config = plugin.getConfig();
-    private static final Metrics metrics = new Metrics(plugin, 16838);
+    private final OsTag plugin = OsTag.getInstance();
+    private final Config config = plugin.getConfig();
+    private final Metrics metrics = new Metrics(plugin, 16838);
     private boolean notRunned = true;
 
     @Override
@@ -37,7 +37,7 @@ public class OsTagMetrics extends Task implements Runnable {
         }).start();
     }
 
-    private static void metrics() throws Exception {
+    private void metrics() throws Exception {
         metrics.addCustomChart(new Metrics.SimplePie("server_movement", () -> String.valueOf(plugin.serverMovement)));
         metrics.addCustomChart(new Metrics.SimplePie("nukkit_version", () -> Server.getInstance().getNukkitVersion()));
         metrics.addCustomChart(new Metrics.SimplePie("ostag_vs_chatformater", () -> {
@@ -103,7 +103,7 @@ public class OsTagMetrics extends Task implements Runnable {
         }));
     }
 
-    private static String mapDeviceOSToString(int os) {
+    private String mapDeviceOSToString(int os) {
         switch (os) {
             case 1:
                 return "Android";
