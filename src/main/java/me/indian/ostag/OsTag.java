@@ -130,11 +130,13 @@ public class OsTag extends PluginBase {
         final String nukkitVersion = server.getNukkitVersion();
         final String serverVersion = server.getVersion();
         final String apiVersion = server.getApiVersion();
+        final String latest = GithubUtil.getFastTagInfo() + GithubUtil.getBehindCount();
+
         switch (type) {
             case "admin":
                 sender.sendMessage(ColorUtil.replaceColorCode("&b-------------------------------"));
                 sender.sendMessage(ColorUtil.replaceColorCode("&aOsTag version:&3 " + pluginVersion));
-                sender.sendMessage(ColorUtil.replaceColorCode("&aLatest version:&3 " + GithubUtil.getFastTagInfo()));
+                sender.sendMessage(ColorUtil.replaceColorCode("&aLatest version:&3 " + latest));
                 sender.sendMessage(ColorUtil.replaceColorCode("&aPlugin by:&6 " + authors));
                 sender.sendMessage(ColorUtil.replaceColorCode("&aNukkit Version:&3 " + nukkitVersion));
                 sender.sendMessage(ColorUtil.replaceColorCode("&aNukkit Api Version:&3 " + apiVersion));
@@ -153,7 +155,7 @@ public class OsTag extends PluginBase {
             case "normal":
                 sender.sendMessage(ColorUtil.replaceColorCode("&b-------------------------------"));
                 sender.sendMessage(ColorUtil.replaceColorCode("&aOsTag version:&3 " + pluginVersion));
-                sender.sendMessage(ColorUtil.replaceColorCode("&aLatest version:&3 " + GithubUtil.getFastTagInfo()));
+                sender.sendMessage(ColorUtil.replaceColorCode("&aLatest version:&3 " + latest));
                 sender.sendMessage(ColorUtil.replaceColorCode("&aPlugin by:&6 " + authors));
                 sender.sendMessage(ColorUtil.replaceColorCode("&aServer Version:&3 " + serverVersion));
                 sender.sendMessage(ColorUtil.replaceColorCode(" "));

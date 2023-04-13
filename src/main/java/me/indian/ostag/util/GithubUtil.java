@@ -1,5 +1,8 @@
 package me.indian.ostag.util;
 
+import cn.nukkit.plugin.PluginLogger;
+import java.util.Map;
+import java.util.TreeMap;
 import me.indian.ostag.OsTag;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,6 +12,11 @@ import java.net.URL;
 
 public class GithubUtil {
 
+    private static final OsTag plugin = OsTag.getInstance();
+    private static final PluginLogger logger = plugin.getLogger();
+    private static final Map<Integer, String> versions = new TreeMap<>();
+    private static final StringBuilder response = new StringBuilder();
+    private static final String debugPrefix = ColorUtil.replaceColorCode(plugin.publicDebugPrefix + "&8[&dLatest tag&8] ");
     private static final String current = OsTag.getInstance().getDescription().getVersion();
     private static final String latest = getLatestTag();
     private static final String errorMessage = "&cCan't get latest tag";
@@ -42,20 +50,101 @@ public class GithubUtil {
             connection.setRequestMethod("GET");
             connection.setRequestProperty("Accept", "application/vnd.github.v3+json");
 
+            int responseCode = connection.getResponseCode();
+            if (!(responseCode == HttpURLConnection.HTTP_OK)) {
+                if (plugin.debug) {
+                    logger.info(ColorUtil.replaceColorCode(debugPrefix + "&cCan't get latest tag, HTTP response code: " + responseCode));
+                }
+                return errorMessage;
+            }
+
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            StringBuilder response = new StringBuilder();
             String line;
             while ((line = reader.readLine()) != null) {
                 response.append(line);
             }
             reader.close();
             connection.disconnect();
+
             return parseLatestTagFromJson(response.toString());
-        } catch (IOException exception) {
+        } catch (IOException e) {
             return errorMessage;
         }
-
     }
+
+    public static String getBehindCount() {
+        if (response.toString().isEmpty()) return " ";
+        String json = response.toString();
+        String[] tags = json.replaceAll("[\\[\\]{}\"]", "").split(",");
+
+        int counter = 0;
+        int index = -1;
+
+        for (int i = 0; i < 66; i += 6) {
+            versions.put(counter, tags[i].split(":")[1]);
+            counter++;
+        }
+
+        if (plugin.debug) {
+            for (Map.Entry<Integer, String> entry : versions.entrySet()) {
+                logger.info(debugPrefix + entry.getKey() + ": " + entry.getValue());
+            }
+        }
+
+        for (Map.Entry<Integer, String> entry : versions.entrySet()) {
+            if (entry.getValue().equals(current)) {
+                index = entry.getKey();
+                break;
+            }
+        }
+
+        if (index == -1) {
+            return ColorUtil.replaceColorCode(" &5(&cBehind more than 10 version&5)");
+        }
+        if (index == 0) {
+            return "";
+        }
+
+        return ColorUtil.replaceColorCode(" &5(&c" + index + " &dVersions behind&5)");
+    }
+
+
+    public static int getBehindIntCount() {
+        if (response.toString().isEmpty()) return 0;
+        String json = response.toString();
+        String[] tags = json.replaceAll("[\\[\\]{}\"]", "").split(",");
+
+        int counter = 0;
+        int index = -1;
+
+        for (int i = 0; i < 66; i += 6) {
+            versions.put(counter, tags[i].split(":")[1]);
+            counter++;
+        }
+
+        if (plugin.debug) {
+            for (Map.Entry<Integer, String> entry : versions.entrySet()) {
+                logger.info(debugPrefix + entry.getKey() + ": " + entry.getValue());
+            }
+        }
+
+        for (Map.Entry<Integer, String> entry : versions.entrySet()) {
+            if (entry.getValue().equals(current)) {
+                index = entry.getKey();
+                break;
+            }
+        }
+
+        if (index == -1) {
+            return index;
+        }
+        if (index == 0) {
+            return 0;
+        }
+
+        return index;
+    }
+
 
     private static String parseLatestTagFromJson(String json) {
         String[] tags = json.replaceAll("[\\[\\]{}\"]", "").split(",");
