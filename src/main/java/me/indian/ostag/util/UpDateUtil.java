@@ -13,7 +13,7 @@ import java.util.concurrent.Executors;
 import me.indian.ostag.OsTag;
 
 public class UpDateUtil {
-    
+
     private static final OsTag plugin = OsTag.getInstance();
     private static final PluginLogger logger = plugin.getLogger();
     private static final Config config = plugin.getConfig();
@@ -45,6 +45,7 @@ public class UpDateUtil {
                 if (current.exists() && latest.exists()) {
                     if (!currentVersion.equals(latestVersion)) {
                         logger.info(ColorUtil.replaceColorCode("&cYou have downloaded the latest version but you are not using it"));
+                        executorService.shutdown();
                         return;
                     }
                 }
@@ -58,6 +59,7 @@ public class UpDateUtil {
             } else {
                 if (plugin.debug) {
                     logger.info(ColorUtil.replaceColorCode(debugPrefix + "&aDownloading the latest version is unnecessary or not possible"));
+                    executorService.shutdown();
                 }
             }
         });
@@ -102,10 +104,12 @@ public class UpDateUtil {
                 logger.info(ColorUtil.replaceColorCode("&aDownload completed in &b" + executionTime + " &ams"));
             } else {
                 logger.warning(ColorUtil.replaceColorCode("&cThe file could not be used. HTTP response code:" + responseCode));
+                executorService.shutdown();
             }
             httpConnection.disconnect();
         } catch (Exception e) {
             logger.warning(ColorUtil.replaceColorCode("&cCan't download latest ostag version!"));
+            executorService.shutdown();
         }
     }
 }
