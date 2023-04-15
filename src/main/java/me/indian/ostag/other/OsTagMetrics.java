@@ -21,6 +21,7 @@ public class OsTagMetrics {
             try {
                 if (!metrics.isEnabled()) {
                     plugin.getLogger().info(ColorUtil.replaceColorCode("&aMetrics is disabled"));
+                    Thread.currentThread().interrupt();
                     return;
                 }
                 metrics();
@@ -28,7 +29,8 @@ public class OsTagMetrics {
             } catch (Exception e) {
                 plugin.getLogger().info(ColorUtil.replaceColorCode("&cCan't load metrics"));
                 System.out.println(e.getMessage());
-                executorService.shutdown();
+                Thread.currentThread().interrupt();
+                ;
             }
         });
     }

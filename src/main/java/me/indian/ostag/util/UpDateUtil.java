@@ -14,29 +14,29 @@ import me.indian.ostag.OsTag;
 
 public class UpDateUtil {
 
-    private static final OsTag plugin = OsTag.getInstance();
-    private static final PluginLogger logger = plugin.getLogger();
-    private static final Config config = plugin.getConfig();
-    private static final String debugPrefix = ColorUtil.replaceColorCode(plugin.publicDebugPrefix + "&8[&dAutoUpdate&8] ");
-    private static final String pluginsPath = Server.getInstance().getPluginPath();
-    private static final String latestVersion = GithubUtil.getLatestTag();
-    private static final String currentVersion = plugin.getDescription().getVersion();
-    private static final String latestUrl = "https://github.com/OpenPlugins-Minecraft/OsTag/releases/download/" + latestVersion + "/OsTag-" + latestVersion + ".jar";
-    private static final String latestFileName = "OsTag-" + latestVersion + ".jar";
-    private static final String currentFileName = "Ostag-" + currentVersion + ".jar";
-    private static final ExecutorService executorService = Executors.newSingleThreadExecutor();
+    private final OsTag plugin = OsTag.getInstance();
+    private final PluginLogger logger = plugin.getLogger();
+    private final Config config = plugin.getConfig();
+    private final String debugPrefix = ColorUtil.replaceColorCode(plugin.publicDebugPrefix + "&8[&dAutoUpdate&8] ");
+    private final String pluginsPath = Server.getInstance().getPluginPath();
+    private final String latestVersion = GithubUtil.getLatestTag();
+    private final String currentVersion = plugin.getDescription().getVersion();
+    private final String latestUrl = "https://github.com/OpenPlugins-Minecraft/OsTag/releases/download/" + latestVersion + "/OsTag-" + latestVersion + ".jar";
+    private final String latestFileName = "OsTag-" + latestVersion + ".jar";
+    private final String currentFileName = "Ostag-" + currentVersion + ".jar";
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
-    public static void autoUpDate() {
+    public void autoUpDate() {
         if (config.getBoolean("AutoUpdate")) {
             upDate();
         }
     }
 
-    public static void manualUpDate() {
+    public void manualUpDate() {
         upDate();
     }
 
-    private static void upDate() {
+    private void upDate() {
         executorService.execute(() -> {
             if (GithubUtil.getFastTagInfo().contains("false")) {
                 File latest = new File(pluginsPath + "/" + latestFileName);
@@ -45,7 +45,7 @@ public class UpDateUtil {
                 if (current.exists() && latest.exists()) {
                     if (!currentVersion.equals(latestVersion)) {
                         logger.info(ColorUtil.replaceColorCode("&cYou have downloaded the latest version but you are not using it"));
-                        executorService.shutdown();
+                        Thread.currentThread().interrupt();
                         return;
                     }
                 }
@@ -59,13 +59,13 @@ public class UpDateUtil {
             } else {
                 if (plugin.debug) {
                     logger.info(ColorUtil.replaceColorCode(debugPrefix + "&aDownloading the latest version is unnecessary or not possible"));
-                    executorService.shutdown();
+                    Thread.currentThread().interrupt();
                 }
             }
         });
     }
 
-    private static void downloadLatestVersion() {
+    private void downloadLatestVersion() {
         try {
             final long millisActualTime = System.currentTimeMillis();
             URL url = new URL(latestUrl);
@@ -105,12 +105,12 @@ public class UpDateUtil {
                 logger.info(ColorUtil.replaceColorCode("&aDownload completed in &b" + executionTimeInSeconds + " &aseconds"));
             } else {
                 logger.warning(ColorUtil.replaceColorCode("&cThe file could not be used. HTTP response code:" + responseCode));
-                executorService.shutdown();
+                Thread.currentThread().interrupt();
             }
             httpConnection.disconnect();
         } catch (Exception e) {
             logger.warning(ColorUtil.replaceColorCode("&cCan't download latest ostag version!"));
-            executorService.shutdown();
+            Thread.currentThread().interrupt();
         }
     }
 }

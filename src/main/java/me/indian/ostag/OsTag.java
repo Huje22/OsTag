@@ -34,10 +34,11 @@ public class OsTag extends PluginBase {
     public boolean chatFormatter;
     public boolean debug;
     private static OsTag instance;
+    private OsTagMetrics osTagMetrics;
+    private UpDateUtil upDateUtil;
     private Formater formater;
     private LuckPerms luckPerms;
     private PlaceholderAPI placeholderApi;
-    private OsTagMetrics osTagMetrics;
 
     public static OsTag getInstance() {
         return instance;
@@ -45,6 +46,10 @@ public class OsTag extends PluginBase {
 
     public OsTagMetrics getOstagMetrics() {
         return this.osTagMetrics;
+    }
+
+    public UpDateUtil getUpdateUtil() {
+        return this.upDateUtil;
     }
 
     public Formater getFormater() {
@@ -63,6 +68,7 @@ public class OsTag extends PluginBase {
     public void onLoad() {
         instance = this;
         saveDefaultConfig();
+        upDateUtil = new UpDateUtil();
         osTagMetrics = new OsTagMetrics();
         serverMovement = getConfig().getBoolean("movement-server");
         osTag = getConfig().getBoolean("OsTag");
@@ -120,7 +126,7 @@ public class OsTag extends PluginBase {
         pm.registerEvents(new PlayerJoinListener(this), this);
         pluginInfo("admin", getServer().getConsoleSender());
         info();
-        UpDateUtil.autoUpDate();
+        this.getUpdateUtil().autoUpDate();
         this.getOstagMetrics().run();
 
         final double executionTimeInSeconds = (System.currentTimeMillis() - millisActualTime) / 1000.0;

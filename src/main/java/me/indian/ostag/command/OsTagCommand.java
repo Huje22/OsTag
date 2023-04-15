@@ -6,18 +6,18 @@ import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandExecutor;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.utils.Config;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import me.indian.ostag.OsTag;
 import me.indian.ostag.util.ColorUtil;
 import me.indian.ostag.util.Permissions;
-import me.indian.ostag.util.UpDateUtil;
 
 public class OsTagCommand implements CommandExecutor {
 
     private final OsTag plugin;
-    private final Map<String, Boolean> confirmations = new HashMap<>();
+    private final List<String> confirmations = new ArrayList<>();
 
     public OsTagCommand(OsTag plugin) {
         this.plugin = plugin;
@@ -58,14 +58,14 @@ public class OsTagCommand implements CommandExecutor {
                 }
             }
             if (args[0].equalsIgnoreCase("update")) {
-                if (confirmations.getOrDefault(sender.getName(), false)) {
+                if (confirmations.contains(sender.getName())) {
                     confirmations.remove(sender.getName());
                     sender.sendMessage(ColorUtil.replaceColorCode("&aAction confirmed"));
-                    UpDateUtil.manualUpDate();
+                    plugin.getUpdateUtil().manualUpDate();
                     if (sender instanceof Player)
                         sender.sendMessage(ColorUtil.replaceColorCode("&aCheck console for results"));
                 } else {
-                    confirmations.put(sender.getName(), true);
+                    confirmations.add(sender.getName());
                     sender.sendMessage(ColorUtil.replaceColorCode("&cAre you sure you want to confirm this action? enter the command again to confirm"));
                 }
             }

@@ -184,7 +184,7 @@ __Fixes__:  <br/>
 Code optymalization (since 1.5.6.1-1.5.6.x) </br>
 Fixed multi-threading issues with latest version download (since 1.5.6.3-1.5.6.4) </br>
 Fixed dumb runnable usage (in version 1.5.6.3), which duplicated the collected data for bstats (since 1.5.6.4) </br>
-
+Better and safety method to get UpDateUtil (since 1.5.6.4) </br>
 
 __Others__: <br/>
 Permissions interface (since 1.5.6.1) </br>
