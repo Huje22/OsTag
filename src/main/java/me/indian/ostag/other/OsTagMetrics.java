@@ -1,7 +1,6 @@
 package me.indian.ostag.other;
 
 import cn.nukkit.Server;
-import cn.nukkit.scheduler.Task;
 import cn.nukkit.utils.Config;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,6 +24,7 @@ public class OsTagMetrics {
                     return;
                 }
                 metrics();
+                plugin.getLogger().info(ColorUtil.replaceColorCode("&aLoaded Metrics"));
             } catch (Exception e) {
                 plugin.getLogger().info(ColorUtil.replaceColorCode("&cCan't load metrics"));
                 System.out.println(e.getMessage());
