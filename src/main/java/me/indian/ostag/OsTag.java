@@ -33,13 +33,18 @@ public class OsTag extends PluginBase {
     public boolean osTag;
     public boolean chatFormatter;
     public boolean debug;
+    private static OsTag instance;
+    private Formater formater;
     private LuckPerms luckPerms;
     private PlaceholderAPI placeholderApi;
-    private Formater formater;
-    private static OsTag instance;
+    private OsTagMetrics osTagMetrics;
 
     public static OsTag getInstance() {
         return instance;
+    }
+
+    public OsTagMetrics getOstagMetrics() {
+        return this.osTagMetrics;
     }
 
     public Formater getFormater() {
@@ -58,6 +63,7 @@ public class OsTag extends PluginBase {
     public void onLoad() {
         instance = this;
         saveDefaultConfig();
+        osTagMetrics = new OsTagMetrics();
         serverMovement = getConfig().getBoolean("movement-server");
         osTag = getConfig().getBoolean("OsTag");
         chatFormatter = getConfig().getBoolean("ChatFormatter");
@@ -115,7 +121,7 @@ public class OsTag extends PluginBase {
         pluginInfo("admin", getServer().getConsoleSender());
         info();
         UpDateUtil.autoUpDate();
-        getServer().getScheduler().scheduleRepeatingTask(new OsTagMetrics(), 60 * 20);
+        this.getOstagMetrics().run();
 
         final long executionTime = System.currentTimeMillis() - millisActualTime;
         getLogger().info(ColorUtil.replaceColorCode("&aStarted in &b" + executionTime + " &ams"));

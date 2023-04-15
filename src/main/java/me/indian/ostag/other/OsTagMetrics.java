@@ -10,37 +10,30 @@ import java.util.concurrent.Executors;
 import me.indian.ostag.OsTag;
 import me.indian.ostag.util.ColorUtil;
 
-public class OsTagMetrics extends Task implements Runnable {
+public class OsTagMetrics {
 
     private final OsTag plugin = OsTag.getInstance();
     private final Config config = plugin.getConfig();
     private final Metrics metrics = new Metrics(plugin, 16838);
     private static final ExecutorService executorService = Executors.newSingleThreadExecutor();
-    private boolean notRunned = true;
 
-    @Override
-    public void onRun(int i) {
+    public void run() {
         executorService.execute(() -> {
             try {
                 if (!metrics.isEnabled()) {
                     plugin.getLogger().info(ColorUtil.replaceColorCode("&aMetrics is disabled"));
-                    this.cancel();
                     return;
                 }
                 metrics();
-                if (notRunned) {
-                    notRunned = false;
-                    plugin.getLogger().info(ColorUtil.replaceColorCode("&aLoaded Metrics"));
-                }
             } catch (Exception e) {
                 plugin.getLogger().info(ColorUtil.replaceColorCode("&cCan't load metrics"));
                 System.out.println(e.getMessage());
-                this.cancel();
+                executorService.shutdown();
             }
         });
     }
 
-    private void metrics() throws Exception {
+    private void metrics() {
         metrics.addCustomChart(new Metrics.SimplePie("server_movement", () -> String.valueOf(plugin.serverMovement)));
         metrics.addCustomChart(new Metrics.SimplePie("nukkit_version", () -> Server.getInstance().getNukkitVersion()));
         metrics.addCustomChart(new Metrics.SimplePie("ostag_vs_chatformater", () -> {
