@@ -100,8 +100,9 @@ public class UpDateUtil {
                 // zwalnianie zasobów
                 outputStream.close();
                 inputStream.close();
-                final long executionTime = System.currentTimeMillis() - millisActualTime;
-                logger.info(ColorUtil.replaceColorCode("&aDownload completed in &b" + executionTime + " &ams"));
+
+                final double executionTimeInSeconds = (System.currentTimeMillis() - millisActualTime) / 1000.0;
+                logger.info(ColorUtil.replaceColorCode("&aDownload completed in &b" + executionTimeInSeconds + " &aseconds"));
             } else {
                 logger.warning(ColorUtil.replaceColorCode("&cThe file could not be used. HTTP response code:" + responseCode));
                 executorService.shutdown();

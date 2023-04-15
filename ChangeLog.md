@@ -178,11 +178,13 @@ AutoUpdate - Download the latest version automatically if it possible (since 1.5
 `/ostag update` - You can update the plugin manually (since 1.5.6.3) </br>
 New metrics update system (since 1.5.6.3) </br>
 Behind version counter in `/ostag v` (since 1.5.6.3) </br>
+Where the execution time is more than 1000ms it has been changed to seconds (since 1.5.6.4) </br>
 
 __Fixes__:  <br/>
 Code optymalization (since 1.5.6.1-1.5.6.x) </br>
 Fixed multi-threading issues with latest version download (since 1.5.6.3-1.5.6.4) </br>
 Fixed dumb runnable usage (in version 1.5.6.3), which duplicated the collected data for bstats (since 1.5.6.4) </br>
+
 
 __Others__: <br/>
 Permissions interface (since 1.5.6.1) </br>

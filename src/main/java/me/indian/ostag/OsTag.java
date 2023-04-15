@@ -123,8 +123,8 @@ public class OsTag extends PluginBase {
         UpDateUtil.autoUpDate();
         this.getOstagMetrics().run();
 
-        final long executionTime = System.currentTimeMillis() - millisActualTime;
-        getLogger().info(ColorUtil.replaceColorCode("&aStarted in &b" + executionTime + " &ams"));
+        final double executionTimeInSeconds = (System.currentTimeMillis() - millisActualTime) / 1000.0;
+        getLogger().info(ColorUtil.replaceColorCode("&aStarted in &b" + executionTimeInSeconds + " &aseconds"));
     }
 
     public void pluginInfo(String type, CommandSender sender) {
