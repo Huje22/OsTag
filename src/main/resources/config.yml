@@ -20,12 +20,12 @@
 # <xp> | %ostag_xp%  - player xp lvl
 # <gamemode> - player gamemode
 # <msg> - player message [ChatFormater]
-# <suffix> | %ostag_suffix% - player group sufix (Luck Perms Required)
+# <suffix> | %ostag_suffix% - player group suffix (Luck Perms Required)
 # <preffix> | %ostag_preffix% - player group prefix (Luck Perms Required)
 # <groupDisName> | %ostag_group% - player group display mame (Luck Perms Required)
 # <model> - device model
 # <device> | %ostag_device% - player device
-# <controller> | %ostag_controller%  - Player controls [OsTag ]
+# <controller> | %ostag_controller%  - Player controls
 # <version> | %ostag_version% - Player game version version
 # <xuid> - get player xuid
 # <language> - player Language
@@ -33,7 +33,7 @@
 # <unique_description> - player unique description from config
 # <cooldown> | %ostag_cooldown% - chat cooldown seconds info
 #Now you can use (almost) any placeholder anywhere you want (except <msg>)
-# for better work dont use / and \ , only use \n
+# for better work don't use / and \ , only use \n
 #--------------------------
 #       Modules
 #
