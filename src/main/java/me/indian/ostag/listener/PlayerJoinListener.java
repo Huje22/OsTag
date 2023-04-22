@@ -27,7 +27,7 @@ public class PlayerJoinListener implements Listener {
 
         if (player.hasPermission(Permissions.ADMIN) || player.isOp()) {
             if (config.getBoolean("UpdateChecker")) {
-                player.sendMessage(plugin.pluginPrefix + " " + compatibility);
+                player.sendMessage(plugin.pluginPrefix + compatibility);
             }
         }
     }
