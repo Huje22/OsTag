@@ -179,6 +179,7 @@ AutoUpdate - Download the latest version automatically if it possible (since 1.5
 New metrics update system (since 1.5.6.3) </br>
 Behind version counter in `/ostag v` (since 1.5.6.3) </br>
 Where the execution time is more than 1000ms it has been changed to seconds (since 1.5.6.4) </br>
+Added timed remove from list (ostag command) and map (input listener) since (1.5.6.4) </br>
 
 __Fixes__:  <br/>
 Code optymalization (since 1.5.6.1-1.5.6.x) </br>

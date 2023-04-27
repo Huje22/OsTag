@@ -5,6 +5,7 @@ import cn.nukkit.Server;
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandExecutor;
 import cn.nukkit.command.CommandSender;
+import cn.nukkit.scheduler.NukkitRunnable;
 import cn.nukkit.utils.Config;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +66,8 @@ public class OsTagCommand implements CommandExecutor {
                         sender.sendMessage(ColorUtil.replaceColorCode("&aCheck console for results"));
                 } else {
                     confirmations.add(sender.getName());
-                    sender.sendMessage(ColorUtil.replaceColorCode("&cAre you sure you want to confirm this action? enter the command again to confirm"));
+                    sender.sendMessage(ColorUtil.replaceColorCode("&cAre you sure you want to confirm this action? enter the command again to confirm, you have 30 seconds"));
+                    timeRemove(sender);
                 }
             }
             if (args[0].equalsIgnoreCase("reload") || args[0].equalsIgnoreCase("r")) {
@@ -87,5 +89,17 @@ public class OsTagCommand implements CommandExecutor {
             sender.sendMessage(ColorUtil.replaceColorCode("&cYou don't have permissions"));
         }
         return false;
+    }
+
+    private void timeRemove(CommandSender sender) {
+        new NukkitRunnable() {
+            @Override
+            public void run() {
+                if (confirmations.contains(sender.getName())) {
+                    confirmations.remove(sender.getName());
+                    sender.sendMessage(ColorUtil.replaceColorCode("&cYour time to confirm has expired"));
+                }
+            }
+        }.runTaskLater(plugin, 30 * 20);
     }
 }
