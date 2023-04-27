@@ -81,7 +81,7 @@ public class Formater implements Listener {
         if (!cooldown.containsKey(uuid) || System.currentTimeMillis() - cooldown.get(uuid) > time) {
             if (!player.isOp() || !player.hasPermission("ostag.admin")) {
                 if (config.getBoolean("cooldown.enable")) {
-                    cooldown.putIfAbsent(uuid , System.currentTimeMillis());
+                    cooldown.putIfAbsent(uuid, System.currentTimeMillis());
                 }
             }
             if (config.getBoolean("break-between-messages.enable")) {
