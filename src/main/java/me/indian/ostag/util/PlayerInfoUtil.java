@@ -2,12 +2,11 @@ package me.indian.ostag.util;
 
 import cn.nukkit.Player;
 import cn.nukkit.utils.Config;
+import java.text.DecimalFormat;
 import me.indian.ostag.OsTag;
 import me.indian.ostag.listener.InputListener;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.model.user.User;
-
-import java.text.DecimalFormat;
 
 
 public class PlayerInfoUtil {

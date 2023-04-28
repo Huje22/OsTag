@@ -14,12 +14,12 @@ import me.indian.ostag.listener.Formater;
 import me.indian.ostag.listener.InputListener;
 import me.indian.ostag.listener.PlayerJoinListener;
 import me.indian.ostag.other.OsTagMetrics;
-import me.indian.ostag.util.UpDateUtil;
 import me.indian.ostag.util.ColorUtil;
 import me.indian.ostag.util.GithubUtil;
 import me.indian.ostag.util.OsTimer;
 import me.indian.ostag.util.OtherUtils;
 import me.indian.ostag.util.PlayerInfoUtil;
+import me.indian.ostag.util.UpDateUtil;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 

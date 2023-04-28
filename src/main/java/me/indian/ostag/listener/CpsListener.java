@@ -6,7 +6,6 @@ import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerQuitEvent;
 import cn.nukkit.event.server.DataPacketReceiveEvent;
 import cn.nukkit.network.protocol.LevelSoundEventPacket;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
