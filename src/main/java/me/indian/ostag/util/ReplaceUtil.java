@@ -13,7 +13,8 @@ public class ReplaceUtil {
     public static String replace(Player player, String msg) {
         return msg
                 .replace("<cooldown>", plugin.getFormater().cooldown(player))
-                .replace("<name>", player.getDisplayName())
+                .replace("<name>", player.getName())
+                .replace("<dis_name>", player.getDisplayName())
                 .replace("<suffix>", getLuckPermSuffix(player))
                 .replace("<preffix>", getLuckPermPreffix(player))
                 .replace("<groupDisName>", getLuckPermGroupDisName(player))

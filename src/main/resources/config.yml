@@ -11,6 +11,7 @@
 # Support PlaceholderAPI
 #
 # <name> - player name
+# <dis_name> - player display name
 # <ping> - player ping
 # <health> - player health
 # <max_health> - player max health
@@ -79,12 +80,12 @@ refresh-time: 1
 #
 #
 #Normal Player
-nick: "%factions_faction% <unique_description><xp> <groupDisName> <name> <suffix> <dimension> <version> "
+nick: "%factions_faction% <unique_description><xp> <groupDisName> <dis_name> <suffix> <dimension> <version> "
 subtag: "%factions_faction% <device> | <controller> \n&eGroup display name: <groupDisName>\n&eDimension: <dimension>\n&eDevice Model: &r<model> \n&eGamemode: &r<gamemode>\n &eCooldown: &r<cooldown> \n&eCps: &r<cps>  &ePing: <ping> &eXp: <xp> \n&eGame Version: &r<version> \n\n&eXuid: &r<xuid>\n&eLanguage: &r<language>\n<health>/<max_health>&c❤"
 #
 #
 #Advanced Player
-a-nick: "%factions_faction% <unique_description><xp> <groupDisName> <name> <suffix> <dimension> <version> "
+a-nick: "%factions_faction% <unique_description><xp> <groupDisName> <dis_name> <suffix> <dimension> <version> "
 a-subtag: "%factions_faction% <device> | <controller> \n&eGroup display name: <groupDisName>\n&eDimension: <dimension> \n&eDevice Model: &r<model> \n&eGamemode: &r<gamemode>\n &eCooldown: &r<cooldown> \n&eCps: &r<cps>  &ePing: <ping> &eXp: <xp> \n&eGame Version: &r<version> \n\n&eXuid: &r<xuid>\n&eLanguage: &r<language>\n<health>/<max_health>&c❤"
 advanced-players:
   - "ExamplePlayer"
