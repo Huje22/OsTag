@@ -174,7 +174,7 @@ public class PlayerInfoUtil {
     public static String getLuckPermPreffix(Player player) {
         String pref = "";
 
-        if (plugin.getServer().getPluginManager().getPlugin("LuckPerms") != null) {
+        if (plugin.luckPerm) {
             User user = luckPerms.getPlayerAdapter(Player.class).getUser(player);
             if (user.getCachedData().getMetaData().getPrefix() != null) {
                 pref = user.getCachedData().getMetaData().getPrefix();
@@ -186,7 +186,7 @@ public class PlayerInfoUtil {
     public static String getLuckPermSuffix(Player player) {
         String suf = "";
 
-        if (plugin.getServer().getPluginManager().getPlugin("LuckPerms") != null) {
+        if (plugin.luckPerm) {
             User user = luckPerms.getPlayerAdapter(Player.class).getUser(player);
             if (user.getCachedData().getMetaData().getSuffix() != null) {
                 suf = user.getCachedData().getMetaData().getSuffix();
@@ -199,7 +199,7 @@ public class PlayerInfoUtil {
     public static String getLuckPermGroupDisName(Player player) {
         String group = "";
 
-        if (plugin.getServer().getPluginManager().getPlugin("LuckPerms") != null) {
+        if (plugin.luckPerm) {
             User user = luckPerms.getPlayerAdapter(Player.class).getUser(player);
             if (luckPerms.getGroupManager().getGroup(user.getPrimaryGroup()).getDisplayName() != null) {
                 group = luckPerms.getGroupManager().getGroup(user.getPrimaryGroup()).getDisplayName();
