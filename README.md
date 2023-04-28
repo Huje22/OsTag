@@ -11,7 +11,7 @@
 [![Repo size](https://img.shields.io/github/repo-size/OpenPlugins-Minecraft/OsTag?style=for-the-badge)](https://github.com/OpenPlugins-Minecraft/OsTag)
 ![Commits since latest release (by date)](https://img.shields.io/github/commits-since/OpenPlugins-Minecraft/OsTag/latest?style=for-the-badge)
 [![Contributors](https://img.shields.io/github/contributors/OpenPlugins-Minecraft/OsTag?color=blue&style=for-the-badge)](https://github.com/OpenPlugins-Minecraft/OsTag/graphs/contributors)
-![Latest Tag](https://img.shields.io/github/v/tag/OpenPlugins-Minecraft/OsTag?label=LATEST%20TAG&style=for-the-badge)
+![Latest Tag](https://img.shields.io/github/v/tag/OpenPlugins-Minecraft/OsTag?label=LATEST%20TAG&style=for-the-badge) </br>
 [![Forks](https://img.shields.io/github/forks/OpenPlugins-Minecraft/OsTag?style=for-the-badge)](https://github.com/OpenPlugins-Minecraft/OsTag/network/members)
 [![Stars](https://img.shields.io/github/stars/OpenPlugins-Minecraft/OsTag?style=for-the-badge)](https://github.com/OpenPlugins-Minecraft/OsTag/stargazers)   </br>
 [![bStats Players](https://img.shields.io/bstats/players/16838?style=for-the-badge)](https://bstats.org/plugin/bukkit/OsTagPNX-Nukkit/16838)
