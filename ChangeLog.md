@@ -170,6 +170,7 @@ Better code optymalization <br/>
 **1.5.6** <br/>
 
 __Naming changes__: <br/>
+none
 
 __New things__: <br/>
 Update checker (you can disable the update information when entering the player in config) (since 1.5.6.1) </br>
@@ -180,16 +181,17 @@ New metrics update system (since 1.5.6.3) </br>
 Behind version counter in `/ostag v` (since 1.5.6.3) </br>
 Where the execution time is more than 1000ms it has been changed to seconds (since 1.5.6.4) </br>
 Added timed remove from list (ostag command) and map (input listener) since (1.5.6.4) </br>
+Now `<name>` placeholder show player name , and new `<dis_name>` show player display name since (1.5.6.5) </br
 
 __Fixes__:  <br/>
-Code optymalization (since 1.5.6.1-1.5.6.x) </br>
+Code optymalization (since 1.5.6.1-1.5.6.5) </br>
 Fixed multi-threading issues with latest version download (since 1.5.6.3-1.5.6.4) </br>
 Fixed dumb runnable usage (in version 1.5.6.3), which duplicated the collected data for bstats (since 1.5.6.4) </br>
 Better and safety method to get UpDateUtil (since 1.5.6.4) </br>
 
 __Others__: <br/>
 Permissions interface (since 1.5.6.1) </br>
-Removed Prefixes interface because is un neccesery, now we have ReplaceUtil (since 1.5.6.1) <br>
+Removed Prefixes interface because is un necessary, now we have ReplaceUtil (since 1.5.6.1) <br>
 
 -------------------------------------------------
 <div align="center">
