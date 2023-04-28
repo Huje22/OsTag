@@ -3,6 +3,7 @@ package me.indian.ostag.command;
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandExecutor;
 import cn.nukkit.command.CommandSender;
+import cn.nukkit.plugin.PluginLogger;
 import me.indian.ostag.OsTag;
 
 public class TestttCommand implements CommandExecutor {
@@ -16,6 +17,14 @@ public class TestttCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender.isOp()) {
+            final PluginLogger logger = plugin.getLogger();
+
+            logger.info("Debug: " + plugin.debug);
+
+            logger.info("Ostag: " + plugin.osTag);
+
+            logger.info("Formatter: " + plugin.chatFormatter);
+
         }
         return false;
     }
