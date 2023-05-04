@@ -62,8 +62,6 @@ public class OsTagCommand implements CommandExecutor {
                     confirmations.remove(sender.getName());
                     sender.sendMessage(ColorUtil.replaceColorCode("&aAction confirmed"));
                     plugin.getUpdateUtil().manualUpDate(sender);
-                    if (sender instanceof Player)
-                        sender.sendMessage(ColorUtil.replaceColorCode("&aCheck console for results"));
                 } else {
                     confirmations.add(sender.getName());
                     sender.sendMessage(ColorUtil.replaceColorCode("&cAre you sure you want to confirm this action? enter the command again to confirm, you have 30 seconds"));

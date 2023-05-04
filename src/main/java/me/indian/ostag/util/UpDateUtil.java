@@ -1,5 +1,6 @@
 package me.indian.ostag.util;
 
+import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.plugin.PluginLogger;
@@ -40,25 +41,28 @@ public class UpDateUtil {
     private void upDate(CommandSender sender) {
         executorService.execute(() -> {
             if (GithubUtil.getFastTagInfo().contains("false")) {
-                File latest = new File(pluginsPath + "/" + latestFileName);
-                File current = new File(pluginsPath + "/" + currentFileName);
+                final File latest = new File(pluginsPath + "/" + latestFileName);
+                final File current = new File(pluginsPath + "/" + currentFileName);
 
                 if (current.exists() && latest.exists()) {
                     if (!currentVersion.equals(latestVersion)) {
                         logger.info(ColorUtil.replaceColorCode("&cYou have downloaded the latest version but you are not using it"));
+                        if (sender instanceof Player) {
+                            sender.sendMessage(ColorUtil.replaceColorCode("&cYou have downloaded the latest version but you are not using it"));
+                        }
                         Thread.currentThread().interrupt();
                         return;
                     }
                 }
                 if (!latest.exists()) {
                     logger.info(ColorUtil.replaceColorCode("&aDownloading latest ostag version..."));
-                    downloadLatestVersion();
+                    downloadLatestVersion(sender);
                 }
             } else {
                 if (plugin.debug) {
                     logger.info(ColorUtil.replaceColorCode(debugPrefix + "&aDownloading the latest version is unnecessary or not possible"));
                 }
-                if(sender != null){
+                if (sender != null) {
                     sender.sendMessage(ColorUtil.replaceColorCode("&aDownloading the latest version is unnecessary or not possible"));
                 }
                 Thread.currentThread().interrupt();
@@ -66,17 +70,17 @@ public class UpDateUtil {
         });
     }
 
-    private void downloadLatestVersion() {
+    private void downloadLatestVersion(CommandSender sender) {
         try {
             final long millisActualTime = System.currentTimeMillis();
-            URL url = new URL(latestUrl);
-            HttpURLConnection httpConnection = (HttpURLConnection) url.openConnection();
-            int responseCode = httpConnection.getResponseCode();
+            final URL url = new URL(latestUrl);
+            final HttpURLConnection httpConnection = (HttpURLConnection) url.openConnection();
+            final int responseCode = httpConnection.getResponseCode();
 
             if (responseCode == HttpURLConnection.HTTP_OK) {
 
-                String contentType = httpConnection.getContentType();
-                int contentLength = httpConnection.getContentLength();
+                final String contentType = httpConnection.getContentType();
+                final int contentLength = httpConnection.getContentLength();
 
                 if (plugin.debug) {
                     logger.info(ColorUtil.replaceColorCode(debugPrefix + "&b" + latestUrl));
@@ -84,12 +88,12 @@ public class UpDateUtil {
                     logger.info(ColorUtil.replaceColorCode(debugPrefix + "&aContent type: &b" + contentType));
                     logger.info(ColorUtil.replaceColorCode(debugPrefix + "&aContent length: &b" + contentLength));
                 }
-                InputStream inputStream = httpConnection.getInputStream();
-                String saveFilePath = pluginsPath + File.separator + latestFileName;
+                final InputStream inputStream = httpConnection.getInputStream();
+                final String saveFilePath = pluginsPath + File.separator + latestFileName;
 
-                FileOutputStream outputStream = new FileOutputStream(saveFilePath);
+                final FileOutputStream outputStream = new FileOutputStream(saveFilePath);
 
-                byte[] buffer = new byte[4096];
+                final byte[] buffer = new byte[4096];
                 int bytesRead;
                 while ((bytesRead = inputStream.read(buffer)) != -1) {
                     outputStream.write(buffer, 0, bytesRead);
@@ -100,6 +104,9 @@ public class UpDateUtil {
 
                 final double executionTimeInSeconds = (System.currentTimeMillis() - millisActualTime) / 1000.0;
                 logger.info(ColorUtil.replaceColorCode("&aDownload completed in &b" + executionTimeInSeconds + " &aseconds"));
+                if (sender instanceof Player) {
+                    sender.sendMessage(ColorUtil.replaceColorCode("&aDownload completed in &b" + executionTimeInSeconds + " &aseconds"));
+                }
             } else {
                 logger.warning(ColorUtil.replaceColorCode("&cThe file could not be used. HTTP response code:" + responseCode));
                 Thread.currentThread().interrupt();
@@ -107,7 +114,7 @@ public class UpDateUtil {
             httpConnection.disconnect();
         } catch (Exception e) {
             logger.warning(ColorUtil.replaceColorCode("&cCan't download latest ostag version!"));
-            if(plugin.debug){
+            if (plugin.debug) {
                 logger.warning(debugPrefix + e);
             }
             Thread.currentThread().interrupt();
