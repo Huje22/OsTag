@@ -61,7 +61,7 @@ public class OsTagCommand implements CommandExecutor {
                 if (confirmations.contains(sender.getName())) {
                     confirmations.remove(sender.getName());
                     sender.sendMessage(ColorUtil.replaceColorCode("&aAction confirmed"));
-                    plugin.getUpdateUtil().manualUpDate();
+                    plugin.getUpdateUtil().manualUpDate(sender);
                     if (sender instanceof Player)
                         sender.sendMessage(ColorUtil.replaceColorCode("&aCheck console for results"));
                 } else {

@@ -1,6 +1,7 @@
 package me.indian.ostag.util;
 
 import cn.nukkit.Server;
+import cn.nukkit.command.CommandSender;
 import cn.nukkit.plugin.PluginLogger;
 import cn.nukkit.utils.Config;
 import java.io.File;
@@ -28,15 +29,15 @@ public class UpDateUtil {
 
     public void autoUpDate() {
         if (config.getBoolean("AutoUpdate")) {
-            upDate();
+            upDate(null);
         }
     }
 
-    public void manualUpDate() {
-        upDate();
+    public void manualUpDate(CommandSender sender) {
+        upDate(sender);
     }
 
-    private void upDate() {
+    private void upDate(CommandSender sender) {
         executorService.execute(() -> {
             if (GithubUtil.getFastTagInfo().contains("false")) {
                 File latest = new File(pluginsPath + "/" + latestFileName);
@@ -51,16 +52,16 @@ public class UpDateUtil {
                 }
                 if (!latest.exists()) {
                     logger.info(ColorUtil.replaceColorCode("&aDownloading latest ostag version..."));
-                    if (plugin.debug) {
-                        logger.info(ColorUtil.replaceColorCode(debugPrefix + "&b" + latestUrl));
-                    }
                     downloadLatestVersion();
                 }
             } else {
                 if (plugin.debug) {
                     logger.info(ColorUtil.replaceColorCode(debugPrefix + "&aDownloading the latest version is unnecessary or not possible"));
-                    Thread.currentThread().interrupt();
                 }
+                if(sender != null){
+                    sender.sendMessage(ColorUtil.replaceColorCode("&aDownloading the latest version is unnecessary or not possible"));
+                }
+                Thread.currentThread().interrupt();
             }
         });
     }
@@ -72,32 +73,28 @@ public class UpDateUtil {
             HttpURLConnection httpConnection = (HttpURLConnection) url.openConnection();
             int responseCode = httpConnection.getResponseCode();
 
-            // sprawdzanie kodu odpowiedzi HTTP
             if (responseCode == HttpURLConnection.HTTP_OK) {
 
                 String contentType = httpConnection.getContentType();
                 int contentLength = httpConnection.getContentLength();
 
                 if (plugin.debug) {
-                    logger.info(ColorUtil.replaceColorCode(debugPrefix + "&aFile download: &b" + latestFileName));
+                    logger.info(ColorUtil.replaceColorCode(debugPrefix + "&b" + latestUrl));
+                    logger.info(ColorUtil.replaceColorCode(debugPrefix + "&aVersion: &b" + latestVersion));
                     logger.info(ColorUtil.replaceColorCode(debugPrefix + "&aContent type: &b" + contentType));
                     logger.info(ColorUtil.replaceColorCode(debugPrefix + "&aContent length: &b" + contentLength));
                 }
-                // otwieranie strumienia wejściowego z połączenia HTTP
                 InputStream inputStream = httpConnection.getInputStream();
                 String saveFilePath = pluginsPath + File.separator + latestFileName;
 
-                // otwieranie strumienia wyjściowego do zapisu pliku
                 FileOutputStream outputStream = new FileOutputStream(saveFilePath);
 
-                // zapisywanie danych z wejściowego strumienia do wyjściowego strumienia
                 byte[] buffer = new byte[4096];
                 int bytesRead;
                 while ((bytesRead = inputStream.read(buffer)) != -1) {
                     outputStream.write(buffer, 0, bytesRead);
                 }
 
-                // zwalnianie zasobów
                 outputStream.close();
                 inputStream.close();
 
@@ -110,6 +107,9 @@ public class UpDateUtil {
             httpConnection.disconnect();
         } catch (Exception e) {
             logger.warning(ColorUtil.replaceColorCode("&cCan't download latest ostag version!"));
+            if(plugin.debug){
+                logger.warning(debugPrefix + e);
+            }
             Thread.currentThread().interrupt();
         }
     }
