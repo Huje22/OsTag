@@ -35,10 +35,10 @@ public class Formater implements Listener {
     @EventHandler
     public void playerChatFormat(final PlayerChatEvent event) {
         final Player player = event.getPlayer();
-        String msg = event.getMessage();
         final Config config = plugin.getConfig();
+        String msg = event.getMessage();
         String mess;
-        String cenzor = config.getString("censorship.word");
+        final String cenzor = config.getString("censorship.word");
         //conzorship is a experimental option, maybe not good working
         for (String blackList : config.getStringList("BlackWords")) {
             if (event.getMessage().toLowerCase().contains(blackList.toLowerCase())) {
@@ -75,7 +75,7 @@ public class Formater implements Listener {
         final Player player = event.getPlayer();
         final UUID uuid = player.getUniqueId();
         final Config config = plugin.getConfig();
-        long time = config.getLong("cooldown.delay") * second;
+        final long time = config.getLong("cooldown.delay") * second;
 
         if (!cooldown.containsKey(uuid) || System.currentTimeMillis() - cooldown.get(uuid) > time) {
             if (!player.isOp() || !player.hasPermission("ostag.admin")) {
