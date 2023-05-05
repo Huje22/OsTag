@@ -115,7 +115,7 @@ public class UpDateUtil {
         } catch (Exception e) {
             logger.warning(ColorUtil.replaceColorCode("&cCan't download latest ostag version!"));
             if (plugin.debug) {
-                logger.warning(debugPrefix + e);
+                logger.error(debugPrefix + e);
             }
             Thread.currentThread().interrupt();
         }
