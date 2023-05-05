@@ -8,7 +8,6 @@ import me.indian.ostag.OsTag;
 public class OtherUtils {
 
     private static final OsTag plugin = OsTag.getInstance();
-
     private static final String fal = "§cfalse";
     private static final String tru = "§etrue";
 
@@ -42,6 +41,14 @@ public class OtherUtils {
             papiAndKotlinLib = tru;
         }
         return papiAndKotlinLib;
+    }
+
+    public static String getMetrics(){
+        String metrics = fal;
+        if(plugin.getOstagMetrics().isRunning){
+            metrics = tru;
+        }
+        return metrics;
     }
 
     public static void sendMessageToAll(String msg) {
