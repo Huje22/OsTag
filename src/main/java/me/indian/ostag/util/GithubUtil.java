@@ -2,7 +2,6 @@ package me.indian.ostag.util;
 
 import cn.nukkit.plugin.PluginLogger;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -53,7 +52,7 @@ public class GithubUtil {
             int responseCode = connection.getResponseCode();
             if (!(responseCode == HttpURLConnection.HTTP_OK)) {
                 if (plugin.debug) {
-                    logger.info(ColorUtil.replaceColorCode(debugPrefix + "&cCan't get latest tag, HTTP response code: " + responseCode));
+                    logger.error(ColorUtil.replaceColorCode(debugPrefix + "&cCan't get latest tag, HTTP response code: " + responseCode));
                 }
                 return errorMessage;
             }
@@ -67,7 +66,10 @@ public class GithubUtil {
             connection.disconnect();
 
             return parseLatestTagFromJson(response.toString());
-        } catch (IOException e) {
+        } catch (Exception e) {
+            if(plugin.debug) {
+                logger.error(debugPrefix + e);
+            }
             return errorMessage;
         }
     }
