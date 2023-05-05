@@ -5,6 +5,7 @@ import cn.nukkit.command.CommandExecutor;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.plugin.PluginLogger;
 import me.indian.ostag.OsTag;
+import me.indian.ostag.util.GithubUtil;
 
 public class TestttCommand implements CommandExecutor {
 
@@ -24,6 +25,10 @@ public class TestttCommand implements CommandExecutor {
             logger.info("Ostag: " + plugin.osTag);
 
             logger.info("Formatter: " + plugin.chatFormatter);
+
+            logger.error("Test");
+
+            logger.info(GithubUtil.getLatestTag());
 
         }
         return false;
