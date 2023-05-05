@@ -1,6 +1,7 @@
 package me.indian.ostag.other;
 
 import cn.nukkit.Server;
+import cn.nukkit.plugin.PluginLogger;
 import cn.nukkit.utils.Config;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,25 +13,33 @@ import me.indian.ostag.util.ColorUtil;
 public class OsTagMetrics {
 
     private final OsTag plugin = OsTag.getInstance();
+    private final PluginLogger logger = plugin.getLogger();
     private final Config config = plugin.getConfig();
+    private final String debugPrefix = ColorUtil.replaceColorCode(plugin.publicDebugPrefix + "&8[&dMetrics&8] ");
     private final Metrics metrics = new Metrics(plugin, 16838);
     private static final ExecutorService executorService = Executors.newSingleThreadExecutor();
+    public boolean isRunning;
+    public boolean enabled = metrics.isEnabled();
 
     public void run() {
         executorService.execute(() -> {
             try {
-                if (!metrics.isEnabled()) {
-                    plugin.getLogger().info(ColorUtil.replaceColorCode("&aMetrics is disabled"));
+                if (!enabled) {
+                    logger.info(ColorUtil.replaceColorCode("&aMetrics is disabled"));
+                    isRunning = false;
                     Thread.currentThread().interrupt();
                     return;
                 }
                 metrics();
-                plugin.getLogger().info(ColorUtil.replaceColorCode("&aLoaded Metrics"));
+                isRunning = true;
+                logger.info(ColorUtil.replaceColorCode("&aLoaded Metrics"));
             } catch (Exception e) {
-                plugin.getLogger().info(ColorUtil.replaceColorCode("&cCan't load metrics"));
-                System.out.println(e.getMessage());
+                isRunning = false;
+                logger.info(ColorUtil.replaceColorCode("&cCan't load metrics"));
+                if(plugin.debug) {
+                    logger.error(debugPrefix + e);
+                }
                 Thread.currentThread().interrupt();
-                ;
             }
         });
     }
