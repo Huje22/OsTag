@@ -28,14 +28,15 @@ public class InputListener implements Listener {
     @SuppressWarnings("unused")
     @EventHandler
     public void inputListener(final DataPacketReceiveEvent event) {
-        final DataPacket packet = event.getPacket();
-        if (packet instanceof PlayerAuthInputPacket) {
-            final InputMode inputMode = ((PlayerAuthInputPacket) packet).getInputMode();
-            final Player player = event.getPlayer();
-            final String name = player.getName();
-            //thanks to Petterim
-            //https://github.com/PetteriM1
-            executorService.execute(() -> {
+        executorService.execute(() -> {
+            final DataPacket packet = event.getPacket();
+            if (packet instanceof PlayerAuthInputPacket) {
+                final InputMode inputMode = ((PlayerAuthInputPacket) packet).getInputMode();
+                final Player player = event.getPlayer();
+                final String name = player.getName();
+                //thanks to Petterim
+                //https://github.com/PetteriM1
+
                 if (!controller.containsKey(name)) {
                     controller.put(name, inputMode);
                     if (plugin.debug) {
@@ -49,8 +50,8 @@ public class InputListener implements Listener {
                         logger.info(ColorUtil.replaceColorCode(debugPrefix + "&aPlayer: &6" + player.getName() + " &achanged controller to: &3" + inputMode));
                     }
                 }
-            });
-        }
+            }
+        });
     }
 
     @SuppressWarnings("unused")
