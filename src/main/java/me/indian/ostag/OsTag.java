@@ -33,6 +33,7 @@ public class OsTag extends PluginBase {
     public boolean osTag;
     public boolean chatFormatter;
     public boolean debug;
+    public boolean upDatechecker;
     private static OsTag instance;
     private OsTagMetrics osTagMetrics;
     private UpDateUtil upDateUtil;
@@ -70,32 +71,33 @@ public class OsTag extends PluginBase {
         saveDefaultConfig();
         upDateUtil = new UpDateUtil();
         osTagMetrics = new OsTagMetrics();
-        serverMovement = getConfig().getBoolean("movement-server");
-        osTag = getConfig().getBoolean("OsTag");
-        chatFormatter = getConfig().getBoolean("ChatFormatter");
-        debug = getConfig().getBoolean("Debug");
+        serverMovement = this.getConfig().getBoolean("movement-server");
+        osTag = this.getConfig().getBoolean("OsTag");
+        chatFormatter = this.getConfig().getBoolean("ChatFormatter");
+        debug = this.getConfig().getBoolean("Debug");
+        upDatechecker = this.getConfig().getBoolean("UpdateChecker");
     }
 
     @Override
     public void onEnable() {
         final long millisActualTime = System.currentTimeMillis();
-        final PluginManager pm = getServer().getPluginManager();
+        final PluginManager pm = this.getServer().getPluginManager();
         if (pm.getPlugin("LuckPerms") == null) {
-            getLogger().warning(ColorUtil.replaceColorCode("&cYou don't have lucky perms , ChatFormatting don't correctly work"));
+            this.getLogger().warning(ColorUtil.replaceColorCode("&cYou don't have lucky perms , ChatFormatting don't correctly work"));
         } else {
             this.luckPerms = LuckPermsProvider.get();
             luckPerm = true;
         }
         if (pm.getPlugin("PlaceholderAPI") == null || pm.getPlugin("KotlinLib") == null) {
-            getLogger().warning(ColorUtil.replaceColorCode("&cYou don't have PlaceholderAPI or kotlin lib,placeholders from &bPlaceholderAPI&c will not work"));
+            this.getLogger().warning(ColorUtil.replaceColorCode("&cYou don't have PlaceholderAPI or kotlin lib,placeholders from &bPlaceholderAPI&c will not work"));
         } else {
             this.placeholderApi = PlaceholderAPI.getInstance();
             papiAndKotlinLib = true;
             registerPlaceholders();
         }
         this.formater = new Formater(this, this.getPlaceholderApi());
-        if (getConfig().getBoolean("Disable")) {
-            getLogger().warning(ColorUtil.replaceColorCode("&4Disabling plugin due to disable in config"));
+        if (this.getConfig().getBoolean("Disable")) {
+            this.getLogger().warning(ColorUtil.replaceColorCode("&4Disabling plugin due to disable in config"));
             pm.disablePlugin(this);
             return;
         }
@@ -107,30 +109,30 @@ public class OsTag extends PluginBase {
         ((PluginCommand<?>) getCommand("tto")).setExecutor(new TestttCommand(this));
         if (osTag) {
             pm.registerEvents(new OsTimer(), this);
-            int refreshTime = getConfig().getInt("refresh-time");
+            int refreshTime = this.getConfig().getInt("refresh-time");
             if (refreshTime <= 0) {
                 refreshTime = 1;
-                getConfig().set("refresh-time", 1);
-                getConfig().save();
-                getLogger().warning(ColorUtil.replaceColorCode("&cRefresh time must be higer than &b0 &c,we will set it up for you!"));
+                this.getConfig().set("refresh-time", 1);
+                this.getConfig().save();
+                this.getLogger().warning(ColorUtil.replaceColorCode("&cRefresh time must be higer than &b0 &c,we will set it up for you!"));
             }
-            getServer().getScheduler().scheduleRepeatingTask(new OsTimer(), 20 * refreshTime);
+            this.getServer().getScheduler().scheduleRepeatingTask(new OsTimer(), 20 * refreshTime);
         } else {
-            getLogger().info(ColorUtil.replaceColorCode("&bOsTag module is disabled "));
+            this.getLogger().info(ColorUtil.replaceColorCode("&bOsTag module is disabled "));
         }
         if (chatFormatter) {
             pm.registerEvents(new Formater(this, this.getPlaceholderApi()), this);
         } else {
-            getLogger().info(ColorUtil.replaceColorCode("&bChatFormatter module is disabled"));
+            this.getLogger().info(ColorUtil.replaceColorCode("&bChatFormatter module is disabled"));
         }
         pm.registerEvents(new PlayerJoinListener(this), this);
-        pluginInfo("admin", getServer().getConsoleSender());
+        pluginInfo("admin", this.getServer().getConsoleSender());
         info();
         this.getUpdateUtil().autoUpDate();
         this.getOstagMetrics().run();
 
         final double executionTimeInSeconds = (System.currentTimeMillis() - millisActualTime) / 1000.0;
-        getLogger().info(ColorUtil.replaceColorCode("&aStarted in &b" + executionTimeInSeconds + " &aseconds"));
+        this.getLogger().info(ColorUtil.replaceColorCode("&aStarted in &b" + executionTimeInSeconds + " &aseconds"));
     }
 
     public void pluginInfo(String type, CommandSender sender) {
@@ -214,17 +216,17 @@ public class OsTag extends PluginBase {
             api.builder(prefix + "xp", String.class)
                     .visitorLoader(entry -> PlayerInfoUtil.getXp(entry.getPlayer()))
                     .build();
-            getLogger().info(ColorUtil.replaceColorCode("&aLoaded placeholderapi placeholders"));
+            this.getLogger().info(ColorUtil.replaceColorCode("&aLoaded placeholderapi placeholders"));
         } catch (Exception exception) {
-            getLogger().error(ColorUtil.replaceColorCode("&cLoading placeholders failed "));
+            this.getLogger().error(ColorUtil.replaceColorCode("&cLoading placeholders failed "));
             System.out.println(exception.getMessage());
         }
     }
 
     private void info() {
         if (this.getDescription().getVersion().contains("Beta") || this.getDescription().getVersion().contains("beta")) {
-            getLogger().warning(ColorUtil.replaceColorCode("&4You are running beta version, it may not be stable"));
+            this.getLogger().warning(ColorUtil.replaceColorCode("&4You are running beta version, it may not be stable"));
         }
-        getLogger().info(GithubUtil.checkTagCompatibility());
+        this.getLogger().info(GithubUtil.checkTagCompatibility());
     }
 }

@@ -26,7 +26,7 @@ public class PlayerJoinListener implements Listener {
         final String compatibility = GithubUtil.checkTagCompatibility();
 
         if (player.hasPermission(Permissions.ADMIN) || player.isOp()) {
-            if (config.getBoolean("UpdateChecker")) {
+            if (plugin.upDatechecker) {
                 player.sendMessage(plugin.pluginPrefix + compatibility);
             }
         }
