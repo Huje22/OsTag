@@ -22,13 +22,13 @@ public class InputListener implements Listener {
     private static final OsTag plugin = OsTag.getInstance();
     private static final PluginLogger logger = plugin.getLogger();
     private final String debugPrefix = ColorUtil.replaceColorCode(plugin.publicDebugPrefix + "&8[&dInputListener&8] ");
-    public static final Map<String, InputMode> controller = new HashMap<>();
+    private static final Map<String, InputMode> controller = new HashMap<>();
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     @SuppressWarnings("unused")
     @EventHandler
-    public void inputListener(DataPacketReceiveEvent event) {
-        DataPacket packet = event.getPacket();
+    public void inputListener(final DataPacketReceiveEvent event) {
+        final DataPacket packet = event.getPacket();
         if (packet instanceof PlayerAuthInputPacket) {
             final InputMode inputMode = ((PlayerAuthInputPacket) packet).getInputMode();
             final Player player = event.getPlayer();
@@ -55,7 +55,7 @@ public class InputListener implements Listener {
 
     @SuppressWarnings("unused")
     @EventHandler
-    public void removeControl(PlayerQuitEvent event) {
+    public void removeControl(final PlayerQuitEvent event) {
         final String name = event.getPlayer().getName();
         timeRemove(name);
     }
