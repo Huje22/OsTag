@@ -43,9 +43,9 @@ public class OtherUtils {
         return papiAndKotlinLib;
     }
 
-    public static String getMetrics(){
+    public static String getMetrics() {
         String metrics = fal;
-        if(plugin.getOstagMetrics().isRunning){
+        if (plugin.getOstagMetrics().isRunning) {
             metrics = tru;
         }
         return metrics;

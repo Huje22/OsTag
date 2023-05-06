@@ -67,7 +67,7 @@ public class GithubUtil {
 
             return parseLatestTagFromJson(response.toString());
         } catch (Exception e) {
-            if(plugin.debug) {
+            if (plugin.debug) {
                 logger.error(debugPrefix + e);
             }
             return errorMessage;

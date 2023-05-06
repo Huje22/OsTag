@@ -36,7 +36,7 @@ public class OsTagMetrics {
             } catch (Exception e) {
                 isRunning = false;
                 logger.info(ColorUtil.replaceColorCode("&cCan't load metrics"));
-                if(plugin.debug) {
+                if (plugin.debug) {
                     logger.error(debugPrefix + e);
                 }
                 Thread.currentThread().interrupt();
