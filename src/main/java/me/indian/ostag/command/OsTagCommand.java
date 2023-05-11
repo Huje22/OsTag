@@ -16,7 +16,6 @@ import me.indian.ostag.util.Permissions;
 public class OsTagCommand implements CommandExecutor {
 
     private final OsTag plugin;
-    private final String usage = "&aUsage &b/ostag &8[version , reload , add <player>, update]";
     private final List<String> confirmations = new ArrayList<>();
 
     public OsTagCommand(OsTag plugin) {
@@ -29,7 +28,7 @@ public class OsTagCommand implements CommandExecutor {
         final List<String> advancedPlayers = config.getStringList("advanced-players");
 
         if (args.length == 0) {
-            sender.sendMessage(ColorUtil.replaceColorCode(usage));
+            sender.sendMessage(ColorUtil.replaceColorCode("&aUsage &b/ostag &8[version , reload , add <player>, update]"));
             return false;
         }
         if (args[0].equalsIgnoreCase("ver") || args[0].equalsIgnoreCase("v")) {
