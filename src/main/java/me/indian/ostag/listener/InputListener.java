@@ -78,7 +78,7 @@ public class InputListener implements Listener {
                         }
                     }
                 }
-            }.runTaskLater(plugin, 20 * 20);
+            }.runTaskLater(plugin, 20 * 30);
         });
     }
 }
