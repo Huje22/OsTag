@@ -41,7 +41,7 @@
 #If you don't want to remove the plugin but you don't want it to work enable this option
 Disable: false
 #
-#UpDate checker on player join (only players with ostag.admin permission)
+#UpDate checker on player join (only players with ostag.admin permission and must restart server to change this)
 UpdateChecker: true
 #
 #Download the latest version automatically if possible
