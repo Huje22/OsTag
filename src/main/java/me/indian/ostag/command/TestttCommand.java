@@ -30,6 +30,8 @@ public class TestttCommand implements CommandExecutor {
 
             logger.info(GithubUtil.getLatestTag());
 
+            logger.info(GithubUtil.getBehindCount());
+
         }
         return false;
     }

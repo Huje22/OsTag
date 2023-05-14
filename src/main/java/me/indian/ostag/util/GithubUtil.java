@@ -75,30 +75,7 @@ public class GithubUtil {
     }
 
     public static String getBehindCount() {
-        if (response.toString().isEmpty()) return " ";
-        String json = response.toString();
-        String[] tags = json.replaceAll("[\\[\\]{}\"]", "").split(",");
-
-        int counter = 0;
-        int index = -1;
-
-        for (int i = 0; i < 66; i += 6) {
-            versions.put(counter, tags[i].split(":")[1]);
-            counter++;
-        }
-
-        if (plugin.debug) {
-            for (Map.Entry<Integer, String> entry : versions.entrySet()) {
-                logger.info(debugPrefix + entry.getKey() + ": " + entry.getValue());
-            }
-        }
-
-        for (Map.Entry<Integer, String> entry : versions.entrySet()) {
-            if (entry.getValue().equals(current)) {
-                index = entry.getKey();
-                break;
-            }
-        }
+        int index = getBehindIntCount();
 
         if (index == -1) {
             return ColorUtil.replaceColorCode(" &5(&cBehind more than 10 version&5)");
@@ -135,13 +112,6 @@ public class GithubUtil {
                 index = entry.getKey();
                 break;
             }
-        }
-
-        if (index == -1) {
-            return index;
-        }
-        if (index == 0) {
-            return 0;
         }
 
         return index;
