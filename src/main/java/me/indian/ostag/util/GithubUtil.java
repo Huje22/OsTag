@@ -90,8 +90,7 @@ public class GithubUtil {
 
     public static int getBehindIntCount() {
         if (response.toString().isEmpty()) return 0;
-        String json = response.toString();
-        String[] tags = json.replaceAll("[\\[\\]{}\"]", "").split(",");
+        String[] tags = response.toString().replaceAll("[\\[\\]{}\"]", "").split(",");
 
         int counter = 0;
         int index = -1;
