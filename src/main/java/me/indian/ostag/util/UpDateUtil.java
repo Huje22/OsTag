@@ -26,6 +26,7 @@ public class UpDateUtil {
     private final String latestUrl = "https://github.com/OpenPlugins-Minecraft/OsTag/releases/download/" + latestVersion + "/OsTag-" + latestVersion + ".jar";
     private final String latestFileName = "OsTag-" + latestVersion + ".jar";
     private final String currentFileName = "Ostag-" + currentVersion + ".jar";
+    private boolean redownload = false;
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     public void autoUpDate() {
@@ -87,6 +88,7 @@ public class UpDateUtil {
                     logger.info(ColorUtil.replaceColorCode(debugPrefix + "&aVersion: &b" + latestVersion));
                     logger.info(ColorUtil.replaceColorCode(debugPrefix + "&aContent type: &b" + contentType));
                     logger.info(ColorUtil.replaceColorCode(debugPrefix + "&aContent length: &b" + contentLength));
+                    logger.info(debugPrefix + ColorUtil.replaceColorCode("&eStarting downloading"));
                 }
                 final InputStream inputStream = httpConnection.getInputStream();
                 final String saveFilePath = pluginsPath + File.separator + latestFileName;
@@ -95,12 +97,42 @@ public class UpDateUtil {
 
                 final byte[] buffer = new byte[4096];
                 int bytesRead;
+                long totalBytesRead = 0;
                 while ((bytesRead = inputStream.read(buffer)) != -1) {
                     outputStream.write(buffer, 0, bytesRead);
+                    totalBytesRead += bytesRead;
+                    String progressMsg = ColorUtil.replaceColorCode("&aDownload progress: &b" + (totalBytesRead * 100) / contentLength + "%");
+                    if (plugin.debug) {
+                        logger.info(debugPrefix + progressMsg);
+                    }
+                    if (sender instanceof Player) {
+                        ((Player) sender).sendActionBar(plugin.pluginPrefix + progressMsg);
+                    }
                 }
 
                 outputStream.close();
                 inputStream.close();
+
+                if (totalBytesRead != contentLength) {
+                    logger.warning(ColorUtil.replaceColorCode("&cDownload failed: Incomplete download"));
+                    logger.info(ColorUtil.replaceColorCode("&aTrying to redownload"));
+                    if (sender instanceof Player) {
+                        sender.sendMessage(ColorUtil.replaceColorCode("&cDownload failed: Incomplete download"));
+                        sender.sendMessage(ColorUtil.replaceColorCode("&aTrying to redownload"));
+                    }
+                    if(redownload) {
+                        logger.warning(ColorUtil.replaceColorCode("&cRedownload failed"));
+                        if (sender instanceof Player) {
+                            sender.sendMessage(ColorUtil.replaceColorCode("&cRedownload failed"));
+                        }
+                        redownload = false;
+                        return;
+                    } else {
+                        redownload = true;
+                        upDate(sender);
+                    }
+                    return;
+                }
 
                 final double executionTimeInSeconds = (System.currentTimeMillis() - millisActualTime) / 1000.0;
                 logger.info(ColorUtil.replaceColorCode("&aDownload completed in &b" + executionTimeInSeconds + " &aseconds"));
