@@ -198,6 +198,22 @@ Permissions interface (since 1.5.6.1) </br>
 Removed Prefixes interface because is un necessary, now we have ReplaceUtil (since 1.5.6.1) <br>
 
 -------------------------------------------------
+**Released on the day xx.xx.2023** <br/>
+**1.5.7** <br/>
+
+__Naming changes__: <br/>
+New thing (Since x.x.x)  <br/>
+
+__New things__: <br/>
+New thing (Since x.x.x)  <br/>
+
+__Fixes__: <br/>
+New thing (Since x.x.x)  <br/>
+
+__Others__: <br/>
+New thing (Since x.x.x)  <br/>
+--------------------------------------------------
+
 <div align="center">
 
 __**General info**__  <br/>
