@@ -182,6 +182,9 @@ Behind version counter in `/ostag v` (since 1.5.6.3) </br>
 Where the execution time is more than 1000ms it has been changed to seconds (since 1.5.6.4) </br>
 Added timed remove from list (ostag command) and map (input listener) since (1.5.6.4) </br>
 Now `<name>` placeholder show player name , and new `<dis_name>` show player display name since (1.5.6.5) </br
+Download Update percentage info (since 1.5.6.5) </br>
+Auto download retry when auto download failed (one time) (since 1.5.6.5) </br>
+
 
 __Fixes__:  <br/>
 Code optymalization (since 1.5.6.1-1.5.6.5) </br>
