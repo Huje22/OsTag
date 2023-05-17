@@ -166,7 +166,7 @@ Cooldown disable info <br/>
 Better code optymalization <br/>
 
 ---------------------------------------------------------------
-**Released on the day xx.xx.2023** <br/>
+**Released on the day 17.05.2023** <br/>
 **1.5.6** <br/>
 
 __Naming changes__: <br/>
