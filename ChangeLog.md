@@ -185,7 +185,6 @@ Now `<name>` placeholder show player name , and new `<dis_name>` show player dis
 Download Update percentage info (since 1.5.6.5) </br>
 Auto download retry when auto download failed (one time) (since 1.5.6.5) </br>
 
-
 __Fixes__:  <br/>
 Code optymalization (since 1.5.6.1-1.5.6.5) </br>
 Fixed multi-threading issues with latest version download (since 1.5.6.3-1.5.6.4) </br>
@@ -205,10 +204,12 @@ __Naming changes__: <br/>
 New thing (Since x.x.x)  <br/>
 
 __New things__: <br/>
-New thing (Since x.x.x)  <br/>
+Info how many kb have been downloaded on the download percentage (Since 1.5.7.1)  <br/>
 
 __Fixes__: <br/>
+Code and code style fixes <br/>
 Better auto redownload (Since 1.5.7.1)  <br/>
+Fix ostag command error when `/ostag add` player argument is null (Since 1.5.7.1)  <br/>
 
 __Others__: <br/>
 New thing (Since x.x.x)  <br/>
