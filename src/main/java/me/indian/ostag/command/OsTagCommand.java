@@ -41,19 +41,23 @@ public class OsTagCommand implements CommandExecutor {
         }
         if (sender.hasPermission(Permissions.ADMIN)) {
             if (args[0].equalsIgnoreCase("add")) {
-                final Player target = Server.getInstance().getPlayer(args[1]);
-                if (target == null) {
-                    sender.sendMessage(ColorUtil.replaceColorCode("&cplayer &6" + args[1] + "&c does not exist"));
-                    return false;
-                }
-                if (advancedPlayers.contains(target.getDisplayName())) {
-                    advancedPlayers.remove(target.getDisplayName());
-                    sender.sendMessage(ColorUtil.replaceColorCode("&6" + target.getDisplayName() + " &chas been removed from advanced player list"));
-                    config.set("advanced-players", advancedPlayers);
-                } else {
-                    advancedPlayers.add(target.getDisplayName());
-                    sender.sendMessage(ColorUtil.replaceColorCode("&6" + target.getDisplayName() + " &ahas been added to advanced player list"));
-                    config.set("advanced-players", advancedPlayers);
+                try {
+                    final Player target = Server.getInstance().getPlayer(args[1]);
+                    if (target == null) {
+                        sender.sendMessage(ColorUtil.replaceColorCode("&cplayer &6" + args[1] + "&c does not exist"));
+                        return false;
+                    }
+                    if (advancedPlayers.contains(target.getDisplayName())) {
+                        advancedPlayers.remove(target.getDisplayName());
+                        sender.sendMessage(ColorUtil.replaceColorCode("&6" + target.getDisplayName() + " &chas been removed from advanced player list"));
+                        config.set("advanced-players", advancedPlayers);
+                    } else {
+                        advancedPlayers.add(target.getDisplayName());
+                        sender.sendMessage(ColorUtil.replaceColorCode("&6" + target.getDisplayName() + " &ahas been added to advanced player list"));
+                        config.set("advanced-players", advancedPlayers);
+                    }
+                } catch (Exception e) {
+                    sender.sendMessage(ColorUtil.replaceColorCode("&cYou must give player name! "));
                 }
             }
             if (args[0].equalsIgnoreCase("update")) {
