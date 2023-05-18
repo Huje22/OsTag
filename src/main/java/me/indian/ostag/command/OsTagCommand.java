@@ -56,7 +56,7 @@ public class OsTagCommand implements CommandExecutor {
                         sender.sendMessage(ColorUtil.replaceColorCode("&6" + target.getDisplayName() + " &ahas been added to advanced player list"));
                         config.set("advanced-players", advancedPlayers);
                     }
-                } catch (Exception e) {
+                } catch (final Exception e) {
                     sender.sendMessage(ColorUtil.replaceColorCode("&cYou must give player name! "));
                 }
             }
@@ -79,7 +79,7 @@ public class OsTagCommand implements CommandExecutor {
                     final long executionTime = System.currentTimeMillis() - millisActualTime;
                     sender.sendMessage(ColorUtil.replaceColorCode("&aReloaded in &b" + executionTime + " &ams"));
                 } catch (final Exception exception) {
-                    String error = ColorUtil.replaceColorCode("&cCan't reload config , check console to see error");
+                    final String error = ColorUtil.replaceColorCode("&cCan't reload config , check console to see error");
                     sender.sendMessage(error);
                     plugin.getLogger().warning(error);
                     System.out.println(exception + "");
