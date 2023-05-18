@@ -88,8 +88,9 @@ public class UpDateUtil {
                     logger.info(ColorUtil.replaceColorCode(debugPrefix + "&aVersion: &b" + latestVersion));
                     logger.info(ColorUtil.replaceColorCode(debugPrefix + "&aContent type: &b" + contentType));
                     logger.info(ColorUtil.replaceColorCode(debugPrefix + "&aContent length: &b" + contentLength));
-                    logger.info(debugPrefix + ColorUtil.replaceColorCode("&eStarting downloading"));
+                    logger.info(ColorUtil.replaceColorCode(debugPrefix + "&eStarting downloading"));
                 }
+
                 final InputStream inputStream = httpConnection.getInputStream();
                 final String saveFilePath = pluginsPath + File.separator + latestFileName;
 
@@ -115,22 +116,11 @@ public class UpDateUtil {
 
                 if (totalBytesRead != contentLength) {
                     logger.warning(ColorUtil.replaceColorCode("&cDownload failed: Incomplete download"));
-                    logger.info(ColorUtil.replaceColorCode("&aTrying to redownload"));
                     if (sender instanceof Player) {
                         sender.sendMessage(ColorUtil.replaceColorCode("&cDownload failed: Incomplete download"));
                         sender.sendMessage(ColorUtil.replaceColorCode("&aTrying to redownload"));
                     }
-                    if(redownload) {
-                        logger.warning(ColorUtil.replaceColorCode("&cRedownload failed"));
-                        if (sender instanceof Player) {
-                            sender.sendMessage(ColorUtil.replaceColorCode("&cRedownload failed"));
-                        }
-                        redownload = false;
-                        return;
-                    } else {
-                        redownload = true;
-                        upDate(sender);
-                    }
+                    reDownload(sender);
                     return;
                 }
 
@@ -149,7 +139,26 @@ public class UpDateUtil {
             if (plugin.debug) {
                 logger.error(debugPrefix + e);
             }
+            reDownload(sender);
             Thread.currentThread().interrupt();
+        }
+    }
+
+    private void reDownload(CommandSender sender){
+        if(redownload) {
+            redownload = false;
+            logger.warning(ColorUtil.replaceColorCode("&cRedownload failed"));
+            if (sender instanceof Player) {
+                sender.sendMessage(ColorUtil.replaceColorCode("&cRedownload failed"));
+            }
+            return;
+        } else {
+            redownload = true;
+            logger.info(ColorUtil.replaceColorCode("&aTrying to redownload"));
+            if (sender instanceof Player) {
+                sender.sendMessage(ColorUtil.replaceColorCode("&aTrying to redownload"));
+            }
+            upDate(sender);
         }
     }
 }

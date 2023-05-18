@@ -208,7 +208,7 @@ __New things__: <br/>
 New thing (Since x.x.x)  <br/>
 
 __Fixes__: <br/>
-New thing (Since x.x.x)  <br/>
+Better auto redownload (Since 1.5.7.1)  <br/>
 
 __Others__: <br/>
 New thing (Since x.x.x)  <br/>
