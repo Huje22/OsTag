@@ -10,6 +10,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import me.indian.ostag.OsTag;
@@ -102,7 +103,7 @@ public class UpDateUtil {
                 while ((bytesRead = inputStream.read(buffer)) != -1) {
                     outputStream.write(buffer, 0, bytesRead);
                     totalBytesRead += bytesRead;
-                    String progressMsg = ColorUtil.replaceColorCode("&aDownload progress: &b" + (totalBytesRead * 100) / contentLength + "%");
+                    String progressMsg = ColorUtil.replaceColorCode("&aDownload progress: &b" + (totalBytesRead * 100) / contentLength + "%" + " &8(&b" + bytesToKb(totalBytesRead) + "kb&8)");
                     if (plugin.debug) {
                         logger.info(debugPrefix + progressMsg);
                     }
@@ -144,14 +145,13 @@ public class UpDateUtil {
         }
     }
 
-    private void reDownload(CommandSender sender){
-        if(redownload) {
+    private void reDownload(CommandSender sender) {
+        if (redownload) {
             redownload = false;
             logger.warning(ColorUtil.replaceColorCode("&cRedownload failed"));
             if (sender instanceof Player) {
                 sender.sendMessage(ColorUtil.replaceColorCode("&cRedownload failed"));
             }
-            return;
         } else {
             redownload = true;
             logger.info(ColorUtil.replaceColorCode("&aTrying to redownload"));
@@ -160,5 +160,13 @@ public class UpDateUtil {
             }
             upDate(sender);
         }
+    }
+
+    private static double bytesToKb(long bytes) {
+        DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(0);
+        String kb = df.format((double) bytes / 1024);
+
+        return Double.parseDouble(kb);
     }
 }
