@@ -12,7 +12,7 @@ public class PlayerJoinListener implements Listener {
 
     private final OsTag plugin;
 
-    public PlayerJoinListener(OsTag plugin) {
+    public PlayerJoinListener(final OsTag plugin) {
         this.plugin = plugin;
     }
 
@@ -24,8 +24,8 @@ public class PlayerJoinListener implements Listener {
         final String compatibility = GithubUtil.checkTagCompatibility();
 
         if (player.hasPermission(Permissions.ADMIN) || player.isOp()) {
-            if (plugin.upDatechecker) {
-                player.sendMessage(plugin.pluginPrefix + compatibility);
+            if (this.plugin.upDatechecker) {
+                player.sendMessage(this.plugin.pluginPrefix + compatibility);
             }
         }
     }

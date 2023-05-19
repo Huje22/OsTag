@@ -25,6 +25,7 @@ import net.luckperms.api.LuckPermsProvider;
 
 public class OsTag extends PluginBase {
 
+    private static OsTag instance;
     public String pluginPrefix = ColorUtil.replaceColorCode("&f[&bOsTag&f] ");
     public String publicDebugPrefix = ColorUtil.replaceColorCode("&8[&7Debug&8] ");
     public boolean luckPerm = false;
@@ -34,7 +35,6 @@ public class OsTag extends PluginBase {
     public boolean chatFormatter;
     public boolean debug;
     public boolean upDatechecker;
-    private static OsTag instance;
     private OsTagMetrics osTagMetrics;
     private UpDateUtil upDateUtil;
     private Formater formater;
@@ -68,14 +68,14 @@ public class OsTag extends PluginBase {
     @Override
     public void onLoad() {
         instance = this;
-        saveDefaultConfig();
-        upDateUtil = new UpDateUtil();
-        osTagMetrics = new OsTagMetrics();
-        serverMovement = this.getConfig().getBoolean("movement-server");
-        osTag = this.getConfig().getBoolean("OsTag");
-        chatFormatter = this.getConfig().getBoolean("ChatFormatter");
-        debug = this.getConfig().getBoolean("Debug");
-        upDatechecker = this.getConfig().getBoolean("UpdateChecker");
+        this.saveDefaultConfig();
+        this.upDateUtil = new UpDateUtil();
+        this.osTagMetrics = new OsTagMetrics();
+        this.serverMovement = this.getConfig().getBoolean("movement-server");
+        this.osTag = this.getConfig().getBoolean("OsTag");
+        this.chatFormatter = this.getConfig().getBoolean("ChatFormatter");
+        this.debug = this.getConfig().getBoolean("Debug");
+        this.upDatechecker = this.getConfig().getBoolean("UpdateChecker");
     }
 
     @Override
@@ -86,14 +86,14 @@ public class OsTag extends PluginBase {
             this.getLogger().warning(ColorUtil.replaceColorCode("&cYou don't have lucky perms , ChatFormatting don't correctly work"));
         } else {
             this.luckPerms = LuckPermsProvider.get();
-            luckPerm = true;
+            this.luckPerm = true;
         }
         if (pm.getPlugin("PlaceholderAPI") == null || pm.getPlugin("KotlinLib") == null) {
             this.getLogger().warning(ColorUtil.replaceColorCode("&cYou don't have PlaceholderAPI or kotlin lib,placeholders from &bPlaceholderAPI&c will not work"));
         } else {
             this.placeholderApi = PlaceholderAPI.getInstance();
-            papiAndKotlinLib = true;
-            registerPlaceholders();
+            this.papiAndKotlinLib = true;
+            this.registerPlaceholders();
         }
         this.formater = new Formater(this, this.getPlaceholderApi());
         if (this.getConfig().getBoolean("Disable")) {
@@ -102,12 +102,12 @@ public class OsTag extends PluginBase {
             return;
         }
         pm.registerEvents(new CpsListener(), this);
-        if (serverMovement) {
+        if (this.serverMovement) {
             pm.registerEvents(new InputListener(), this);
         }
-        ((PluginCommand<?>) getCommand("ostag")).setExecutor(new OsTagCommand(this));
-        ((PluginCommand<?>) getCommand("tto")).setExecutor(new TestttCommand(this));
-        if (osTag) {
+        ((PluginCommand<?>) this.getCommand("ostag")).setExecutor(new OsTagCommand(this));
+        ((PluginCommand<?>) this.getCommand("tto")).setExecutor(new TestttCommand(this));
+        if (this.osTag) {
             pm.registerEvents(new OsTimer(), this);
             int refreshTime = this.getConfig().getInt("refresh-time");
             if (refreshTime <= 0) {
@@ -120,14 +120,14 @@ public class OsTag extends PluginBase {
         } else {
             this.getLogger().info(ColorUtil.replaceColorCode("&bOsTag module is disabled "));
         }
-        if (chatFormatter) {
+        if (this.chatFormatter) {
             pm.registerEvents(new Formater(this, this.getPlaceholderApi()), this);
         } else {
             this.getLogger().info(ColorUtil.replaceColorCode("&bChatFormatter module is disabled"));
         }
         pm.registerEvents(new PlayerJoinListener(this), this);
-        pluginInfo("admin", this.getServer().getConsoleSender());
-        info();
+        this.pluginInfo("admin", this.getServer().getConsoleSender());
+        this.info();
         this.getUpdateUtil().autoUpDate();
         this.getOstagMetrics().run();
 
@@ -135,7 +135,7 @@ public class OsTag extends PluginBase {
         this.getLogger().info(ColorUtil.replaceColorCode("&aStarted in &b" + executionTimeInSeconds + " &aseconds"));
     }
 
-    public void pluginInfo(String type, CommandSender sender) {
+    public void pluginInfo(final String type, final CommandSender sender) {
         final PluginDescription descriptor = this.getDescription();
         final Server server = this.getServer();
 
@@ -193,7 +193,7 @@ public class OsTag extends PluginBase {
                     .visitorLoader(entry -> CpsListener.getCPS(entry.getPlayer()))
                     .build();
             api.builder(prefix + "cooldown", String.class)
-                    .visitorLoader(entry -> getFormater().cooldown(entry.getPlayer()))
+                    .visitorLoader(entry -> this.getFormater().cooldown(entry.getPlayer()))
                     .build();
             api.builder(prefix + "device", String.class)
                     .visitorLoader(entry -> PlayerInfoUtil.getDevice(entry.getPlayer()))
@@ -217,7 +217,7 @@ public class OsTag extends PluginBase {
                     .visitorLoader(entry -> PlayerInfoUtil.getXp(entry.getPlayer()))
                     .build();
             this.getLogger().info(ColorUtil.replaceColorCode("&aLoaded placeholderapi placeholders"));
-        } catch (Exception exception) {
+        } catch (final Exception exception) {
             this.getLogger().error(ColorUtil.replaceColorCode("&cLoading placeholders failed "));
             System.out.println(exception.getMessage());
         }

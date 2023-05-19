@@ -7,24 +7,25 @@ import cn.nukkit.command.CommandExecutor;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.scheduler.NukkitRunnable;
 import cn.nukkit.utils.Config;
-import java.util.ArrayList;
-import java.util.List;
 import me.indian.ostag.OsTag;
 import me.indian.ostag.util.ColorUtil;
 import me.indian.ostag.util.Permissions;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class OsTagCommand implements CommandExecutor {
 
     private final OsTag plugin;
     private final List<String> confirmations = new ArrayList<>();
 
-    public OsTagCommand(OsTag plugin) {
+    public OsTagCommand(final OsTag plugin) {
         this.plugin = plugin;
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        final Config config = plugin.getConfig();
+    public boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
+        final Config config = this.plugin.getConfig();
         final List<String> advancedPlayers = config.getStringList("advanced-players");
 
         if (args.length == 0) {
@@ -33,9 +34,9 @@ public class OsTagCommand implements CommandExecutor {
         }
         if (args[0].equalsIgnoreCase("ver") || args[0].equalsIgnoreCase("v")) {
             if (sender.hasPermission(Permissions.ADMIN)) {
-                plugin.pluginInfo("admin", sender);
+                this.plugin.pluginInfo("admin", sender);
             } else {
-                plugin.pluginInfo("normal", sender);
+                this.plugin.pluginInfo("normal", sender);
             }
             return false;
         }
@@ -61,14 +62,14 @@ public class OsTagCommand implements CommandExecutor {
                 }
             }
             if (args[0].equalsIgnoreCase("update")) {
-                if (confirmations.contains(sender.getName())) {
-                    confirmations.remove(sender.getName());
+                if (this.confirmations.contains(sender.getName())) {
+                    this.confirmations.remove(sender.getName());
                     sender.sendMessage(ColorUtil.replaceColorCode("&aAction confirmed"));
-                    plugin.getUpdateUtil().manualUpDate(sender);
+                    this.plugin.getUpdateUtil().manualUpDate(sender);
                 } else {
-                    confirmations.add(sender.getName());
+                    this.confirmations.add(sender.getName());
                     sender.sendMessage(ColorUtil.replaceColorCode("&cAre you sure you want to confirm this action? enter the command again to confirm, you have 30 seconds"));
-                    timeRemove(sender);
+                    this.timeRemove(sender);
                 }
             }
             if (args[0].equalsIgnoreCase("reload") || args[0].equalsIgnoreCase("r")) {
@@ -81,8 +82,8 @@ public class OsTagCommand implements CommandExecutor {
                 } catch (final Exception exception) {
                     final String error = ColorUtil.replaceColorCode("&cCan't reload config , check console to see error");
                     sender.sendMessage(error);
-                    plugin.getLogger().warning(error);
-                    System.out.println(exception + "");
+                    this.plugin.getLogger().warning(error);
+                    System.out.println(String.valueOf(exception));
                 }
             }
             config.save();
@@ -92,15 +93,15 @@ public class OsTagCommand implements CommandExecutor {
         return false;
     }
 
-    private void timeRemove(CommandSender sender) {
+    private void timeRemove(final CommandSender sender) {
         new NukkitRunnable() {
             @Override
             public void run() {
-                if (confirmations.contains(sender.getName())) {
-                    confirmations.remove(sender.getName());
+                if (OsTagCommand.this.confirmations.contains(sender.getName())) {
+                    OsTagCommand.this.confirmations.remove(sender.getName());
                     sender.sendMessage(ColorUtil.replaceColorCode("&cYour time to confirm has expired"));
                 }
             }
-        }.runTaskLater(plugin, 30 * 20);
+        }.runTaskLater(this.plugin, 30 * 20);
     }
 }

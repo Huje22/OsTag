@@ -1,13 +1,14 @@
 package me.indian.ostag.util;
 
 import cn.nukkit.plugin.PluginLogger;
+import me.indian.ostag.OsTag;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
 import java.util.TreeMap;
-import me.indian.ostag.OsTag;
 
 public class GithubUtil {
 
@@ -17,8 +18,8 @@ public class GithubUtil {
     private static final StringBuilder response = new StringBuilder();
     private static final String debugPrefix = ColorUtil.replaceColorCode(plugin.publicDebugPrefix + "&8[&dLatest tag&8] ");
     private static final String current = OsTag.getInstance().getDescription().getVersion();
-    private static final String latest = getLatestTag();
     private static final String errorMessage = "&cCan't get latest tag";
+    private static final String latest = getLatestTag();
 
     public static String getFastTagInfo() {
         if (latest.equals(errorMessage)) {
@@ -44,12 +45,12 @@ public class GithubUtil {
 
     public static String getLatestTag() {
         try {
-            URL url = new URL("https://api.github.com/repos/OpenPlugins-Minecraft/OsTag/tags");
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            final URL url = new URL("https://api.github.com/repos/OpenPlugins-Minecraft/OsTag/tags");
+            final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.setRequestProperty("Accept", "application/vnd.github.v3+json");
 
-            int responseCode = connection.getResponseCode();
+            final int responseCode = connection.getResponseCode();
             if (!(responseCode == HttpURLConnection.HTTP_OK)) {
                 if (plugin.debug) {
                     logger.error(ColorUtil.replaceColorCode(debugPrefix + "&cCan't get latest tag, HTTP response code: " + responseCode));
@@ -57,7 +58,7 @@ public class GithubUtil {
                 return errorMessage;
             }
 
-            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            final BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             String line;
             while ((line = reader.readLine()) != null) {
                 response.append(line);
@@ -66,7 +67,7 @@ public class GithubUtil {
             connection.disconnect();
 
             return parseLatestTagFromJson(response.toString());
-        } catch (Exception e) {
+        } catch (final Exception e) {
             if (plugin.debug) {
                 logger.error(debugPrefix + e);
             }
@@ -75,7 +76,7 @@ public class GithubUtil {
     }
 
     public static String getBehindCount() {
-        int index = getBehindIntCount();
+        final int index = getBehindIntCount();
 
         if (index == -1) {
             return ColorUtil.replaceColorCode(" &5(&cBehind more than 10 version&5)");
@@ -90,7 +91,7 @@ public class GithubUtil {
 
     public static int getBehindIntCount() {
         if (response.toString().isEmpty()) return 0;
-        String[] tags = response.toString().replaceAll("[\\[\\]{}\"]", "").split(",");
+        final String[] tags = response.toString().replaceAll("[\\[\\]{}\"]", "").split(",");
 
         int counter = 0;
         int index = -1;
@@ -101,12 +102,12 @@ public class GithubUtil {
         }
 
         if (plugin.debug) {
-            for (Map.Entry<Integer, String> entry : versions.entrySet()) {
+            for (final Map.Entry<Integer, String> entry : versions.entrySet()) {
                 logger.info(debugPrefix + entry.getKey() + ": " + entry.getValue());
             }
         }
 
-        for (Map.Entry<Integer, String> entry : versions.entrySet()) {
+        for (final Map.Entry<Integer, String> entry : versions.entrySet()) {
             if (entry.getValue().equals(current)) {
                 index = entry.getKey();
                 break;
@@ -117,8 +118,8 @@ public class GithubUtil {
     }
 
 
-    private static String parseLatestTagFromJson(String json) {
-        String[] tags = json.replaceAll("[\\[\\]{}\"]", "").split(",");
+    private static String parseLatestTagFromJson(final String json) {
+        final String[] tags = json.replaceAll("[\\[\\]{}\"]", "").split(",");
         return tags[0].split(":")[1];
     }
 }

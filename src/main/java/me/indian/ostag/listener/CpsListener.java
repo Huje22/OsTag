@@ -8,11 +8,12 @@ import cn.nukkit.event.server.DataPacketReceiveEvent;
 import cn.nukkit.network.protocol.LevelSoundEventPacket;
 import cn.nukkit.plugin.PluginLogger;
 import cn.nukkit.scheduler.NukkitRunnable;
+import me.indian.ostag.OsTag;
+import me.indian.ostag.util.ColorUtil;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import me.indian.ostag.OsTag;
-import me.indian.ostag.util.ColorUtil;
 
 public class CpsListener implements Listener {
 
@@ -23,6 +24,15 @@ public class CpsListener implements Listener {
 
     // cps counter from https://github.com/GommeAWM/CPSCounter
     // witch permissions from author edited by IndianPL
+
+    public static int getCPS(final Player player) {
+        final List<Long> list = cps.get(player.getName());
+        if (list == null) {
+            return 0;
+        }
+        list.removeIf(l -> l < System.currentTimeMillis() - 1000L);
+        return list.size();
+    }
 
     @SuppressWarnings("unused")
     @EventHandler
@@ -43,15 +53,6 @@ public class CpsListener implements Listener {
         }
     }
 
-    public static int getCPS(Player player) {
-        final List<Long> list = cps.get(player.getName());
-        if (list == null) {
-            return 0;
-        }
-        list.removeIf(l -> l < System.currentTimeMillis() - 1000L);
-        return list.size();
-    }
-
     // cps counter from https://github.com/GommeAWM/CPSCounter
     // witch permisions from author edited by IndianPL
 
@@ -59,10 +60,10 @@ public class CpsListener implements Listener {
     @EventHandler
     public void removeCps(final PlayerQuitEvent event) {
         final String name = event.getPlayer().getName();
-        timeRemove(name);
+        this.timeRemove(name);
     }
 
-    private void timeRemove(String name) {
+    private void timeRemove(final String name) {
         new NukkitRunnable() {
             @Override
             public void run() {
@@ -70,7 +71,7 @@ public class CpsListener implements Listener {
                 if (player == null) {
                     cps.remove(name);
                     if (plugin.debug) {
-                        logger.info(ColorUtil.replaceColorCode(debugPrefix + "&aPlayer &6" + name + "&a has been removed from the map"));
+                        logger.info(ColorUtil.replaceColorCode(CpsListener.this.debugPrefix + "&aPlayer &6" + name + "&a has been removed from the map"));
                     }
                 }
             }

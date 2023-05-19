@@ -5,6 +5,8 @@ import cn.nukkit.Server;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.plugin.PluginLogger;
 import cn.nukkit.utils.Config;
+import me.indian.ostag.OsTag;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -13,42 +15,49 @@ import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import me.indian.ostag.OsTag;
 
 public class UpDateUtil {
 
     private final OsTag plugin = OsTag.getInstance();
-    private final PluginLogger logger = plugin.getLogger();
-    private final Config config = plugin.getConfig();
-    private final String debugPrefix = ColorUtil.replaceColorCode(plugin.publicDebugPrefix + "&8[&dAutoUpdate&8] ");
+    private final PluginLogger logger = this.plugin.getLogger();
+    private final Config config = this.plugin.getConfig();
+    private final String debugPrefix = ColorUtil.replaceColorCode(this.plugin.publicDebugPrefix + "&8[&dAutoUpdate&8] ");
     private final String pluginsPath = Server.getInstance().getPluginPath();
     private final String latestVersion = GithubUtil.getLatestTag();
-    private final String currentVersion = plugin.getDescription().getVersion();
-    private final String latestUrl = "https://github.com/OpenPlugins-Minecraft/OsTag/releases/download/" + latestVersion + "/OsTag-" + latestVersion + ".jar";
-    private final String latestFileName = "OsTag-" + latestVersion + ".jar";
-    private final String currentFileName = "Ostag-" + currentVersion + ".jar";
-    private boolean redownload = false;
+    private final String currentVersion = this.plugin.getDescription().getVersion();
+    private final String currentFileName = "Ostag-" + this.currentVersion + ".jar";
+    private final String latestUrl = "https://github.com/OpenPlugins-Minecraft/OsTag/releases/download/" + this.latestVersion + "/OsTag-" + this.latestVersion + ".jar";
+    private final String latestFileName = "OsTag-" + this.latestVersion + ".jar";
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
+    private boolean redownload = false;
+
+    private static double bytesToKb(final long bytes) {
+        final DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(0);
+        final String kb = df.format((double) bytes / 1024);
+
+        return Double.parseDouble(kb);
+    }
 
     public void autoUpDate() {
-        if (config.getBoolean("AutoUpdate")) {
-            upDate(null);
+        if (this.config.getBoolean("AutoUpdate")) {
+            this.upDate(null);
         }
     }
 
-    public void manualUpDate(CommandSender sender) {
-        upDate(sender);
+    public void manualUpDate(final CommandSender sender) {
+        this.upDate(sender);
     }
 
-    private void upDate(CommandSender sender) {
-        executorService.execute(() -> {
+    private void upDate(final CommandSender sender) {
+        this.executorService.execute(() -> {
             if (GithubUtil.getFastTagInfo().contains("false")) {
-                final File latest = new File(pluginsPath + "/" + latestFileName);
-                final File current = new File(pluginsPath + "/" + currentFileName);
+                final File latest = new File(this.pluginsPath + "/" + this.latestFileName);
+                final File current = new File(this.pluginsPath + "/" + this.currentFileName);
 
                 if (current.exists() && latest.exists()) {
-                    if (!currentVersion.equals(latestVersion)) {
-                        logger.info(ColorUtil.replaceColorCode("&cYou have downloaded the latest version but you are not using it"));
+                    if (!this.currentVersion.equals(this.latestVersion)) {
+                        this.logger.info(ColorUtil.replaceColorCode("&cYou have downloaded the latest version but you are not using it"));
                         if (sender instanceof Player) {
                             sender.sendMessage(ColorUtil.replaceColorCode("&cYou have downloaded the latest version but you are not using it"));
                         }
@@ -57,12 +66,12 @@ public class UpDateUtil {
                     }
                 }
                 if (!latest.exists()) {
-                    logger.info(ColorUtil.replaceColorCode("&aDownloading latest ostag version..."));
-                    downloadLatestVersion(sender);
+                    this.logger.info(ColorUtil.replaceColorCode("&aDownloading latest ostag version..."));
+                    this.downloadLatestVersion(sender);
                 }
             } else {
-                if (plugin.debug) {
-                    logger.info(ColorUtil.replaceColorCode(debugPrefix + "&aDownloading the latest version is unnecessary or not possible"));
+                if (this.plugin.debug) {
+                    this.logger.info(ColorUtil.replaceColorCode(this.debugPrefix + "&aDownloading the latest version is unnecessary or not possible"));
                 }
                 if (sender != null) {
                     sender.sendMessage(ColorUtil.replaceColorCode("&aDownloading the latest version is unnecessary or not possible"));
@@ -72,10 +81,10 @@ public class UpDateUtil {
         });
     }
 
-    private void downloadLatestVersion(CommandSender sender) {
+    private void downloadLatestVersion(final CommandSender sender) {
         try {
             final long millisActualTime = System.currentTimeMillis();
-            final URL url = new URL(latestUrl);
+            final URL url = new URL(this.latestUrl);
             final HttpURLConnection httpConnection = (HttpURLConnection) url.openConnection();
             final int responseCode = httpConnection.getResponseCode();
 
@@ -84,16 +93,16 @@ public class UpDateUtil {
                 final String contentType = httpConnection.getContentType();
                 final int contentLength = httpConnection.getContentLength();
 
-                if (plugin.debug) {
-                    logger.info(ColorUtil.replaceColorCode(debugPrefix + "&b" + latestUrl));
-                    logger.info(ColorUtil.replaceColorCode(debugPrefix + "&aVersion: &b" + latestVersion));
-                    logger.info(ColorUtil.replaceColorCode(debugPrefix + "&aContent type: &b" + contentType));
-                    logger.info(ColorUtil.replaceColorCode(debugPrefix + "&aContent length: &b" + contentLength));
-                    logger.info(ColorUtil.replaceColorCode(debugPrefix + "&eStarting downloading"));
+                if (this.plugin.debug) {
+                    this.logger.info(ColorUtil.replaceColorCode(this.debugPrefix + "&b" + this.latestUrl));
+                    this.logger.info(ColorUtil.replaceColorCode(this.debugPrefix + "&aVersion: &b" + this.latestVersion));
+                    this.logger.info(ColorUtil.replaceColorCode(this.debugPrefix + "&aContent type: &b" + contentType));
+                    this.logger.info(ColorUtil.replaceColorCode(this.debugPrefix + "&aContent length: &b" + contentLength));
+                    this.logger.info(ColorUtil.replaceColorCode(this.debugPrefix + "&eStarting downloading"));
                 }
 
                 final InputStream inputStream = httpConnection.getInputStream();
-                final String saveFilePath = pluginsPath + File.separator + latestFileName;
+                final String saveFilePath = this.pluginsPath + File.separator + this.latestFileName;
 
                 final FileOutputStream outputStream = new FileOutputStream(saveFilePath);
 
@@ -103,12 +112,12 @@ public class UpDateUtil {
                 while ((bytesRead = inputStream.read(buffer)) != -1) {
                     outputStream.write(buffer, 0, bytesRead);
                     totalBytesRead += bytesRead;
-                    String progressMsg = ColorUtil.replaceColorCode("&aDownload progress: &b" + (totalBytesRead * 100) / contentLength + "%" + " &8(&b" + bytesToKb(totalBytesRead) + "kb&8)");
-                    if (plugin.debug) {
-                        logger.info(debugPrefix + progressMsg);
+                    final String progressMsg = ColorUtil.replaceColorCode("&aDownload progress: &b" + (totalBytesRead * 100) / contentLength + "%" + " &8(&b" + bytesToKb(totalBytesRead) + "kb&8)");
+                    if (this.plugin.debug) {
+                        this.logger.info(this.debugPrefix + progressMsg);
                     }
                     if (sender instanceof Player) {
-                        ((Player) sender).sendActionBar(plugin.pluginPrefix + progressMsg);
+                        ((Player) sender).sendActionBar(this.plugin.pluginPrefix + progressMsg);
                     }
                 }
 
@@ -116,57 +125,49 @@ public class UpDateUtil {
                 inputStream.close();
 
                 if (totalBytesRead != contentLength) {
-                    logger.warning(ColorUtil.replaceColorCode("&cDownload failed: Incomplete download"));
+                    this.logger.warning(ColorUtil.replaceColorCode("&cDownload failed: Incomplete download"));
                     if (sender instanceof Player) {
                         sender.sendMessage(ColorUtil.replaceColorCode("&cDownload failed: Incomplete download"));
                         sender.sendMessage(ColorUtil.replaceColorCode("&aTrying to redownload"));
                     }
-                    reDownload(sender);
+                    this.reDownload(sender);
                     return;
                 }
 
                 final double executionTimeInSeconds = (System.currentTimeMillis() - millisActualTime) / 1000.0;
-                logger.info(ColorUtil.replaceColorCode("&aDownload completed in &b" + executionTimeInSeconds + " &aseconds"));
+                this.logger.info(ColorUtil.replaceColorCode("&aDownload completed in &b" + executionTimeInSeconds + " &aseconds"));
                 if (sender instanceof Player) {
                     sender.sendMessage(ColorUtil.replaceColorCode("&aDownload completed in &b" + executionTimeInSeconds + " &aseconds"));
                 }
             } else {
-                logger.warning(ColorUtil.replaceColorCode("&cThe file could not be used. HTTP response code:" + responseCode));
+                this.logger.warning(ColorUtil.replaceColorCode("&cThe file could not be used. HTTP response code:" + responseCode));
                 Thread.currentThread().interrupt();
             }
             httpConnection.disconnect();
-        } catch (Exception e) {
-            logger.warning(ColorUtil.replaceColorCode("&cCan't download latest ostag version!"));
-            if (plugin.debug) {
-                logger.error(debugPrefix + e);
+        } catch (final Exception e) {
+            this.logger.warning(ColorUtil.replaceColorCode("&cCan't download latest ostag version!"));
+            if (this.plugin.debug) {
+                this.logger.error(this.debugPrefix + e);
             }
-            reDownload(sender);
+            this.reDownload(sender);
             Thread.currentThread().interrupt();
         }
     }
 
-    private void reDownload(CommandSender sender) {
-        if (redownload) {
-            redownload = false;
-            logger.warning(ColorUtil.replaceColorCode("&cRedownload failed"));
+    private void reDownload(final CommandSender sender) {
+        if (this.redownload) {
+            this.redownload = false;
+            this.logger.warning(ColorUtil.replaceColorCode("&cRedownload failed"));
             if (sender instanceof Player) {
                 sender.sendMessage(ColorUtil.replaceColorCode("&cRedownload failed"));
             }
         } else {
-            redownload = true;
-            logger.info(ColorUtil.replaceColorCode("&aTrying to redownload"));
+            this.redownload = true;
+            this.logger.info(ColorUtil.replaceColorCode("&aTrying to redownload"));
             if (sender instanceof Player) {
                 sender.sendMessage(ColorUtil.replaceColorCode("&aTrying to redownload"));
             }
-            upDate(sender);
+            this.upDate(sender);
         }
-    }
-
-    private static double bytesToKb(long bytes) {
-        DecimalFormat df = new DecimalFormat();
-        df.setMaximumFractionDigits(0);
-        String kb = df.format((double) bytes / 1024);
-
-        return Double.parseDouble(kb);
     }
 }

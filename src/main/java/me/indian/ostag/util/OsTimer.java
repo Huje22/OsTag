@@ -7,10 +7,11 @@ import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerJoinEvent;
 import cn.nukkit.scheduler.Task;
 import cn.nukkit.utils.Config;
+import me.indian.ostag.OsTag;
+
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import me.indian.ostag.OsTag;
 
 public class OsTimer extends Task implements Runnable, Listener {
 
@@ -21,8 +22,8 @@ public class OsTimer extends Task implements Runnable, Listener {
     @Override
     public void onRun(final int i) {
         executorService.execute(() -> {
-            for (Player all : Server.getInstance().getOnlinePlayers().values()) {
-                addOsTag(all);
+            for (final Player all : Server.getInstance().getOnlinePlayers().values()) {
+                this.addOsTag(all);
             }
         });
     }
@@ -31,13 +32,13 @@ public class OsTimer extends Task implements Runnable, Listener {
     @EventHandler
     public void playerJoin(final PlayerJoinEvent event) {
         final Player player = event.getPlayer();
-        addOsTag(player);
+        this.addOsTag(player);
     }
 
     private void addOsTag(final Player player) {
         final List<String> advancedPlayers = config.getStringList("advanced-players");
         final List<String> disabledWorld = config.getStringList("disabled-worlds");
-        for (String dis : disabledWorld) {
+        for (final String dis : disabledWorld) {
             if (player.getLevel().getName().equalsIgnoreCase(dis)) {
                 //disabled worlds is a experimental option, maybe not good working
                 return;

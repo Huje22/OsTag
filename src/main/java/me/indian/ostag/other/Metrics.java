@@ -10,6 +10,10 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import org.yaml.snakeyaml.DumperOptions;
+import org.yaml.snakeyaml.Yaml;
+
+import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
@@ -32,9 +36,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.zip.GZIPOutputStream;
-import javax.net.ssl.HttpsURLConnection;
-import org.yaml.snakeyaml.DumperOptions;
-import org.yaml.snakeyaml.Yaml;
 
 /**
  * bStats collects some data for plugin authors.
@@ -43,6 +44,19 @@ import org.yaml.snakeyaml.Yaml;
  */
 @SuppressWarnings({"WeakerAccess", "unused"})
 public class Metrics {
+
+    // The version of this bStats class
+    public static final int B_STATS_VERSION = 1;
+    // The url to which the data is sent
+    private static final String URL = "https://bStats.org/submitData/bukkit";
+    // Should failed requests be logged?
+    private static boolean logFailedRequests;
+    // Should the sent data be logged?
+    private static boolean logSentData;
+    // Should the response text be logged?
+    private static boolean logResponseStatusText;
+    // The uuid of the server
+    private static String serverUUID;
 
     static {
         // You can use the property to disable the check in your test environment
@@ -59,40 +73,17 @@ public class Metrics {
 
     // This ThreadFactory enforces the naming convention for our Threads
     private final ThreadFactory threadFactory = task -> new Thread(task, "bStats-Metrics");
-
     // Executor service for requests
     // We use an executor service because the Nukkit scheduler is affected by server lags
-    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1, threadFactory);
-
-    // The version of this bStats class
-    public static final int B_STATS_VERSION = 1;
-
-    // The url to which the data is sent
-    private static final String URL = "https://bStats.org/submitData/bukkit";
-
-    // Is bStats enabled on this server?
-    private boolean enabled;
-
-    // Should failed requests be logged?
-    private static boolean logFailedRequests;
-
-    // Should the sent data be logged?
-    private static boolean logSentData;
-
-    // Should the response text be logged?
-    private static boolean logResponseStatusText;
-
-    // The uuid of the server
-    private static String serverUUID;
-
+    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1, this.threadFactory);
     // The plugin
     private final Plugin plugin;
-
     // The plugin id
     private final int pluginId;
-
     // A list with all custom charts
     private final List<CustomChart> charts = new ArrayList<>();
+    // Is bStats enabled on this server?
+    private boolean enabled;
 
     /**
      * Class constructor.
@@ -101,7 +92,7 @@ public class Metrics {
      * @param pluginId The id of the plugin.
      *                 It can be found at <a href="https://bstats.org/what-is-my-plugin-id">What is my plugin id?</a>
      */
-    public Metrics(Plugin plugin, int pluginId) {
+    public Metrics(final Plugin plugin, final int pluginId) {
         if (plugin == null) {
             throw new IllegalArgumentException("Plugin cannot be null!");
         }
@@ -109,258 +100,28 @@ public class Metrics {
         this.pluginId = pluginId;
 
         try {
-            loadConfig();
-        } catch (IOException e) {
+            this.loadConfig();
+        } catch (final IOException e) {
             // Failed to load configuration
             plugin.getLogger().warning("Failed to load bStats config!", e);
         }
 
-        if (enabled) {
+        if (this.enabled) {
             boolean found = false;
             // Search for all other bStats Metrics classes to see if we are the first one
-            for (Class<?> service : Server.getInstance().getServiceManager().getKnownService()) {
+            for (final Class<?> service : Server.getInstance().getServiceManager().getKnownService()) {
                 try {
                     service.getField("B_STATS_VERSION"); // Our identifier :)
                     found = true; // We aren't the first
                     break;
-                } catch (NoSuchFieldException ignored) {
+                } catch (final NoSuchFieldException ignored) {
                 }
             }
             // Register our service
             Server.getInstance().getServiceManager().register(Metrics.class, this, plugin, ServicePriority.NORMAL);
             if (!found) {
                 // We are the first!
-                startSubmitting();
-            }
-        }
-    }
-
-    /**
-     * Checks if bStats is enabled.
-     *
-     * @return Whether bStats is enabled or not.
-     */
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    /**
-     * Adds a custom chart.
-     *
-     * @param chart The chart to add.
-     */
-    public void addCustomChart(CustomChart chart) {
-        if (chart == null) {
-            throw new IllegalArgumentException("Chart cannot be null!");
-        }
-        charts.add(chart);
-    }
-
-    /**
-     * Starts the Scheduler which submits our data every 30 minutes.
-     */
-    private void startSubmitting() {
-        final Runnable submitTask = () -> {
-            if (!plugin.isEnabled()) { // Plugin was disabled
-                scheduler.shutdown();
-                return;
-            }
-            // Nevertheless we want our code to run in the Nukkit main thread, so we have to use the Nukkit scheduler
-            // Don't be afraid! The connection to the bStats server is still async, only the stats collection is sync ;)
-            Server.getInstance().getScheduler().scheduleTask(plugin, this::submitData);
-        };
-
-        // Many servers tend to restart at a fixed time at xx:00 which causes an uneven distribution of requests on the
-        // bStats backend. To circumvent this problem, we introduce some randomness into the initial and second delay.
-        // WARNING: You must not modify and part of this Metrics class, including the submit delay or frequency!
-        // WARNING: Modifying this code will get your plugin banned on bStats. Just don't do it!
-        long initialDelay = (long) (1000 * 60 * (3 + Math.random() * 3));
-        long secondDelay = (long) (1000 * 60 * (Math.random() * 30));
-        scheduler.schedule(submitTask, initialDelay, TimeUnit.MILLISECONDS);
-        scheduler.scheduleAtFixedRate(submitTask, initialDelay + secondDelay, 1000 * 60 * 30, TimeUnit.MILLISECONDS);
-    }
-
-    /**
-     * Gets the plugin specific data.
-     * This method is called using Reflection.
-     *
-     * @return The plugin specific data.
-     */
-    public JsonObject getPluginData() {
-        JsonObject data = new JsonObject();
-
-        String pluginName = plugin.getDescription().getName();
-        String pluginVersion = plugin.getDescription().getVersion();
-
-        data.addProperty("pluginName", pluginName); // Append the name of the plugin
-        data.addProperty("id", pluginId); // Append the id of the plugin
-        data.addProperty("pluginVersion", pluginVersion); // Append the version of the plugin
-
-        JsonArray customCharts = new JsonArray();
-        for (CustomChart customChart : charts) {
-            // Add the data of the custom charts
-            JsonObject chart = customChart.getRequestJsonObject();
-            if (chart == null) { // If the chart is null, we skip it
-                continue;
-            }
-            customCharts.add(chart);
-        }
-        data.add("customCharts", customCharts);
-
-        return data;
-    }
-
-    /**
-     * Gets the server specific data.
-     *
-     * @return The server specific data.
-     */
-    private JsonObject getServerData() {
-        // Minecraft specific data
-        int playerAmount = Server.getInstance().getOnlinePlayers().size();
-        int onlineMode = Server.getInstance().getPropertyBoolean("xbox-auth", true) ? 1 : 0;
-        String softwareVersion = Server.getInstance().getApiVersion() + " (MC: " + Server.getInstance().getVersion().substring(1) + ")";
-        String softwareName = Server.getInstance().getName();
-
-        // OS/Java specific data
-        String javaVersion = System.getProperty("java.version");
-        String osName = System.getProperty("os.name");
-        String osArch = System.getProperty("os.arch");
-        String osVersion = System.getProperty("os.version");
-        int coreCount = Runtime.getRuntime().availableProcessors();
-
-        JsonObject data = new JsonObject();
-
-        data.addProperty("serverUUID", serverUUID);
-
-        data.addProperty("playerAmount", playerAmount);
-        data.addProperty("onlineMode", onlineMode);
-        data.addProperty("bukkitVersion", softwareVersion);
-        data.addProperty("bukkitName", softwareName);
-
-        data.addProperty("javaVersion", javaVersion);
-        data.addProperty("osName", osName);
-        data.addProperty("osArch", osArch);
-        data.addProperty("osVersion", osVersion);
-        data.addProperty("coreCount", coreCount);
-
-        return data;
-    }
-
-    /**
-     * Collects the data and sends it afterwards.
-     */
-    @SuppressWarnings("unchecked")
-    private void submitData() {
-        final JsonObject data = getServerData();
-
-        JsonArray pluginData = new JsonArray();
-        // Search for all other bStats Metrics classes to get their plugin data
-        for (Class<?> service : Server.getInstance().getServiceManager().getKnownService()) {
-            try {
-                service.getField("B_STATS_VERSION"); // Our identifier :)
-
-                List<? extends RegisteredServiceProvider<?>> providers = null;
-                try {
-                    providers = Server.getInstance().getServiceManager().getRegistrations(service);
-                } catch (Throwable t) { // no such method: ServiceManager.getRegistrations()
-                    try {
-                        Field handle = NKServiceManager.class.getDeclaredField("handle");
-                        handle.setAccessible(true);
-                        providers = ((Map<Class<?>, List<RegisteredServiceProvider<?>>>) handle.get(Server.getInstance().getServiceManager())).get(service);
-                    } catch (NullPointerException | NoSuchFieldException | IllegalAccessException |
-                             IllegalArgumentException e) {
-                        if (logFailedRequests) {
-                            plugin.getLogger().error("Encountered unexpected exception ", e);
-                        }
-                    }
-                }
-
-                if (providers != null) {
-                    for (RegisteredServiceProvider<?> provider : providers) {
-                        try {
-                            Object plugin = provider.getService().getMethod("getPluginData").invoke(provider.getProvider());
-                            if (plugin instanceof JsonObject) {
-                                pluginData.add((JsonElement) plugin);
-                            }
-                        } catch (NullPointerException | NoSuchMethodException | IllegalAccessException |
-                                 InvocationTargetException ignored) {
-                        }
-                    }
-                }
-            } catch (NoSuchFieldException ignored) {
-            }
-        }
-
-        data.add("plugins", pluginData);
-
-        // Create a new thread for the connection to the bStats server
-        new Thread(() -> {
-            try {
-                // Send the data
-                sendData(plugin, data);
-            } catch (Exception e) {
-                // Something went wrong! :(
-                if (logFailedRequests) {
-                    plugin.getLogger().warning("Could not submit plugin stats of " + plugin.getName(), e);
-                }
-            }
-        }).start();
-    }
-
-    /**
-     * Loads the bStats configuration.
-     *
-     * @throws IOException If something did not work :(
-     */
-    private void loadConfig() throws IOException {
-        File bStatsFolder = new File(plugin.getDataFolder().getParentFile(), "bStats");
-        File configFile = new File(bStatsFolder, "config.yml");
-        Config config = new Config(configFile);
-
-        // Check if the config file exists
-        if (!config.exists("serverUuid")) {
-            // Add default values
-            config.set("enabled", true);
-            // Every server gets it's unique random id.
-            config.set("serverUuid", UUID.randomUUID().toString());
-            // Should failed request be logged?
-            config.set("logFailedRequests", false);
-            // Should the sent data be logged?
-            config.set("logSentData", false);
-            // Should the response text be logged?
-            config.set("logResponseStatusText", false);
-
-            DumperOptions dumperOptions = new DumperOptions();
-            dumperOptions.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
-            writeFile(configFile,
-                    "# bStats collects some data for plugin authors like how many servers are using their plugins.",
-                    "# To honor their work, you should not disable it.",
-                    "# This has nearly no effect on the server performance!",
-                    "# Check out https://bStats.org/ to learn more :)",
-                    new Yaml(dumperOptions).dump(config.getRootSection()));
-        }
-
-        // Load the data
-        enabled = config.getBoolean("enabled", true);
-        serverUUID = config.getString("serverUuid");
-        logFailedRequests = config.getBoolean("logFailedRequests", false);
-        logSentData = config.getBoolean("logSentData", false);
-        logResponseStatusText = config.getBoolean("logResponseStatusText", false);
-    }
-
-    /**
-     * Writes a String to a file. It also adds a note for the user.
-     *
-     * @param file  The file to write to. Cannot be null.
-     * @param lines The lines to write.
-     * @throws IOException If something did not work :(
-     */
-    private void writeFile(File file, String... lines) throws IOException {
-        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file))) {
-            for (String line : lines) {
-                bufferedWriter.write(line);
-                bufferedWriter.newLine();
+                this.startSubmitting();
             }
         }
     }
@@ -372,7 +133,7 @@ public class Metrics {
      * @param data   The data to send.
      * @throws Exception If the request failed.
      */
-    private static void sendData(Plugin plugin, JsonObject data) throws Exception {
+    private static void sendData(final Plugin plugin, final JsonObject data) throws Exception {
         if (data == null) {
             throw new IllegalArgumentException("Data cannot be null!");
         }
@@ -382,10 +143,10 @@ public class Metrics {
         if (logSentData) {
             plugin.getLogger().info("Sending data to bStats: " + data);
         }
-        HttpsURLConnection connection = (HttpsURLConnection) new URL(URL).openConnection();
+        final HttpsURLConnection connection = (HttpsURLConnection) new URL(URL).openConnection();
 
         // Compress the data to save bandwidth
-        byte[] compressedData = compress(data.toString());
+        final byte[] compressedData = compress(data.toString());
 
         // Add headers
         connection.setRequestMethod("POST");
@@ -398,12 +159,12 @@ public class Metrics {
 
         // Send data
         connection.setDoOutput(true);
-        try (DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream())) {
+        try (final DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream())) {
             outputStream.write(compressedData);
         }
 
-        StringBuilder builder = new StringBuilder();
-        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+        final StringBuilder builder = new StringBuilder();
+        try (final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 builder.append(line);
@@ -426,11 +187,241 @@ public class Metrics {
         if (str == null) {
             return null;
         }
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        try (GZIPOutputStream gzip = new GZIPOutputStream(outputStream)) {
+        final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        try (final GZIPOutputStream gzip = new GZIPOutputStream(outputStream)) {
             gzip.write(str.getBytes(StandardCharsets.UTF_8));
         }
         return outputStream.toByteArray();
+    }
+
+    /**
+     * Checks if bStats is enabled.
+     *
+     * @return Whether bStats is enabled or not.
+     */
+    public boolean isEnabled() {
+        return this.enabled;
+    }
+
+    /**
+     * Adds a custom chart.
+     *
+     * @param chart The chart to add.
+     */
+    public void addCustomChart(final CustomChart chart) {
+        if (chart == null) {
+            throw new IllegalArgumentException("Chart cannot be null!");
+        }
+        this.charts.add(chart);
+    }
+
+    /**
+     * Starts the Scheduler which submits our data every 30 minutes.
+     */
+    private void startSubmitting() {
+        final Runnable submitTask = () -> {
+            if (!this.plugin.isEnabled()) { // Plugin was disabled
+                this.scheduler.shutdown();
+                return;
+            }
+            // Nevertheless we want our code to run in the Nukkit main thread, so we have to use the Nukkit scheduler
+            // Don't be afraid! The connection to the bStats server is still async, only the stats collection is sync ;)
+            Server.getInstance().getScheduler().scheduleTask(this.plugin, this::submitData);
+        };
+
+        // Many servers tend to restart at a fixed time at xx:00 which causes an uneven distribution of requests on the
+        // bStats backend. To circumvent this problem, we introduce some randomness into the initial and second delay.
+        // WARNING: You must not modify and part of this Metrics class, including the submit delay or frequency!
+        // WARNING: Modifying this code will get your plugin banned on bStats. Just don't do it!
+        final long initialDelay = (long) (1000 * 60 * (3 + Math.random() * 3));
+        final long secondDelay = (long) (1000 * 60 * (Math.random() * 30));
+        this.scheduler.schedule(submitTask, initialDelay, TimeUnit.MILLISECONDS);
+        this.scheduler.scheduleAtFixedRate(submitTask, initialDelay + secondDelay, 1000 * 60 * 30, TimeUnit.MILLISECONDS);
+    }
+
+    /**
+     * Gets the plugin specific data.
+     * This method is called using Reflection.
+     *
+     * @return The plugin specific data.
+     */
+    public JsonObject getPluginData() {
+        final JsonObject data = new JsonObject();
+
+        final String pluginName = this.plugin.getDescription().getName();
+        final String pluginVersion = this.plugin.getDescription().getVersion();
+
+        data.addProperty("pluginName", pluginName); // Append the name of the plugin
+        data.addProperty("id", this.pluginId); // Append the id of the plugin
+        data.addProperty("pluginVersion", pluginVersion); // Append the version of the plugin
+
+        final JsonArray customCharts = new JsonArray();
+        for (final CustomChart customChart : this.charts) {
+            // Add the data of the custom charts
+            final JsonObject chart = customChart.getRequestJsonObject();
+            if (chart == null) { // If the chart is null, we skip it
+                continue;
+            }
+            customCharts.add(chart);
+        }
+        data.add("customCharts", customCharts);
+
+        return data;
+    }
+
+    /**
+     * Gets the server specific data.
+     *
+     * @return The server specific data.
+     */
+    private JsonObject getServerData() {
+        // Minecraft specific data
+        final int playerAmount = Server.getInstance().getOnlinePlayers().size();
+        final int onlineMode = Server.getInstance().getPropertyBoolean("xbox-auth", true) ? 1 : 0;
+        final String softwareVersion = Server.getInstance().getApiVersion() + " (MC: " + Server.getInstance().getVersion().substring(1) + ")";
+        final String softwareName = Server.getInstance().getName();
+
+        // OS/Java specific data
+        final String javaVersion = System.getProperty("java.version");
+        final String osName = System.getProperty("os.name");
+        final String osArch = System.getProperty("os.arch");
+        final String osVersion = System.getProperty("os.version");
+        final int coreCount = Runtime.getRuntime().availableProcessors();
+
+        final JsonObject data = new JsonObject();
+
+        data.addProperty("serverUUID", serverUUID);
+
+        data.addProperty("playerAmount", playerAmount);
+        data.addProperty("onlineMode", onlineMode);
+        data.addProperty("bukkitVersion", softwareVersion);
+        data.addProperty("bukkitName", softwareName);
+
+        data.addProperty("javaVersion", javaVersion);
+        data.addProperty("osName", osName);
+        data.addProperty("osArch", osArch);
+        data.addProperty("osVersion", osVersion);
+        data.addProperty("coreCount", coreCount);
+
+        return data;
+    }
+
+    /**
+     * Collects the data and sends it afterwards.
+     */
+    @SuppressWarnings("unchecked")
+    private void submitData() {
+        final JsonObject data = this.getServerData();
+
+        final JsonArray pluginData = new JsonArray();
+        // Search for all other bStats Metrics classes to get their plugin data
+        for (final Class<?> service : Server.getInstance().getServiceManager().getKnownService()) {
+            try {
+                service.getField("B_STATS_VERSION"); // Our identifier :)
+
+                List<? extends RegisteredServiceProvider<?>> providers = null;
+                try {
+                    providers = Server.getInstance().getServiceManager().getRegistrations(service);
+                } catch (final Throwable t) { // no such method: ServiceManager.getRegistrations()
+                    try {
+                        final Field handle = NKServiceManager.class.getDeclaredField("handle");
+                        handle.setAccessible(true);
+                        providers = ((Map<Class<?>, List<RegisteredServiceProvider<?>>>) handle.get(Server.getInstance().getServiceManager())).get(service);
+                    } catch (final NullPointerException | NoSuchFieldException | IllegalAccessException |
+                                   IllegalArgumentException e) {
+                        if (logFailedRequests) {
+                            this.plugin.getLogger().error("Encountered unexpected exception ", e);
+                        }
+                    }
+                }
+
+                if (providers != null) {
+                    for (final RegisteredServiceProvider<?> provider : providers) {
+                        try {
+                            final Object plugin = provider.getService().getMethod("getPluginData").invoke(provider.getProvider());
+                            if (plugin instanceof JsonObject) {
+                                pluginData.add((JsonElement) plugin);
+                            }
+                        } catch (final NullPointerException | NoSuchMethodException | IllegalAccessException |
+                                       InvocationTargetException ignored) {
+                        }
+                    }
+                }
+            } catch (final NoSuchFieldException ignored) {
+            }
+        }
+
+        data.add("plugins", pluginData);
+
+        // Create a new thread for the connection to the bStats server
+        new Thread(() -> {
+            try {
+                // Send the data
+                sendData(this.plugin, data);
+            } catch (final Exception e) {
+                // Something went wrong! :(
+                if (logFailedRequests) {
+                    this.plugin.getLogger().warning("Could not submit plugin stats of " + this.plugin.getName(), e);
+                }
+            }
+        }).start();
+    }
+
+    /**
+     * Loads the bStats configuration.
+     *
+     * @throws IOException If something did not work :(
+     */
+    private void loadConfig() throws IOException {
+        final File bStatsFolder = new File(this.plugin.getDataFolder().getParentFile(), "bStats");
+        final File configFile = new File(bStatsFolder, "config.yml");
+        final Config config = new Config(configFile);
+
+        // Check if the config file exists
+        if (!config.exists("serverUuid")) {
+            // Add default values
+            config.set("enabled", true);
+            // Every server gets it's unique random id.
+            config.set("serverUuid", UUID.randomUUID().toString());
+            // Should failed request be logged?
+            config.set("logFailedRequests", false);
+            // Should the sent data be logged?
+            config.set("logSentData", false);
+            // Should the response text be logged?
+            config.set("logResponseStatusText", false);
+
+            final DumperOptions dumperOptions = new DumperOptions();
+            dumperOptions.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
+            this.writeFile(configFile,
+                    "# bStats collects some data for plugin authors like how many servers are using their plugins.",
+                    "# To honor their work, you should not disable it.",
+                    "# This has nearly no effect on the server performance!",
+                    "# Check out https://bStats.org/ to learn more :)",
+                    new Yaml(dumperOptions).dump(config.getRootSection()));
+        }
+
+        // Load the data
+        this.enabled = config.getBoolean("enabled", true);
+        serverUUID = config.getString("serverUuid");
+        logFailedRequests = config.getBoolean("logFailedRequests", false);
+        logSentData = config.getBoolean("logSentData", false);
+        logResponseStatusText = config.getBoolean("logResponseStatusText", false);
+    }
+
+    /**
+     * Writes a String to a file. It also adds a note for the user.
+     *
+     * @param file  The file to write to. Cannot be null.
+     * @param lines The lines to write.
+     * @throws IOException If something did not work :(
+     */
+    private void writeFile(final File file, final String... lines) throws IOException {
+        try (final BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file))) {
+            for (final String line : lines) {
+                bufferedWriter.write(line);
+                bufferedWriter.newLine();
+            }
+        }
     }
 
     /**
@@ -446,7 +437,7 @@ public class Metrics {
          *
          * @param chartId The id of the chart.
          */
-        CustomChart(String chartId) {
+        CustomChart(final String chartId) {
             if (chartId == null || chartId.isEmpty()) {
                 throw new IllegalArgumentException("ChartId cannot be null or empty!");
             }
@@ -454,18 +445,18 @@ public class Metrics {
         }
 
         private JsonObject getRequestJsonObject() {
-            JsonObject chart = new JsonObject();
-            chart.addProperty("chartId", chartId);
+            final JsonObject chart = new JsonObject();
+            chart.addProperty("chartId", this.chartId);
             try {
-                JsonObject data = getChartData();
+                final JsonObject data = this.getChartData();
                 if (data == null) {
                     // If the data is null we don't send the chart.
                     return null;
                 }
                 chart.add("data", data);
-            } catch (Throwable t) {
+            } catch (final Throwable t) {
                 if (logFailedRequests) {
-                    Server.getInstance().getLogger().warning("Failed to get data for custom chart with id " + chartId, t);
+                    Server.getInstance().getLogger().warning("Failed to get data for custom chart with id " + this.chartId, t);
                 }
                 return null;
             }
@@ -489,15 +480,15 @@ public class Metrics {
          * @param chartId  The id of the chart.
          * @param callable The callable which is used to request the chart data.
          */
-        public SimplePie(String chartId, Callable<String> callable) {
+        public SimplePie(final String chartId, final Callable<String> callable) {
             super(chartId);
             this.callable = callable;
         }
 
         @Override
         protected JsonObject getChartData() throws Exception {
-            JsonObject data = new JsonObject();
-            String value = callable.call();
+            final JsonObject data = new JsonObject();
+            final String value = this.callable.call();
             if (value == null || value.isEmpty()) {
                 // Null = skip the chart
                 return null;
@@ -520,22 +511,22 @@ public class Metrics {
          * @param chartId  The id of the chart.
          * @param callable The callable which is used to request the chart data.
          */
-        public AdvancedPie(String chartId, Callable<Map<String, Integer>> callable) {
+        public AdvancedPie(final String chartId, final Callable<Map<String, Integer>> callable) {
             super(chartId);
             this.callable = callable;
         }
 
         @Override
         protected JsonObject getChartData() throws Exception {
-            JsonObject data = new JsonObject();
-            JsonObject values = new JsonObject();
-            Map<String, Integer> map = callable.call();
+            final JsonObject data = new JsonObject();
+            final JsonObject values = new JsonObject();
+            final Map<String, Integer> map = this.callable.call();
             if (map == null || map.isEmpty()) {
                 // Null = skip the chart
                 return null;
             }
             boolean allSkipped = true;
-            for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            for (final Map.Entry<String, Integer> entry : map.entrySet()) {
                 if (entry.getValue() == 0) {
                     continue; // Skip this invalid
                 }
@@ -564,25 +555,25 @@ public class Metrics {
          * @param chartId  The id of the chart.
          * @param callable The callable which is used to request the chart data.
          */
-        public DrilldownPie(String chartId, Callable<Map<String, Map<String, Integer>>> callable) {
+        public DrilldownPie(final String chartId, final Callable<Map<String, Map<String, Integer>>> callable) {
             super(chartId);
             this.callable = callable;
         }
 
         @Override
         public JsonObject getChartData() throws Exception {
-            JsonObject data = new JsonObject();
-            JsonObject values = new JsonObject();
-            Map<String, Map<String, Integer>> map = callable.call();
+            final JsonObject data = new JsonObject();
+            final JsonObject values = new JsonObject();
+            final Map<String, Map<String, Integer>> map = this.callable.call();
             if (map == null || map.isEmpty()) {
                 // Null = skip the chart
                 return null;
             }
             boolean reallyAllSkipped = true;
-            for (Map.Entry<String, Map<String, Integer>> entryValues : map.entrySet()) {
-                JsonObject value = new JsonObject();
+            for (final Map.Entry<String, Map<String, Integer>> entryValues : map.entrySet()) {
+                final JsonObject value = new JsonObject();
                 boolean allSkipped = true;
-                for (Map.Entry<String, Integer> valueEntry : map.get(entryValues.getKey()).entrySet()) {
+                for (final Map.Entry<String, Integer> valueEntry : map.get(entryValues.getKey()).entrySet()) {
                     value.addProperty(valueEntry.getKey(), valueEntry.getValue());
                     allSkipped = false;
                 }
@@ -613,15 +604,15 @@ public class Metrics {
          * @param chartId  The id of the chart.
          * @param callable The callable which is used to request the chart data.
          */
-        public SingleLineChart(String chartId, Callable<Integer> callable) {
+        public SingleLineChart(final String chartId, final Callable<Integer> callable) {
             super(chartId);
             this.callable = callable;
         }
 
         @Override
         protected JsonObject getChartData() throws Exception {
-            JsonObject data = new JsonObject();
-            int value = callable.call();
+            final JsonObject data = new JsonObject();
+            final int value = this.callable.call();
             if (value == 0) {
                 // Null = skip the chart
                 return null;
@@ -645,22 +636,22 @@ public class Metrics {
          * @param chartId  The id of the chart.
          * @param callable The callable which is used to request the chart data.
          */
-        public MultiLineChart(String chartId, Callable<Map<String, Integer>> callable) {
+        public MultiLineChart(final String chartId, final Callable<Map<String, Integer>> callable) {
             super(chartId);
             this.callable = callable;
         }
 
         @Override
         protected JsonObject getChartData() throws Exception {
-            JsonObject data = new JsonObject();
-            JsonObject values = new JsonObject();
-            Map<String, Integer> map = callable.call();
+            final JsonObject data = new JsonObject();
+            final JsonObject values = new JsonObject();
+            final Map<String, Integer> map = this.callable.call();
             if (map == null || map.isEmpty()) {
                 // Null = skip the chart
                 return null;
             }
             boolean allSkipped = true;
-            for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            for (final Map.Entry<String, Integer> entry : map.entrySet()) {
                 if (entry.getValue() == 0) {
                     continue; // Skip this invalid
                 }
@@ -690,22 +681,22 @@ public class Metrics {
          * @param chartId  The id of the chart.
          * @param callable The callable which is used to request the chart data.
          */
-        public SimpleBarChart(String chartId, Callable<Map<String, Integer>> callable) {
+        public SimpleBarChart(final String chartId, final Callable<Map<String, Integer>> callable) {
             super(chartId);
             this.callable = callable;
         }
 
         @Override
         protected JsonObject getChartData() throws Exception {
-            JsonObject data = new JsonObject();
-            JsonObject values = new JsonObject();
-            Map<String, Integer> map = callable.call();
+            final JsonObject data = new JsonObject();
+            final JsonObject values = new JsonObject();
+            final Map<String, Integer> map = this.callable.call();
             if (map == null || map.isEmpty()) {
                 // Null = skip the chart
                 return null;
             }
-            for (Map.Entry<String, Integer> entry : map.entrySet()) {
-                JsonArray categoryValues = new JsonArray();
+            for (final Map.Entry<String, Integer> entry : map.entrySet()) {
+                final JsonArray categoryValues = new JsonArray();
                 categoryValues.add(new JsonPrimitive(entry.getValue()));
                 values.add(entry.getKey(), categoryValues);
             }
@@ -728,28 +719,28 @@ public class Metrics {
          * @param chartId  The id of the chart.
          * @param callable The callable which is used to request the chart data.
          */
-        public AdvancedBarChart(String chartId, Callable<Map<String, int[]>> callable) {
+        public AdvancedBarChart(final String chartId, final Callable<Map<String, int[]>> callable) {
             super(chartId);
             this.callable = callable;
         }
 
         @Override
         protected JsonObject getChartData() throws Exception {
-            JsonObject data = new JsonObject();
-            JsonObject values = new JsonObject();
-            Map<String, int[]> map = callable.call();
+            final JsonObject data = new JsonObject();
+            final JsonObject values = new JsonObject();
+            final Map<String, int[]> map = this.callable.call();
             if (map == null || map.isEmpty()) {
                 // Null = skip the chart
                 return null;
             }
             boolean allSkipped = true;
-            for (Map.Entry<String, int[]> entry : map.entrySet()) {
+            for (final Map.Entry<String, int[]> entry : map.entrySet()) {
                 if (entry.getValue().length == 0) {
                     continue; // Skip this invalid
                 }
                 allSkipped = false;
-                JsonArray categoryValues = new JsonArray();
-                for (int categoryValue : entry.getValue()) {
+                final JsonArray categoryValues = new JsonArray();
+                for (final int categoryValue : entry.getValue()) {
                     categoryValues.add(new JsonPrimitive(categoryValue));
                 }
                 values.add(entry.getKey(), categoryValues);

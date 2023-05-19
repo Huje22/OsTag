@@ -11,20 +11,20 @@ public class TestttCommand implements CommandExecutor {
 
     private final OsTag plugin;
 
-    public TestttCommand(OsTag plugin) {
+    public TestttCommand(final OsTag plugin) {
         this.plugin = plugin;
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
         if (sender.isOp()) {
-            final PluginLogger logger = plugin.getLogger();
+            final PluginLogger logger = this.plugin.getLogger();
 
-            logger.info("Debug: " + plugin.debug);
+            logger.info("Debug: " + this.plugin.debug);
 
-            logger.info("Ostag: " + plugin.osTag);
+            logger.info("Ostag: " + this.plugin.osTag);
 
-            logger.info("Formatter: " + plugin.chatFormatter);
+            logger.info("Formatter: " + this.plugin.chatFormatter);
 
             logger.error("Test");
 

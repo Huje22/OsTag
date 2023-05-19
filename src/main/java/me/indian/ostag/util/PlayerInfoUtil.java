@@ -2,11 +2,12 @@ package me.indian.ostag.util;
 
 import cn.nukkit.Player;
 import cn.nukkit.utils.Config;
-import java.text.DecimalFormat;
 import me.indian.ostag.OsTag;
 import me.indian.ostag.listener.InputListener;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.model.user.User;
+
+import java.text.DecimalFormat;
 
 
 public class PlayerInfoUtil {
@@ -15,20 +16,20 @@ public class PlayerInfoUtil {
     private static final Config config = plugin.getConfig();
     private static final LuckPerms luckPerms = plugin.getLuckperms();
 
-    public static String getDevice(Player player) {
-        String windows = ColorUtil.replaceColorCode(config.getString("Windows"));
-        String android = ColorUtil.replaceColorCode(config.getString("Android"));
-        String ios = ColorUtil.replaceColorCode(config.getString("Ios"));
-        String mac = ColorUtil.replaceColorCode(config.getString("Mac"));
-        String fire = ColorUtil.replaceColorCode(config.getString("Fire"));
-        String hololens = ColorUtil.replaceColorCode(config.getString("Hololens"));
-        String dedicated = ColorUtil.replaceColorCode(config.getString("Dedicated"));
-        String tvos = ColorUtil.replaceColorCode(config.getString("TvOs"));
-        String playstation = ColorUtil.replaceColorCode(config.getString("PlayStation"));
-        String nintendo = ColorUtil.replaceColorCode(config.getString("Nintendo"));
-        String xbox = ColorUtil.replaceColorCode(config.getString("Xbox"));
-        String linux = ColorUtil.replaceColorCode(config.getString("Linux"));
-        String unknown = ColorUtil.replaceColorCode(config.getString("Unknown"));
+    public static String getDevice(final Player player) {
+        final String windows = ColorUtil.replaceColorCode(config.getString("Windows"));
+        final String android = ColorUtil.replaceColorCode(config.getString("Android"));
+        final String ios = ColorUtil.replaceColorCode(config.getString("Ios"));
+        final String mac = ColorUtil.replaceColorCode(config.getString("Mac"));
+        final String fire = ColorUtil.replaceColorCode(config.getString("Fire"));
+        final String hololens = ColorUtil.replaceColorCode(config.getString("Hololens"));
+        final String dedicated = ColorUtil.replaceColorCode(config.getString("Dedicated"));
+        final String tvos = ColorUtil.replaceColorCode(config.getString("TvOs"));
+        final String playstation = ColorUtil.replaceColorCode(config.getString("PlayStation"));
+        final String nintendo = ColorUtil.replaceColorCode(config.getString("Nintendo"));
+        final String xbox = ColorUtil.replaceColorCode(config.getString("Xbox"));
+        final String linux = ColorUtil.replaceColorCode(config.getString("Linux"));
+        final String unknown = ColorUtil.replaceColorCode(config.getString("Unknown"));
 
         switch (player.getLoginChainData().getDeviceOS()) {
             case 1:
@@ -65,12 +66,12 @@ public class PlayerInfoUtil {
         }
     }
 
-    public static String getController(Player player) {
-        String motion_controller = ColorUtil.replaceColorCode(config.getString("Motion_controller"));
-        String touch = ColorUtil.replaceColorCode(config.getString("Touch"));
-        String keyboard = ColorUtil.replaceColorCode(config.getString("Keyboard"));
-        String pad = ColorUtil.replaceColorCode(config.getString("Gamepad"));
-        String unknowcon = ColorUtil.replaceColorCode(config.getString("UnknownController"));
+    public static String getController(final Player player) {
+        final String motion_controller = ColorUtil.replaceColorCode(config.getString("Motion_controller"));
+        final String touch = ColorUtil.replaceColorCode(config.getString("Touch"));
+        final String keyboard = ColorUtil.replaceColorCode(config.getString("Keyboard"));
+        final String pad = ColorUtil.replaceColorCode(config.getString("Gamepad"));
+        final String unknowcon = ColorUtil.replaceColorCode(config.getString("UnknownController"));
 
         if (plugin.serverMovement) {
             switch (InputListener.getController(player)) {
@@ -101,7 +102,7 @@ public class PlayerInfoUtil {
         }
     }
 
-    public static String getXp(Player player) {
+    public static String getXp(final Player player) {
         String xp = "0";
 
         if (player.getExperienceLevel() == 0) {
@@ -135,11 +136,11 @@ public class PlayerInfoUtil {
         return ColorUtil.replaceColorCode(xp);
     }
 
-    public static String getGameMode(Player player) {
-        String survival = ColorUtil.replaceColorCode(config.getString("survival"));
-        String creative = ColorUtil.replaceColorCode(config.getString("creative"));
-        String adventure = ColorUtil.replaceColorCode(config.getString("adventure"));
-        String spectator = ColorUtil.replaceColorCode(config.getString("spectator"));
+    public static String getGameMode(final Player player) {
+        final String survival = ColorUtil.replaceColorCode(config.getString("survival"));
+        final String creative = ColorUtil.replaceColorCode(config.getString("creative"));
+        final String adventure = ColorUtil.replaceColorCode(config.getString("adventure"));
+        final String spectator = ColorUtil.replaceColorCode(config.getString("spectator"));
 
         switch (player.getGamemode()) {
             case 1:
@@ -155,7 +156,7 @@ public class PlayerInfoUtil {
         }
     }
 
-    public static String getPing(Player player) {
+    public static String getPing(final Player player) {
         String ping = ColorUtil.replaceColorCode("&r0");
 
         if (player.getPing() >= 1) {
@@ -170,11 +171,11 @@ public class PlayerInfoUtil {
         return ping;
     }
 
-    public static String getLuckPermPreffix(Player player) {
+    public static String getLuckPermPreffix(final Player player) {
         String pref = "";
 
         if (plugin.luckPerm) {
-            User user = luckPerms.getPlayerAdapter(Player.class).getUser(player);
+            final User user = luckPerms.getPlayerAdapter(Player.class).getUser(player);
             if (user.getCachedData().getMetaData().getPrefix() != null) {
                 pref = user.getCachedData().getMetaData().getPrefix();
             }
@@ -182,11 +183,11 @@ public class PlayerInfoUtil {
         return ColorUtil.replaceColorCode(pref);
     }
 
-    public static String getLuckPermSuffix(Player player) {
+    public static String getLuckPermSuffix(final Player player) {
         String suf = "";
 
         if (plugin.luckPerm) {
-            User user = luckPerms.getPlayerAdapter(Player.class).getUser(player);
+            final User user = luckPerms.getPlayerAdapter(Player.class).getUser(player);
             if (user.getCachedData().getMetaData().getSuffix() != null) {
                 suf = user.getCachedData().getMetaData().getSuffix();
             }
@@ -195,11 +196,11 @@ public class PlayerInfoUtil {
     }
 
     @SuppressWarnings("ConstantConditions")
-    public static String getLuckPermGroupDisName(Player player) {
+    public static String getLuckPermGroupDisName(final Player player) {
         String group = "";
 
         if (plugin.luckPerm) {
-            User user = luckPerms.getPlayerAdapter(Player.class).getUser(player);
+            final User user = luckPerms.getPlayerAdapter(Player.class).getUser(player);
             if (luckPerms.getGroupManager().getGroup(user.getPrimaryGroup()).getDisplayName() != null) {
                 group = luckPerms.getGroupManager().getGroup(user.getPrimaryGroup()).getDisplayName();
             }
@@ -207,7 +208,7 @@ public class PlayerInfoUtil {
         return ColorUtil.replaceColorCode(group);
     }
 
-    public static String getXuid(Player player) {
+    public static String getXuid(final Player player) {
         String xuid = ColorUtil.replaceColorCode(config.getString("guest"));
 
         if (player.getLoginChainData().getXUID() != null) {
@@ -216,10 +217,10 @@ public class PlayerInfoUtil {
         return xuid;
     }
 
-    public static String getDimension(Player player) {
-        String overworld = ColorUtil.replaceColorCode(config.getString("overworld"));
-        String nether = ColorUtil.replaceColorCode(config.getString("nether"));
-        String end = ColorUtil.replaceColorCode(config.getString("end"));
+    public static String getDimension(final Player player) {
+        final String overworld = ColorUtil.replaceColorCode(config.getString("overworld"));
+        final String nether = ColorUtil.replaceColorCode(config.getString("nether"));
+        final String end = ColorUtil.replaceColorCode(config.getString("end"));
 
         switch (player.getLevel().getDimension()) {
             case 0:
@@ -233,9 +234,9 @@ public class PlayerInfoUtil {
         }
     }
 
-    public static String getUnique(Player player) {
+    public static String getUnique(final Player player) {
         String unique = config.getString("Players.default.description");
-        String name = player.getDisplayName();
+        final String name = player.getDisplayName();
 
         if (!(config.getString("Players." + name + ".unique-description").isEmpty())) {
             unique = config.getString("Players." + name + ".unique-description");
@@ -244,8 +245,8 @@ public class PlayerInfoUtil {
         return ColorUtil.replaceColorCode(unique);
     }
 
-    public static String getHealth(Player player) {
-        DecimalFormat df = new DecimalFormat();
+    public static String getHealth(final Player player) {
+        final DecimalFormat df = new DecimalFormat();
         df.setMaximumFractionDigits(0);
 
         return df.format(player.getHealth());

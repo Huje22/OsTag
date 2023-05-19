@@ -9,13 +9,13 @@ public class OsTagAdd {
 
     private static final OsTag plugin = OsTag.getInstance();
     private static final Config config = plugin.getConfig();
-    private static final PlaceholderAPI api = plugin.getPlaceholderApi();
     private static String subTag = ColorUtil.replaceColorCode(config.getString("subtag"));
     private static String nick = ColorUtil.replaceColorCode(config.getString("nick"));
     private static String aSubTag = ColorUtil.replaceColorCode(config.getString("a-subtag"));
     private static String aNick = ColorUtil.replaceColorCode(config.getString("a-nick"));
+    private static final PlaceholderAPI api = plugin.getPlaceholderApi();
 
-    public static void addDevNormal(Player player) {
+    public static void addDevNormal(final Player player) {
         if (plugin.papiAndKotlinLib) {
             subTag = api.translateString(ColorUtil.replaceColorCode(config.getString("subtag")), player);
             nick = api.translateString(ColorUtil.replaceColorCode(config.getString("nick")), player);
@@ -28,7 +28,7 @@ public class OsTagAdd {
         }
     }
 
-    public static void addDevAdvanced(Player player) {
+    public static void addDevAdvanced(final Player player) {
         if (plugin.papiAndKotlinLib) {
             aSubTag = api.translateString(ColorUtil.replaceColorCode(config.getString("a-subtag")), player);
             aNick = api.translateString(ColorUtil.replaceColorCode(config.getString("a-nick")), player);
