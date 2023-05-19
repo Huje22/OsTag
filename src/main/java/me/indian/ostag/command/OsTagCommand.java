@@ -81,7 +81,7 @@ public class OsTagCommand implements CommandExecutor {
                     sender.sendMessage(ColorUtil.replaceColorCode("&aReloaded in &b" + executionTime + " &ams"));
                 } catch (final Exception exception) {
                     sender.sendMessage(ColorUtil.replaceColorCode("&cCan't reload config , check console to see error"));
-                    exception.printStackTrace();
+                    this.plugin.getLogger().error(exception.getMessage());
                 }
             }
             config.save();
