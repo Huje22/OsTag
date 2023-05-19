@@ -23,7 +23,7 @@ public class CpsListener implements Listener {
     private final String debugPrefix = ColorUtil.replaceColorCode(plugin.publicDebugPrefix + "&8[&dCpsListener&8] ");
 
     // cps counter from https://github.com/GommeAWM/CPSCounter
-    // witch permissions from author edited by IndianPL
+    // witch permissions from author edited by IndianPL and Neziw
 
     public static int getCPS(final Player player) {
         final List<Long> list = cps.get(player.getName());
@@ -54,7 +54,7 @@ public class CpsListener implements Listener {
     }
 
     // cps counter from https://github.com/GommeAWM/CPSCounter
-    // witch permisions from author edited by IndianPL
+    // witch permisions from author edited by IndianPL and Neziw
 
     @SuppressWarnings("unused")
     @EventHandler
