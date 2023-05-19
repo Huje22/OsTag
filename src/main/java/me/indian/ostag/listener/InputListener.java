@@ -32,7 +32,7 @@ public class InputListener implements Listener {
 
     @SuppressWarnings("unused")
     @EventHandler
-    public void inputListener(final DataPacketReceiveEvent event) {
+    private void inputListener(final DataPacketReceiveEvent event) {
         this.executorService.execute(() -> {
             final DataPacket packet = event.getPacket();
             if (packet instanceof PlayerAuthInputPacket) {
@@ -61,7 +61,7 @@ public class InputListener implements Listener {
 
     @SuppressWarnings("unused")
     @EventHandler
-    public void removeControl(final PlayerQuitEvent event) {
+    private void removeControl(final PlayerQuitEvent event) {
         final String name = event.getPlayer().getName();
         this.timeRemove(name);
     }

@@ -19,7 +19,7 @@ public class PlayerJoinListener implements Listener {
 
     @SuppressWarnings("unused")
     @EventHandler
-    public void onPlayerJoin(final PlayerJoinEvent event) {
+    private void onPlayerJoin(final PlayerJoinEvent event) {
         final Player player = event.getPlayer();
         final String compatibility = GithubUtil.checkTagCompatibility();
 

@@ -34,7 +34,7 @@ public class Formater implements Listener {
 
     @SuppressWarnings("unused")
     @EventHandler
-    public void playerChatFormat(final PlayerChatEvent event) {
+    private void playerChatFormat(final PlayerChatEvent event) {
         final Player player = event.getPlayer();
         final Config config = this.plugin.getConfig();
         String msg = event.getMessage();
@@ -71,7 +71,7 @@ public class Formater implements Listener {
 
     @SuppressWarnings("unused")
     @EventHandler
-    public void cooldownMessage(final PlayerChatEvent event) {
+    private void cooldownMessage(final PlayerChatEvent event) {
         //cooldown is a experimental option, maybe not good working
         final Player player = event.getPlayer();
         final UUID uuid = player.getUniqueId();

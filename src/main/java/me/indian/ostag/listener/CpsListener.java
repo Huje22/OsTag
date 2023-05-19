@@ -36,7 +36,7 @@ public class CpsListener implements Listener {
 
     @SuppressWarnings("unused")
     @EventHandler
-    public void onPacket(final DataPacketReceiveEvent event) {
+    private void onPacket(final DataPacketReceiveEvent event) {
         if (event.getPacket() instanceof LevelSoundEventPacket) {
             final Player player = event.getPlayer();
             final LevelSoundEventPacket packet = (LevelSoundEventPacket) event.getPacket();
@@ -58,7 +58,7 @@ public class CpsListener implements Listener {
 
     @SuppressWarnings("unused")
     @EventHandler
-    public void removeCps(final PlayerQuitEvent event) {
+    private void removeCps(final PlayerQuitEvent event) {
         final String name = event.getPlayer().getName();
         this.timeRemove(name);
     }
