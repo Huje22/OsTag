@@ -39,6 +39,7 @@ public class GithubUtil {
         }
         if (!current.equals(latest)) {
             tag = "&aNew update available, your version &b" + current + "&a latest version &b" + latest;
+            // add /ostag update info
         }
         return ColorUtil.replaceColorCode(tag);
     }
