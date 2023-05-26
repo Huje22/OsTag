@@ -17,6 +17,8 @@ public class OsTimer extends Task implements Runnable, Listener {
 
     private static final OsTag plugin = OsTag.getInstance();
     private static final Config config = plugin.getConfig();
+    private static final List<String> advancedPlayers = config.getStringList("advanced-players");
+    private static final List<String> disabledWorlds = config.getStringList("disabled-worlds");
     private static final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     @Override
@@ -30,15 +32,13 @@ public class OsTimer extends Task implements Runnable, Listener {
 
     @SuppressWarnings("unused")
     @EventHandler
-    public void playerJoin(final PlayerJoinEvent event) {
+    private void playerJoin(final PlayerJoinEvent event) {
         final Player player = event.getPlayer();
         this.addOsTag(player);
     }
 
     private void addOsTag(final Player player) {
-        final List<String> advancedPlayers = config.getStringList("advanced-players");
-        final List<String> disabledWorld = config.getStringList("disabled-worlds");
-        for (final String dis : disabledWorld) {
+        for (final String dis : disabledWorlds) {
             if (player.getLevel().getName().equalsIgnoreCase(dis)) {
                 //disabled worlds is a experimental option, maybe not good working
                 return;
