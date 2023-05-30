@@ -82,8 +82,8 @@ public class OsTag extends PluginBase {
         this.scoreTag = this.getConfig().getBoolean("ScoreTag");
         if (!(nametag && scoreTag)) {
             this.osTag = false;
-            if(this.debug){
-                this.getLogger().info(ColorUtil.replaceColorCode( publicDebugPrefix + "&8[&dMain&8] "+ "&bWe disable the&a ostag&b module because&a scoretag&b and&a nametag&b are disabled "));
+            if (this.debug) {
+                this.getLogger().info(ColorUtil.replaceColorCode(publicDebugPrefix + "&8[&dMain&8] " + "&bWe disable the&a ostag&b module because&a scoretag&b and&a nametag&b are disabled "));
             }
         }
     }

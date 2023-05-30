@@ -58,8 +58,7 @@ public class CpsListener implements Listener {
     @SuppressWarnings("unused")
     @EventHandler
     private void removeCps(final PlayerQuitEvent event) {
-        final String name = event.getPlayer().getName();
-        this.timeRemove(name);
+        this.timeRemove(event.getPlayer().getName());
     }
 
     private void timeRemove(final String name) {

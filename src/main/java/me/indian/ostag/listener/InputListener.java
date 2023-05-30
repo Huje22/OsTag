@@ -61,8 +61,7 @@ public class InputListener implements Listener {
     @SuppressWarnings("unused")
     @EventHandler
     private void removeControl(final PlayerQuitEvent event) {
-        final String name = event.getPlayer().getName();
-        this.timeRemove(name);
+        this.timeRemove(event.getPlayer().getName());
     }
 
     private void timeRemove(final String name) {
