@@ -7,12 +7,11 @@ import cn.nukkit.command.CommandExecutor;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.scheduler.NukkitRunnable;
 import cn.nukkit.utils.Config;
+import java.util.ArrayList;
+import java.util.List;
 import me.indian.ostag.OsTag;
 import me.indian.ostag.util.ColorUtil;
 import me.indian.ostag.util.Permissions;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class OsTagCommand implements CommandExecutor {
 

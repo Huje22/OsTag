@@ -7,11 +7,10 @@ import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerJoinEvent;
 import cn.nukkit.scheduler.Task;
 import cn.nukkit.utils.Config;
-import me.indian.ostag.OsTag;
-
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import me.indian.ostag.OsTag;
 
 public class OsTimer extends Task implements Runnable, Listener {
 

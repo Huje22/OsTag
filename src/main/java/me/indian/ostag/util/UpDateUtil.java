@@ -5,8 +5,6 @@ import cn.nukkit.Server;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.plugin.PluginLogger;
 import cn.nukkit.utils.Config;
-import me.indian.ostag.OsTag;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -15,6 +13,7 @@ import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import me.indian.ostag.OsTag;
 
 public class UpDateUtil {
 

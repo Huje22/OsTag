@@ -3,13 +3,12 @@ package me.indian.ostag.other;
 import cn.nukkit.Server;
 import cn.nukkit.plugin.PluginLogger;
 import cn.nukkit.utils.Config;
-import me.indian.ostag.OsTag;
-import me.indian.ostag.util.ColorUtil;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import me.indian.ostag.OsTag;
+import me.indian.ostag.util.ColorUtil;
 
 public class OsTagMetrics {
 
