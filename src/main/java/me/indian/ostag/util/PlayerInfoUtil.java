@@ -2,12 +2,12 @@ package me.indian.ostag.util;
 
 import cn.nukkit.Player;
 import cn.nukkit.utils.Config;
+import java.text.DecimalFormat;
 import me.indian.ostag.OsTag;
+import me.indian.ostag.listener.CpsListener;
 import me.indian.ostag.listener.InputListener;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.model.user.User;
-
-import java.text.DecimalFormat;
 
 
 public class PlayerInfoUtil {
@@ -15,6 +15,33 @@ public class PlayerInfoUtil {
     private static final OsTag plugin = OsTag.getInstance();
     private static final Config config = plugin.getConfig();
     private static final LuckPerms luckPerms = plugin.getLuckperms();
+
+    public static String replaceAllInfo(final Player player, final String msg) {
+        return msg
+                .replace("<cooldown>", plugin.getFormater().cooldown(player))
+                .replace("<name>", player.getName())
+                .replace("<dis_name>", player.getDisplayName())
+                .replace("<suffix>", getLuckPermSuffix(player))
+                .replace("<preffix>", getLuckPermPreffix(player))
+                .replace("<groupDisName>", getLuckPermGroupDisName(player))
+                .replace("<unique_description>", getUnique(player))
+                .replace("<xp>", getXp(player))
+                .replace("<device>", getDevice(player))
+                .replace("<controller>", getController(player))
+                .replace("<health>", getHealth(player))
+                .replace("<max_health>", String.valueOf(player.getMaxHealth()))
+                .replace("<model>", player.getLoginChainData().getDeviceModel())
+                .replace("<food>", String.valueOf(player.getFoodData().getLevel() / 2))
+                .replace("<max_food>", String.valueOf(player.getFoodData().getMaxLevel() / 2))
+                .replace("<version>", player.getLoginChainData().getGameVersion())
+                .replace("<xuid>", getXuid(player))
+                .replace("<language>", player.getLoginChainData().getLanguageCode())
+                .replace("<ping>", getPing(player))
+                .replace("<cps>", String.valueOf(CpsListener.getCPS(player)))
+                .replace("<gamemode>", getGameMode(player))
+                .replace("<dimension>", getDimension(player)
+                );
+    }
 
     public static String getDevice(final Player player) {
         final String windows = ColorUtil.replaceColorCode(config.getString("Windows"));

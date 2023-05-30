@@ -7,14 +7,13 @@ import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerChatEvent;
 import cn.nukkit.utils.Config;
 import com.creeperface.nukkit.placeholderapi.api.PlaceholderAPI;
+import java.util.HashMap;
+import java.util.UUID;
 import me.indian.ostag.OsTag;
 import me.indian.ostag.util.ColorUtil;
 import me.indian.ostag.util.OtherUtils;
 import me.indian.ostag.util.Permissions;
-import me.indian.ostag.util.ReplaceUtil;
-
-import java.util.HashMap;
-import java.util.UUID;
+import me.indian.ostag.util.PlayerInfoUtil;
 
 public class Formater implements Listener {
 
@@ -63,7 +62,7 @@ public class Formater implements Listener {
             if (this.plugin.papiAndKotlinLib) {
                 messageFormat = this.api.translateString(ColorUtil.replaceColorCode(config.getString("message-format")), player);
             }
-            event.setFormat(ReplaceUtil.replace(player, messageFormat
+            event.setFormat(PlayerInfoUtil.replaceAllInfo(player, messageFormat
                     .replace("<msg>", event.getMessage())
                     .replace("\n", " this action not allowed here ")));
         }
