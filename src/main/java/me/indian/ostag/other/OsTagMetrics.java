@@ -65,8 +65,8 @@ public class OsTagMetrics {
         this.metrics.addCustomChart(new Metrics.SimplePie("scoretag_vs_nametag", () -> {
             String info2 = "All disabled";
             if (this.plugin.osTag) {
-                final boolean nametag = this.config.getBoolean("NameTag");
-                final boolean scoreTag = this.config.getBoolean("ScoreTag");
+                final boolean nametag = this.plugin.nametag;
+                final boolean scoreTag = this.plugin.scoreTag;
                 if (nametag && scoreTag) {
                     info2 = "NameTag and ScoreTag";
                 }

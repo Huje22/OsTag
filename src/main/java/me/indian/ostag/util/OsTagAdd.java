@@ -20,10 +20,10 @@ public class OsTagAdd {
             subTag = api.translateString(ColorUtil.replaceColorCode(config.getString("subtag")), player);
             nick = api.translateString(ColorUtil.replaceColorCode(config.getString("nick")), player);
         }
-        if (config.getBoolean("NameTag")) {
+        if (plugin.nametag) {
             player.setNameTag(PlayerInfoUtil.replaceAllInfo(player, nick));
         }
-        if (config.getBoolean("ScoreTag")) {
+        if (plugin.scoreTag) {
             player.setScoreTag(PlayerInfoUtil.replaceAllInfo(player, subTag));
         }
     }
@@ -33,10 +33,10 @@ public class OsTagAdd {
             aSubTag = api.translateString(ColorUtil.replaceColorCode(config.getString("a-subtag")), player);
             aNick = api.translateString(ColorUtil.replaceColorCode(config.getString("a-nick")), player);
         }
-        if (config.getBoolean("NameTag")) {
+        if (plugin.nametag) {
             player.setNameTag(PlayerInfoUtil.replaceAllInfo(player, aNick));
         }
-        if (config.getBoolean("ScoreTag")) {
+        if (plugin.scoreTag) {
             player.setScoreTag(PlayerInfoUtil.replaceAllInfo(player, aSubTag));
         }
     }

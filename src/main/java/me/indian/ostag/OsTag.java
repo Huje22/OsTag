@@ -31,6 +31,8 @@ public class OsTag extends PluginBase {
     public boolean luckPerm = false;
     public boolean papiAndKotlinLib = false;
     public boolean serverMovement;
+    public boolean nametag;
+    public boolean scoreTag;
     public boolean osTag;
     public boolean chatFormatter;
     public boolean debug;
@@ -71,12 +73,19 @@ public class OsTag extends PluginBase {
         this.saveDefaultConfig();
         this.upDateUtil = new UpDateUtil();
         this.osTagMetrics = new OsTagMetrics();
+        this.debug = this.getConfig().getBoolean("Debug");
         this.serverMovement = this.getConfig().getBoolean("movement-server");
-        //[Todo] disable ostag if "scoret tag" and " nametag " modules is disabled 
+        this.upDatechecker = this.getConfig().getBoolean("UpdateChecker");
         this.osTag = this.getConfig().getBoolean("OsTag");
         this.chatFormatter = this.getConfig().getBoolean("ChatFormatter");
-        this.debug = this.getConfig().getBoolean("Debug");
-        this.upDatechecker = this.getConfig().getBoolean("UpdateChecker");
+        this.nametag = this.getConfig().getBoolean("NameTag");
+        this.scoreTag = this.getConfig().getBoolean("ScoreTag");
+        if (!(nametag && scoreTag)) {
+            this.osTag = false;
+            if(this.debug){
+                this.getLogger().info(ColorUtil.replaceColorCode( publicDebugPrefix + "&8[&dMain&8] "+ "&bWe disable the&a ostag&b module because&a scoretag&b and&a nametag&b are disabled "));
+            }
+        }
     }
 
     @Override
