@@ -72,6 +72,7 @@ public class OsTag extends PluginBase {
         this.upDateUtil = new UpDateUtil();
         this.osTagMetrics = new OsTagMetrics();
         this.serverMovement = this.getConfig().getBoolean("movement-server");
+        //[Todo] disable ostag if "scoret tag" and " nametag " modules is disabled 
         this.osTag = this.getConfig().getBoolean("OsTag");
         this.chatFormatter = this.getConfig().getBoolean("ChatFormatter");
         this.debug = this.getConfig().getBoolean("Debug");
