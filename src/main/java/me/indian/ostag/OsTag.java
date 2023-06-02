@@ -14,7 +14,7 @@ import me.indian.ostag.listener.Formater;
 import me.indian.ostag.listener.InputListener;
 import me.indian.ostag.listener.PlayerJoinListener;
 import me.indian.ostag.other.OsTagMetrics;
-import me.indian.ostag.util.ColorUtil;
+import me.indian.ostag.util.TextUtil;
 import me.indian.ostag.util.GithubUtil;
 import me.indian.ostag.runnnable.OsTimer;
 import me.indian.ostag.util.OtherUtils;
@@ -26,8 +26,8 @@ import net.luckperms.api.LuckPermsProvider;
 public class OsTag extends PluginBase {
 
     private static OsTag instance;
-    public String pluginPrefix = ColorUtil.replaceColorCode("&f[&bOsTag&f] ");
-    public String publicDebugPrefix = ColorUtil.replaceColorCode("&8[&7Debug&8] ");
+    public String pluginPrefix = TextUtil.replaceColorCode("&f[&bOsTag&f] ");
+    public String publicDebugPrefix = TextUtil.replaceColorCode("&8[&7Debug&8] ");
     public boolean luckPerm = false;
     public boolean papiAndKotlinLib = false;
     public boolean serverMovement;
@@ -83,7 +83,7 @@ public class OsTag extends PluginBase {
         if (!(nametag && scoreTag)) {
             this.osTag = false;
             if (this.debug) {
-                this.getLogger().info(ColorUtil.replaceColorCode(publicDebugPrefix + "&8[&dMain&8] " + "&bWe disable the&a ostag&b module because&a scoretag&b and&a nametag&b are disabled "));
+                this.getLogger().info(TextUtil.replaceColorCode(publicDebugPrefix + "&8[&dMain&8] " + "&bWe disable the&a ostag&b module because&a scoretag&b and&a nametag&b are disabled "));
             }
         }
     }
@@ -93,13 +93,13 @@ public class OsTag extends PluginBase {
         final long millisActualTime = System.currentTimeMillis();
         final PluginManager pm = this.getServer().getPluginManager();
         if (pm.getPlugin("LuckPerms") == null) {
-            this.getLogger().warning(ColorUtil.replaceColorCode("&cYou don't have lucky perms , ChatFormatting don't correctly work"));
+            this.getLogger().warning(TextUtil.replaceColorCode("&cYou don't have lucky perms , ChatFormatting don't correctly work"));
         } else {
             this.luckPerms = LuckPermsProvider.get();
             this.luckPerm = true;
         }
         if (pm.getPlugin("PlaceholderAPI") == null || pm.getPlugin("KotlinLib") == null) {
-            this.getLogger().warning(ColorUtil.replaceColorCode("&cYou don't have PlaceholderAPI or kotlin lib,placeholders from &bPlaceholderAPI&c will not work"));
+            this.getLogger().warning(TextUtil.replaceColorCode("&cYou don't have PlaceholderAPI or kotlin lib,placeholders from &bPlaceholderAPI&c will not work"));
         } else {
             this.placeholderApi = PlaceholderAPI.getInstance();
             this.papiAndKotlinLib = true;
@@ -107,7 +107,7 @@ public class OsTag extends PluginBase {
         }
         this.formater = new Formater(this, this.getPlaceholderApi());
         if (this.getConfig().getBoolean("Disable")) {
-            this.getLogger().warning(ColorUtil.replaceColorCode("&4Disabling plugin due to disable in config"));
+            this.getLogger().warning(TextUtil.replaceColorCode("&4Disabling plugin due to disable in config"));
             pm.disablePlugin(this);
             return;
         }
@@ -124,16 +124,16 @@ public class OsTag extends PluginBase {
                 refreshTime = 1;
                 this.getConfig().set("refresh-time", 1);
                 this.getConfig().save();
-                this.getLogger().warning(ColorUtil.replaceColorCode("&cRefresh time must be higer than &b0 &c,we will set it up for you!"));
+                this.getLogger().warning(TextUtil.replaceColorCode("&cRefresh time must be higer than &b0 &c,we will set it up for you!"));
             }
             this.getServer().getScheduler().scheduleRepeatingTask(new OsTimer(), 20 * refreshTime);
         } else {
-            this.getLogger().info(ColorUtil.replaceColorCode("&bOsTag module is disabled "));
+            this.getLogger().info(TextUtil.replaceColorCode("&bOsTag module is disabled "));
         }
         if (this.chatFormatter) {
             pm.registerEvents(new Formater(this, this.getPlaceholderApi()), this);
         } else {
-            this.getLogger().info(ColorUtil.replaceColorCode("&bChatFormatter module is disabled"));
+            this.getLogger().info(TextUtil.replaceColorCode("&bChatFormatter module is disabled"));
         }
         pm.registerEvents(new PlayerJoinListener(this), this);
         this.pluginInfo("admin", this.getServer().getConsoleSender());
@@ -142,7 +142,7 @@ public class OsTag extends PluginBase {
         this.getOstagMetrics().run();
 
         final double executionTimeInSeconds = (System.currentTimeMillis() - millisActualTime) / 1000.0;
-        this.getLogger().info(ColorUtil.replaceColorCode("&aStarted in &b" + executionTimeInSeconds + " &aseconds"));
+        this.getLogger().info(TextUtil.replaceColorCode("&aStarted in &b" + executionTimeInSeconds + " &aseconds"));
     }
 
     public void pluginInfo(final String type, final CommandSender sender) {
@@ -158,36 +158,36 @@ public class OsTag extends PluginBase {
 
         switch (type) {
             case "admin":
-                sender.sendMessage(ColorUtil.replaceColorCode("&b-------------------------------"));
-                sender.sendMessage(ColorUtil.replaceColorCode("&aOsTag version:&3 " + pluginVersion));
-                sender.sendMessage(ColorUtil.replaceColorCode("&aLatest version:&3 " + latest));
-                sender.sendMessage(ColorUtil.replaceColorCode("&aPlugin by:&6 " + authors));
-                sender.sendMessage(ColorUtil.replaceColorCode("&aNukkit Version:&3 " + nukkitVersion));
-                sender.sendMessage(ColorUtil.replaceColorCode("&aNukkit Api Version:&3 " + apiVersion));
-                sender.sendMessage(ColorUtil.replaceColorCode("&aServer Version:&3 " + serverVersion));
-                sender.sendMessage(ColorUtil.replaceColorCode(" "));
-                sender.sendMessage(ColorUtil.replaceColorCode("&1Modules"));
-                sender.sendMessage(ColorUtil.replaceColorCode("&aFormatter&3: " + OtherUtils.getFormaterStatus()));
-                sender.sendMessage(ColorUtil.replaceColorCode("&aOsTag&3: " + OtherUtils.getOsTagStatus()));
-                sender.sendMessage(ColorUtil.replaceColorCode(" "));
-                sender.sendMessage(ColorUtil.replaceColorCode("&1Plugins"));
-                sender.sendMessage(ColorUtil.replaceColorCode("&aLuckPerms&3: " + OtherUtils.getLuckPermStatus()));
-                sender.sendMessage(ColorUtil.replaceColorCode("&aKotlinLib & PlaceholderAPI&3: " + OtherUtils.getKotOrPapiStatus()));
-                sender.sendMessage(ColorUtil.replaceColorCode(" "));
-                sender.sendMessage(ColorUtil.replaceColorCode("&b-------------------------------"));
+                sender.sendMessage(TextUtil.replaceColorCode("&b-------------------------------"));
+                sender.sendMessage(TextUtil.replaceColorCode("&aOsTag version:&3 " + pluginVersion));
+                sender.sendMessage(TextUtil.replaceColorCode("&aLatest version:&3 " + latest));
+                sender.sendMessage(TextUtil.replaceColorCode("&aPlugin by:&6 " + authors));
+                sender.sendMessage(TextUtil.replaceColorCode("&aNukkit Version:&3 " + nukkitVersion));
+                sender.sendMessage(TextUtil.replaceColorCode("&aNukkit Api Version:&3 " + apiVersion));
+                sender.sendMessage(TextUtil.replaceColorCode("&aServer Version:&3 " + serverVersion));
+                sender.sendMessage(TextUtil.replaceColorCode(" "));
+                sender.sendMessage(TextUtil.replaceColorCode("&1Modules"));
+                sender.sendMessage(TextUtil.replaceColorCode("&aFormatter&3: " + OtherUtils.getFormaterStatus()));
+                sender.sendMessage(TextUtil.replaceColorCode("&aOsTag&3: " + OtherUtils.getOsTagStatus()));
+                sender.sendMessage(TextUtil.replaceColorCode(" "));
+                sender.sendMessage(TextUtil.replaceColorCode("&1Plugins"));
+                sender.sendMessage(TextUtil.replaceColorCode("&aLuckPerms&3: " + OtherUtils.getLuckPermStatus()));
+                sender.sendMessage(TextUtil.replaceColorCode("&aKotlinLib & PlaceholderAPI&3: " + OtherUtils.getKotOrPapiStatus()));
+                sender.sendMessage(TextUtil.replaceColorCode(" "));
+                sender.sendMessage(TextUtil.replaceColorCode("&b-------------------------------"));
                 break;
             case "normal":
-                sender.sendMessage(ColorUtil.replaceColorCode("&b-------------------------------"));
-                sender.sendMessage(ColorUtil.replaceColorCode("&aOsTag version:&3 " + pluginVersion));
-                sender.sendMessage(ColorUtil.replaceColorCode("&aLatest version:&3 " + latest));
-                sender.sendMessage(ColorUtil.replaceColorCode("&aPlugin by:&6 " + authors));
-                sender.sendMessage(ColorUtil.replaceColorCode("&aServer Version:&3 " + serverVersion));
-                sender.sendMessage(ColorUtil.replaceColorCode(" "));
-                sender.sendMessage(ColorUtil.replaceColorCode("&1Modules"));
-                sender.sendMessage(ColorUtil.replaceColorCode("&aFormatter&3: " + OtherUtils.getFormaterStatus()));
-                sender.sendMessage(ColorUtil.replaceColorCode("&aOsTag&3: " + OtherUtils.getOsTagStatus()));
-                sender.sendMessage(ColorUtil.replaceColorCode(" "));
-                sender.sendMessage(ColorUtil.replaceColorCode("&b-------------------------------"));
+                sender.sendMessage(TextUtil.replaceColorCode("&b-------------------------------"));
+                sender.sendMessage(TextUtil.replaceColorCode("&aOsTag version:&3 " + pluginVersion));
+                sender.sendMessage(TextUtil.replaceColorCode("&aLatest version:&3 " + latest));
+                sender.sendMessage(TextUtil.replaceColorCode("&aPlugin by:&6 " + authors));
+                sender.sendMessage(TextUtil.replaceColorCode("&aServer Version:&3 " + serverVersion));
+                sender.sendMessage(TextUtil.replaceColorCode(" "));
+                sender.sendMessage(TextUtil.replaceColorCode("&1Modules"));
+                sender.sendMessage(TextUtil.replaceColorCode("&aFormatter&3: " + OtherUtils.getFormaterStatus()));
+                sender.sendMessage(TextUtil.replaceColorCode("&aOsTag&3: " + OtherUtils.getOsTagStatus()));
+                sender.sendMessage(TextUtil.replaceColorCode(" "));
+                sender.sendMessage(TextUtil.replaceColorCode("&b-------------------------------"));
                 break;
             default:
                 sender.sendMessage("Unknown OnEnableInfo type");
@@ -226,16 +226,16 @@ public class OsTag extends PluginBase {
             api.builder(prefix + "xp", String.class)
                     .visitorLoader(entry -> PlayerInfoUtil.getXp(entry.getPlayer()))
                     .build();
-            this.getLogger().info(ColorUtil.replaceColorCode("&aLoaded placeholderapi placeholders"));
+            this.getLogger().info(TextUtil.replaceColorCode("&aLoaded placeholderapi placeholders"));
         } catch (final Exception exception) {
-            this.getLogger().error(ColorUtil.replaceColorCode("&cLoading placeholders failed "));
+            this.getLogger().error(TextUtil.replaceColorCode("&cLoading placeholders failed "));
             System.out.println(exception.getMessage());
         }
     }
 
     private void info() {
         if (this.getDescription().getVersion().contains("Beta") || this.getDescription().getVersion().contains("beta")) {
-            this.getLogger().warning(ColorUtil.replaceColorCode("&4You are running beta version, it may not be stable"));
+            this.getLogger().warning(TextUtil.replaceColorCode("&4You are running beta version, it may not be stable"));
         }
         this.getLogger().info(GithubUtil.checkTagCompatibility());
     }

@@ -10,8 +10,7 @@ import com.creeperface.nukkit.placeholderapi.api.PlaceholderAPI;
 import java.util.HashMap;
 import java.util.UUID;
 import me.indian.ostag.OsTag;
-import me.indian.ostag.util.ColorUtil;
-import me.indian.ostag.util.OtherUtils;
+import me.indian.ostag.util.TextUtil;
 import me.indian.ostag.util.Permissions;
 import me.indian.ostag.util.PlayerInfoUtil;
 
@@ -53,14 +52,14 @@ public class Formater implements Listener {
                 event.setMessage(msg);
             }
             if (player.hasPermission(Permissions.ADMIN) || player.hasPermission(Permissions.COLORS) || config.getBoolean("and-for-all")) {
-                mess = ColorUtil.replaceColorCode(event.getMessage());
+                mess = TextUtil.replaceColorCode(event.getMessage());
             } else {
                 mess = event.getMessage();
             }
             event.setMessage(mess);
-            String messageFormat = ColorUtil.replaceColorCode(config.getString("message-format"));
+            String messageFormat = TextUtil.replaceColorCode(config.getString("message-format"));
             if (this.plugin.papiAndKotlinLib) {
-                messageFormat = this.api.translateString(ColorUtil.replaceColorCode(config.getString("message-format")), player);
+                messageFormat = this.api.translateString(TextUtil.replaceColorCode(config.getString("message-format")), player);
             }
             event.setFormat(PlayerInfoUtil.replaceAllInfo(player, messageFormat
                     .replace("<msg>", event.getMessage())
@@ -84,7 +83,7 @@ public class Formater implements Listener {
                 }
             }
             if (config.getBoolean("break-between-messages.enable")) {
-                Server.getInstance().getScheduler().scheduleDelayedTask(this.plugin, () -> OtherUtils.sendMessageToAll(" "), 1);
+                Server.getInstance().getScheduler().scheduleDelayedTask(this.plugin, () -> TextUtil.sendMessageToAll(" "), 1);
             }
         } else {
             final long cooldownTime = (time - (System.currentTimeMillis() - cooldown.get(uuid))) / this.second;
@@ -93,10 +92,10 @@ public class Formater implements Listener {
                 player.sendMessage(" ");
             }
 
-            String cooldownMessage = ColorUtil.replaceColorCode(config.getString("cooldown.message")
+            String cooldownMessage = TextUtil.replaceColorCode(config.getString("cooldown.message")
                     .replace("<left>", String.valueOf(cooldownTime)));
             if (this.plugin.papiAndKotlinLib) {
-                cooldownMessage = this.api.translateString(ColorUtil.replaceColorCode(config.getString("cooldown.message")
+                cooldownMessage = this.api.translateString(TextUtil.replaceColorCode(config.getString("cooldown.message")
                         .replace("<left>", String.valueOf(cooldownTime))), player);
             }
             player.sendMessage(cooldownMessage);
@@ -109,17 +108,17 @@ public class Formater implements Listener {
         final long time = this.plugin.getConfig().getLong("cooldown.delay") * this.second;
         long cooldownTime = 0;
         if (!config.getBoolean("cooldown.enable")) {
-            return ColorUtil.replaceColorCode(config.getString("cooldown.disabled"));
+            return TextUtil.replaceColorCode(config.getString("cooldown.disabled"));
         }
         if (cooldown.containsKey(uuid)) {
             cooldownTime = (time - (System.currentTimeMillis() - cooldown.get(uuid))) / this.second;
         }
         if (player.isOp() || player.hasPermission("ostag.admin")) {
-            return ColorUtil.replaceColorCode(config.getString("cooldown.bypass"));
+            return TextUtil.replaceColorCode(config.getString("cooldown.bypass"));
         }
         if (cooldownTime <= 0) {
             cooldown.remove(uuid);
-            return ColorUtil.replaceColorCode(config.getString("cooldown.over"));
+            return TextUtil.replaceColorCode(config.getString("cooldown.over"));
         }
         return String.valueOf(cooldownTime);
     }

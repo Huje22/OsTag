@@ -12,14 +12,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import me.indian.ostag.OsTag;
-import me.indian.ostag.util.ColorUtil;
+import me.indian.ostag.util.TextUtil;
 
 public class CpsListener implements Listener {
 
     private static final HashMap<String, List<Long>> cps = new HashMap<>();
     private static final OsTag plugin = OsTag.getInstance();
     private static final PluginLogger logger = plugin.getLogger();
-    private final String debugPrefix = ColorUtil.replaceColorCode(plugin.publicDebugPrefix + "&8[&dCpsListener&8] ");
+    private final String debugPrefix = TextUtil.replaceColorCode(plugin.publicDebugPrefix + "&8[&dCpsListener&8] ");
 
     // cps counter from https://github.com/GommeAWM/CPSCounter
     // witch permissions from author edited by IndianPL and Neziw
@@ -69,7 +69,7 @@ public class CpsListener implements Listener {
                 if (player == null) {
                     cps.remove(name);
                     if (plugin.debug) {
-                        logger.info(ColorUtil.replaceColorCode(CpsListener.this.debugPrefix + "&aPlayer &6" + name + "&a has been removed from the map"));
+                        logger.info(TextUtil.replaceColorCode(CpsListener.this.debugPrefix + "&aPlayer &6" + name + "&a has been removed from the map"));
                     }
                 }
             }

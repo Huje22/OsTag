@@ -50,10 +50,4 @@ public class OtherUtils {
         }
         return metrics;
     }
-
-    public static void sendMessageToAll(final String msg) {
-        for (final Player all : Server.getInstance().getOnlinePlayers().values()) {
-            all.sendMessage(msg);
-        }
-    }
 }
