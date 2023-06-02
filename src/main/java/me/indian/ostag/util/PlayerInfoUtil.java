@@ -129,7 +129,7 @@ public class PlayerInfoUtil {
         }
     }
 
-     public static String getXp(final Player player) {
+    public static String getXp(final Player player) {
         String xp = "0";
         final int playerXp = player.getExperienceLevel();
 
@@ -186,8 +186,8 @@ public class PlayerInfoUtil {
 
     public static String getPing(final Player player) {
         String ping = TextUtil.replaceColorCode("&r0");
-       final int playerPing = player.getPing();
-        
+        final int playerPing = player.getPing();
+
         if (playerPing >= 1) {
             ping = TextUtil.replaceColorCode(config.getString("low-ping")) + playerPing;
         }
