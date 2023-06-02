@@ -2,20 +2,19 @@ package me.indian.ostag.other;
 
 import cn.nukkit.Server;
 import cn.nukkit.plugin.PluginLogger;
-import cn.nukkit.utils.Config;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import me.indian.ostag.OsTag;
 import me.indian.ostag.util.ColorUtil;
+import me.indian.ostag.util.ThreadUtil;
 
 public class OsTagMetrics {
 
-    private static final ExecutorService executorService = Executors.newSingleThreadExecutor();
+    private static final ExecutorService executorService = Executors.newSingleThreadExecutor(new ThreadUtil("Ostag-MetricsThread"));
     private final OsTag plugin = OsTag.getInstance();
     private final PluginLogger logger = this.plugin.getLogger();
-    private final Config config = this.plugin.getConfig();
     private final String debugPrefix = ColorUtil.replaceColorCode(this.plugin.publicDebugPrefix + "&8[&dMetrics&8] ");
     private final Metrics metrics = new Metrics(this.plugin, 16838);
     public boolean enabled = this.metrics.isEnabled();

@@ -16,6 +16,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import me.indian.ostag.OsTag;
 import me.indian.ostag.util.ColorUtil;
+import me.indian.ostag.util.ThreadUtil;
 
 public class InputListener implements Listener {
 
@@ -23,7 +24,7 @@ public class InputListener implements Listener {
     private static final PluginLogger logger = plugin.getLogger();
     private static final Map<String, InputMode> controller = new HashMap<>();
     private final String debugPrefix = ColorUtil.replaceColorCode(plugin.publicDebugPrefix + "&8[&dInputListener&8] ");
-    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor(new ThreadUtil("Ostag-InputListenerThread"));
 
     public static String getController(final Player player) {
         return String.valueOf(controller.get(player.getName()));
@@ -40,7 +41,7 @@ public class InputListener implements Listener {
                 final String name = player.getName();
                 //thanks to Petterim
                 //https://github.com/PetteriM1
-
+                
                 if (!controller.containsKey(name)) {
                     controller.put(name, inputMode);
                     if (plugin.debug) {
