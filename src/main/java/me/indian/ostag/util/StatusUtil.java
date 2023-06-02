@@ -1,11 +1,9 @@
 package me.indian.ostag.util;
 
-import cn.nukkit.Player;
-import cn.nukkit.Server;
 import me.indian.ostag.OsTag;
 
 
-public class OtherUtils {
+public class StatusUtil {
 
     private static final OsTag plugin = OsTag.getInstance();
     private static final String fal = "§cfalse";
