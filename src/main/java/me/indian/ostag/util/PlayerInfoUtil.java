@@ -129,35 +129,36 @@ public class PlayerInfoUtil {
         }
     }
 
-    public static String getXp(final Player player) {
+     public static String getXp(final Player player) {
         String xp = "0";
+        final int playerXp = player.getExperienceLevel();
 
-        if (player.getExperienceLevel() == 0) {
-            xp = config.getString("1lvl") + player.getExperienceLevel();
+        if (playerXp == 0) {
+            xp = config.getString("1lvl") + playerXp;
         }
-        if (player.getExperienceLevel() >= 1) {
-            xp = config.getString("1lvl") + player.getExperienceLevel();
+        if (playerXp >= 1) {
+            xp = config.getString("1lvl") + playerXp;
         }
-        if (player.getExperienceLevel() >= 5) {
-            xp = config.getString("5lvl") + player.getExperienceLevel();
+        if (playerXp >= 5) {
+            xp = config.getString("5lvl") + playerXp;
         }
-        if (player.getExperienceLevel() >= 10) {
-            xp = config.getString("10lvl") + player.getExperienceLevel();
+        if (playerXp >= 10) {
+            xp = config.getString("10lvl") + playerXp;
         }
-        if (player.getExperienceLevel() >= 15) {
-            xp = config.getString("15lvl") + player.getExperienceLevel();
+        if (playerXp >= 15) {
+            xp = config.getString("15lvl") + playerXp;
         }
-        if (player.getExperienceLevel() >= 20) {
-            xp = config.getString("20lvl") + player.getExperienceLevel();
+        if (playerXp >= 20) {
+            xp = config.getString("20lvl") + playerXp;
         }
-        if (player.getExperienceLevel() >= 25) {
-            xp = config.getString("25lvl") + player.getExperienceLevel();
+        if (playerXp >= 25) {
+            xp = config.getString("25lvl") + playerXp;
         }
-        if (player.getExperienceLevel() >= 30) {
-            xp = config.getString("30lvl") + player.getExperienceLevel();
+        if (playerXp >= 30) {
+            xp = config.getString("30lvl") + playerXp;
         }
-        if (player.getExperienceLevel() >= 35) {
-            xp = config.getString("35lvl") + player.getExperienceLevel();
+        if (playerXp >= 35) {
+            xp = config.getString("35lvl") + playerXp;
         }
 
         return ColorUtil.replaceColorCode(xp);
