@@ -5,7 +5,7 @@ import cn.nukkit.utils.Config;
 import com.creeperface.nukkit.placeholderapi.api.PlaceholderAPI;
 import me.indian.ostag.OsTag;
 
-public class OsTagAdd {
+public class TagAddUtil {
 
     private static final OsTag plugin = OsTag.getInstance();
     private static final Config config = plugin.getConfig();

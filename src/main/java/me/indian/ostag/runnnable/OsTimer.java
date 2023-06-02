@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import me.indian.ostag.OsTag;
-import me.indian.ostag.util.OsTagAdd;
+import me.indian.ostag.util.TagAddUtil;
 import me.indian.ostag.util.ThreadUtil;
 
 public class OsTimer extends Task implements Runnable, Listener {
@@ -45,9 +45,9 @@ public class OsTimer extends Task implements Runnable, Listener {
             }
         }
         if (advancedPlayers.contains(player.getDisplayName())) {
-            OsTagAdd.addDevAdvanced(player);
+            TagAddUtil.addDevAdvanced(player);
         } else {
-            OsTagAdd.addDevNormal(player);
+            TagAddUtil.addDevNormal(player);
         }
     }
 }
