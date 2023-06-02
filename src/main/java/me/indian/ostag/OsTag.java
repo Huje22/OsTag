@@ -16,7 +16,7 @@ import me.indian.ostag.listener.PlayerJoinListener;
 import me.indian.ostag.other.OsTagMetrics;
 import me.indian.ostag.util.ColorUtil;
 import me.indian.ostag.util.GithubUtil;
-import me.indian.ostag.util.OsTimer;
+import me.indian.ostag.runnnable.OsTimer;
 import me.indian.ostag.util.OtherUtils;
 import me.indian.ostag.util.PlayerInfoUtil;
 import me.indian.ostag.util.UpDateUtil;
