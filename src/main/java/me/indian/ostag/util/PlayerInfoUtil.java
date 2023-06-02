@@ -185,15 +185,16 @@ public class PlayerInfoUtil {
 
     public static String getPing(final Player player) {
         String ping = ColorUtil.replaceColorCode("&r0");
-
-        if (player.getPing() >= 1) {
-            ping = ColorUtil.replaceColorCode(config.getString("low-ping")) + player.getPing();
+       final int playerPing = player.getPing();
+        
+        if (playerPing >= 1) {
+            ping = ColorUtil.replaceColorCode(config.getString("low-ping")) + playerPing;
         }
-        if (player.getPing() >= 75) {
-            ping = ColorUtil.replaceColorCode(config.getString("medium-ping")) + player.getPing();
+        if (playerPing >= 75) {
+            ping = ColorUtil.replaceColorCode(config.getString("medium-ping")) + playerPing;
         }
-        if (player.getPing() >= 100) {
-            ping = ColorUtil.replaceColorCode(config.getString("high-ping")) + player.getPing();
+        if (playerPing >= 100) {
+            ping = ColorUtil.replaceColorCode(config.getString("high-ping")) + playerPing;
         }
         return ping;
     }
