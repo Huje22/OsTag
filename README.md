@@ -18,7 +18,7 @@
 [![bStats Servers](https://img.shields.io/bstats/servers/16838?style=for-the-badge)](https://bstats.org/plugin/bukkit/OsTagPNX-Nukkit/16838)</br>
 ![JDK8](https://github.com/intergrav/devins-badges/blob/v2/assets/cozy/built-with/java8_vector.svg?raw=true)
 ![Maven](https://github.com/intergrav/devins-badges/blob/v2/assets/cozy/built-with/maven_vector.svg)</br>
-[![PayPal](https://github.com/intergrav/devins-badges/blob/v2/assets/compact/donate/paypal-singular_vector.svg)](https://paypal.me/IndianPL)
+[![PayPal](https://github.com/intergrav/devins-badges/blob/v2/assets/compact/donate/paypal-singular_vector.svg)](https://github.com/OpenPlugins-Minecraft/.github/blob/master/programers/donations.md)
 
 This plugin is used to display information under the player's heads. And for chat formatting with LuckPerms plugin.
 
