@@ -29,7 +29,7 @@ public class OsTagMetrics {
                     Thread.currentThread().interrupt();
                     return;
                 }
-                this.metrics();
+                this.customMetrics();
                 this.isRunning = true;
                 this.logger.info(TextUtil.replaceColorCode("&aLoaded Metrics"));
             } catch (final Exception e) {
@@ -43,9 +43,10 @@ public class OsTagMetrics {
         });
     }
 
-    private void metrics() {
+    private void customMetrics() {
         this.metrics.addCustomChart(new Metrics.SimplePie("server_movement", () -> String.valueOf(this.plugin.serverMovement)));
         this.metrics.addCustomChart(new Metrics.SimplePie("nukkit_version", () -> Server.getInstance().getNukkitVersion()));
+        this.metrics.addCustomChart(new Metrics.SimplePie("serverSoftware", () -> "Nukkit " + this.plugin.getServer().getVersion()));
         this.metrics.addCustomChart(new Metrics.SimplePie("ostag_vs_chatformater", () -> {
             String info1 = "All disabled";
             final boolean ostag = this.plugin.osTag;
