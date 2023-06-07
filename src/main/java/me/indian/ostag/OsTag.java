@@ -157,7 +157,7 @@ public class OsTag extends PluginBase {
         final String nukkitVersion = server.getNukkitVersion();
         final String serverVersion = server.getVersion();
         final String apiVersion = server.getApiVersion();
-        final String latest = GithubUtil.getFastTagInfo() + GithubUtil.getBehindCount();
+        final String latest = GithubUtil.getFastTagInfo() + GithubUtil.getBehindCount(sender);
 
         switch (type) {
             case "admin":

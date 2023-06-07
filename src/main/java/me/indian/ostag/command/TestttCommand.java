@@ -30,7 +30,7 @@ public class TestttCommand extends Command {
 
             logger.info(GithubUtil.getLatestTag());
 
-            logger.info(GithubUtil.getBehindCount());
+            logger.info(GithubUtil.getBehindCount(sender));
 
         }
         return false;

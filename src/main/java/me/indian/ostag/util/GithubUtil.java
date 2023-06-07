@@ -1,5 +1,7 @@
 package me.indian.ostag.util;
 
+import cn.nukkit.Player;
+import cn.nukkit.command.CommandSender;
 import cn.nukkit.plugin.PluginLogger;
 import me.indian.ostag.OsTag;
 
@@ -76,8 +78,8 @@ public class GithubUtil {
         }
     }
 
-    public static String getBehindCount() {
-        final int index = getBehindIntCount();
+    public static String getBehindCount(final CommandSender sender) {
+        final int index = getBehindIntCount(sender);
 
         if (index == -1) {
             return TextUtil.replaceColorCode(" &5(&cBehind more than 10 version&5)");
@@ -90,7 +92,7 @@ public class GithubUtil {
     }
 
 
-    public static int getBehindIntCount() {
+    public static int getBehindIntCount(final CommandSender sender) {
         if (response.toString().isEmpty()) return 0;
         final String[] tags = response.toString().replaceAll("[\\[\\]{}\"]", "").split(",");
 
@@ -102,7 +104,7 @@ public class GithubUtil {
             counter++;
         }
 
-        if (plugin.debug) {
+        if (plugin.debug && !(sender instanceof Player)) {
             for (final Map.Entry<Integer, String> entry : versions.entrySet()) {
                 logger.info(debugPrefix + entry.getKey() + ": " + entry.getValue());
             }
