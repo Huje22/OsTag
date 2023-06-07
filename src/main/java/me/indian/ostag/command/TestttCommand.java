@@ -1,22 +1,22 @@
 package me.indian.ostag.command;
 
 import cn.nukkit.command.Command;
-import cn.nukkit.command.CommandExecutor;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.plugin.PluginLogger;
 import me.indian.ostag.OsTag;
 import me.indian.ostag.util.GithubUtil;
 
-public class TestttCommand implements CommandExecutor {
+public class TestttCommand extends Command {
 
     private final OsTag plugin;
 
     public TestttCommand(final OsTag plugin) {
+        super("tto", "ostag test cmd");
         this.plugin = plugin;
     }
 
     @Override
-    public boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
+    public boolean execute(final CommandSender sender, final String s, final String[] args) {
         if (sender.isOp()) {
             final PluginLogger logger = this.plugin.getLogger();
 

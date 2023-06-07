@@ -1,19 +1,19 @@
 package me.indian.ostag;
 
 import cn.nukkit.Server;
+import cn.nukkit.command.CommandMap;
 import cn.nukkit.command.CommandSender;
-import cn.nukkit.command.PluginCommand;
 import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.plugin.PluginDescription;
 import cn.nukkit.plugin.PluginManager;
 import com.creeperface.nukkit.placeholderapi.api.PlaceholderAPI;
+import me.indian.ostag.basic.OsTagMetrics;
 import me.indian.ostag.command.OsTagCommand;
 import me.indian.ostag.command.TestttCommand;
 import me.indian.ostag.listener.CpsListener;
 import me.indian.ostag.listener.Formater;
 import me.indian.ostag.listener.InputListener;
 import me.indian.ostag.listener.PlayerJoinListener;
-import me.indian.ostag.basic.OsTagMetrics;
 import me.indian.ostag.runnnable.OsTimer;
 import me.indian.ostag.util.GithubUtil;
 import me.indian.ostag.util.PlayerInfoUtil;
@@ -115,8 +115,11 @@ public class OsTag extends PluginBase {
         if (this.serverMovement) {
             pm.registerEvents(new InputListener(), this);
         }
-        ((PluginCommand<?>) this.getCommand("ostag")).setExecutor(new OsTagCommand(this));
-        ((PluginCommand<?>) this.getCommand("tto")).setExecutor(new TestttCommand(this));
+
+        CommandMap commandMap = this.getServer().getCommandMap();
+        commandMap.register("s", new OsTagCommand(this));
+        commandMap.register("s", new TestttCommand(this));
+
         if (this.osTag) {
             pm.registerEvents(new OsTimer(), this);
             int refreshTime = this.getConfig().getInt("refresh-time");

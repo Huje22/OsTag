@@ -3,8 +3,10 @@ package me.indian.ostag.command;
 import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.command.Command;
-import cn.nukkit.command.CommandExecutor;
 import cn.nukkit.command.CommandSender;
+import cn.nukkit.command.data.CommandEnum;
+import cn.nukkit.command.data.CommandParamType;
+import cn.nukkit.command.data.CommandParameter;
 import cn.nukkit.scheduler.NukkitRunnable;
 import cn.nukkit.utils.Config;
 import me.indian.ostag.OsTag;
@@ -14,17 +16,37 @@ import me.indian.ostag.util.TextUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OsTagCommand implements CommandExecutor {
+public class OsTagCommand extends Command {
 
     private final OsTag plugin;
     private final List<String> confirmations = new ArrayList<>();
 
     public OsTagCommand(final OsTag plugin) {
+        super("ostag", "ostag management" );
+
+        commandParameters.clear();
+//        /ostag reload
+        commandParameters.put("reload", new CommandParameter[]{
+                CommandParameter.newEnum("reload", new CommandEnum("reload", "reload")),
+        });
+//        /ostag update
+        commandParameters.put("update", new CommandParameter[]{
+                CommandParameter.newEnum("update", new CommandEnum("update", "update"))
+        });
+//        /ostag update
+        commandParameters.put("version", new CommandParameter[]{
+                CommandParameter.newEnum("version", new CommandEnum("version", "version"))
+        });
+//        /ostag add <player>
+        commandParameters.put("add", new CommandParameter[]{
+                CommandParameter.newEnum("add", new CommandEnum("add", "add")),
+                CommandParameter.newType("add", CommandParamType.TARGET)
+        });
         this.plugin = plugin;
     }
 
     @Override
-    public boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
+    public boolean execute(final CommandSender sender, final String s, final String[] args) {
         final Config config = this.plugin.getConfig();
         final List<String> advancedPlayers = config.getStringList("advanced-players");
 
