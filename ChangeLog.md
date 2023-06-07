@@ -217,6 +217,7 @@ Fix ostag command error when `/ostag add` player argument is null (Since 1.5.7.1
 
 __Others__: <br/>
 New thing (Since x.x.x)  <br/>
+
 --------------------------------------------------
 
 <div align="center">
