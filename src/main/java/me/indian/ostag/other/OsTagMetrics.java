@@ -49,38 +49,40 @@ public class OsTagMetrics {
         this.metrics.addCustomChart(new Metrics.SimplePie("server_movement", () -> String.valueOf(this.plugin.serverMovement)));
         this.metrics.addCustomChart(new Metrics.SimplePie("nukkit_version", () -> Server.getInstance().getNukkitVersion()));
         this.metrics.addCustomChart(new Metrics.SimplePie("serverSoftware", () -> "Nukkit " + this.plugin.getServer().getVersion()));
+
         this.metrics.addCustomChart(new Metrics.SimplePie("ostag_vs_chatformater", () -> {
-            String info1 = "All disabled";
+            String ostagVsFormater = "All disabled";
             final boolean ostag = this.plugin.osTag;
             final boolean chatFormater = this.plugin.chatFormatter;
             if (ostag && chatFormater) {
-                info1 = "OsTag and ChatFormater";
+                ostagVsFormater = "OsTag and ChatFormater";
             }
             if (ostag && !chatFormater) {
-                info1 = "OsTag";
+                ostagVsFormater = "OsTag";
             }
             if (!ostag && chatFormater) {
-                info1 = "ChatFormater";
+                ostagVsFormater = "ChatFormater";
             }
-            return info1;
+            return ostagVsFormater;
         }));
         this.metrics.addCustomChart(new Metrics.SimplePie("scoretag_vs_nametag", () -> {
-            String info2 = "All disabled";
+            String scoreVsName = "All disabled";
             if (this.plugin.osTag) {
                 final boolean nametag = this.plugin.nametag;
                 final boolean scoreTag = this.plugin.scoreTag;
                 if (nametag && scoreTag) {
-                    info2 = "NameTag and ScoreTag";
+                    scoreVsName = "NameTag and ScoreTag";
                 }
                 if (nametag && !scoreTag) {
-                    info2 = "NameTag";
+                    scoreVsName = "NameTag";
                 }
                 if (!nametag && scoreTag) {
-                    info2 = "ScoreTag";
+                    scoreVsName = "ScoreTag";
                 }
             }
-            return info2;
+            return scoreVsName;
         }));
+
 
         this.metrics.addCustomChart(new Metrics.AdvancedPie("plugins", () -> {
             final Map<String, Integer> valueMap = new HashMap<>();
