@@ -91,7 +91,7 @@ public class OsTagMetrics {
             final boolean update = this.plugin.upDatechecker;
             final boolean auto = this.config.getBoolean("AutoUpdate");
             if (update && auto) {
-                updateVsAuto = "Updatecheck and AutoUpdate";
+                updateVsAuto = "Updatechecker and AutoUpdate";
             }
             if (update && !auto) {
                 updateVsAuto = "UpdateChecker";
