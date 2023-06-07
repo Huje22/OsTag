@@ -139,7 +139,7 @@ public class UpDateUtil {
         } catch (final Exception e) {
             this.logger.warning(TextUtil.replaceColorCode("&cCan't download latest ostag version!"));
             if (this.plugin.debug) {
-                this.logger.error(this.debugPrefix + e);
+                e.printStackTrace();
             }
             this.reDownload(sender);
             Thread.currentThread().interrupt();

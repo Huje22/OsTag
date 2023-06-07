@@ -70,7 +70,7 @@ public class GithubUtil {
             return parseLatestTagFromJson(response.toString());
         } catch (final Exception e) {
             if (plugin.debug) {
-                logger.error(debugPrefix + e);
+                e.printStackTrace();
             }
             return errorMessage;
         }
