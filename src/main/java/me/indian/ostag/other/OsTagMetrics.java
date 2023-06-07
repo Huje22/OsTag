@@ -3,6 +3,7 @@ package me.indian.ostag.other;
 import cn.nukkit.Server;
 import cn.nukkit.plugin.Plugin;
 import cn.nukkit.plugin.PluginLogger;
+import cn.nukkit.utils.Config;
 import me.indian.ostag.OsTag;
 import me.indian.ostag.util.TextUtil;
 import me.indian.ostag.util.ThreadUtil;
@@ -16,6 +17,7 @@ public class OsTagMetrics {
 
     private static final ExecutorService executorService = Executors.newSingleThreadExecutor(new ThreadUtil("Ostag-MetricsThread"));
     private final OsTag plugin = OsTag.getInstance();
+    private final Config config = this.plugin.getConfig();
     private final PluginLogger logger = this.plugin.getLogger();
     private final String debugPrefix = TextUtil.replaceColorCode(this.plugin.publicDebugPrefix + "&8[&dMetrics&8] ");
     private final Metrics metrics = new Metrics(this.plugin, 16838);
@@ -81,6 +83,23 @@ public class OsTagMetrics {
                 }
             }
             return scoreVsName;
+        }));
+
+
+        this.metrics.addCustomChart(new Metrics.SimplePie("updatecheck_vs_autoupdate", () -> {
+            String updateVsAuto = "All disabled";
+            final boolean update = this.plugin.upDatechecker;
+            final boolean auto = this.config.getBoolean("AutoUpdate");
+            if (update && auto) {
+                updateVsAuto = "Updatecheck and AutoUpdate";
+            }
+            if (update && !auto) {
+                updateVsAuto = "UpdateChecker";
+            }
+            if (!update && auto) {
+                updateVsAuto = "AutoUpdate";
+            }
+            return updateVsAuto;
         }));
 
 
