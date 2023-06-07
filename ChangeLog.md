@@ -207,6 +207,7 @@ __New things__: <br/>
 Info how many kb have been downloaded on the download percentage (Since 1.5.7.1)  <br/>
 Remove `ReplaceUtil` and add replace method in `PlayerInfoUtil` (Since 1.5.7.1)  <br/>
 Disabling the entire "Ostag" module when "scoretag" and "nametag" are disabled (Since 1.5.7.1)  <br/>
+Added more metrics (Since 1.5.7.2)  <br/>
 
 __Fixes__: <br/>
 Code and code style fixes <br/>
