@@ -10,13 +10,14 @@ import cn.nukkit.network.protocol.PlayerAuthInputPacket;
 import cn.nukkit.network.protocol.types.InputMode;
 import cn.nukkit.plugin.PluginLogger;
 import cn.nukkit.scheduler.NukkitRunnable;
+import me.indian.ostag.OsTag;
+import me.indian.ostag.util.TextUtil;
+import me.indian.ostag.util.ThreadUtil;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import me.indian.ostag.OsTag;
-import me.indian.ostag.util.TextUtil;
-import me.indian.ostag.util.ThreadUtil;
 
 public class InputListener implements Listener {
 
@@ -41,7 +42,7 @@ public class InputListener implements Listener {
                 final String name = player.getName();
                 //thanks to Petterim
                 //https://github.com/PetteriM1
-                
+
                 if (!controller.containsKey(name)) {
                     controller.put(name, inputMode);
                     if (plugin.debug) {

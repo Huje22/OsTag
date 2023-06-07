@@ -7,12 +7,13 @@ import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerChatEvent;
 import cn.nukkit.utils.Config;
 import com.creeperface.nukkit.placeholderapi.api.PlaceholderAPI;
-import java.util.HashMap;
-import java.util.UUID;
 import me.indian.ostag.OsTag;
-import me.indian.ostag.util.TextUtil;
 import me.indian.ostag.util.Permissions;
 import me.indian.ostag.util.PlayerInfoUtil;
+import me.indian.ostag.util.TextUtil;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 public class Formater implements Listener {
 
