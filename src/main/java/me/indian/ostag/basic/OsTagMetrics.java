@@ -107,7 +107,7 @@ public class OsTagMetrics {
 
             for (Map.Entry<String, Plugin> entry : pluginMap.entrySet()) {
                 final String key = entry.getKey();
-                if (key.equalsIgnoreCase("LuckPerms") || key.equalsIgnoreCase("PlaceholderAPI")) {
+                if (key.equalsIgnoreCase("LuckPerms") || key.equalsIgnoreCase("PlaceholderAPI") || key.equalsIgnoreCase("KotlinLib") ) {
                     if (!valueMap.containsKey(key)) {
                         valueMap.put(key, 1);
                     }
