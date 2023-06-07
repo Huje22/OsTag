@@ -1,14 +1,16 @@
 package me.indian.ostag.other;
 
 import cn.nukkit.Server;
+import cn.nukkit.plugin.Plugin;
 import cn.nukkit.plugin.PluginLogger;
+import me.indian.ostag.OsTag;
+import me.indian.ostag.util.TextUtil;
+import me.indian.ostag.util.ThreadUtil;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import me.indian.ostag.OsTag;
-import me.indian.ostag.util.TextUtil;
-import me.indian.ostag.util.ThreadUtil;
 
 public class OsTagMetrics {
 
@@ -79,6 +81,23 @@ public class OsTagMetrics {
             }
             return info2;
         }));
+
+        this.metrics.addCustomChart(new Metrics.AdvancedPie("plugins", () -> {
+            final Map<String, Integer> valueMap = new HashMap<>();
+            final Map<String, Plugin> pluginMap = this.plugin.getServer().getPluginManager().getPlugins();
+
+            for (Map.Entry<String, Plugin> entry : pluginMap.entrySet()) {
+                final String key = entry.getKey();
+                if (key.equalsIgnoreCase("LuckPerms") || key.equalsIgnoreCase("PlaceholderAPI")) {
+                    if (!valueMap.containsKey(key)) {
+                        valueMap.put(key, 1);
+                    }
+                }
+            }
+            return valueMap;
+        }));
+        
+        
         /*
         Code from https://github.com/CloudburstMC/Nukkit/blob/master/src/main/java/cn/nukkit/metrics/NukkitMetrics.java#L47
          */
