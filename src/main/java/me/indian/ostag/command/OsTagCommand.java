@@ -54,7 +54,7 @@ public class OsTagCommand extends Command {
             sender.sendMessage(TextUtil.replaceColorCode("&aUsage &b/ostag &8[version , reload , add <player>, update]"));
             return false;
         }
-        if (args[0].equalsIgnoreCase("ver") || args[0].equalsIgnoreCase("v")) {
+        if (args[0].equalsIgnoreCase("version") || args[0].equalsIgnoreCase("v")) {
             if (sender.hasPermission(Permissions.ADMIN)) {
                 this.plugin.pluginInfo("admin", sender);
             } else {
