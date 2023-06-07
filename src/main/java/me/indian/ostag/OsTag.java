@@ -13,7 +13,7 @@ import me.indian.ostag.listener.CpsListener;
 import me.indian.ostag.listener.Formater;
 import me.indian.ostag.listener.InputListener;
 import me.indian.ostag.listener.PlayerJoinListener;
-import me.indian.ostag.other.OsTagMetrics;
+import me.indian.ostag.basic.OsTagMetrics;
 import me.indian.ostag.runnnable.OsTimer;
 import me.indian.ostag.util.GithubUtil;
 import me.indian.ostag.util.PlayerInfoUtil;
