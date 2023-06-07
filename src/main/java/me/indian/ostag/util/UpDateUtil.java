@@ -31,14 +31,6 @@ public class UpDateUtil {
     private final ExecutorService executorService = Executors.newSingleThreadExecutor(new ThreadUtil("Ostag-UpdateThread"));
     private boolean redownload = false;
 
-    private static double bytesToKb(final long bytes) {
-        final DecimalFormat df = new DecimalFormat();
-        df.setMaximumFractionDigits(0);
-        final String kb = df.format((double) bytes / 1024);
-
-        return Double.parseDouble(kb);
-    }
-
     public void autoUpDate() {
         if (this.config.getBoolean("AutoUpdate")) {
             this.upDate(null);
@@ -169,5 +161,13 @@ public class UpDateUtil {
             }
             this.upDate(sender);
         }
+    }
+
+    private static double bytesToKb(final long bytes) {
+        final DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(0);
+        final String kb = df.format((double) bytes / 1024);
+
+        return Double.parseDouble(kb);
     }
 }
