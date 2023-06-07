@@ -50,7 +50,6 @@ public class OsTagMetrics {
     private void customMetrics() {
         this.metrics.addCustomChart(new Metrics.SimplePie("server_movement", () -> String.valueOf(this.plugin.serverMovement)));
         this.metrics.addCustomChart(new Metrics.SimplePie("nukkit_version", () -> Server.getInstance().getNukkitVersion()));
-        this.metrics.addCustomChart(new Metrics.SimplePie("serverSoftware", () -> "Nukkit " + this.plugin.getServer().getVersion()));
 
         this.metrics.addCustomChart(new Metrics.SimplePie("ostag_vs_chatformater", () -> {
             String ostagVsFormater = "All disabled";
@@ -67,6 +66,7 @@ public class OsTagMetrics {
             }
             return ostagVsFormater;
         }));
+
         this.metrics.addCustomChart(new Metrics.SimplePie("scoretag_vs_nametag", () -> {
             String scoreVsName = "All disabled";
             if (this.plugin.osTag) {
@@ -85,7 +85,6 @@ public class OsTagMetrics {
             return scoreVsName;
         }));
 
-
         this.metrics.addCustomChart(new Metrics.SimplePie("updatecheck_vs_autoupdate", () -> {
             String updateVsAuto = "All disabled";
             final boolean update = this.plugin.upDatechecker;
@@ -102,7 +101,6 @@ public class OsTagMetrics {
             return updateVsAuto;
         }));
 
-
         this.metrics.addCustomChart(new Metrics.AdvancedPie("plugins", () -> {
             final Map<String, Integer> valueMap = new HashMap<>();
             final Map<String, Plugin> pluginMap = this.plugin.getServer().getPluginManager().getPlugins();
@@ -117,8 +115,7 @@ public class OsTagMetrics {
             }
             return valueMap;
         }));
-        
-        
+
         /*
         Code from https://github.com/CloudburstMC/Nukkit/blob/master/src/main/java/cn/nukkit/metrics/NukkitMetrics.java#L47
          */
