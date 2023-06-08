@@ -15,7 +15,7 @@ import java.util.concurrent.Executors;
 
 public class OsTagMetrics {
 
-    private static final ExecutorService executorService = Executors.newSingleThreadExecutor(new ThreadUtil("Ostag-MetricsThread"));
+    private static final ExecutorService executorService = Executors.newSingleThreadExecutor(new ThreadUtil("Ostag Metrics Thread"));
     private final OsTag plugin = OsTag.getInstance();
     private final Config config = this.plugin.getConfig();
     private final PluginLogger logger = this.plugin.getLogger();

@@ -28,7 +28,7 @@ public class UpDateUtil {
     private final String currentFileName = "Ostag-" + this.currentVersion + ".jar";
     private final String latestUrl = "https://github.com/OpenPlugins-Minecraft/OsTag/releases/download/" + this.latestVersion + "/OsTag-" + this.latestVersion + ".jar";
     private final String latestFileName = "OsTag-" + this.latestVersion + ".jar";
-    private final ExecutorService executorService = Executors.newSingleThreadExecutor(new ThreadUtil("Ostag-UpdateThread"));
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor(new ThreadUtil("Ostag Update Thread"));
     private boolean redownload = false;
 
     public void autoUpDate() {

@@ -21,7 +21,7 @@ public class OsTimer extends Task implements Runnable, Listener {
     private static final Config config = plugin.getConfig();
     private static final List<String> advancedPlayers = config.getStringList("advanced-players");
     private static final List<String> disabledWorlds = config.getStringList("disabled-worlds");
-    private static final ExecutorService executorService = Executors.newSingleThreadExecutor(new ThreadUtil("Ostag-OsTimerThread"));
+    private static final ExecutorService executorService = Executors.newSingleThreadExecutor(new ThreadUtil("Ostag OsTimer Thread"));
 
     @Override
     public void onRun(final int i) {

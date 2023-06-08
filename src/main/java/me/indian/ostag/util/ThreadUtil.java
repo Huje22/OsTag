@@ -12,7 +12,7 @@ public class ThreadUtil implements ThreadFactory {
     @Override
     public Thread newThread(Runnable runnable) {
         Thread thread = new Thread(runnable);
-        thread.setName(threadName);
+        thread.setName(threadName.replace(" " , "-"));
         return thread;
     }
 }

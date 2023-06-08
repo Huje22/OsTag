@@ -25,7 +25,7 @@ public class InputListener implements Listener {
     private static final PluginLogger logger = plugin.getLogger();
     private static final Map<String, InputMode> controller = new HashMap<>();
     private final String debugPrefix = TextUtil.replaceColorCode(plugin.publicDebugPrefix + "&8[&dInputListener&8] ");
-    private final ExecutorService executorService = Executors.newSingleThreadExecutor(new ThreadUtil("Ostag-InputListenerThread"));
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor(new ThreadUtil("Ostag InputListener Thread"));
 
     public static String getController(final Player player) {
         return String.valueOf(controller.get(player.getName()));
