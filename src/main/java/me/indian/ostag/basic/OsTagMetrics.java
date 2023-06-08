@@ -92,6 +92,7 @@ public class OsTagMetrics {
             if (update && auto) {
                 updateVsAuto = "Updatechecker and AutoUpdate";
             }
+            //change it to map and rename to `functions` in bstats
             if (update && !auto) {
                 updateVsAuto = "UpdateChecker";
             }
