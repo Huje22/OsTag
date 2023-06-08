@@ -232,7 +232,7 @@ public class OsTag extends PluginBase {
             this.getLogger().info(TextUtil.replaceColorCode("&aLoaded placeholderapi placeholders"));
         } catch (final Exception exception) {
             this.getLogger().error(TextUtil.replaceColorCode("&cLoading placeholders failed "));
-            System.out.println(exception.getMessage());
+            exception.printStackTrace();
         }
     }
 
