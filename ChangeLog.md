@@ -207,13 +207,14 @@ __New things__: <br/>
 Info how many kb have been downloaded on the download percentage (Since 1.5.7.1)  <br/>
 Remove `ReplaceUtil` and add replace method in `PlayerInfoUtil` (Since 1.5.7.1)  <br/>
 Disabling the entire "Ostag" module when "scoretag" and "nametag" are disabled (Since 1.5.7.1)  <br/>
-Added more metrics (Since 1.5.7.2)  <br/>
+Added more metrics (Since 1.5.7.2 - 1.5.7.3)  <br/>
 Added finally working tab command completion (Since 1.5.7.2)  <br/>
 
 __Fixes__: <br/>
 Code and code style fixes <br/>
 Better auto redownload (Since 1.5.7.1)  <br/>
-Fix ostag command error when `/ostag add` player argument is null (Since 1.5.7.1)  <br/>
+Fixed ostag command error when `/ostag add` player argument is null (Since 1.5.7.1)  <br/>
+Fixed `/ostag version` commpatibliity command (Since 1.5.7.3)  <br/>
 
 __Others__: <br/>
 New thing (Since x.x.x)  <br/>
