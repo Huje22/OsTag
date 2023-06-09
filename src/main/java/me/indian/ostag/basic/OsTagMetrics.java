@@ -17,6 +17,7 @@ public class OsTagMetrics {
 
     private static final ExecutorService executorService = Executors.newSingleThreadExecutor(new ThreadUtil("Ostag Metrics Thread"));
     private final OsTag plugin = OsTag.getInstance();
+    private final Server server = plugin.getServer();
     private final Config config = this.plugin.getConfig();
     private final PluginLogger logger = this.plugin.getLogger();
     private final String debugPrefix = TextUtil.replaceColorCode(this.plugin.publicDebugPrefix + "&8[&dMetrics&8] ");
@@ -40,7 +41,7 @@ public class OsTagMetrics {
                 this.isRunning = false;
                 this.logger.info(TextUtil.replaceColorCode("&cCan't load metrics"));
                 if (this.plugin.debug) {
-                    this.logger.error(this.debugPrefix + e);
+                    e.printStackTrace();
                 }
                 Thread.currentThread().interrupt();
             }
@@ -49,7 +50,15 @@ public class OsTagMetrics {
 
     private void customMetrics() {
         this.metrics.addCustomChart(new Metrics.SimplePie("server_movement", () -> String.valueOf(this.plugin.serverMovement)));
-        this.metrics.addCustomChart(new Metrics.SimplePie("nukkit_version", () -> Server.getInstance().getNukkitVersion()));
+        this.metrics.addCustomChart(new Metrics.SimplePie("nukkit_version", this.server::getNukkitVersion));
+        this.metrics.addCustomChart(new Metrics.SimplePie("nukkit_api", this.server::getApiVersion));
+        this.metrics.addCustomChart(new Metrics.SimplePie("refresh_time", () -> {
+            if (this.plugin.osTag) {
+                return this.config.getInt("refresh-time") + " seconds";
+            } else {
+                return "";
+            }
+        }));
 
         this.metrics.addCustomChart(new Metrics.SimplePie("ostag_vs_chatformater", () -> {
             String ostagVsFormater = "All disabled";
@@ -85,21 +94,39 @@ public class OsTagMetrics {
             return scoreVsName;
         }));
 
-        this.metrics.addCustomChart(new Metrics.SimplePie("updatecheck_vs_autoupdate", () -> {
-            String updateVsAuto = "All disabled";
+        this.metrics.addCustomChart(new Metrics.AdvancedPie("functions", () -> {
+            final Map<String, Integer> valueMap = new HashMap<>();
             final boolean update = this.plugin.upDatechecker;
             final boolean auto = this.config.getBoolean("AutoUpdate");
-            if (update && auto) {
-                updateVsAuto = "Updatechecker and AutoUpdate";
+            final boolean debug = this.plugin.debug;
+            final boolean censor = this.config.getBoolean("censorship.enable");
+            final boolean breaks = this.config.getBoolean("break-between-messages.enable");
+            final boolean cooldown = this.config.getBoolean("cooldown.enable");
+            final boolean andForAll = this.config.getBoolean("and-for-all");
+
+            if (update) {
+                valueMap.put("UpdateChecker", 1);
             }
-            //change it to map and rename to `functions` in bstats
-            if (update && !auto) {
-                updateVsAuto = "UpdateChecker";
+            if (auto) {
+                valueMap.put("AutoUpdate", 1);
             }
-            if (!update && auto) {
-                updateVsAuto = "AutoUpdate";
+            if (debug) {
+                valueMap.put("Debug", 1);
             }
-            return updateVsAuto;
+            if (censor) {
+                valueMap.put("CensorShip", 1);
+            }
+            if (breaks) {
+                valueMap.put("Breaks Between Messages", 1);
+            }
+            if (cooldown) {
+                valueMap.put("Cooldown", 1);
+            }
+            if (andForAll) {
+                valueMap.put("And For All", 1);
+            }
+
+            return valueMap;
         }));
 
         this.metrics.addCustomChart(new Metrics.AdvancedPie("plugins", () -> {
@@ -108,7 +135,7 @@ public class OsTagMetrics {
 
             for (Map.Entry<String, Plugin> entry : pluginMap.entrySet()) {
                 final String key = entry.getKey();
-                if (key.equalsIgnoreCase("LuckPerms") || key.equalsIgnoreCase("PlaceholderAPI") || key.equalsIgnoreCase("KotlinLib") ) {
+                if (key.equalsIgnoreCase("LuckPerms") || key.equalsIgnoreCase("PlaceholderAPI") || key.equalsIgnoreCase("KotlinLib")) {
                     if (!valueMap.containsKey(key)) {
                         valueMap.put(key, 1);
                     }
