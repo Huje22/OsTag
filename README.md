@@ -7,6 +7,7 @@
 ![Nukkit API support](https://img.shields.io/badge/Nukkit%20API-1.0.14-blueviolet?style=for-the-badge)</br>
 [![Open issues](https://img.shields.io/github/issues/OpenPlugins-Minecraft/OsTag?style=for-the-badge)](https://github.com/OpenPlugins-Minecraft/OsTag/issues)
 [![Open pull requests](https://img.shields.io/github/issues-pr/OpenPlugins-Minecraft/OsTag?style=for-the-badge)](https://github.com/OpenPlugins-Minecraft/OsTag/pulls)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/m/OpenPlugins-Minecraft/OsTag?color=brightgreen&style=for-the-badge)
 [![Last Commit](https://img.shields.io/github/last-commit/OpenPlugins-Minecraft/OsTag?style=for-the-badge)](https://github.com/OpenPlugins-Minecraft/OsTag/commits/main)</br>
 ![Commits since latest release (by date)](https://img.shields.io/github/commits-since/OpenPlugins-Minecraft/OsTag/latest?style=for-the-badge)
 ![GitHub commits since latest release (by date including pre-releases)](https://img.shields.io/github/commits-since/OpenPlugins-Minecraft/Ostag/latest?include_prereleases&style=for-the-badge) </br>
