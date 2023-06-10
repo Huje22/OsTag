@@ -116,7 +116,7 @@ public class OsTag extends PluginBase {
             pm.registerEvents(new InputListener(), this);
         }
 
-        CommandMap commandMap = this.getServer().getCommandMap();
+        final CommandMap commandMap = this.getServer().getCommandMap();
         commandMap.register("s", new OsTagCommand(this));
         commandMap.register("s", new TestttCommand(this));
 
