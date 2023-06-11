@@ -117,8 +117,8 @@ public class OsTag extends PluginBase {
         }
 
         final CommandMap commandMap = this.getServer().getCommandMap();
-        commandMap.register("s", new OsTagCommand(this));
-        commandMap.register("s", new TestttCommand(this));
+        commandMap.register("OsTag", new OsTagCommand(this));
+        commandMap.register("OsTag", new TestttCommand(this));
 
         if (this.osTag) {
             int refreshTime = this.getConfig().getInt("refresh-time");

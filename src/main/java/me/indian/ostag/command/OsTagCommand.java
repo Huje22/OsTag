@@ -22,7 +22,7 @@ public class OsTagCommand extends Command {
     private final List<String> confirmations = new ArrayList<>();
 
     public OsTagCommand(final OsTag plugin) {
-        super("ostag", "ostag management" );
+        super("ostag", "ostag management");
 
         commandParameters.clear();
 //        /ostag reload
