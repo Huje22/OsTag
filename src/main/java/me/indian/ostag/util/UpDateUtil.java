@@ -21,7 +21,7 @@ public class UpDateUtil {
     private final OsTag plugin = OsTag.getInstance();
     private final PluginLogger logger = this.plugin.getLogger();
     private final Config config = this.plugin.getConfig();
-    private final String debugPrefix = TextUtil.replaceColorCode(this.plugin.publicDebugPrefix + "&8[&dAutoUpdate&8] ");
+    private final String debugPrefix = TextUtil.colorize(this.plugin.publicDebugPrefix + "&8[&dAutoUpdate&8] ");
     private final String pluginsPath = Server.getInstance().getPluginPath();
     private final String latestVersion = GithubUtil.getLatestTag();
     private final String currentVersion = this.plugin.getDescription().getVersion();
@@ -49,24 +49,24 @@ public class UpDateUtil {
 
                 if (current.exists() && latest.exists()) {
                     if (!this.currentVersion.equals(this.latestVersion)) {
-                        this.logger.info(TextUtil.replaceColorCode("&cYou have downloaded the latest version but you are not using it"));
+                        this.logger.info(TextUtil.colorize("&cYou have downloaded the latest version but you are not using it"));
                         if (sender instanceof Player) {
-                            sender.sendMessage(TextUtil.replaceColorCode("&cYou have downloaded the latest version but you are not using it"));
+                            sender.sendMessage(TextUtil.colorize("&cYou have downloaded the latest version but you are not using it"));
                         }
                         Thread.currentThread().interrupt();
                         return;
                     }
                 }
                 if (!latest.exists()) {
-                    this.logger.info(TextUtil.replaceColorCode("&aDownloading latest ostag version..."));
+                    this.logger.info(TextUtil.colorize("&aDownloading latest ostag version..."));
                     this.downloadLatestVersion(sender);
                 }
             } else {
                 if (this.plugin.debug) {
-                    this.logger.info(TextUtil.replaceColorCode(this.debugPrefix + "&aDownloading the latest version is unnecessary or not possible"));
+                    this.logger.info(TextUtil.colorize(this.debugPrefix + "&aDownloading the latest version is unnecessary or not possible"));
                 }
                 if (sender != null) {
-                    sender.sendMessage(TextUtil.replaceColorCode("&aDownloading the latest version is unnecessary or not possible"));
+                    sender.sendMessage(TextUtil.colorize("&aDownloading the latest version is unnecessary or not possible"));
                 }
                 Thread.currentThread().interrupt();
             }
@@ -86,11 +86,11 @@ public class UpDateUtil {
                 final int contentLength = httpConnection.getContentLength();
 
                 if (this.plugin.debug) {
-                    this.logger.info(TextUtil.replaceColorCode(this.debugPrefix + "&b" + this.latestUrl));
-                    this.logger.info(TextUtil.replaceColorCode(this.debugPrefix + "&aVersion: &b" + this.latestVersion));
-                    this.logger.info(TextUtil.replaceColorCode(this.debugPrefix + "&aContent type: &b" + contentType));
-                    this.logger.info(TextUtil.replaceColorCode(this.debugPrefix + "&aContent length: &b" + contentLength));
-                    this.logger.info(TextUtil.replaceColorCode(this.debugPrefix + "&eStarting downloading"));
+                    this.logger.info(TextUtil.colorize(this.debugPrefix + "&b" + this.latestUrl));
+                    this.logger.info(TextUtil.colorize(this.debugPrefix + "&aVersion: &b" + this.latestVersion));
+                    this.logger.info(TextUtil.colorize(this.debugPrefix + "&aContent type: &b" + contentType));
+                    this.logger.info(TextUtil.colorize(this.debugPrefix + "&aContent length: &b" + contentLength));
+                    this.logger.info(TextUtil.colorize(this.debugPrefix + "&eStarting downloading"));
                 }
 
                 final InputStream inputStream = httpConnection.getInputStream();
@@ -104,7 +104,7 @@ public class UpDateUtil {
                 while ((bytesRead = inputStream.read(buffer)) != -1) {
                     outputStream.write(buffer, 0, bytesRead);
                     totalBytesRead += bytesRead;
-                    final String progressMsg = TextUtil.replaceColorCode("&aDownload progress: &b" + (totalBytesRead * 100) / contentLength + "%" + " &8(&b" + bytesToKb(totalBytesRead) + "kb&8)");
+                    final String progressMsg = TextUtil.colorize("&aDownload progress: &b" + (totalBytesRead * 100) / contentLength + "%" + " &8(&b" + bytesToKb(totalBytesRead) + "kb&8)");
                     if (this.plugin.debug) {
                         this.logger.info(this.debugPrefix + progressMsg);
                     }
@@ -117,27 +117,27 @@ public class UpDateUtil {
                 inputStream.close();
 
                 if (totalBytesRead != contentLength) {
-                    this.logger.warning(TextUtil.replaceColorCode("&cDownload failed: Incomplete download"));
+                    this.logger.warning(TextUtil.colorize("&cDownload failed: Incomplete download"));
                     if (sender instanceof Player) {
-                        sender.sendMessage(TextUtil.replaceColorCode("&cDownload failed: Incomplete download"));
-                        sender.sendMessage(TextUtil.replaceColorCode("&aTrying to redownload"));
+                        sender.sendMessage(TextUtil.colorize("&cDownload failed: Incomplete download"));
+                        sender.sendMessage(TextUtil.colorize("&aTrying to redownload"));
                     }
                     this.reDownload(sender);
                     return;
                 }
 
                 final double executionTimeInSeconds = (System.currentTimeMillis() - millisActualTime) / 1000.0;
-                this.logger.info(TextUtil.replaceColorCode("&aDownload completed in &b" + executionTimeInSeconds + " &aseconds"));
+                this.logger.info(TextUtil.colorize("&aDownload completed in &b" + executionTimeInSeconds + " &aseconds"));
                 if (sender instanceof Player) {
-                    sender.sendMessage(TextUtil.replaceColorCode("&aDownload completed in &b" + executionTimeInSeconds + " &aseconds"));
+                    sender.sendMessage(TextUtil.colorize("&aDownload completed in &b" + executionTimeInSeconds + " &aseconds"));
                 }
             } else {
-                this.logger.warning(TextUtil.replaceColorCode("&cThe file could not be used. HTTP response code:" + responseCode));
+                this.logger.warning(TextUtil.colorize("&cThe file could not be used. HTTP response code:" + responseCode));
                 Thread.currentThread().interrupt();
             }
             httpConnection.disconnect();
         } catch (final Exception e) {
-            this.logger.warning(TextUtil.replaceColorCode("&cCan't download latest ostag version!"));
+            this.logger.warning(TextUtil.colorize("&cCan't download latest ostag version!"));
             if (this.plugin.debug) {
                 e.printStackTrace();
             }
@@ -149,15 +149,15 @@ public class UpDateUtil {
     private void reDownload(final CommandSender sender) {
         if (this.redownload) {
             this.redownload = false;
-            this.logger.warning(TextUtil.replaceColorCode("&cRedownload failed"));
+            this.logger.warning(TextUtil.colorize("&cRedownload failed"));
             if (sender instanceof Player) {
-                sender.sendMessage(TextUtil.replaceColorCode("&cRedownload failed"));
+                sender.sendMessage(TextUtil.colorize("&cRedownload failed"));
             }
         } else {
             this.redownload = true;
-            this.logger.info(TextUtil.replaceColorCode("&aTrying to redownload"));
+            this.logger.info(TextUtil.colorize("&aTrying to redownload"));
             if (sender instanceof Player) {
-                sender.sendMessage(TextUtil.replaceColorCode("&aTrying to redownload"));
+                sender.sendMessage(TextUtil.colorize("&aTrying to redownload"));
             }
             this.upDate(sender);
         }

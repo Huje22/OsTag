@@ -51,7 +51,7 @@ public class OsTagCommand extends Command {
         final List<String> advancedPlayers = config.getStringList("advanced-players");
 
         if (args.length == 0) {
-            sender.sendMessage(TextUtil.replaceColorCode("&aUsage &b/ostag &8[version , reload , add <player>, update]"));
+            sender.sendMessage(TextUtil.colorize("&aUsage &b/ostag &8[version , reload , add <player>, update]"));
             return false;
         }
         if (args[0].equalsIgnoreCase("version") || args[0].equalsIgnoreCase("v")) {
@@ -67,30 +67,30 @@ public class OsTagCommand extends Command {
                 try {
                     final Player target = Server.getInstance().getPlayer(args[1]);
                     if (target == null) {
-                        sender.sendMessage(TextUtil.replaceColorCode("&cplayer &6" + args[1] + "&c does not exist"));
+                        sender.sendMessage(TextUtil.colorize("&cplayer &6" + args[1] + "&c does not exist"));
                         return false;
                     }
                     if (advancedPlayers.contains(target.getDisplayName())) {
                         advancedPlayers.remove(target.getDisplayName());
-                        sender.sendMessage(TextUtil.replaceColorCode("&6" + target.getDisplayName() + " &chas been removed from advanced player list"));
+                        sender.sendMessage(TextUtil.colorize("&6" + target.getDisplayName() + " &chas been removed from advanced player list"));
                         config.set("advanced-players", advancedPlayers);
                     } else {
                         advancedPlayers.add(target.getDisplayName());
-                        sender.sendMessage(TextUtil.replaceColorCode("&6" + target.getDisplayName() + " &ahas been added to advanced player list"));
+                        sender.sendMessage(TextUtil.colorize("&6" + target.getDisplayName() + " &ahas been added to advanced player list"));
                         config.set("advanced-players", advancedPlayers);
                     }
                 } catch (final Exception e) {
-                    sender.sendMessage(TextUtil.replaceColorCode("&cYou must give player name! "));
+                    sender.sendMessage(TextUtil.colorize("&cYou must give player name! "));
                 }
             }
             if (args[0].equalsIgnoreCase("update")) {
                 if (this.confirmations.contains(sender.getName())) {
                     this.confirmations.remove(sender.getName());
-                    sender.sendMessage(TextUtil.replaceColorCode("&aAction confirmed"));
+                    sender.sendMessage(TextUtil.colorize("&aAction confirmed"));
                     this.plugin.getUpdateUtil().manualUpDate(sender);
                 } else {
                     this.confirmations.add(sender.getName());
-                    sender.sendMessage(TextUtil.replaceColorCode("&cAre you sure you want to confirm this action? enter the command again to confirm, you have 30 seconds"));
+                    sender.sendMessage(TextUtil.colorize("&cAre you sure you want to confirm this action? enter the command again to confirm, you have 30 seconds"));
                     this.timeRemove(sender);
                 }
             }
@@ -98,17 +98,17 @@ public class OsTagCommand extends Command {
                 try {
                     final long millisActualTime = System.currentTimeMillis();
                     config.reload();
-                    sender.sendMessage(TextUtil.replaceColorCode("&aConfig Reloaded"));
+                    sender.sendMessage(TextUtil.colorize("&aConfig Reloaded"));
                     final long executionTime = System.currentTimeMillis() - millisActualTime;
-                    sender.sendMessage(TextUtil.replaceColorCode("&aReloaded in &b" + executionTime + " &ams"));
+                    sender.sendMessage(TextUtil.colorize("&aReloaded in &b" + executionTime + " &ams"));
                 } catch (final Exception exception) {
-                    sender.sendMessage(TextUtil.replaceColorCode("&cCan't reload config , check console to see error"));
+                    sender.sendMessage(TextUtil.colorize("&cCan't reload config , check console to see error"));
                     this.plugin.getLogger().error(exception.getMessage());
                 }
             }
             config.save();
         } else {
-            sender.sendMessage(TextUtil.replaceColorCode("&cYou don't have permissions"));
+            sender.sendMessage(TextUtil.colorize("&cYou don't have permissions"));
         }
         return false;
     }
@@ -119,7 +119,7 @@ public class OsTagCommand extends Command {
             public void run() {
                 if (OsTagCommand.this.confirmations.contains(sender.getName())) {
                     OsTagCommand.this.confirmations.remove(sender.getName());
-                    sender.sendMessage(TextUtil.replaceColorCode("&cYour time to confirm has expired"));
+                    sender.sendMessage(TextUtil.colorize("&cYour time to confirm has expired"));
                 }
             }
         }.runTaskLater(this.plugin, 30 * 20);

@@ -24,7 +24,7 @@ public class InputListener implements Listener {
     private static final OsTag plugin = OsTag.getInstance();
     private static final PluginLogger logger = plugin.getLogger();
     private static final Map<String, InputMode> controller = new HashMap<>();
-    private final String debugPrefix = TextUtil.replaceColorCode(plugin.publicDebugPrefix + "&8[&dInputListener&8] ");
+    private final String debugPrefix = TextUtil.colorize(plugin.publicDebugPrefix + "&8[&dInputListener&8] ");
     private final ExecutorService executorService = Executors.newSingleThreadExecutor(new ThreadUtil("Ostag InputListener Thread"));
 
     public static String getController(final Player player) {
@@ -46,14 +46,14 @@ public class InputListener implements Listener {
                 if (!controller.containsKey(name)) {
                     controller.put(name, inputMode);
                     if (plugin.debug) {
-                        logger.info(TextUtil.replaceColorCode(this.debugPrefix + "&aPlayer: &6" + player.getName() + " &ahas been added to controller list with &3" + inputMode));
+                        logger.info(TextUtil.colorize(this.debugPrefix + "&aPlayer: &6" + player.getName() + " &ahas been added to controller list with &3" + inputMode));
                     }
                     return;
                 }
                 if (controller.get(name) != inputMode) {
                     controller.put(name, inputMode);
                     if (plugin.debug) {
-                        logger.info(TextUtil.replaceColorCode(this.debugPrefix + "&aPlayer: &6" + player.getName() + " &achanged controller to: &3" + inputMode));
+                        logger.info(TextUtil.colorize(this.debugPrefix + "&aPlayer: &6" + player.getName() + " &achanged controller to: &3" + inputMode));
                     }
                 }
             }
@@ -75,7 +75,7 @@ public class InputListener implements Listener {
                     if (player == null) {
                         controller.remove(name);
                         if (plugin.debug) {
-                            logger.info(TextUtil.replaceColorCode(InputListener.this.debugPrefix + "&aPlayer &6" + name + "&a has been removed from the map"));
+                            logger.info(TextUtil.colorize(InputListener.this.debugPrefix + "&aPlayer &6" + name + "&a has been removed from the map"));
                         }
                     }
                 }

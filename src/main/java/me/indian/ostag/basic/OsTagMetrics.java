@@ -20,7 +20,7 @@ public class OsTagMetrics {
     private final Server server = plugin.getServer();
     private final Config config = this.plugin.getConfig();
     private final PluginLogger logger = this.plugin.getLogger();
-    private final String debugPrefix = TextUtil.replaceColorCode(this.plugin.publicDebugPrefix + "&8[&dMetrics&8] ");
+    private final String debugPrefix = TextUtil.colorize(this.plugin.publicDebugPrefix + "&8[&dMetrics&8] ");
     private final Metrics metrics = new Metrics(this.plugin, 16838);
     public boolean enabled = this.metrics.isEnabled();
     public boolean isRunning;
@@ -29,17 +29,17 @@ public class OsTagMetrics {
         executorService.execute(() -> {
             try {
                 if (!this.enabled) {
-                    this.logger.info(TextUtil.replaceColorCode("&aMetrics is disabled"));
+                    this.logger.info(TextUtil.colorize("&aMetrics is disabled"));
                     this.isRunning = false;
                     Thread.currentThread().interrupt();
                     return;
                 }
                 this.customMetrics();
                 this.isRunning = true;
-                this.logger.info(TextUtil.replaceColorCode("&aLoaded Metrics"));
+                this.logger.info(TextUtil.colorize("&aLoaded Metrics"));
             } catch (final Exception e) {
                 this.isRunning = false;
-                this.logger.info(TextUtil.replaceColorCode("&cCan't load metrics"));
+                this.logger.info(TextUtil.colorize("&cCan't load metrics"));
                 if (this.plugin.debug) {
                     e.printStackTrace();
                 }

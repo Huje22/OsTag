@@ -6,7 +6,7 @@ import cn.nukkit.utils.TextFormat;
 
 public class TextUtil {
 
-    public static String replaceColorCode(final String msg) {
+    public static String colorize(final String msg) {
         return TextFormat.colorize('&', msg);
     }
 
