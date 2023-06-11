@@ -41,6 +41,7 @@ look [Contributing wiki page](https://github.com/OpenPlugins-Minecraft/OsTag/wik
 * Chat formating (with luckperms plugin support)
 * Many placeholders and PlaceholderAPI support
 * Easy to configure
+* AutoUpdate and Update checker
 * and many more...
 
 ----
