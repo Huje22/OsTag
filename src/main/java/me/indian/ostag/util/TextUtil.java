@@ -4,10 +4,19 @@ import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.utils.TextFormat;
 
+import java.util.List;
+
 public class TextUtil {
 
     public static String colorize(final String msg) {
         return TextFormat.colorize('&', msg);
+    }
+
+    public static String listToString(List<String> lista) {
+        if (lista == null) {
+            return "";
+        }
+        return String.join("\n", lista);
     }
 
     public static void sendMessageToAll(final String msg) {

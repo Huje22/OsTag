@@ -121,7 +121,6 @@ public class OsTag extends PluginBase {
         commandMap.register("s", new TestttCommand(this));
 
         if (this.osTag) {
-            pm.registerEvents(new OsTimer(), this);
             int refreshTime = this.getConfig().getInt("refresh-time");
             if (refreshTime <= 0) {
                 refreshTime = 1;

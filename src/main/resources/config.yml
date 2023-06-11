@@ -81,12 +81,34 @@ refresh-time: 1
 #
 #Normal Player
 nick: "%factions_faction% <unique_description><xp> <groupDisName> <dis_name> <suffix> <dimension> <version> "
-subtag: "%factions_faction% <device> | <controller> \n&eGroup display name: <groupDisName>\n&eDimension: <dimension>\n&eDevice Model: &r<model> \n&eGamemode: &r<gamemode>\n &eCooldown: &r<cooldown> \n&eCps: &r<cps>  &ePing: <ping> &eXp: <xp> \n&eGame Version: &r<version> \n\n&eXuid: &r<xuid>\n&eLanguage: &r<language>\n<health>/<max_health>&c❤"
+subtag:
+  - "%factions_faction% <device> | <controller> "
+  - "&eGroup display name: <groupDisName>"
+  - "&eDimension: <dimension>"
+  - "&eDevice Model: &r<model> "
+  - "&eGamemode: &r<gamemode>"
+  - "&eCooldown: &r<cooldown> "
+  - "&eCps: &r<cps>  &ePing: <ping> &eXp: <xp> "
+  - "&eGame Version: &r<version> "
+  - "&eXuid: &r<xuid>"
+  - "&eLanguage: &r<language>"
+  - "<health>/<max_health>&c❤"
 #
 #
 #Advanced Player
 a-nick: "%factions_faction% <unique_description><xp> <groupDisName> <dis_name> <suffix> <dimension> <version> "
-a-subtag: "%factions_faction% <device> | <controller> \n&eGroup display name: <groupDisName>\n&eDimension: <dimension> \n&eDevice Model: &r<model> \n&eGamemode: &r<gamemode>\n &eCooldown: &r<cooldown> \n&eCps: &r<cps>  &ePing: <ping> &eXp: <xp> \n&eGame Version: &r<version> \n\n&eXuid: &r<xuid>\n&eLanguage: &r<language>\n<health>/<max_health>&c❤"
+a-subtag:
+  - "%factions_faction% <device> | <controller>  "
+  - "&eGroup display name: <groupDisName>"
+  - "&eDimension: <dimension> "
+  - "&eDevice Model: &r<model> "
+  - "&eGamemode: &r<gamemode>"
+  - "&eCooldown: &r<cooldown> "
+  - "&eCps: &r<cps>  &ePing: <ping> &eXp: <xp> "
+  - "&eGame Version: &r<version> "
+  - "&eXuid: &r<xuid>"
+  - "&eLanguage: &r<language>"
+  - "<health>/<max_health>&c❤"
 advanced-players:
   - "ExamplePlayer"
 #
