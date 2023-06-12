@@ -37,7 +37,6 @@ public class OsTag extends PluginBase {
     public boolean chatFormatter;
     public boolean debug;
     public boolean upDatechecker;
-    private OsTagMetrics osTagMetrics;
     private UpDateUtil upDateUtil;
     private Formater formater;
     private LuckPerms luckPerms;
@@ -45,10 +44,6 @@ public class OsTag extends PluginBase {
 
     public static OsTag getInstance() {
         return instance;
-    }
-
-    public OsTagMetrics getOstagMetrics() {
-        return this.osTagMetrics;
     }
 
     public UpDateUtil getUpdateUtil() {
@@ -72,7 +67,6 @@ public class OsTag extends PluginBase {
         instance = this;
         this.saveDefaultConfig();
         this.upDateUtil = new UpDateUtil();
-        this.osTagMetrics = new OsTagMetrics();
         this.debug = this.getConfig().getBoolean("Debug");
         this.serverMovement = this.getConfig().getBoolean("movement-server");
         this.upDatechecker = this.getConfig().getBoolean("UpdateChecker");
@@ -141,7 +135,7 @@ public class OsTag extends PluginBase {
         this.pluginInfo("admin", this.getServer().getConsoleSender());
         this.info();
         this.getUpdateUtil().autoUpDate();
-        this.getOstagMetrics().run();
+        new OsTagMetrics().run();
 
         final double executionTimeInSeconds = (System.currentTimeMillis() - millisActualTime) / 1000.0;
         this.getLogger().info(TextUtil.colorize("&aStarted in &b" + executionTimeInSeconds + " &aseconds"));

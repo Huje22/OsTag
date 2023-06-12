@@ -79,25 +79,17 @@ public class Metrics {
     // The plugin
     private final Plugin plugin;
     // The plugin id
-    private final int pluginId;
+    private final int pluginId = 16838;
     // A list with all custom charts
     private final List<CustomChart> charts = new ArrayList<>();
     // Is bStats enabled on this server?
     private boolean enabled;
 
-    /**
-     * Class constructor.
-     *
-     * @param plugin   The plugin which stats should be submitted.
-     * @param pluginId The id of the plugin.
-     *                 It can be found at <a href="https://bstats.org/what-is-my-plugin-id">What is my plugin id?</a>
-     */
-    public Metrics(final Plugin plugin, final int pluginId) {
+    public Metrics(final Plugin plugin) {
         if (plugin == null) {
             throw new IllegalArgumentException("Plugin cannot be null!");
         }
         this.plugin = plugin;
-        this.pluginId = pluginId;
 
         try {
             this.loadConfig();

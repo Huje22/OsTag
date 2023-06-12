@@ -41,11 +41,4 @@ public class StatusUtil {
         return papiAndKotlinLib;
     }
 
-    public static String getMetrics() {
-        String metrics = fal;
-        if (plugin.getOstagMetrics().isRunning) {
-            metrics = tru;
-        }
-        return metrics;
-    }
 }
