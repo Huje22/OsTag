@@ -6,13 +6,13 @@ import cn.nukkit.utils.TextFormat;
 
 import java.util.List;
 
-public class TextUtil {
+public class MessageUtil {
 
     public static String colorize(final String msg) {
         return TextFormat.colorize('&', msg);
     }
 
-    public static String listToString(List<String> lista) {
+    public static String listToSpacedString(List<String> lista) {
         if (lista == null) {
             return "";
         }

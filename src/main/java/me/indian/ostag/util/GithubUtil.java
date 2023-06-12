@@ -18,32 +18,32 @@ public class GithubUtil {
     private static final PluginLogger logger = plugin.getLogger();
     private static final Map<Integer, String> versions = new TreeMap<>();
     private static final StringBuilder response = new StringBuilder();
-    private static final String debugPrefix = TextUtil.colorize(plugin.publicDebugPrefix + "&8[&dLatest tag&8] ");
+    private static final String debugPrefix = MessageUtil.colorize(plugin.publicDebugPrefix + "&8[&dLatest tag&8] ");
     private static final String current = OsTag.getInstance().getDescription().getVersion();
     private static final String errorMessage = "&cCan't get latest tag";
     private static final String latest = getLatestTag();
 
     public static String getFastTagInfo() {
         if (latest.equals(errorMessage)) {
-            return TextUtil.colorize(errorMessage);
+            return MessageUtil.colorize(errorMessage);
         }
         if (current.equals(latest)) {
-            return TextUtil.colorize("&etrue");
+            return MessageUtil.colorize("&etrue");
         } else {
-            return TextUtil.colorize("&4false");
+            return MessageUtil.colorize("&4false");
         }
     }
 
     public static String checkTagCompatibility() {
         String tag = "&aYou are running latest version";
         if (latest.equals(errorMessage)) {
-            return TextUtil.colorize(errorMessage);
+            return MessageUtil.colorize(errorMessage);
         }
         if (!current.equals(latest)) {
             tag = "&aNew update available, your version &b" + current + "&a latest version &b" + latest;
             // add /ostag update info
         }
-        return TextUtil.colorize(tag);
+        return MessageUtil.colorize(tag);
     }
 
     public static String getLatestTag() {
@@ -56,7 +56,7 @@ public class GithubUtil {
             final int responseCode = connection.getResponseCode();
             if (!(responseCode == HttpURLConnection.HTTP_OK)) {
                 if (plugin.debug) {
-                    logger.error(TextUtil.colorize(debugPrefix + "&cCan't get latest tag, HTTP response code: " + responseCode));
+                    logger.error(MessageUtil.colorize(debugPrefix + "&cCan't get latest tag, HTTP response code: " + responseCode));
                 }
                 return errorMessage;
             }
@@ -82,13 +82,13 @@ public class GithubUtil {
         final int index = getBehindIntCount(sender);
 
         if (index == -1) {
-            return TextUtil.colorize(" &5(&cBehind more than 10 version&5)");
+            return MessageUtil.colorize(" &5(&cBehind more than 10 version&5)");
         }
         if (index == 0) {
             return "";
         }
 
-        return TextUtil.colorize(" &5(&c" + index + " &dVersions behind&5)");
+        return MessageUtil.colorize(" &5(&c" + index + " &dVersions behind&5)");
     }
 
 

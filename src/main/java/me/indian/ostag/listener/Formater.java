@@ -10,7 +10,7 @@ import com.creeperface.nukkit.placeholderapi.api.PlaceholderAPI;
 import me.indian.ostag.OsTag;
 import me.indian.ostag.util.Permissions;
 import me.indian.ostag.util.PlayerInfoUtil;
-import me.indian.ostag.util.TextUtil;
+import me.indian.ostag.util.MessageUtil;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -53,14 +53,14 @@ public class Formater implements Listener {
                 event.setMessage(msg);
             }
             if (player.hasPermission(Permissions.ADMIN) || player.hasPermission(Permissions.COLORS) || config.getBoolean("and-for-all")) {
-                mess = TextUtil.colorize(event.getMessage());
+                mess = MessageUtil.colorize(event.getMessage());
             } else {
                 mess = event.getMessage();
             }
             event.setMessage(mess);
-            String messageFormat = TextUtil.colorize(config.getString("message-format"));
+            String messageFormat = MessageUtil.colorize(config.getString("message-format"));
             if (this.plugin.papiAndKotlinLib) {
-                messageFormat = this.api.translateString(TextUtil.colorize(config.getString("message-format")), player);
+                messageFormat = this.api.translateString(MessageUtil.colorize(config.getString("message-format")), player);
             }
             event.setFormat(PlayerInfoUtil.replaceAllInfo(player, messageFormat
                     .replace("<msg>", event.getMessage())
@@ -84,7 +84,7 @@ public class Formater implements Listener {
                 }
             }
             if (config.getBoolean("break-between-messages.enable")) {
-                Server.getInstance().getScheduler().scheduleDelayedTask(this.plugin, () -> TextUtil.sendMessageToAll(" "), 1);
+                Server.getInstance().getScheduler().scheduleDelayedTask(this.plugin, () -> MessageUtil.sendMessageToAll(" "), 1);
             }
         } else {
             final long cooldownTime = (time - (System.currentTimeMillis() - cooldown.get(uuid))) / this.second;
@@ -93,10 +93,10 @@ public class Formater implements Listener {
                 player.sendMessage(" ");
             }
 
-            String cooldownMessage = TextUtil.colorize(config.getString("cooldown.message")
+            String cooldownMessage = MessageUtil.colorize(config.getString("cooldown.message")
                     .replace("<left>", String.valueOf(cooldownTime)));
             if (this.plugin.papiAndKotlinLib) {
-                cooldownMessage = this.api.translateString(TextUtil.colorize(config.getString("cooldown.message")
+                cooldownMessage = this.api.translateString(MessageUtil.colorize(config.getString("cooldown.message")
                         .replace("<left>", String.valueOf(cooldownTime))), player);
             }
             player.sendMessage(cooldownMessage);
@@ -109,17 +109,17 @@ public class Formater implements Listener {
         final long time = this.plugin.getConfig().getLong("cooldown.delay") * this.second;
         long cooldownTime = 0;
         if (!config.getBoolean("cooldown.enable")) {
-            return TextUtil.colorize(config.getString("cooldown.disabled"));
+            return MessageUtil.colorize(config.getString("cooldown.disabled"));
         }
         if (cooldown.containsKey(uuid)) {
             cooldownTime = (time - (System.currentTimeMillis() - cooldown.get(uuid))) / this.second;
         }
         if (player.isOp() || player.hasPermission("ostag.admin")) {
-            return TextUtil.colorize(config.getString("cooldown.bypass"));
+            return MessageUtil.colorize(config.getString("cooldown.bypass"));
         }
         if (cooldownTime <= 0) {
             cooldown.remove(uuid);
-            return TextUtil.colorize(config.getString("cooldown.over"));
+            return MessageUtil.colorize(config.getString("cooldown.over"));
         }
         return String.valueOf(cooldownTime);
     }

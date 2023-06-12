@@ -12,12 +12,12 @@ public class TagAddUtil {
     private static final PlaceholderAPI api = plugin.getPlaceholderApi();
 
     public static void addDevNormal(final Player player) {
-        String subTag = TextUtil.colorize(TextUtil.listToString(config.getStringList("subtag")));
-        String nick = TextUtil.colorize(config.getString("nick"));
+        String subTag = MessageUtil.colorize(MessageUtil.listToSpacedString(config.getStringList("subtag")));
+        String nick = MessageUtil.colorize(config.getString("nick"));
 
         if (plugin.papiAndKotlinLib) {
-            subTag = api.translateString(TextUtil.colorize(subTag), player);
-            nick = api.translateString(TextUtil.colorize(nick), player);
+            subTag = api.translateString(MessageUtil.colorize(subTag), player);
+            nick = api.translateString(MessageUtil.colorize(nick), player);
         }
 
         if (plugin.nametag) {
@@ -29,12 +29,12 @@ public class TagAddUtil {
     }
 
     public static void addDevAdvanced(final Player player) {
-        String aSubTag = TextUtil.colorize(TextUtil.listToString(config.getStringList("a-subtag")));
-        String aNick = TextUtil.colorize(config.getString("a-nick"));
+        String aSubTag = MessageUtil.colorize(MessageUtil.listToSpacedString(config.getStringList("a-subtag")));
+        String aNick = MessageUtil.colorize(config.getString("a-nick"));
 
         if (plugin.papiAndKotlinLib) {
             aSubTag = api.translateString(aSubTag, player);
-            aNick = api.translateString(TextUtil.colorize(aNick), player);
+            aNick = api.translateString(MessageUtil.colorize(aNick), player);
         }
 
         if (plugin.nametag) {

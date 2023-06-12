@@ -45,19 +45,19 @@ public class PlayerInfoUtil {
     }
 
     public static String getDevice(final Player player) {
-        final String windows = TextUtil.colorize(config.getString("Windows"));
-        final String android = TextUtil.colorize(config.getString("Android"));
-        final String ios = TextUtil.colorize(config.getString("Ios"));
-        final String mac = TextUtil.colorize(config.getString("Mac"));
-        final String fire = TextUtil.colorize(config.getString("Fire"));
-        final String hololens = TextUtil.colorize(config.getString("Hololens"));
-        final String dedicated = TextUtil.colorize(config.getString("Dedicated"));
-        final String tvos = TextUtil.colorize(config.getString("TvOs"));
-        final String playstation = TextUtil.colorize(config.getString("PlayStation"));
-        final String nintendo = TextUtil.colorize(config.getString("Nintendo"));
-        final String xbox = TextUtil.colorize(config.getString("Xbox"));
-        final String linux = TextUtil.colorize(config.getString("Linux"));
-        final String unknown = TextUtil.colorize(config.getString("Unknown"));
+        final String windows = MessageUtil.colorize(config.getString("Windows"));
+        final String android = MessageUtil.colorize(config.getString("Android"));
+        final String ios = MessageUtil.colorize(config.getString("Ios"));
+        final String mac = MessageUtil.colorize(config.getString("Mac"));
+        final String fire = MessageUtil.colorize(config.getString("Fire"));
+        final String hololens = MessageUtil.colorize(config.getString("Hololens"));
+        final String dedicated = MessageUtil.colorize(config.getString("Dedicated"));
+        final String tvos = MessageUtil.colorize(config.getString("TvOs"));
+        final String playstation = MessageUtil.colorize(config.getString("PlayStation"));
+        final String nintendo = MessageUtil.colorize(config.getString("Nintendo"));
+        final String xbox = MessageUtil.colorize(config.getString("Xbox"));
+        final String linux = MessageUtil.colorize(config.getString("Linux"));
+        final String unknown = MessageUtil.colorize(config.getString("Unknown"));
 
         switch (player.getLoginChainData().getDeviceOS()) {
             case 1:
@@ -95,11 +95,11 @@ public class PlayerInfoUtil {
     }
 
     public static String getController(final Player player) {
-        final String motion_controller = TextUtil.colorize(config.getString("Motion_controller"));
-        final String touch = TextUtil.colorize(config.getString("Touch"));
-        final String keyboard = TextUtil.colorize(config.getString("Keyboard"));
-        final String pad = TextUtil.colorize(config.getString("Gamepad"));
-        final String unknowcon = TextUtil.colorize(config.getString("UnknownController"));
+        final String motion_controller = MessageUtil.colorize(config.getString("Motion_controller"));
+        final String touch = MessageUtil.colorize(config.getString("Touch"));
+        final String keyboard = MessageUtil.colorize(config.getString("Keyboard"));
+        final String pad = MessageUtil.colorize(config.getString("Gamepad"));
+        final String unknowcon = MessageUtil.colorize(config.getString("UnknownController"));
 
         if (plugin.serverMovement) {
             switch (InputListener.getController(player)) {
@@ -162,14 +162,14 @@ public class PlayerInfoUtil {
             xp = config.getString("35lvl") + playerXp;
         }
 
-        return TextUtil.colorize(xp);
+        return MessageUtil.colorize(xp);
     }
 
     public static String getGameMode(final Player player) {
-        final String survival = TextUtil.colorize(config.getString("survival"));
-        final String creative = TextUtil.colorize(config.getString("creative"));
-        final String adventure = TextUtil.colorize(config.getString("adventure"));
-        final String spectator = TextUtil.colorize(config.getString("spectator"));
+        final String survival = MessageUtil.colorize(config.getString("survival"));
+        final String creative = MessageUtil.colorize(config.getString("creative"));
+        final String adventure = MessageUtil.colorize(config.getString("adventure"));
+        final String spectator = MessageUtil.colorize(config.getString("spectator"));
 
         switch (player.getGamemode()) {
             case 1:
@@ -186,17 +186,17 @@ public class PlayerInfoUtil {
     }
 
     public static String getPing(final Player player) {
-        String ping = TextUtil.colorize("&r0");
+        String ping = MessageUtil.colorize("&r0");
         final int playerPing = player.getPing();
 
         if (playerPing >= 1) {
-            ping = TextUtil.colorize(config.getString("low-ping")) + playerPing;
+            ping = MessageUtil.colorize(config.getString("low-ping")) + playerPing;
         }
         if (playerPing >= 75) {
-            ping = TextUtil.colorize(config.getString("medium-ping")) + playerPing;
+            ping = MessageUtil.colorize(config.getString("medium-ping")) + playerPing;
         }
         if (playerPing >= 100) {
-            ping = TextUtil.colorize(config.getString("high-ping")) + playerPing;
+            ping = MessageUtil.colorize(config.getString("high-ping")) + playerPing;
         }
         return ping;
     }
@@ -210,7 +210,7 @@ public class PlayerInfoUtil {
                 pref = user.getCachedData().getMetaData().getPrefix();
             }
         }
-        return TextUtil.colorize(pref);
+        return MessageUtil.colorize(pref);
     }
 
     public static String getLuckPermSuffix(final Player player) {
@@ -222,7 +222,7 @@ public class PlayerInfoUtil {
                 suf = user.getCachedData().getMetaData().getSuffix();
             }
         }
-        return TextUtil.colorize(suf);
+        return MessageUtil.colorize(suf);
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -235,11 +235,11 @@ public class PlayerInfoUtil {
                 group = luckPerms.getGroupManager().getGroup(user.getPrimaryGroup()).getDisplayName();
             }
         }
-        return TextUtil.colorize(group);
+        return MessageUtil.colorize(group);
     }
 
     public static String getXuid(final Player player) {
-        String xuid = TextUtil.colorize(config.getString("guest"));
+        String xuid = MessageUtil.colorize(config.getString("guest"));
 
         if (player.getLoginChainData().getXUID() != null) {
             xuid = player.getLoginChainData().getXUID();
@@ -248,9 +248,9 @@ public class PlayerInfoUtil {
     }
 
     public static String getDimension(final Player player) {
-        final String overworld = TextUtil.colorize(config.getString("overworld"));
-        final String nether = TextUtil.colorize(config.getString("nether"));
-        final String end = TextUtil.colorize(config.getString("end"));
+        final String overworld = MessageUtil.colorize(config.getString("overworld"));
+        final String nether = MessageUtil.colorize(config.getString("nether"));
+        final String end = MessageUtil.colorize(config.getString("end"));
 
         switch (player.getLevel().getDimension()) {
             case 0:
@@ -272,7 +272,7 @@ public class PlayerInfoUtil {
             unique = config.getString("Players." + name + ".unique-description");
         }
 
-        return TextUtil.colorize(unique);
+        return MessageUtil.colorize(unique);
     }
 
     public static String getHealth(final Player player) {
