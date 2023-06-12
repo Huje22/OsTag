@@ -10,6 +10,7 @@ import cn.nukkit.command.data.CommandParameter;
 import cn.nukkit.scheduler.NukkitRunnable;
 import cn.nukkit.utils.Config;
 import me.indian.ostag.OsTag;
+import me.indian.ostag.basic.OsTagForm;
 import me.indian.ostag.util.Permissions;
 import me.indian.ostag.util.MessageUtil;
 
@@ -33,9 +34,13 @@ public class OsTagCommand extends Command {
         commandParameters.put("update", new CommandParameter[]{
                 CommandParameter.newEnum("update", new CommandEnum("update", "update"))
         });
-//        /ostag update
+//        /ostag version
         commandParameters.put("version", new CommandParameter[]{
                 CommandParameter.newEnum("version", new CommandEnum("version", "version"))
+        });
+//        /ostag menu
+        commandParameters.put("menu", new CommandParameter[]{
+                CommandParameter.newEnum("menu", new CommandEnum("menu", "menu"))
         });
 //        /ostag add <player>
         commandParameters.put("add", new CommandParameter[]{
@@ -51,8 +56,16 @@ public class OsTagCommand extends Command {
         final List<String> advancedPlayers = config.getStringList("advanced-players");
 
         if (args.length == 0) {
-            sender.sendMessage(MessageUtil.colorize("&aUsage &b/ostag &8[version , reload , add <player>, update]"));
+            sender.sendMessage(MessageUtil.colorize("&aUsage &b/ostag &8[version , reload , add <player>, update, menu]"));
             return false;
+        }
+        if (args[0].equalsIgnoreCase("menu")) {
+            if (sender instanceof Player) {
+                Player player = (Player) sender;
+                new OsTagForm(player).runOstagFrom();
+            } else {
+                sender.sendMessage(MessageUtil.colorize("&cThis command only is for a player!"));
+            }
         }
         if (args[0].equalsIgnoreCase("version") || args[0].equalsIgnoreCase("v")) {
             if (sender.hasPermission(Permissions.ADMIN)) {

@@ -5,7 +5,7 @@ import cn.nukkit.plugin.Plugin;
 import cn.nukkit.plugin.PluginLogger;
 import cn.nukkit.utils.Config;
 import me.indian.ostag.OsTag;
-import me.indian.ostag.util.TextUtil;
+import me.indian.ostag.util.MessageUtil;
 import me.indian.ostag.util.ThreadUtil;
 
 import java.util.HashMap;
@@ -27,14 +27,14 @@ public class OsTagMetrics {
         executorService.execute(() -> {
             try {
                 if (!this.enabled) {
-                    this.logger.info(TextUtil.colorize("&aMetrics is disabled"));
+                    this.logger.info(MessageUtil.colorize("&aMetrics is disabled"));
                     Thread.currentThread().interrupt();
                     return;
                 }
                 this.customMetrics();
-                this.logger.info(TextUtil.colorize("&aLoaded Metrics"));
+                this.logger.info(MessageUtil.colorize("&aLoaded Metrics"));
             } catch (final Exception e) {
-                this.logger.info(TextUtil.colorize("&cCan't load metrics"));
+                this.logger.info(MessageUtil.colorize("&cCan't load metrics"));
                 if (this.plugin.debug) {
                     e.printStackTrace();
                 }
@@ -130,7 +130,7 @@ public class OsTagMetrics {
 
             for (Map.Entry<String, Plugin> entry : pluginMap.entrySet()) {
                 final String key = entry.getKey();
-                if (key.equalsIgnoreCase("LuckPerms") || key.equalsIgnoreCase("PlaceholderAPI") || key.equalsIgnoreCase("KotlinLib")) {
+                if (key.equalsIgnoreCase("LuckPerms") || key.equalsIgnoreCase("PlaceholderAPI") || key.equalsIgnoreCase("KotlinLib") || key.equalsIgnoreCase("FormConstructor")) {
                     if (!valueMap.containsKey(key)) {
                         valueMap.put(key, 1);
                     }
