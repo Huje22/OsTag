@@ -63,6 +63,7 @@ public class OsTagCommand extends Command {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
                 new OsTagForm(player).runOstagFrom();
+                return false;
             } else {
                 sender.sendMessage(MessageUtil.colorize("&cThis command only is for a player!"));
             }

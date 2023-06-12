@@ -206,7 +206,7 @@ public class OsTagForm {
     private void scoreAndNameSettings() {
         final CustomForm form = new CustomForm("NameTag & ScoreTag Settings");
 
-        form.addElement(new Label(MessageUtil.colorize("&aTo start a new line use \"- \"")));
+        form.addElement(new Label(MessageUtil.colorize("&1&lTo start a new line use \"- \"")));
         form.addElement(new Label(MessageUtil.colorize("&lNormal player settings")));
         form.addElement("nick",
                         Input.builder()
