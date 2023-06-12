@@ -3,8 +3,9 @@ package me.indian.ostag.util;
 import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.utils.TextFormat;
-import me.indian.ostag.OsTag;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MessageUtil {
@@ -26,7 +27,15 @@ public class MessageUtil {
         if (lista == null) {
             return "";
         }
-        return String.join(" ", lista);
+        return String.join("- ", lista);
+    }
+
+
+    public static List<String> stringToList(String tekst) {
+        if (tekst == null || tekst.isEmpty()) {
+            return new ArrayList<>();
+        }
+        return Arrays.asList(tekst.split("- "));
     }
 
     public static void playerCommand(final Player player, final String command) {
