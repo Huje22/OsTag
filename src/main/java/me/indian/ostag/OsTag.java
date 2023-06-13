@@ -25,7 +25,6 @@ import net.luckperms.api.LuckPermsProvider;
 
 public class OsTag extends PluginBase {
 
-    private static OsTag instance;
     public String pluginPrefix = MessageUtil.colorize("&f[&bOsTag&f] ");
     public String publicDebugPrefix = MessageUtil.colorize("&8[&7Debug&8] ");
     public boolean luckPerm = false;
@@ -37,6 +36,8 @@ public class OsTag extends PluginBase {
     public boolean chatFormatter;
     public boolean debug;
     public boolean upDatechecker;
+    private static OsTag instance;
+    private OsTagCommand osTagCommand;
     private UpDateUtil upDateUtil;
     private Formater formater;
     private LuckPerms luckPerms;
@@ -44,6 +45,10 @@ public class OsTag extends PluginBase {
 
     public static OsTag getInstance() {
         return instance;
+    }
+
+    public OsTagCommand getOsTagCommand(){
+        return this.osTagCommand;
     }
 
     public UpDateUtil getUpdateUtil() {
@@ -66,6 +71,7 @@ public class OsTag extends PluginBase {
     public void onLoad() {
         instance = this;
         this.saveDefaultConfig();
+        this.osTagCommand = new OsTagCommand(this);
         this.upDateUtil = new UpDateUtil();
         this.debug = this.getConfig().getBoolean("Debug");
         this.serverMovement = this.getConfig().getBoolean("movement-server");

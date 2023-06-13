@@ -10,7 +10,7 @@ import cn.nukkit.command.data.CommandParameter;
 import cn.nukkit.scheduler.NukkitRunnable;
 import cn.nukkit.utils.Config;
 import me.indian.ostag.OsTag;
-import me.indian.ostag.basic.OsTagForm;
+import me.indian.ostag.froms.Form;
 import me.indian.ostag.util.Permissions;
 import me.indian.ostag.util.MessageUtil;
 
@@ -20,7 +20,8 @@ import java.util.List;
 public class OsTagCommand extends Command {
 
     private final OsTag plugin;
-    private final List<String> confirmations = new ArrayList<>();
+    private final List<String> confirmations;
+    private String lastException = "";
 
     public OsTagCommand(final OsTag plugin) {
         super("ostag", "ostag management");
@@ -48,6 +49,7 @@ public class OsTagCommand extends Command {
                 CommandParameter.newType("add", CommandParamType.TARGET)
         });
         this.plugin = plugin;
+        this.confirmations = new ArrayList<>();
     }
 
     @Override
@@ -62,7 +64,7 @@ public class OsTagCommand extends Command {
         if (args[0].equalsIgnoreCase("menu")) {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
-                new OsTagForm(player).runOstagFrom();
+                new Form(player).runOstagFrom();
                 return false;
             } else {
                 sender.sendMessage(MessageUtil.colorize("&cThis command only is for a player!"));
@@ -109,22 +111,32 @@ public class OsTagCommand extends Command {
                 }
             }
             if (args[0].equalsIgnoreCase("reload") || args[0].equalsIgnoreCase("r")) {
-                try {
-                    final long millisActualTime = System.currentTimeMillis();
-                    config.reload();
-                    sender.sendMessage(MessageUtil.colorize("&aConfig Reloaded"));
-                    final long executionTime = System.currentTimeMillis() - millisActualTime;
-                    sender.sendMessage(MessageUtil.colorize("&aReloaded in &b" + executionTime + " &ams"));
-                } catch (final Exception exception) {
-                    sender.sendMessage(MessageUtil.colorize("&cCan't reload config , check console to see error"));
-                    this.plugin.getLogger().error(exception.getMessage());
-                }
+                reloadConfig(sender);
             }
             config.save();
         } else {
             sender.sendMessage(MessageUtil.colorize("&cYou don't have permissions"));
         }
         return false;
+    }
+
+    public String getLastException(){
+        return this.lastException;
+    }
+
+    public void reloadConfig(final  CommandSender sender){
+        try {
+            final long millisActualTime = System.currentTimeMillis();
+            plugin.getConfig().reload();
+            sender.sendMessage(MessageUtil.colorize("&aConfig Reloaded"));
+            final long executionTime = System.currentTimeMillis() - millisActualTime;
+            this.lastException = "";
+            sender.sendMessage(MessageUtil.colorize("&aReloaded in &b" + executionTime + " &ams"));
+        } catch (final Exception exception) {
+            sender.sendMessage(MessageUtil.colorize("&cCan't reload config , check console or reload menu to see error"));
+            this.lastException = exception.getMessage();
+            this.plugin.getLogger().error(exception.getMessage());
+        }
     }
 
     private void timeRemove(final CommandSender sender) {
