@@ -11,8 +11,8 @@ import cn.nukkit.scheduler.NukkitRunnable;
 import cn.nukkit.utils.Config;
 import me.indian.ostag.OsTag;
 import me.indian.ostag.froms.Form;
-import me.indian.ostag.util.Permissions;
 import me.indian.ostag.util.MessageUtil;
+import me.indian.ostag.util.Permissions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -120,11 +120,11 @@ public class OsTagCommand extends Command {
         return false;
     }
 
-    public String getLastException(){
+    public String getLastException() {
         return this.lastException;
     }
 
-    public void reloadConfig(final  CommandSender sender){
+    public void reloadConfig(final CommandSender sender) {
         try {
             final long millisActualTime = System.currentTimeMillis();
             plugin.getConfig().reload();

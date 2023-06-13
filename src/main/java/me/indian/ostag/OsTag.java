@@ -16,15 +16,16 @@ import me.indian.ostag.listener.InputListener;
 import me.indian.ostag.listener.PlayerJoinListener;
 import me.indian.ostag.runnnable.OsTimer;
 import me.indian.ostag.util.GithubUtil;
+import me.indian.ostag.util.MessageUtil;
 import me.indian.ostag.util.PlayerInfoUtil;
 import me.indian.ostag.util.StatusUtil;
-import me.indian.ostag.util.MessageUtil;
 import me.indian.ostag.util.UpDateUtil;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 
 public class OsTag extends PluginBase {
 
+    private static OsTag instance;
     public String pluginPrefix = MessageUtil.colorize("&f[&bOsTag&f] ");
     public String publicDebugPrefix = MessageUtil.colorize("&8[&7Debug&8] ");
     public boolean luckPerm = false;
@@ -36,7 +37,6 @@ public class OsTag extends PluginBase {
     public boolean chatFormatter;
     public boolean debug;
     public boolean upDatechecker;
-    private static OsTag instance;
     private OsTagCommand osTagCommand;
     private UpDateUtil upDateUtil;
     private Formater formater;
@@ -47,7 +47,7 @@ public class OsTag extends PluginBase {
         return instance;
     }
 
-    public OsTagCommand getOsTagCommand(){
+    public OsTagCommand getOsTagCommand() {
         return this.osTagCommand;
     }
 
@@ -117,7 +117,7 @@ public class OsTag extends PluginBase {
         }
 
         final CommandMap commandMap = this.getServer().getCommandMap();
-        commandMap.register("OsTag", new OsTagCommand(this));
+        commandMap.register("OsTag", this.getOsTagCommand());
         commandMap.register("OsTag", new TestttCommand(this));
 
         if (this.osTag) {
@@ -133,7 +133,7 @@ public class OsTag extends PluginBase {
             this.getLogger().info(MessageUtil.colorize("&bOsTag module is disabled "));
         }
         if (this.chatFormatter) {
-            pm.registerEvents(new Formater(this, this.getPlaceholderApi()), this);
+            pm.registerEvents(this.getFormater(), this);
         } else {
             this.getLogger().info(MessageUtil.colorize("&bChatFormatter module is disabled"));
         }

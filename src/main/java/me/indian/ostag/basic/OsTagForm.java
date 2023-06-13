@@ -21,10 +21,10 @@ import java.util.List;
 
 public class OsTagForm {
 
+    final List<String> advancedPlayers;
     private final OsTag plugin;
     private final Config config;
     private final Player player;
-    final List<String> advancedPlayers;
 
     public OsTagForm(final Player player) {
         this.player = player;
@@ -35,7 +35,7 @@ public class OsTagForm {
 
 
     public void runOstagFrom() {
-        if(plugin.getServer().getPluginManager().getPlugin("FormConstructor") == null){
+        if (plugin.getServer().getPluginManager().getPlugin("FormConstructor") == null) {
             String error = MessageUtil.colorize("&cYou dont have &bFormConstructor &b plugin !");
             String error2 = MessageUtil.colorize("&cDownload it from here &bhttps://github.com/OpenPlugins-Minecraft/OsTag/tree/main/libs!");
             plugin.getLogger().error(error);

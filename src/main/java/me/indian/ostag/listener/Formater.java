@@ -8,9 +8,9 @@ import cn.nukkit.event.player.PlayerChatEvent;
 import cn.nukkit.utils.Config;
 import com.creeperface.nukkit.placeholderapi.api.PlaceholderAPI;
 import me.indian.ostag.OsTag;
+import me.indian.ostag.util.MessageUtil;
 import me.indian.ostag.util.Permissions;
 import me.indian.ostag.util.PlayerInfoUtil;
-import me.indian.ostag.util.MessageUtil;
 
 import java.util.HashMap;
 import java.util.UUID;
