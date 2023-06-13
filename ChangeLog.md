@@ -201,7 +201,8 @@ Removed Prefixes interface because is un necessary, now we have ReplaceUtil (sin
 **1.5.7** <br/>
 
 __Naming changes__: <br/>
-New thing (Since x.x.x)  <br/>
+From `and-for-all` to `And-for-all` (Since 1.5.7.3)  <br/>
+From `movement-server` to `Movement-server` (Since 1.5.7.3)  <br/>
 
 __New things__: <br/>
 Info how many kb have been downloaded on the download percentage (Since 1.5.7.1)  <br/>

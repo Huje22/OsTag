@@ -124,7 +124,7 @@ message-format: "%factions_faction% <dimension> <cps> <food>/<max_food> <preffix
 #
 #
 #If this option set to true everyone can use & by default instead of §
-and-for-all: false
+And-for-all: false
 #
 #
 #break between messages, why? so that the emotes you give players will be visible if they are 16x16 [exparimental]
