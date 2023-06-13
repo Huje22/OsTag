@@ -62,7 +62,7 @@ ChatFormatter: true
 #
 #
 #if you use server-authoritative-movement=client-auth in powernukkitx, set this to false
-movement-server: true
+Movement-server: true
 #
 #Public plugin debug
 Debug: false

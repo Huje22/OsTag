@@ -74,7 +74,7 @@ public class OsTag extends PluginBase {
         this.osTagCommand = new OsTagCommand(this);
         this.upDateUtil = new UpDateUtil();
         this.debug = this.getConfig().getBoolean("Debug");
-        this.serverMovement = this.getConfig().getBoolean("movement-server");
+        this.serverMovement = this.getConfig().getBoolean("Movement-server");
         this.upDatechecker = this.getConfig().getBoolean("UpdateChecker");
         this.osTag = this.getConfig().getBoolean("OsTag");
         this.chatFormatter = this.getConfig().getBoolean("ChatFormatter");
