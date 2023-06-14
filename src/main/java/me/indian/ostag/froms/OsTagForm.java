@@ -105,11 +105,10 @@ public class OsTagForm {
             }
 
             final String playerName = response.getInput("add_player").getValue();
-            if (!playerName.isEmpty()) {
-                if (!playerName.equalsIgnoreCase("ExamplePlayer")) {
-                    advancedPlayers.add(playerName);
+             if (!playerName.isEmpty() && !playerName.equalsIgnoreCase("ExamplePlayer")) {
+            advancedPlayers.add(playerName);
                 }
-            }
+           
 
             config.set("advanced-players", advancedPlayers);
             config.save();
