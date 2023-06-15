@@ -1,4 +1,4 @@
-package me.indian.ostag.froms;
+package me.indian.ostag.from;
 
 import cn.nukkit.Player;
 import cn.nukkit.utils.Config;
@@ -8,6 +8,7 @@ import ru.contentforge.formconstructor.form.CustomForm;
 import ru.contentforge.formconstructor.form.SimpleForm;
 import ru.contentforge.formconstructor.form.element.ImageType;
 import ru.contentforge.formconstructor.form.element.Input;
+import ru.contentforge.formconstructor.form.element.Label;
 import ru.contentforge.formconstructor.form.element.Toggle;
 
 public class FormatterForm {
@@ -27,7 +28,7 @@ public class FormatterForm {
     public void formatterSettings() {
         final SimpleForm form = new SimpleForm("Formatter Settings");
 
-        form.addButton("Message Format", ImageType.PATH, "textures/ui/text_color_paintbrush", (p, button) -> messageFormatSettings())
+        form.addButton("Chat Format", ImageType.PATH, "textures/ui/text_color_paintbrush", (p, button) -> messageFormatSettings())
                 .addButton("Cooldown", ImageType.PATH, "textures/ui/timer", (p, button) -> cooldownSettings());
 
         this.mainForm.addCloseButton(form);
@@ -36,23 +37,40 @@ public class FormatterForm {
     }
 
     private void messageFormatSettings() {
-        final CustomForm form = new CustomForm("Cooldown Settings");
+        final CustomForm form = new CustomForm("Chat Format");
+        final boolean andForAll = config.getBoolean("And-for-all");
+        final boolean breaksBetweenMessages = config.getBoolean("break-between-messages.enable");
 
         form.addElement("message_format",
-                Input.builder()
-                        .setName(MessageUtil.colorize("&lMessage format"))
-                        .setDefaultValue(config.getString("message-format"))
-                        .build());
+                        Input.builder()
+                                .setName(MessageUtil.colorize("&lMessage format"))
+                                .setDefaultValue(config.getString("message-format"))
+                                .build())
+                .addElement(new Label(MessageUtil.colorize("&lAdditional chat features")))
+                .addElement("and-for-all", new Toggle("And for all", andForAll))
+                .addElement("breaks", new Toggle("Breaks between messages", breaksBetweenMessages));
 
         form.setHandler((p, response) -> {
-            if (!response.getInput("message_format").getValue().isEmpty()) {
-                config.set("message-format", response.getInput("message_format").getValue());
-                config.save();
-                p.sendMessage(MessageUtil.colorize("&aSaved changes"));
+            final String messageFormat = response.getInput("message_format").getValue();
+            if (!messageFormat.isEmpty()) {
+                config.set("message-format", messageFormat);
             }
+
+            final boolean finalAndForAll = response.getToggle("and-for-all").getValue();
+            if (finalAndForAll != andForAll) {
+                config.set("And-for-all", finalAndForAll);
+            }
+
+            final boolean finalBreaksBetweenMessages = response.getToggle("breaks").getValue();
+            if (finalBreaksBetweenMessages != breaksBetweenMessages) {
+                config.set("break-between-messages.enable", finalBreaksBetweenMessages);
+            }
+
+            config.save();
+            p.sendMessage(MessageUtil.colorize("&aSaved changes"));
+
             formatterSettings();
         });
-
         form.setNoneHandler(p -> formatterSettings());
         form.send(player);
     }
@@ -62,7 +80,6 @@ public class FormatterForm {
         final boolean enabled = config.getBoolean("cooldown.enable");
 
         form.addElement("cooldown_enable", new Toggle("Cooldown", enabled));
-
 
         if (enabled) {
             form.addElement("delay",

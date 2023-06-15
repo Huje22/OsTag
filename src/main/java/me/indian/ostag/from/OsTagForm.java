@@ -1,4 +1,4 @@
-package me.indian.ostag.froms;
+package me.indian.ostag.from;
 
 import cn.nukkit.Player;
 import cn.nukkit.level.Level;
@@ -48,16 +48,15 @@ public class OsTagForm {
         final CustomForm form = new CustomForm("Advanced players settings");
 
         form.addElement(new Label(MessageUtil.colorize("&lOnline Players")));
-        for (Player all : plugin.getServer().getOnlinePlayers().values()) {
+        for (final Player all : plugin.getServer().getOnlinePlayers().values()) {
             form.addElement("online_players_toggle_" + all.getName(), new Toggle(all.getName(), this.mainForm.isAdvancedPlayer(all.getName())));
         }
 
         if (!advancedPlayers.isEmpty()) {
-
             form.addElement(new Label(MessageUtil.colorize("&lAdvanced Players")));
         }
-        for (String playerXName : advancedPlayers) {
-            if (this.mainForm.online(playerXName)) {
+        for (final String playerXName : advancedPlayers) {
+            if (this.mainForm.onlineByName(playerXName)) {
                 continue;
             }
             form.addElement("advanced_players_toggle_" + playerXName, new Toggle(playerXName, this.mainForm.isAdvancedPlayer(playerXName)));
@@ -73,22 +72,23 @@ public class OsTagForm {
 
         form.setHandler((p, response) -> {
             for (Player all : plugin.getServer().getOnlinePlayers().values()) {
-                if (response.getToggle("online_players_toggle_" + all.getName()).getValue()) {
-                    if (this.mainForm.isAdvancedPlayer(all.getName())) {
+                final String name = all.getName();
+                if (response.getToggle("online_players_toggle_" + name).getValue()) {
+                    if (this.mainForm.isAdvancedPlayer(name)) {
                         continue;
                     }
-                    advancedPlayers.add(all.getName());
+                    advancedPlayers.add(name);
                 } else {
-                    if (!this.mainForm.isAdvancedPlayer(all.getName())) {
+                    if (!this.mainForm.isAdvancedPlayer(name)) {
                         continue;
                     }
-                    advancedPlayers.remove(all.getName());
+                    advancedPlayers.remove(name);
                 }
             }
 
             for (int i = 0; i < advancedPlayers.size(); i++) {
-                String playerXName = advancedPlayers.get(i);
-                if (this.mainForm.online(playerXName)) {
+                final String playerXName = advancedPlayers.get(i);
+                if (this.mainForm.onlineByName(playerXName)) {
                     continue;
                 }
                 if (response.getToggle("advanced_players_toggle_" + playerXName).getValue()) {
@@ -105,10 +105,9 @@ public class OsTagForm {
             }
 
             final String playerName = response.getInput("add_player").getValue();
-             if (!playerName.isEmpty() && !playerName.equalsIgnoreCase("ExamplePlayer")) {
-            advancedPlayers.add(playerName);
-                }
-           
+            if (!playerName.isEmpty() && !playerName.equalsIgnoreCase("ExamplePlayer")) {
+                advancedPlayers.add(playerName);
+            }
 
             config.set("advanced-players", advancedPlayers);
             config.save();
@@ -191,9 +190,7 @@ public class OsTagForm {
         final List<String> finalDis = new ArrayList<>(disabledWorlds);
 
         form.setHandler((p, response) -> {
-            for (int i = 0; i < disabledWorlds.size(); i++) {
-                final String world = disabledWorlds.get(i);
-
+            for (final String world : disabledWorlds) {
                 if (response.getToggle("disabled_world_" + world).getValue()) {
                     finalDis.add(world);
                 } else {
@@ -213,10 +210,8 @@ public class OsTagForm {
             }
 
             final String worldName = response.getInput("add_world").getValue();
-            if (!worldName.isEmpty()) {
-                if (!worldName.equalsIgnoreCase("ExampleWorld")) {
-                    finalDis.add(response.getInput("add_world").getValue());
-                }
+            if (!worldName.isEmpty() && !worldName.equalsIgnoreCase("ExampleWorld")) {
+                finalDis.add(response.getInput("add_world").getValue());
             }
 
             disabledWorlds = finalDis;

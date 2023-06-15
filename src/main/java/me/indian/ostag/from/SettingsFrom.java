@@ -1,4 +1,4 @@
-package me.indian.ostag.froms;
+package me.indian.ostag.from;
 
 import cn.nukkit.Player;
 import cn.nukkit.utils.Config;

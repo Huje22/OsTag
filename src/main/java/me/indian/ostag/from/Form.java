@@ -1,4 +1,4 @@
-package me.indian.ostag.froms;
+package me.indian.ostag.from;
 
 import cn.nukkit.Player;
 import cn.nukkit.Server;
@@ -32,13 +32,13 @@ public class Form {
     }
 
     public void runOstagFrom() {
-        if (plugin.getServer().getPluginManager().getPlugin("FormConstructor") == null) {
-            String error = MessageUtil.colorize("&cYou dont have &bFormConstructor &b plugin !");
-            String error2 = MessageUtil.colorize("&cDownload it from here &bhttps://github.com/OpenPlugins-Minecraft/OsTag/tree/main/libs!");
-            plugin.getLogger().error(error);
-            plugin.getLogger().error(error2);
-            player.sendMessage(error);
-            player.sendMessage(error2);
+        if(!plugin.formConstructor) {
+            if (player.isOp()) {
+                player.sendMessage(MessageUtil.colorize("&cYou don't have &bFormConstructor&b plugin !"));
+                player.sendMessage(MessageUtil.colorize("&cDownload it from here &bhttps://github.com/OpenPlugins-Minecraft/OsTag/tree/main/libs!"));
+            } else {
+                player.sendMessage(MessageUtil.colorize("&cYThis server don't have &bFormConstructor&b plugin !"));
+            }
             return;
         }
 
@@ -57,7 +57,7 @@ public class Form {
         form.send(player);
     }
 
-    public void versionInfo() {
+    private void versionInfo() {
         final SimpleForm form = new SimpleForm("Version info");
 
         final PluginDescription descriptor = plugin.getDescription();
@@ -85,6 +85,7 @@ public class Form {
                     .addContent(MessageUtil.colorize("&1Plugins" + "\n"))
                     .addContent(MessageUtil.colorize("&aLuckPerms&3: " + StatusUtil.getLuckPermStatus() + "\n"))
                     .addContent(MessageUtil.colorize("&aKotlinLib & PlaceholderAPI&3: " + StatusUtil.getKotOrPapiStatus() + "\n"))
+                    .addContent(MessageUtil.colorize("&aFormConstructor&3: " + StatusUtil.getFormConstructor() + "\n"))
                     .addContent(MessageUtil.colorize(" " + "\n"));
         } else {
             form.addContent(MessageUtil.colorize("&aOsTag version:&3 " + pluginVersion + "\n"))
@@ -100,11 +101,12 @@ public class Form {
 
         form.addButton(MessageUtil.colorize("Run &7/ostag version"), (p, button) -> MessageUtil.playerCommand(player, "ostag version"));
 
+        this.addCloseButton(form);
         form.setNoneHandler(p -> runOstagFrom());
         form.send(player);
     }
 
-    public void reloadConfig() {
+    private void reloadConfig() {
         final SimpleForm form = new SimpleForm("Reload Config");
         final String lastException = plugin.getOsTagCommand().getLastException();
 
@@ -125,7 +127,7 @@ public class Form {
         form.send(player);
     }
 
-    public void upDate() {
+    private void upDate() {
         final SimpleForm form = new SimpleForm("UpDate menu");
 
         if (GithubUtil.getFastTagInfo().contains("false")) {
@@ -133,7 +135,7 @@ public class Form {
                     .addButton("UpDate", ImageType.PATH, "textures/ui/up_chevron", (p, button) -> plugin.getUpdateUtil().manualUpDate(player));
         } else {
             if (!GithubUtil.getFastTagInfo().contains("true")) {
-                form.setContent(MessageUtil.colorize("&aYou can't download lates"))
+                form.setContent(MessageUtil.colorize("&cYou can't download latest version"))
                         .addButton("Force UpDate", ImageType.PATH, "textures/ui/ErrorGlyph_small", (p, button) -> plugin.getUpdateUtil().manualUpDate(player));
             } else {
                 form.setContent(MessageUtil.colorize("&aYou have latest version!"));
@@ -145,24 +147,11 @@ public class Form {
         form.send(player);
     }
 
-    public void test() {
-        final SimpleForm form = new SimpleForm("Sample title");
-        form.setContent("This is a text")
-                .addContent("\nThis is addition :3")
-                .addButton("Test1", ImageType.PATH, "textures/ui/settings_glyph_color_2x", (p, button) -> p.sendMessage(String.valueOf(button.index)))
-                .addButton("Test2", ImageType.PATH, "textures/ui/icon_setting", (p, button) -> p.sendMessage(String.valueOf(button.index)))
-                .addButton("Test3", ImageType.PATH, "textures/ui/refresh", (p, button) -> p.sendMessage(String.valueOf(button.index)))
-                .addButton("Test4", ImageType.PATH, "textures/ui/refresh_light", (p, button) -> p.sendMessage(String.valueOf(button.index)));
-
-        form.setNoneHandler(p -> runOstagFrom());
-        form.send(player);
-    }
-
     public void addCloseButton(final SimpleForm form) {
         form.addButton("Close", ImageType.PATH, "textures/ui/redX1", null);
     }
 
-    public boolean online(final String name) {
+    public boolean onlineByName(final String name) {
         final Player player = plugin.getServer().getPlayer(name);
         return player != null;
     }
@@ -177,5 +166,18 @@ public class Form {
 
     public SettingsFrom getSettings() {
         return this.settings;
+    }
+
+    public void test() {
+        final SimpleForm form = new SimpleForm("Sample title");
+        form.setContent("This is a text")
+                .addContent("\nThis is addition :3")
+                .addButton("Test1", ImageType.PATH, "textures/ui/settings_glyph_color_2x", (p, button) -> p.sendMessage(String.valueOf(button.index)))
+                .addButton("Test2", ImageType.PATH, "textures/ui/icon_setting", (p, button) -> p.sendMessage(String.valueOf(button.index)))
+                .addButton("Test3", ImageType.PATH, "textures/ui/refresh", (p, button) -> p.sendMessage(String.valueOf(button.index)))
+                .addButton("Test4", ImageType.PATH, "textures/ui/refresh_light", (p, button) -> p.sendMessage(String.valueOf(button.index)));
+
+        form.setNoneHandler(p -> runOstagFrom());
+        form.send(player);
     }
 }
