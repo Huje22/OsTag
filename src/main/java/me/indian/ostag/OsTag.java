@@ -30,6 +30,7 @@ public class OsTag extends PluginBase {
     public String publicDebugPrefix = MessageUtil.colorize("&8[&7Debug&8] ");
     public boolean luckPerm = false;
     public boolean papiAndKotlinLib = false;
+    public boolean formConstructor = false;
     public boolean serverMovement;
     public boolean nametag;
     public boolean scoreTag;
@@ -105,6 +106,13 @@ public class OsTag extends PluginBase {
             this.papiAndKotlinLib = true;
             this.registerPlaceholders();
         }
+        if (pm.getPlugin("FormConstructor") == null) {
+            this.getLogger().error(MessageUtil.colorize("&cYou don't have &bFormConstructor &b plugin !"));
+            this.getLogger().error(MessageUtil.colorize("&cDownload it from here &bhttps://github.com/OpenPlugins-Minecraft/OsTag/tree/main/libs!"));
+        } else {
+            formConstructor = true;
+        }
+
         this.formater = new Formater(this, this.getPlaceholderApi());
         if (this.getConfig().getBoolean("Disable")) {
             this.getLogger().warning(MessageUtil.colorize("&4Disabling plugin due to disable in config"));
@@ -175,6 +183,7 @@ public class OsTag extends PluginBase {
                 sender.sendMessage(MessageUtil.colorize("&1Plugins"));
                 sender.sendMessage(MessageUtil.colorize("&aLuckPerms&3: " + StatusUtil.getLuckPermStatus()));
                 sender.sendMessage(MessageUtil.colorize("&aKotlinLib & PlaceholderAPI&3: " + StatusUtil.getKotOrPapiStatus()));
+                sender.sendMessage(MessageUtil.colorize("&aFormConstructor&3: " + StatusUtil.getFormConstructor()));
                 sender.sendMessage(MessageUtil.colorize(" "));
                 sender.sendMessage(MessageUtil.colorize("&b-------------------------------"));
                 break;

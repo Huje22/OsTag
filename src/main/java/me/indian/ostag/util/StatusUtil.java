@@ -41,4 +41,11 @@ public class StatusUtil {
         return papiAndKotlinLib;
     }
 
+    public static String getFormConstructor() {
+        String formConstructor = fal;
+        if (plugin.formConstructor) {
+            formConstructor = tru;
+        }
+        return formConstructor;
+    }
 }
