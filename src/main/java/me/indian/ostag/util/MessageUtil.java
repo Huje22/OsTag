@@ -48,7 +48,7 @@ public class MessageUtil {
 
     public static void sendMessageToAll(final String msg) {
         for (final Player all : server.getOnlinePlayers().values()) {
-            all.sendMessage(msg);
+            all.sendMessage(colorize(msg));
         }
     }
 }
