@@ -41,6 +41,7 @@ public class GithubUtil {
         }
         if (!current.equals(latest)) {
             tag = "&aNew update available, your version &b" + current + "&a latest version &b" + latest;
+            plugin.getUpdateUtil().setDownloadStatus(MessageUtil.colorize("&aYou can download latest version"));
             // add /ostag update info
         }
         return MessageUtil.colorize(tag);

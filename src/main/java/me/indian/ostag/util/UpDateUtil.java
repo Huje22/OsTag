@@ -21,6 +21,7 @@ public class UpDateUtil {
     private final OsTag plugin = OsTag.getInstance();
     private final PluginLogger logger = this.plugin.getLogger();
     private final Config config = this.plugin.getConfig();
+    private String downloadStatus = "";
     private final String debugPrefix = MessageUtil.colorize(this.plugin.publicDebugPrefix + "&8[&dAutoUpdate&8] ");
     private final String pluginsPath = Server.getInstance().getPluginPath();
     private final String latestVersion = GithubUtil.getLatestTag();
@@ -42,6 +43,7 @@ public class UpDateUtil {
     }
 
     private void upDate(final CommandSender sender) {
+        this.downloadStatus = "";
         this.executorService.execute(() -> {
             if (GithubUtil.getFastTagInfo().contains("false")) {
                 final File latest = new File(this.pluginsPath + "/" + this.latestFileName);
@@ -49,9 +51,11 @@ public class UpDateUtil {
 
                 if (current.exists() && latest.exists()) {
                     if (!this.currentVersion.equals(this.latestVersion)) {
-                        this.logger.info(MessageUtil.colorize("&cYou have downloaded the latest version but you are not using it"));
+                        final String notUsingLatest = MessageUtil.colorize("&cYou have downloaded the latest version but you are not using it");
+                        this.downloadStatus = notUsingLatest;
+                        this.logger.info(notUsingLatest);
                         if (sender instanceof Player) {
-                            sender.sendMessage(MessageUtil.colorize("&cYou have downloaded the latest version but you are not using it"));
+                            sender.sendMessage(notUsingLatest);
                         }
                         Thread.currentThread().interrupt();
                         return;
@@ -62,11 +66,13 @@ public class UpDateUtil {
                     this.downloadLatestVersion(sender);
                 }
             } else {
+                final String unNecessaryNotPossible = MessageUtil.colorize("&aDownloading the latest version is unnecessary or not possible");
+                this.downloadStatus = unNecessaryNotPossible;
                 if (this.plugin.debug) {
-                    this.logger.info(MessageUtil.colorize(this.debugPrefix + "&aDownloading the latest version is unnecessary or not possible"));
+                    this.logger.info(MessageUtil.colorize(this.debugPrefix) + unNecessaryNotPossible);
                 }
-                if (sender != null) {
-                    sender.sendMessage(MessageUtil.colorize("&aDownloading the latest version is unnecessary or not possible"));
+                if (sender instanceof Player) {
+                    sender.sendMessage(unNecessaryNotPossible);
                 }
                 Thread.currentThread().interrupt();
             }
@@ -108,6 +114,7 @@ public class UpDateUtil {
                     if (this.plugin.debug) {
                         this.logger.info(this.debugPrefix + progressMsg);
                     }
+                    this.downloadStatus = progressMsg;
                     if (sender instanceof Player) {
                         ((Player) sender).sendActionBar(this.plugin.pluginPrefix + progressMsg);
                     }
@@ -117,9 +124,11 @@ public class UpDateUtil {
                 inputStream.close();
 
                 if (totalBytesRead != contentLength) {
-                    this.logger.warning(MessageUtil.colorize("&cDownload failed: Incomplete download"));
+                    final String badDownload = MessageUtil.colorize("&cDownload failed: Incomplete download");
+                    this.downloadStatus = badDownload;
+                    this.logger.warning(badDownload);
                     if (sender instanceof Player) {
-                        sender.sendMessage(MessageUtil.colorize("&cDownload failed: Incomplete download"));
+                        sender.sendMessage(badDownload);
                         sender.sendMessage(MessageUtil.colorize("&aTrying to redownload"));
                     }
                     this.reDownload(sender);
@@ -131,8 +140,11 @@ public class UpDateUtil {
                 if (sender instanceof Player) {
                     sender.sendMessage(MessageUtil.colorize("&aDownload completed in &b" + executionTimeInSeconds + " &aseconds"));
                 }
+                this.downloadStatus = "&aDownloaded";
             } else {
-                this.logger.warning(MessageUtil.colorize("&cThe file could not be used. HTTP response code:" + responseCode));
+                final String incorrectResponse = MessageUtil.colorize("&cThe file could not be used. HTTP response code:" + responseCode);
+                this.downloadStatus = incorrectResponse;
+                this.logger.warning(incorrectResponse);
                 Thread.currentThread().interrupt();
             }
             httpConnection.disconnect();
@@ -169,5 +181,16 @@ public class UpDateUtil {
         final String kb = df.format((double) bytes / 1024);
 
         return Double.parseDouble(kb);
+    }
+
+    public String getDownloadStatus() {
+        return this.downloadStatus;
+    }
+
+    public void setDownloadStatus(final String status) {
+        if (status.equalsIgnoreCase(MessageUtil.colorize("&cYou have downloaded the latest version but you are not using it"))) {
+            return;
+        }
+        this.downloadStatus = status;
     }
 }
