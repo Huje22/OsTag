@@ -13,6 +13,7 @@ import me.indian.ostag.OsTag;
 import me.indian.ostag.from.Form;
 import me.indian.ostag.util.MessageUtil;
 import me.indian.ostag.util.Permissions;
+import me.indian.ostag.util.PluginInfoUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +56,7 @@ public class OsTagCommand extends Command {
     @Override
     public boolean execute(final CommandSender sender, final String s, final String[] args) {
         final Config config = this.plugin.getConfig();
+        final PluginInfoUtil infoUtil = new PluginInfoUtil(sender, true);
         final List<String> advancedPlayers = config.getStringList("advanced-players");
 
         if (args.length == 0) {
@@ -72,9 +74,13 @@ public class OsTagCommand extends Command {
         }
         if (args[0].equalsIgnoreCase("version") || args[0].equalsIgnoreCase("v")) {
             if (sender.hasPermission(Permissions.ADMIN)) {
-                this.plugin.pluginInfo("admin", sender);
+                for (final String adminInfo : infoUtil.getAdminInfo()) {
+                    sender.sendMessage(MessageUtil.colorize(adminInfo));
+                }
             } else {
-                this.plugin.pluginInfo("normal", sender);
+                for (final String normalInfo : infoUtil.getNormalInfo()) {
+                    sender.sendMessage(MessageUtil.colorize(normalInfo));
+                }
             }
             return false;
         }

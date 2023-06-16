@@ -1,10 +1,7 @@
 package me.indian.ostag;
 
-import cn.nukkit.Server;
 import cn.nukkit.command.CommandMap;
-import cn.nukkit.command.CommandSender;
 import cn.nukkit.plugin.PluginBase;
-import cn.nukkit.plugin.PluginDescription;
 import cn.nukkit.plugin.PluginManager;
 import com.creeperface.nukkit.placeholderapi.api.PlaceholderAPI;
 import me.indian.ostag.basic.OsTagMetrics;
@@ -18,7 +15,7 @@ import me.indian.ostag.runnnable.OsTimer;
 import me.indian.ostag.util.GithubUtil;
 import me.indian.ostag.util.MessageUtil;
 import me.indian.ostag.util.PlayerInfoUtil;
-import me.indian.ostag.util.StatusUtil;
+import me.indian.ostag.util.PluginInfoUtil;
 import me.indian.ostag.util.UpDateUtil;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
@@ -146,8 +143,8 @@ public class OsTag extends PluginBase {
             this.getLogger().info(MessageUtil.colorize("&bChatFormatter module is disabled"));
         }
         pm.registerEvents(new PlayerJoinListener(this), this);
-        this.pluginInfo("admin", this.getServer().getConsoleSender());
-        this.info();
+        this.onEnableInfo();
+        this.getServer().getScheduler().scheduleDelayedTask(this::info, 30);
         this.getUpdateUtil().autoUpDate();
         new OsTagMetrics().run();
 
@@ -155,54 +152,11 @@ public class OsTag extends PluginBase {
         this.getLogger().info(MessageUtil.colorize("&aStarted in &b" + executionTimeInSeconds + " &aseconds"));
     }
 
-    public void pluginInfo(final String type, final CommandSender sender) {
-        final PluginDescription descriptor = this.getDescription();
-        final Server server = this.getServer();
+    private void onEnableInfo() {
+        final PluginInfoUtil infoUtil = new PluginInfoUtil(this.getServer().getConsoleSender() , true);
 
-        final String pluginVersion = descriptor.getVersion();
-        final String authors = String.valueOf(descriptor.getAuthors()).replace("[", "").replace("]", "");
-        final String nukkitVersion = server.getNukkitVersion();
-        final String serverVersion = server.getVersion();
-        final String apiVersion = server.getApiVersion();
-        final String latest = GithubUtil.getFastTagInfo() + GithubUtil.getBehindCount(sender);
-
-        switch (type) {
-            case "admin":
-                sender.sendMessage(MessageUtil.colorize("&b-------------------------------"));
-                sender.sendMessage(MessageUtil.colorize("&aOsTag version:&3 " + pluginVersion));
-                sender.sendMessage(MessageUtil.colorize("&aLatest version:&3 " + latest));
-                sender.sendMessage(MessageUtil.colorize("&aPlugin by:&6 " + authors));
-                sender.sendMessage(MessageUtil.colorize("&aNukkit Version:&3 " + nukkitVersion));
-                sender.sendMessage(MessageUtil.colorize("&aNukkit Api Version:&3 " + apiVersion));
-                sender.sendMessage(MessageUtil.colorize("&aServer Version:&3 " + serverVersion));
-                sender.sendMessage(MessageUtil.colorize(" "));
-                sender.sendMessage(MessageUtil.colorize("&1Modules"));
-                sender.sendMessage(MessageUtil.colorize("&aFormatter&3: " + StatusUtil.getFormaterStatus()));
-                sender.sendMessage(MessageUtil.colorize("&aOsTag&3: " + StatusUtil.getOsTagStatus()));
-                sender.sendMessage(MessageUtil.colorize(" "));
-                sender.sendMessage(MessageUtil.colorize("&1Plugins"));
-                sender.sendMessage(MessageUtil.colorize("&aLuckPerms&3: " + StatusUtil.getLuckPermStatus()));
-                sender.sendMessage(MessageUtil.colorize("&aKotlinLib & PlaceholderAPI&3: " + StatusUtil.getKotOrPapiStatus()));
-                sender.sendMessage(MessageUtil.colorize("&aFormConstructor&3: " + StatusUtil.getFormConstructor()));
-                sender.sendMessage(MessageUtil.colorize(" "));
-                sender.sendMessage(MessageUtil.colorize("&b-------------------------------"));
-                break;
-            case "normal":
-                sender.sendMessage(MessageUtil.colorize("&b-------------------------------"));
-                sender.sendMessage(MessageUtil.colorize("&aOsTag version:&3 " + pluginVersion));
-                sender.sendMessage(MessageUtil.colorize("&aLatest version:&3 " + latest));
-                sender.sendMessage(MessageUtil.colorize("&aPlugin by:&6 " + authors));
-                sender.sendMessage(MessageUtil.colorize("&aServer Version:&3 " + serverVersion));
-                sender.sendMessage(MessageUtil.colorize(" "));
-                sender.sendMessage(MessageUtil.colorize("&1Modules"));
-                sender.sendMessage(MessageUtil.colorize("&aFormatter&3: " + StatusUtil.getFormaterStatus()));
-                sender.sendMessage(MessageUtil.colorize("&aOsTag&3: " + StatusUtil.getOsTagStatus()));
-                sender.sendMessage(MessageUtil.colorize(" "));
-                sender.sendMessage(MessageUtil.colorize("&b-------------------------------"));
-                break;
-            default:
-                sender.sendMessage("Unknown OnEnableInfo type");
-                break;
+        for (final String s : infoUtil.getAdminInfo()) {
+            this.getLogger().info(MessageUtil.colorize(s));
         }
     }
 
@@ -245,8 +199,12 @@ public class OsTag extends PluginBase {
     }
 
     private void info() {
-        if (this.getDescription().getVersion().contains("Beta") || this.getDescription().getVersion().contains("beta")) {
+        final String version = this.getDescription().getVersion();
+        if (version.contains("Beta") || version.contains("beta")) {
             this.getLogger().warning(MessageUtil.colorize("&4You are running beta version, it may not be stable"));
+        }
+        if (version.contains("Dev") || version.contains("dev")) {
+            this.getLogger().warning(MessageUtil.colorize("&4You running dev build , so many things which this version contains  may be removed"));
         }
         this.getLogger().info(GithubUtil.checkTagCompatibility());
     }

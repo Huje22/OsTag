@@ -1,24 +1,24 @@
 package me.indian.ostag.from;
 
 import cn.nukkit.Player;
-import cn.nukkit.Server;
-import cn.nukkit.plugin.PluginDescription;
 import cn.nukkit.utils.Config;
 import me.indian.ostag.OsTag;
 import me.indian.ostag.util.GithubUtil;
 import me.indian.ostag.util.MessageUtil;
 import me.indian.ostag.util.Permissions;
-import me.indian.ostag.util.StatusUtil;
+import me.indian.ostag.util.PluginInfoUtil;
 import ru.contentforge.formconstructor.form.SimpleForm;
 import ru.contentforge.formconstructor.form.element.ImageType;
 
 import java.util.List;
 
+/*
+ Settings in forms is a pre-feature
+ */
 
 public class Form {
 
     private final OsTag plugin;
-    private final Config config;
     private final Player player;
     private final List<String> advancedPlayers;
     private final SettingsFrom settings;
@@ -26,13 +26,13 @@ public class Form {
     public Form(final Player player) {
         this.player = player;
         this.plugin = OsTag.getInstance();
-        this.config = this.plugin.getConfig();
-        this.advancedPlayers = this.config.getStringList("advanced-players");
-        this.settings = new SettingsFrom(this, this.config, this.advancedPlayers);
+        final Config config = this.plugin.getConfig();
+        this.advancedPlayers = config.getStringList("advanced-players");
+        this.settings = new SettingsFrom(this, config, this.advancedPlayers);
     }
 
     public void runOstagFrom() {
-        if(!plugin.formConstructor) {
+        if (!plugin.formConstructor) {
             if (player.isOp()) {
                 player.sendMessage(MessageUtil.colorize("&cYou don't have &bFormConstructor&b plugin !"));
                 player.sendMessage(MessageUtil.colorize("&cDownload it from here &bhttps://github.com/OpenPlugins-Minecraft/OsTag/tree/main/libs!"));
@@ -59,46 +59,17 @@ public class Form {
 
     private void versionInfo() {
         final SimpleForm form = new SimpleForm("Version info");
+        final PluginInfoUtil infoUtil = new PluginInfoUtil(player , true);
 
-        final PluginDescription descriptor = plugin.getDescription();
-        final Server server = plugin.getServer();
-
-        final String pluginVersion = descriptor.getVersion();
-        final String authors = String.valueOf(descriptor.getAuthors()).replace("[", "").replace("]", "");
-        final String nukkitVersion = server.getNukkitVersion();
-        final String serverVersion = server.getVersion();
-        final String apiVersion = server.getApiVersion();
-        final String latest = GithubUtil.getFastTagInfo() + GithubUtil.getBehindCount(player);
-
-        if (player.hasPermission(Permissions.ADMIN) || player.isOp()) {
-            form.addContent(MessageUtil.colorize("&aOsTag version:&3 " + pluginVersion + "\n"))
-                    .addContent(MessageUtil.colorize("&aLatest version:&3 " + latest + "\n"))
-                    .addContent(MessageUtil.colorize("&aPlugin by:&6 " + authors + "\n"))
-                    .addContent(MessageUtil.colorize("&aNukkit Version:&3 " + nukkitVersion + "\n"))
-                    .addContent(MessageUtil.colorize("&aNukkit Api Version:&3 " + apiVersion + "\n"))
-                    .addContent(MessageUtil.colorize("&aServer Version:&3 " + serverVersion + "\n"))
-                    .addContent(MessageUtil.colorize(" " + "\n"))
-                    .addContent(MessageUtil.colorize("&1Modules" + "\n"))
-                    .addContent(MessageUtil.colorize("&aFormatter&3: " + StatusUtil.getFormaterStatus() + "\n"))
-                    .addContent(MessageUtil.colorize("&aOsTag&3: " + StatusUtil.getOsTagStatus() + "\n"))
-                    .addContent(MessageUtil.colorize(" " + "\n"))
-                    .addContent(MessageUtil.colorize("&1Plugins" + "\n"))
-                    .addContent(MessageUtil.colorize("&aLuckPerms&3: " + StatusUtil.getLuckPermStatus() + "\n"))
-                    .addContent(MessageUtil.colorize("&aKotlinLib & PlaceholderAPI&3: " + StatusUtil.getKotOrPapiStatus() + "\n"))
-                    .addContent(MessageUtil.colorize("&aFormConstructor&3: " + StatusUtil.getFormConstructor() + "\n"))
-                    .addContent(MessageUtil.colorize(" " + "\n"));
+        if (player.hasPermission(Permissions.ADMIN)) {
+            for (final String adminInfo : infoUtil.getAdminInfo()) {
+                form.addContent(MessageUtil.colorize(adminInfo) + "\n");
+            }
         } else {
-            form.addContent(MessageUtil.colorize("&aOsTag version:&3 " + pluginVersion + "\n"))
-                    .addContent(MessageUtil.colorize("&aLatest version:&3 " + latest + "\n"))
-                    .addContent(MessageUtil.colorize("&aPlugin by:&6 " + authors + "\n"))
-                    .addContent(MessageUtil.colorize("&aServer Version:&3 " + serverVersion + "\n"))
-                    .addContent(MessageUtil.colorize(" " + "\n"))
-                    .addContent(MessageUtil.colorize("&1Modules" + "\n"))
-                    .addContent(MessageUtil.colorize("&aFormatter&3: " + StatusUtil.getFormaterStatus() + "\n"))
-                    .addContent(MessageUtil.colorize("&aOsTag&3: " + StatusUtil.getOsTagStatus() + "\n"))
-                    .addContent(MessageUtil.colorize(" " + "\n"));
+            for (final String normalInfo : infoUtil.getNormalInfo()) {
+                form.addContent(MessageUtil.colorize(normalInfo) + "\n");
+            }
         }
-
         form.addButton(MessageUtil.colorize("Run &7/ostag version"), (p, button) -> MessageUtil.playerCommand(player, "ostag version"));
 
         this.addCloseButton(form);
