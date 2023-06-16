@@ -5,6 +5,7 @@ import cn.nukkit.utils.Config;
 import me.indian.ostag.OsTag;
 import me.indian.ostag.util.MessageUtil;
 import ru.contentforge.formconstructor.form.CustomForm;
+import ru.contentforge.formconstructor.form.ModalForm;
 import ru.contentforge.formconstructor.form.SimpleForm;
 import ru.contentforge.formconstructor.form.element.ImageType;
 import ru.contentforge.formconstructor.form.element.Label;
@@ -44,7 +45,6 @@ public class SettingsFrom {
         form.send(player);
     }
 
-
     private void modulesSettings() {
         final CustomForm form = new CustomForm("Modules settings");
 
@@ -74,11 +74,42 @@ public class SettingsFrom {
 
             config.set("AutoUpdate", response.getToggle("autoupdate").getValue());
             config.save();
-            p.sendMessage(MessageUtil.colorize("&aSaved changes"));
-            settings();
+            p.sendMessage(MessageUtil.colorize("&aThis changes may need restart server"));
+            if (p.isOp()) {
+                this.reloadServer();
+            } else {
+                settings();
+            }
         });
 
         form.setNoneHandler(p -> this.settings());
+        form.send(player);
+    }
+
+
+    private void reloadServer() {
+        final ModalForm form = new ModalForm("Server reload");
+
+        form.setContent("Reload the server?\n")
+                .addContent(MessageUtil.colorize("&n&m&lThis may negatively affect some plugins!"))
+                .setPositiveButton(MessageUtil.colorize("&cYes"))
+                .setNegativeButton(MessageUtil.colorize("&aNo"));
+
+        form.setNoneHandler(p -> {
+            p.sendMessage(MessageUtil.colorize("&aAction canceled :)"));
+            this.settings();
+        });
+
+        form.setHandler((p, result) -> {
+            if (result) {
+
+                MessageUtil.playerCommand(p, "reload");
+
+            } else {
+                p.sendMessage(MessageUtil.colorize("&aAction canceled :)"));
+                this.settings();
+            }
+        });
         form.send(player);
     }
 }
