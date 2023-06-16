@@ -1,7 +1,7 @@
 package me.indian.ostag.util;
 
-public interface Permissions {
-    String ADMIN = "ostag.admin";
-    String COLORS = "ostag.colors";
+public final class Permissions {
+    public static String ADMIN = "ostag.admin";
+    public static String COLORS = "ostag.colors";
 
 }
