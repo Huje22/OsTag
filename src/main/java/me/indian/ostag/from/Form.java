@@ -100,10 +100,15 @@ public class Form {
 
     private void upDate() {
         final SimpleForm form = new SimpleForm("UpDate menu");
+        String downloadStatus = MessageUtil.colorize(plugin.getUpdateUtil().getDownloadStatus());
+
+        form.addContent(MessageUtil.colorize("&aDownload status") + "\n")
+                .addContent(downloadStatus + "\n");
 
         if (GithubUtil.getFastTagInfo().contains("false")) {
-            form.setContent(MessageUtil.colorize("&aYou can download latest version"))
-                    .addButton("UpDate", ImageType.PATH, "textures/ui/up_chevron", (p, button) -> plugin.getUpdateUtil().manualUpDate(player));
+            if (!downloadStatus.equalsIgnoreCase(MessageUtil.colorize("&cYou have downloaded the latest version but you are not using it"))) {
+                form.addButton("UpDate", ImageType.PATH, "textures/ui/up_chevron", (p, button) -> plugin.getUpdateUtil().manualUpDate(player));
+            }
         } else {
             if (!GithubUtil.getFastTagInfo().contains("true")) {
                 form.setContent(MessageUtil.colorize("&cYou can't download latest version"))
