@@ -109,7 +109,7 @@ public class OsTagMetrics {
                 valueMap.put("Debug", 1);
             }
             if (censor) {
-                valueMap.put("CensorShip", 1);
+                valueMap.put("Censorship", 1);
             }
             if (breaks) {
                 valueMap.put("Breaks Between Messages", 1);
