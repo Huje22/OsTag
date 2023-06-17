@@ -2,7 +2,6 @@ package me.indian.ostag.from;
 
 import cn.nukkit.Player;
 import cn.nukkit.utils.Config;
-import me.indian.ostag.OsTag;
 import me.indian.ostag.util.MessageUtil;
 import ru.contentforge.formconstructor.form.CustomForm;
 import ru.contentforge.formconstructor.form.SimpleForm;
@@ -11,24 +10,29 @@ import ru.contentforge.formconstructor.form.element.Input;
 import ru.contentforge.formconstructor.form.element.Label;
 import ru.contentforge.formconstructor.form.element.Toggle;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FormatterForm {
 
     private final Form mainForm;
     private final Config config;
     private final Player player;
+    private List<String> blockedWords;
 
     public FormatterForm(final Form mainForm, final Config config) {
         this.mainForm = mainForm;
         this.config = config;
         this.player = this.mainForm.getFormPlayer();
+        this.blockedWords = config.getStringList("BlackWords");
     }
 
     public void formatterSettings() {
         final SimpleForm form = new SimpleForm("Formatter Settings");
 
-        form.addButton("Chat Format", ImageType.PATH, "textures/ui/book_edit_default", (p, button) -> messageFormatSettings())
+        form.addButton("Chat Format", ImageType.PATH, "textures/ui/editIcon", (p, button) -> messageFormatSettings())
                 .addButton("Cooldown", ImageType.PATH, "textures/ui/timer", (p, button) -> cooldownSettings())
-                .addButton("Censor Ship", ImageType.PATH, "textures/ui/text_color_paintbrush", (p, button) -> censorShipSettings());
+                .addButton("Censorship", ImageType.PATH, "textures/ui/mute_on", (p, button) -> censorShipSettings());
 
         this.mainForm.addCloseButton(form);
         form.setNoneHandler(p -> this.mainForm.getSettings().settings());
@@ -132,30 +136,53 @@ public class FormatterForm {
     private void censorShipSettings() {
         final CustomForm form = new CustomForm("CensorShip Settings");
         final boolean enabled = config.getBoolean("censorship.enable");
-        final String split = this.mainForm.getSplit();
 
         form.addElement(new Label(MessageUtil.colorize("&aEnable censor ship")))
                 .addElement("censor_enable", new Toggle("Censorship", enabled));
 
         if (enabled) {
-            this.mainForm.addNewLineMessage(form);
-            form.addElement("blackwords",
-                            Input.builder()
-                                    .setName(MessageUtil.colorize("&aBlocked words"))
-                                    .setDefaultValue(MessageUtil.listToString(config.getStringList("BlackWords"), split))
-                                    .build())
-                    .addElement("censor",
-                            Input.builder()
-                                    .setName(MessageUtil.colorize("&aCensorShip message"))
-                                    .setDefaultValue(config.getString("censorship.word"))
-                                    .build());
+            form.addElement("censor",
+                    Input.builder()
+                            .setName(MessageUtil.colorize("&aCensorShip message"))
+                            .setDefaultValue(config.getString("censorship.word"))
+                            .build());
+
+            form.addElement(new Label(MessageUtil.colorize("&aBlocked words")));
+            for (int i = 0; i < blockedWords.size(); i++) {
+                form.addElement("blackwords_" + i,
+                        Input.builder()
+                                .setName((i + 1) + ".")
+                                .setDefaultValue(blockedWords.get(i))
+                                .build());
+
+            }
+            form.addElement("blockword",
+                    Input.builder()
+                            .setName(MessageUtil.colorize("&lBlock an word"))
+                            .setDefaultValue("ExampleWord")
+                            .build());
         }
 
         form.setHandler((p, response) -> {
             config.set("censorship.enable", response.getToggle("censor_enable").getValue());
             if (enabled) {
-                config.set("cooldown.bypass", response.getInput("censor").getValue());
-                config.set("BlackWords", MessageUtil.stringToList(response.getInput("blackwords").getValue(), split));
+                final List<String> finalBlocked = new ArrayList<>(blockedWords);
+                config.set("censorship.word", response.getInput("censor").getValue());
+
+                for (int i = 0; i < blockedWords.size(); i++) {
+                    final String word = response.getInput("blackwords_" + i).getValue();
+                    if (!blockedWords.contains(word)) {
+                        finalBlocked.add(word);
+                    }
+                }
+
+                final String blockedWord = response.getInput("blockword").getValue();
+                if (!blockedWord.isEmpty() && !blockedWord.equalsIgnoreCase("ExampleWord")) {
+                    finalBlocked.add(blockedWord);
+                }
+
+                blockedWords = finalBlocked;
+                config.set("BlackWords", blockedWords);
             }
             config.save();
             p.sendMessage(MessageUtil.colorize("&aSaved changes"));
