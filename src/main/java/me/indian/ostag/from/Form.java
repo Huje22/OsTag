@@ -100,7 +100,7 @@ public class Form {
 
     private void upDate() {
         final SimpleForm form = new SimpleForm("UpDate menu");
-        String downloadStatus = MessageUtil.colorize(plugin.getUpdateUtil().getDownloadStatus());
+        final String downloadStatus = MessageUtil.colorize(plugin.getUpdateUtil().getDownloadStatus());
 
         form.addContent(MessageUtil.colorize("&aDownload status") + "\n")
                 .addContent(downloadStatus + "\n");
