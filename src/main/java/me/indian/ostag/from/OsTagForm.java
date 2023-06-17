@@ -136,6 +136,7 @@ public class OsTagForm {
         for (int i = 0; i < subtag.size(); i++) {
             form.addElement("subtag_" + i,
                     Input.builder()
+                            .setName((i + 1) + ".")
                             .setDefaultValue(subtag.get(i))
                             .build());
         }
@@ -155,6 +156,7 @@ public class OsTagForm {
         for (int i = 0; i < aSubtag.size(); i++) {
             form.addElement("a-subtag_" + i,
                     Input.builder()
+                            .setName((i + 1) + ".")
                             .setDefaultValue(aSubtag.get(i))
                             .build());
         }

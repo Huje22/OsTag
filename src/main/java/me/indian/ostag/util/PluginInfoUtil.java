@@ -27,7 +27,7 @@ public class PluginInfoUtil {
         this.lines = lines;
         this.pluginVersion = descriptor.getVersion();
         this.authors = MessageUtil.listToString(descriptor.getAuthors(), " , ");
-        this.contributors = MessageUtil.listToString(Arrays.asList("Techno neziw", "Test"), " , ");
+        this.contributors = MessageUtil.listToString(Arrays.asList("Techno neziw"), " , ");
         this.nukkitVersion = server.getNukkitVersion();
         this.serverVersion = server.getVersion();
         this.apiVersion = server.getApiVersion();
