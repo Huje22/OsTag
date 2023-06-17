@@ -23,6 +23,8 @@ public class OsTagForm {
     private final Player player;
     private final List<String> advancedPlayers;
     private List<String> disabledWorlds;
+    private List<String> subtag;
+    private List<String> aSubtag;
 
     public OsTagForm(final Form mainForm, final Config config, final List<String> advancedPlayers) {
         this.mainForm = mainForm;
@@ -31,12 +33,14 @@ public class OsTagForm {
         this.player = this.mainForm.getFormPlayer();
         this.advancedPlayers = advancedPlayers;
         this.disabledWorlds = this.config.getStringList("disabled-worlds");
+        this.subtag = config.getStringList("subtag");
+        this.aSubtag = config.getStringList("a-subtag");
     }
 
     public void osTagSettings() {
         final SimpleForm form = new SimpleForm("OsTag Settings");
 
-        form.addButton("NameTag & ScoreTag", ImageType.PATH, "textures/items/diamond", (p, button) -> scoreAndNameSettings())
+        form.addButton("NameTag & ScoreTag", ImageType.PATH, "textures/ui/book_metatag_default", (p, button) -> scoreAndNameSettings())
                 .addButton("Advanced Players", ImageType.PATH, "textures/ui/FriendsDiversity", (p, button) -> advancedPlayersSettings())
                 .addButton("Disabled worlds", ImageType.PATH, "textures/ui/worldsIcon", (p, button) -> disabledWorld());
         this.mainForm.addCloseButton(form);
@@ -119,39 +123,84 @@ public class OsTagForm {
 
     private void scoreAndNameSettings() {
         final CustomForm form = new CustomForm("NameTag & ScoreTag Settings");
-        final String split = this.mainForm.getSplit();
 
-        this.mainForm.addNewLineMessage(form);
+
         form.addElement(new Label(MessageUtil.colorize("&lNormal player settings")));
         form.addElement("nick",
-                        Input.builder()
-                                .setName(MessageUtil.colorize("&aNameTag"))
-                                .setDefaultValue(config.getString("nick"))
-                                .build())
-                .addElement("subtag",
-                        Input.builder()
-                                .setName(MessageUtil.colorize("&aSubTag"))
-                                .setDefaultValue(MessageUtil.listToString(config.getStringList("subtag"), split))
-                                .build());
+                Input.builder()
+                        .setName(MessageUtil.colorize("&aNameTag"))
+                        .setDefaultValue(config.getString("nick"))
+                        .build());
+
+        form.addElement(new Label(MessageUtil.colorize("&aSubTag")));
+        for (int i = 0; i < subtag.size(); i++) {
+            form.addElement("subtag_" + i,
+                    Input.builder()
+                            .setDefaultValue(subtag.get(i))
+                            .build());
+        }
+        form.addElement("add_subtag",
+                Input.builder()
+                        .setName(MessageUtil.colorize("&lAdd subtag line"))
+                        .setDefaultValue("ExampleWord")
+                        .build());
+
         form.addElement(new Label(MessageUtil.colorize("&lAdvanced player settings")))
                 .addElement("a-nick",
                         Input.builder()
                                 .setName(MessageUtil.colorize("&aNameTag"))
                                 .setDefaultValue(config.getString("a-nick"))
-                                .build())
-                .addElement("a-subtag",
-                        Input.builder()
-                                .setName(MessageUtil.colorize("&aSubTag"))
-                                .setDefaultValue(MessageUtil.listToString(config.getStringList("a-subtag"), split))
                                 .build());
+        form.addElement(new Label(MessageUtil.colorize("&aSubTag")));
+        for (int i = 0; i < aSubtag.size(); i++) {
+            form.addElement("a-subtag_" + i,
+                    Input.builder()
+                            .setDefaultValue(aSubtag.get(i))
+                            .build());
+        }
+        form.addElement("add_asubtag",
+                Input.builder()
+                        .setName(MessageUtil.colorize("&lAdd subtag line"))
+                        .setDefaultValue("ExampleWord")
+                        .build());
 
 
         form.setHandler((p, response) -> {
-            config.set("nick", response.getInput("nick").getValue());
-            config.set("subtag", MessageUtil.stringToList(response.getInput("subtag").getValue(), split));
+            final List<String> finalSubtag = new ArrayList<>();
+            final List<String> finalAsubtag = new ArrayList<>();
 
+            config.set("nick", response.getInput("nick").getValue());
             config.set("a-nick", response.getInput("a-nick").getValue());
-            config.set("a-subtag", MessageUtil.stringToList(response.getInput("a-subtag").getValue(), split));
+
+            for (int i = 0; i < subtag.size(); i++) {
+                final String tag = response.getInput("subtag_" + i).getValue();
+                if (!tag.isEmpty()) {
+                    finalSubtag.add(tag);
+                }
+            }
+
+            for (int i = 0; i < aSubtag.size(); i++) {
+                final String tag = response.getInput("a-subtag_" + i).getValue();
+                if (!tag.isEmpty()) {
+                    finalAsubtag.add(tag);
+                }
+            }
+
+            final String addSubtag = response.getInput("add_subtag").getValue();
+            if (!addSubtag.isEmpty() && !addSubtag.equalsIgnoreCase("ExampleWord")) {
+                finalSubtag.add(addSubtag);
+            }
+
+            final String addAsubtag = response.getInput("add_asubtag").getValue();
+            if (!addAsubtag.isEmpty() && !addAsubtag.equalsIgnoreCase("ExampleWord")) {
+                finalAsubtag.add(addAsubtag);
+            }
+
+            subtag = finalSubtag;
+            aSubtag = finalAsubtag;
+
+            config.set("subtag", subtag);
+            config.set("a-subtag", aSubtag);
             config.save();
             p.sendMessage(MessageUtil.colorize("&aSaved changes"));
             osTagSettings();

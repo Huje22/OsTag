@@ -166,12 +166,12 @@ public class FormatterForm {
         form.setHandler((p, response) -> {
             config.set("censorship.enable", response.getToggle("censor_enable").getValue());
             if (enabled) {
-                final List<String> finalBlocked = new ArrayList<>(blockedWords);
+                final List<String> finalBlocked = new ArrayList<>();
                 config.set("censorship.word", response.getInput("censor").getValue());
 
                 for (int i = 0; i < blockedWords.size(); i++) {
                     final String word = response.getInput("blackwords_" + i).getValue();
-                    if (!blockedWords.contains(word)) {
+                    if (!word.isEmpty()) {
                         finalBlocked.add(word);
                     }
                 }

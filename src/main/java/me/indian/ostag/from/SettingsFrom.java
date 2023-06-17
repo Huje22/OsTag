@@ -33,10 +33,10 @@ public class SettingsFrom {
         final SimpleForm form = new SimpleForm("Settings");
 
         if (plugin.osTag) {
-            form.addButton("OsTag", ImageType.PATH, "textures/items/name_tag", (p, button) -> new OsTagForm(this.mainForm, this.config, this.advancedPlayers).osTagSettings());
+            form.addButton("OsTag", ImageType.PATH, "textures/ui/sidebar_icons/profile_screen_icon", (p, button) -> new OsTagForm(this.mainForm, this.config, this.advancedPlayers).osTagSettings());
         }
         if (plugin.chatFormatter) {
-            form.addButton("Formatter", ImageType.PATH, "textures/ui/chat_send", (p, button) -> new FormatterForm(this.mainForm, this.config).formatterSettings());
+            form.addButton("Formatter", ImageType.PATH, "textures/ui/mute_off", (p, button) -> new FormatterForm(this.mainForm, this.config).formatterSettings());
         }
         form.addButton("Modules", ImageType.PATH, "textures/ui/servers", (p, button) -> modulesSettings());
 

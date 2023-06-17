@@ -4,10 +4,6 @@ package me.indian.ostag.from;
 import cn.nukkit.Player;
 import cn.nukkit.utils.Config;
 import me.indian.ostag.OsTag;
-import me.indian.ostag.util.GithubUtil;
-import me.indian.ostag.util.MessageUtil;
-import me.indian.ostag.util.Permissions;
-import me.indian.ostag.util.PluginInfoUtil;
 import ru.contentforge.formconstructor.form.CustomForm;
 import ru.contentforge.formconstructor.form.ModalForm;
 import ru.contentforge.formconstructor.form.SimpleForm;
@@ -18,7 +14,6 @@ import ru.contentforge.formconstructor.form.element.Label;
 import ru.contentforge.formconstructor.form.element.SelectableElement;
 import ru.contentforge.formconstructor.form.element.StepSlider;
 import ru.contentforge.formconstructor.form.element.Toggle;
-
 
 import java.util.Arrays;
 import java.util.List;
@@ -40,6 +35,26 @@ public class ExampleForms {
 
         form.setContent("This is a text")
                 .addContent("\nThis is addition :3")
+                .addButton("Test", ImageType.PATH, "textures/ui/subcategory_icons/head", (p, button) -> run())
+                .addButton("Test", ImageType.PATH, "textures/ui/sidebar_icons/profile_screen_icon", (p, button) -> run())
+                .addButton("Test", ImageType.PATH, "textures/ui/user_icon", (p, button) -> run())
+                .addButton("Test", ImageType.PATH, "textures/ui/book_metatag_hover", (p, button) -> run())
+                .addButton("Test", ImageType.PATH, "textures/ui/book_metatag_pressed", (p, button) -> run())
+                .addButton("Test", ImageType.PATH, "textures/ui/cartography_table_glass", (p, button) -> run())
+                .addButton("Test", ImageType.PATH, "textures/ui/cherry_sign", (p, button) -> run())
+                .addButton("Test", ImageType.PATH, "textures/ui/classrooms_icon", (p, button) -> run())
+                .addButton("Test", ImageType.PATH, "textures/ui/teams_icon", (p, button) -> run())
+                .addButton("Test", ImageType.PATH, "textures/ui/icon_best3", (p, button) -> run())
+                .addButton("Test", ImageType.PATH, "textures/ui/icon_bookshelf", (p, button) -> run())
+                .addButton("Test", ImageType.PATH, "textures/ui/icon_new", (p, button) -> run())
+                .addButton("Test", ImageType.PATH, "textures/ui/lan_icon", (p, button) -> run())
+                .addButton("Test", ImageType.PATH, "textures/ui/invite_base", (p, button) -> run())
+                .addButton("Test", ImageType.PATH, "textures/ui/lock_color", (p, button) -> run())
+                .addButton("Test", ImageType.PATH, "textures/ui/portalBg", (p, button) -> run())
+                .addButton("Test", ImageType.PATH, "textures/ui/xbox4", (p, button) -> run())
+                .addButton("Test", ImageType.PATH, "textures/ui/store_filter_icon", (p, button) -> run())
+                .addButton("Test", ImageType.PATH, "textures/ui/mute_on", (p, button) -> run())
+//                .addButton("Test", ImageType.PATH , "textures/ui/book_metatag_hover" , (p,button) -> p.sendMessage("test"))
                 .addButton("Modal", (p,button) -> modal())
                 .addButton("Custom",(p,button) -> custom());
 
