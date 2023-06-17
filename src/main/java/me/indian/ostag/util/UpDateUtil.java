@@ -107,16 +107,16 @@ public class UpDateUtil {
                 final byte[] buffer = new byte[4096];
                 int bytesRead;
                 long totalBytesRead = 0;
+
                 while ((bytesRead = inputStream.read(buffer)) != -1) {
                     outputStream.write(buffer, 0, bytesRead);
                     totalBytesRead += bytesRead;
-                    final String progressMsg = MessageUtil.colorize("&aDownload progress: &b" + (totalBytesRead * 100) / contentLength + "%" + " &8(&b" + bytesToKb(totalBytesRead) + "kb&8)");
+                    this.downloadStatus = MessageUtil.colorize("&aDownload progress: &b" + (totalBytesRead * 100) / contentLength + "%" + " &8(&b" + bytesToKb(totalBytesRead) + "kb&8)");
                     if (this.plugin.debug) {
-                        this.logger.info(this.debugPrefix + progressMsg);
+                        this.logger.info(this.debugPrefix + downloadStatus);
                     }
-                    this.downloadStatus = progressMsg;
                     if (sender instanceof Player) {
-                        ((Player) sender).sendActionBar(this.plugin.pluginPrefix + progressMsg);
+                        ((Player) sender).sendActionBar(this.plugin.pluginPrefix + downloadStatus);
                     }
                 }
 
