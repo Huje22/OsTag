@@ -7,8 +7,10 @@ import me.indian.ostag.util.GithubUtil;
 import me.indian.ostag.util.MessageUtil;
 import me.indian.ostag.util.Permissions;
 import me.indian.ostag.util.PluginInfoUtil;
+import ru.contentforge.formconstructor.form.CustomForm;
 import ru.contentforge.formconstructor.form.SimpleForm;
 import ru.contentforge.formconstructor.form.element.ImageType;
+import ru.contentforge.formconstructor.form.element.Label;
 
 import java.util.List;
 
@@ -18,6 +20,7 @@ import java.util.List;
 
 public class Form {
 
+    private String split = "- ";
     private final OsTag plugin;
     private final Player player;
     private final List<String> advancedPlayers;
@@ -125,6 +128,14 @@ public class Form {
 
     public void addCloseButton(final SimpleForm form) {
         form.addButton("Close", ImageType.PATH, "textures/ui/redX1", null);
+    }
+
+    public void addNewLineMessage(final CustomForm form){
+        form.addElement(new Label(MessageUtil.colorize("&1&lTo start a new line use &6\"" + this.getSplit() + "\"")));
+    }
+
+    public String getSplit(){
+        return this.split;
     }
 
     public boolean onlineByName(final String name) {

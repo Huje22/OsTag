@@ -14,13 +14,11 @@ import ru.contentforge.formconstructor.form.element.Toggle;
 public class FormatterForm {
 
     private final Form mainForm;
-    private final OsTag plugin;
     private final Config config;
     private final Player player;
 
     public FormatterForm(final Form mainForm, final Config config) {
         this.mainForm = mainForm;
-        this.plugin = OsTag.getInstance();
         this.config = config;
         this.player = this.mainForm.getFormPlayer();
     }
@@ -28,8 +26,9 @@ public class FormatterForm {
     public void formatterSettings() {
         final SimpleForm form = new SimpleForm("Formatter Settings");
 
-        form.addButton("Chat Format", ImageType.PATH, "textures/ui/text_color_paintbrush", (p, button) -> messageFormatSettings())
-                .addButton("Cooldown", ImageType.PATH, "textures/ui/timer", (p, button) -> cooldownSettings());
+        form.addButton("Chat Format", ImageType.PATH, "textures/ui/book_edit_default", (p, button) -> messageFormatSettings())
+                .addButton("Cooldown", ImageType.PATH, "textures/ui/timer", (p, button) -> cooldownSettings())
+                .addButton("Censor Ship", ImageType.PATH, "textures/ui/text_color_paintbrush", (p, button) -> censorShipSettings());
 
         this.mainForm.addCloseButton(form);
         form.setNoneHandler(p -> this.mainForm.getSettings().settings());
@@ -79,7 +78,8 @@ public class FormatterForm {
         final CustomForm form = new CustomForm("Cooldown Settings");
         final boolean enabled = config.getBoolean("cooldown.enable");
 
-        form.addElement("cooldown_enable", new Toggle("Cooldown", enabled));
+        form.addElement(new Label(MessageUtil.colorize("&aEnable cooldown")))
+                .addElement("cooldown_enable", new Toggle("Cooldown", enabled));
 
         if (enabled) {
             form.addElement("delay",
@@ -118,6 +118,44 @@ public class FormatterForm {
                 config.set("cooldown.over", response.getInput("over").getValue());
                 config.set("cooldown.disabled", response.getInput("disabled").getValue());
                 config.set("cooldown.bypass", response.getInput("bypass").getValue());
+            }
+            config.save();
+            p.sendMessage(MessageUtil.colorize("&aSaved changes"));
+            formatterSettings();
+        });
+
+        form.setNoneHandler(p -> formatterSettings());
+        form.send(player);
+    }
+
+
+    private void censorShipSettings() {
+        final CustomForm form = new CustomForm("CensorShip Settings");
+        final boolean enabled = config.getBoolean("censorship.enable");
+        final String split = this.mainForm.getSplit();
+
+        form.addElement(new Label(MessageUtil.colorize("&aEnable censor ship")))
+                .addElement("censor_enable", new Toggle("Censorship", enabled));
+
+        if (enabled) {
+            this.mainForm.addNewLineMessage(form);
+            form.addElement("blackwords",
+                            Input.builder()
+                                    .setName(MessageUtil.colorize("&aBlocked words"))
+                                    .setDefaultValue(MessageUtil.listToString(config.getStringList("BlackWords"), split))
+                                    .build())
+                    .addElement("censor",
+                            Input.builder()
+                                    .setName(MessageUtil.colorize("&aCensorShip message"))
+                                    .setDefaultValue(config.getString("censorship.word"))
+                                    .build());
+        }
+
+        form.setHandler((p, response) -> {
+            config.set("censorship.enable", response.getToggle("censor_enable").getValue());
+            if (enabled) {
+                config.set("cooldown.bypass", response.getInput("censor").getValue());
+                config.set("BlackWords", MessageUtil.stringToList(response.getInput("blackwords").getValue(), split));
             }
             config.save();
             p.sendMessage(MessageUtil.colorize("&aSaved changes"));
