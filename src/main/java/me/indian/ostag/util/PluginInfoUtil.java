@@ -6,6 +6,7 @@ import cn.nukkit.plugin.PluginDescription;
 import me.indian.ostag.OsTag;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class PluginInfoUtil {
@@ -25,8 +26,8 @@ public class PluginInfoUtil {
         final Server server = plugin.getServer();
         this.lines = lines;
         this.pluginVersion = descriptor.getVersion();
-        this.authors = String.valueOf(descriptor.getAuthors()).replace("[", "").replace("]", "");
-        this.contributors = "Techno neziw";
+        this.authors = MessageUtil.listToString(descriptor.getAuthors(), " , ");
+        this.contributors = MessageUtil.listToString(Arrays.asList("Techno neziw", "Test"), " , ");
         this.nukkitVersion = server.getNukkitVersion();
         this.serverVersion = server.getVersion();
         this.apiVersion = server.getApiVersion();

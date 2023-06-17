@@ -119,6 +119,7 @@ public class OsTagForm {
 
     private void scoreAndNameSettings() {
         final CustomForm form = new CustomForm("NameTag & ScoreTag Settings");
+        final String split = "- ";
 
         form.addElement(new Label(MessageUtil.colorize("&1&lTo start a new line use \"- \"")));
         form.addElement(new Label(MessageUtil.colorize("&lNormal player settings")));
@@ -130,7 +131,7 @@ public class OsTagForm {
                 .addElement("subtag",
                         Input.builder()
                                 .setName(MessageUtil.colorize("&aSubTag"))
-                                .setDefaultValue(MessageUtil.listToString(config.getStringList("subtag")))
+                                .setDefaultValue(MessageUtil.listToString(config.getStringList("subtag"), split))
                                 .build());
         form.addElement(new Label(MessageUtil.colorize("&lAdvanced player settings")))
                 .addElement("a-nick",
@@ -141,16 +142,16 @@ public class OsTagForm {
                 .addElement("a-subtag",
                         Input.builder()
                                 .setName(MessageUtil.colorize("&aSubTag"))
-                                .setDefaultValue(MessageUtil.listToString(config.getStringList("a-subtag")))
+                                .setDefaultValue(MessageUtil.listToString(config.getStringList("a-subtag"), split))
                                 .build());
 
 
         form.setHandler((p, response) -> {
             config.set("nick", response.getInput("nick").getValue());
-            config.set("subtag", MessageUtil.stringToList(response.getInput("subtag").getValue()));
+            config.set("subtag", MessageUtil.stringToList(response.getInput("subtag").getValue(), split));
 
             config.set("a-nick", response.getInput("a-nick").getValue());
-            config.set("a-subtag", MessageUtil.stringToList(response.getInput("a-subtag").getValue()));
+            config.set("a-subtag", MessageUtil.stringToList(response.getInput("a-subtag").getValue(), split));
             config.save();
             p.sendMessage(MessageUtil.colorize("&aSaved changes"));
             osTagSettings();

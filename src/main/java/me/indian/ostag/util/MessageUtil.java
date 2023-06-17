@@ -16,27 +16,36 @@ public class MessageUtil {
         return TextFormat.colorize('&', msg);
     }
 
-    public static String listToSpacedString(List<String> lista) {
+    public static String listToSpacedString(final List<String> lista) {
         if (lista == null) {
             return "";
         }
         return String.join("\n", lista);
     }
 
-    public static String listToString(List<String> lista) {
+    public static String listToString(final List<String> lista, String split) {
+        if (split == null) {
+            split = " ";
+        }
+
         if (lista == null) {
             return "";
         }
-        return String.join("- ", lista);
+        return String.join(split, lista);
     }
 
 
-    public static List<String> stringToList(String tekst) {
-        if (tekst == null || tekst.isEmpty()) {
+    public static List<String> stringToList(final String text, String split) {
+        if (split == null) {
+            split = " ";
+        }
+
+        if (text == null || text.isEmpty()) {
             return new ArrayList<>();
         }
-        return Arrays.asList(tekst.split("- "));
+        return Arrays.asList(text.split(split));
     }
+
 
     public static void playerCommand(final Player player, final String command) {
         server.dispatchCommand(player, command);
