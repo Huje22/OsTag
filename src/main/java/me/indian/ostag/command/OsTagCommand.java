@@ -56,7 +56,6 @@ public class OsTagCommand extends Command {
     @Override
     public boolean execute(final CommandSender sender, final String s, final String[] args) {
         final Config config = this.plugin.getConfig();
-        final PluginInfoUtil infoUtil = new PluginInfoUtil(sender, true);
         final List<String> advancedPlayers = config.getStringList("advanced-players");
 
         if (args.length == 0) {
@@ -65,14 +64,15 @@ public class OsTagCommand extends Command {
         }
         if (args[0].equalsIgnoreCase("menu")) {
             if (sender instanceof Player) {
-                Player player = (Player) sender;
+                final Player player = (Player) sender;
                 new Form(player).runOstagFrom();
-                return false;
             } else {
                 sender.sendMessage(MessageUtil.colorize("&cThis command only is for a player!"));
             }
+            return false;
         }
         if (args[0].equalsIgnoreCase("version") || args[0].equalsIgnoreCase("v")) {
+            final PluginInfoUtil infoUtil = new PluginInfoUtil(sender, true);
             if (sender.hasPermission(Permissions.ADMIN)) {
                 for (final String adminInfo : infoUtil.getAdminInfo()) {
                     sender.sendMessage(MessageUtil.colorize(adminInfo));
