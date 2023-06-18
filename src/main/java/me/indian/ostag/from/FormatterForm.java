@@ -71,7 +71,7 @@ public class FormatterForm {
 
             config.save();
             p.sendMessage(MessageUtil.colorize("&aSaved changes"));
-
+            this.mainForm.logger("&aPlayer&6 " + p.getName() + "&a edited&b " + form.getTitle());
             formatterSettings();
         });
         form.setNoneHandler(p -> formatterSettings());
@@ -125,6 +125,7 @@ public class FormatterForm {
             }
             config.save();
             p.sendMessage(MessageUtil.colorize("&aSaved changes"));
+            this.mainForm.logger("&aPlayer&6 " + p.getName() + "&a edited&b " + form.getTitle());
             formatterSettings();
         });
 
@@ -186,6 +187,7 @@ public class FormatterForm {
             }
             config.save();
             p.sendMessage(MessageUtil.colorize("&aSaved changes"));
+            this.mainForm.logger("&aPlayer&6 " + p.getName() + "&a edited&b " + form.getTitle());
             formatterSettings();
         });
 

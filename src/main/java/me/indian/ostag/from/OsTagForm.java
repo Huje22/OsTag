@@ -116,6 +116,7 @@ public class OsTagForm {
             config.set("advanced-players", advancedPlayers);
             config.save();
             p.sendMessage(MessageUtil.colorize("&aSaved changes"));
+            this.mainForm.logger("&aPlayer&6 " + p.getName() + "&a edited&b " + form.getTitle());
             osTagSettings();
         });
         form.send(player);
@@ -205,6 +206,7 @@ public class OsTagForm {
             config.set("a-subtag", aSubtag);
             config.save();
             p.sendMessage(MessageUtil.colorize("&aSaved changes"));
+            this.mainForm.logger("&aPlayer&6 " + p.getName() + "&a edited&b " + form.getTitle());
             osTagSettings();
         });
 
@@ -269,6 +271,7 @@ public class OsTagForm {
             disabledWorlds = finalDis;
             config.set("disabled-worlds", disabledWorlds);
             config.save();
+            this.mainForm.logger("&aPlayer&6 " + p.getName() + "&a edited&b " + form.getTitle());
             p.sendMessage(MessageUtil.colorize("&aSaved changes"));
             osTagSettings();
         });

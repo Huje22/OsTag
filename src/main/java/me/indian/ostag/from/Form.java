@@ -20,22 +20,26 @@ public class Form {
 
     private final OsTag plugin;
     private final Player player;
+    private final String debugPrefix;
     private final List<String> advancedPlayers;
     private final SettingsFrom settings;
+    private final boolean debug;
 
     public Form(final Player player) {
         this.player = player;
         this.plugin = OsTag.getInstance();
+        this.debugPrefix = MessageUtil.colorize(plugin.publicDebugPrefix + "&8[&dForms&8] ");
         final Config config = this.plugin.getConfig();
         this.advancedPlayers = config.getStringList("advanced-players");
         this.settings = new SettingsFrom(this, config, this.advancedPlayers);
+        this.debug = config.getBoolean("FormsDebug");
     }
 
     public void runOstagFrom() {
         if (!plugin.formConstructor) {
             if (player.isOp()) {
-                player.sendMessage(MessageUtil.colorize("&cYou don't have &bFormConstructor&b plugin !"));
-                player.sendMessage(MessageUtil.colorize("&cDownload it from here &bhttps://github.com/OpenPlugins-Minecraft/OsTag/tree/main/libs!"));
+                player.sendMessage(MessageUtil.colorize("&cYou don't have &bFormConstructor&c plugin !"));
+                player.sendMessage(MessageUtil.colorize("&cDownload it from here&b https://github.com/OpenPlugins-Minecraft/OsTag/tree/main/libs!"));
             } else {
                 player.sendMessage(MessageUtil.colorize("&cYThis server don't have &bFormConstructor&b plugin !"));
             }
@@ -59,7 +63,7 @@ public class Form {
 
     private void versionInfo() {
         final SimpleForm form = new SimpleForm("Version info");
-        final PluginInfoUtil infoUtil = new PluginInfoUtil(player , true);
+        final PluginInfoUtil infoUtil = new PluginInfoUtil(player, true);
 
         if (player.hasPermission(Permissions.ADMIN)) {
             for (final String adminInfo : infoUtil.getAdminInfo()) {
@@ -91,6 +95,7 @@ public class Form {
         form.addButton("Reload config", ImageType.PATH, "textures/ui/refresh", (p, button) -> {
             plugin.getOsTagCommand().reloadConfig(player);
             this.reloadConfig();
+            this.logger("&aPlayer&6 " + p.getName() + "&a reloading config");
         });
 
         this.addCloseButton(form);
@@ -107,12 +112,18 @@ public class Form {
 
         if (GithubUtil.getFastTagInfo().contains("false")) {
             if (!downloadStatus.equalsIgnoreCase(MessageUtil.colorize("&cYou have downloaded the latest version but you are not using it"))) {
-                form.addButton("UpDate", ImageType.PATH, "textures/ui/up_chevron", (p, button) -> plugin.getUpdateUtil().manualUpDate(player));
+                form.addButton("UpDate", ImageType.PATH, "textures/ui/up_chevron", (p, button) -> {
+                    plugin.getUpdateUtil().manualUpDate(player);
+                    this.logger("&aPlayer&6 " + p.getName() + "&a trying to update plugin");
+                });
             }
         } else {
             if (!GithubUtil.getFastTagInfo().contains("true")) {
                 form.setContent(MessageUtil.colorize("&cYou can't download latest version"))
-                        .addButton("Force UpDate", ImageType.PATH, "textures/ui/ErrorGlyph_small", (p, button) -> plugin.getUpdateUtil().manualUpDate(player));
+                        .addButton("Force UpDate", ImageType.PATH, "textures/ui/ErrorGlyph_small", (p, button) -> {
+                            plugin.getUpdateUtil().manualUpDate(player);
+                            this.logger("&aPlayer&6 " + p.getName() + "&a trying to force update plugin");
+                        });
             } else {
                 form.setContent(MessageUtil.colorize("&aYou have latest version!"));
             }
@@ -142,6 +153,13 @@ public class Form {
 
     public SettingsFrom getSettings() {
         return this.settings;
+    }
+
+    public void logger(final String log) {
+        if (this.debug) {
+            plugin.getLogger().info(MessageUtil.colorize(debugPrefix + log));
+            MessageUtil.sendMessageToAdmins(debugPrefix + log);
+        }
     }
 
     public void test() {

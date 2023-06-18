@@ -67,6 +67,9 @@ Movement-server: true
 #Public plugin debug
 Debug: false
 #
+#If it is enabled, information about what a given player has done in forms is sent
+FormsDebug: false
+#
 #--------------------------
 #   OsTag options
 #

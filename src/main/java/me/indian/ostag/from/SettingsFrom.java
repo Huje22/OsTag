@@ -49,18 +49,24 @@ public class SettingsFrom {
         final CustomForm form = new CustomForm("Modules settings");
 
         form.addElement(new Label(MessageUtil.colorize("&a&lRestart no needed!")));
-        form.addElement("autoupdate", new Toggle("Auto Update", this.config.getBoolean("AutoUpdate")));
+        form.addElement("autoupdate", new Toggle("Auto Update", this.config.getBoolean("AutoUpdate")))
+                .addElement("formsdebug", new Toggle("Forms debug", this.config.getBoolean("FormsDebug")));
 
 
-        form.addElement(new Label(MessageUtil.colorize("&c&lThis booleans needed restart server to reload!")));
-        form.addElement("update", new Toggle("Update checker", plugin.upDatechecker));
-        form.addElement("ostag", new Toggle("Ostag", plugin.osTag));
-        form.addElement("formatter", new Toggle("ChatFormatter", plugin.chatFormatter));
-        form.addElement("debug", new Toggle("Debug", plugin.debug));
-        form.addElement("movement", new Toggle("Server movement", plugin.serverMovement));
+        form.addElement(new Label(MessageUtil.colorize("&c&lThis booleans needed restart server to reload!")))
+                .addElement("update", new Toggle("Update checker", plugin.upDatechecker))
+                .addElement("ostag", new Toggle("Ostag", plugin.osTag))
+                .addElement("formatter", new Toggle("ChatFormatter", plugin.chatFormatter))
+                .addElement("debug", new Toggle("Debug", plugin.debug))
+                .addElement("movement", new Toggle("Server movement", plugin.serverMovement));
 
 
         form.setHandler((p, response) -> {
+
+            // not restart
+
+            config.set("AutoUpdate", response.getToggle("autoupdate").getValue());
+            config.set("FormsDebug", response.getToggle("formsdebug").getValue());
 
             //restart
 
@@ -70,22 +76,18 @@ public class SettingsFrom {
             config.set("Debug", response.getToggle("debug").getValue());
             config.set("Movement-server", response.getToggle("movement").getValue());
 
-            // not restart
-
-            config.set("AutoUpdate", response.getToggle("autoupdate").getValue());
             config.save();
             p.sendMessage(MessageUtil.colorize("&aThis changes may need restart server"));
+            this.mainForm.logger("&aPlayer&6 " + p.getName() + "&a trying to edit&b " + form.getTitle());
             if (p.isOp()) {
                 this.reloadServer();
             } else {
                 settings();
             }
         });
-
         form.setNoneHandler(p -> this.settings());
         form.send(player);
     }
-
 
     private void reloadServer() {
         final ModalForm form = new ModalForm("Server reload");
