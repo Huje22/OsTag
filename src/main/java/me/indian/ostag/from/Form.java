@@ -21,18 +21,17 @@ public class Form {
     private final OsTag plugin;
     private final Player player;
     private final String debugPrefix;
+    private final Config config;
     private final List<String> advancedPlayers;
     private final SettingsFrom settings;
-    private final boolean debug;
 
     public Form(final Player player) {
         this.player = player;
         this.plugin = OsTag.getInstance();
         this.debugPrefix = MessageUtil.colorize(plugin.publicDebugPrefix + "&8[&dForms&8] ");
-        final Config config = this.plugin.getConfig();
+        this.config = this.plugin.getConfig();
         this.advancedPlayers = config.getStringList("advanced-players");
         this.settings = new SettingsFrom(this, config, this.advancedPlayers);
-        this.debug = config.getBoolean("FormsDebug");
     }
 
     public void runOstagFrom() {
@@ -156,7 +155,7 @@ public class Form {
     }
 
     public void logger(final String log) {
-        if (this.debug) {
+        if (this.config.getBoolean("FormsDebug")) {
             plugin.getLogger().info(MessageUtil.colorize(debugPrefix + log));
             MessageUtil.sendMessageToAdmins(debugPrefix + log);
         }
