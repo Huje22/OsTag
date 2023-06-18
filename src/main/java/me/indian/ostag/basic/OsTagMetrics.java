@@ -97,7 +97,7 @@ public class OsTagMetrics {
             final boolean censor = this.config.getBoolean("censorship.enable");
             final boolean breaks = this.config.getBoolean("break-between-messages.enable");
             final boolean cooldown = this.config.getBoolean("cooldown.enable");
-            final boolean andForAll = this.config.getBoolean("and-for-all");
+            final boolean andForAll = this.config.getBoolean("And-for-all");
             final boolean formsDebug = this.config.getBoolean("FormsDebug");
 
             if (update) {
@@ -129,27 +129,27 @@ public class OsTagMetrics {
         }));
 
         this.metrics.addCustomChart(new Metrics.AdvancedPie("plugins", () -> {
-            final Map<String, Integer> valueMap = new HashMap<>();
-            final Map<String, Plugin> pluginMap = this.plugin.getServer().getPluginManager().getPlugins();
+            final Map<String, Plugin> serverPluginsMap = this.server.getPluginManager().getPlugins();
+            final Map<String, Integer> pluginMap = new HashMap<>();
 
-            for (Map.Entry<String, Plugin> entry : pluginMap.entrySet()) {
+            for (Map.Entry<String, Plugin> entry : serverPluginsMap.entrySet()) {
                 final String key = entry.getKey();
                 if (key.equalsIgnoreCase("LuckPerms") || key.equalsIgnoreCase("PlaceholderAPI") || key.equalsIgnoreCase("KotlinLib") || key.equalsIgnoreCase("FormConstructor")) {
-                    if (!valueMap.containsKey(key)) {
-                        valueMap.put(key, 1);
+                    if (!pluginMap.containsKey(key)) {
+                        pluginMap.put(key, 1);
                     }
                 }
             }
-            return valueMap;
+            return pluginMap;
         }));
 
         /*
         Code from https://github.com/CloudburstMC/Nukkit/blob/master/src/main/java/cn/nukkit/metrics/NukkitMetrics.java#L47
          */
-        this.metrics.addCustomChart(new Metrics.SimplePie("xbox_auth", () -> this.plugin.getServer().getPropertyBoolean("xbox-auth") ? "Required" : "Not required"));
+        this.metrics.addCustomChart(new Metrics.SimplePie("xbox_auth", () -> this.server.getPropertyBoolean("xbox-auth") ? "Required" : "Not required"));
         this.metrics.addCustomChart(new Metrics.AdvancedPie("player_platform", () -> {
             final Map<String, Integer> valueMap = new HashMap<>();
-            this.plugin.getServer().getOnlinePlayers().forEach((uuid, player) -> {
+            this.server.getOnlinePlayers().forEach((uuid, player) -> {
                 final String deviceOS = this.mapDeviceOSToString(player.getLoginChainData().getDeviceOS());
                 if (!valueMap.containsKey(deviceOS)) {
                     valueMap.put(deviceOS, 1);
@@ -162,7 +162,7 @@ public class OsTagMetrics {
 
         this.metrics.addCustomChart(new Metrics.AdvancedPie("player_game_version", () -> {
             final Map<String, Integer> valueMap = new HashMap<>();
-            this.plugin.getServer().getOnlinePlayers().forEach((uuid, player) -> {
+            this.server.getOnlinePlayers().forEach((uuid, player) -> {
                 final String gameVersion = player.getLoginChainData().getGameVersion();
                 if (!valueMap.containsKey(gameVersion)) {
                     valueMap.put(gameVersion, 1);
