@@ -34,7 +34,6 @@ public class MessageUtil {
         return String.join(split, lista);
     }
 
-
     public static List<String> stringToList(final String text, String split) {
         if (split == null) {
             split = " ";
@@ -45,7 +44,6 @@ public class MessageUtil {
         }
         return Arrays.asList(text.split(split));
     }
-
 
     public static void playerCommand(final Player player, final String command) {
         server.dispatchCommand(player, command);
@@ -58,6 +56,14 @@ public class MessageUtil {
     public static void sendMessageToAll(final String msg) {
         for (final Player all : server.getOnlinePlayers().values()) {
             all.sendMessage(colorize(msg));
+        }
+    }
+
+    public static void sendMessageToAdmins(final String msg) {
+        for (final Player player : server.getOnlinePlayers().values()) {
+            if (player.isOp() || player.hasPermission(Permissions.ADMIN)) {
+                player.sendMessage(colorize(msg));
+            }
         }
     }
 }
