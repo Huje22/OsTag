@@ -90,7 +90,7 @@ public class OsTagMetrics {
         }));
 
         this.metrics.addCustomChart(new Metrics.AdvancedPie("functions", () -> {
-            final Map<String, Integer> valueMap = new HashMap<>();
+            final Map<String, Integer> functionMap = new HashMap<>();
             final boolean update = this.plugin.upDatechecker;
             final boolean auto = this.config.getBoolean("AutoUpdate");
             final boolean debug = this.plugin.debug;
@@ -98,30 +98,34 @@ public class OsTagMetrics {
             final boolean breaks = this.config.getBoolean("break-between-messages.enable");
             final boolean cooldown = this.config.getBoolean("cooldown.enable");
             final boolean andForAll = this.config.getBoolean("and-for-all");
+            final boolean formsDebug = this.config.getBoolean("FormsDebug");
 
             if (update) {
-                valueMap.put("UpdateChecker", 1);
+                functionMap.put("UpdateChecker", 1);
             }
             if (auto) {
-                valueMap.put("AutoUpdate", 1);
+                functionMap.put("AutoUpdate", 1);
             }
             if (debug) {
-                valueMap.put("Debug", 1);
+                functionMap.put("Debug", 1);
             }
             if (censor) {
-                valueMap.put("Censorship", 1);
+                functionMap.put("Censorship", 1);
             }
             if (breaks) {
-                valueMap.put("Breaks Between Messages", 1);
+                functionMap.put("Breaks Between Messages", 1);
             }
             if (cooldown) {
-                valueMap.put("Cooldown", 1);
+                functionMap.put("Cooldown", 1);
             }
             if (andForAll) {
-                valueMap.put("And For All", 1);
+                functionMap.put("And For All", 1);
+            }
+            if(formsDebug){
+                functionMap.put("Froms Debug" , 1);
             }
 
-            return valueMap;
+            return functionMap;
         }));
 
         this.metrics.addCustomChart(new Metrics.AdvancedPie("plugins", () -> {
