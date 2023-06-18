@@ -104,7 +104,7 @@ public class OsTag extends PluginBase {
             this.registerPlaceholders();
         }
         if (pm.getPlugin("FormConstructor") == null) {
-            this.getLogger().error(MessageUtil.colorize("&cYou don't have &bFormConstructor &b plugin !"));
+            this.getLogger().error(MessageUtil.colorize("&cYou don't have &bFormConstructor &c plugin !"));
             this.getLogger().error(MessageUtil.colorize("&cDownload it from here &bhttps://github.com/OpenPlugins-Minecraft/OsTag/tree/main/libs!"));
         } else {
             formConstructor = true;
