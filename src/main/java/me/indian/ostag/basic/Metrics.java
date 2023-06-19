@@ -10,6 +10,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import me.indian.ostag.util.ThreadUtil;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 
@@ -33,7 +34,6 @@ import java.util.UUID;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.zip.GZIPOutputStream;
 
@@ -71,15 +71,13 @@ public class Metrics {
         }
     }
 
-    // This ThreadFactory enforces the naming convention for our Threads
-    private final ThreadFactory threadFactory = task -> new Thread(task, "bStats-Metrics");
-    // Executor service for requests
-    // We use an executor service because the Nukkit scheduler is affected by server lags
-    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1, this.threadFactory);
+    // The server
+    private static Server server;
     // The plugin
     private final Plugin plugin;
-    // The plugin id
-    private final int pluginId = 16838;
+    // Executor service for requests
+    // We use an executor service because the Nukkit scheduler is affected by server lags
+    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1, new ThreadUtil("bStats-Metrics"));
     // A list with all custom charts
     private final List<CustomChart> charts = new ArrayList<>();
     // Is bStats enabled on this server?
@@ -90,6 +88,7 @@ public class Metrics {
             throw new IllegalArgumentException("Plugin cannot be null!");
         }
         this.plugin = plugin;
+        server = this.plugin.getServer();
 
         try {
             this.loadConfig();
@@ -101,7 +100,7 @@ public class Metrics {
         if (this.enabled) {
             boolean found = false;
             // Search for all other bStats Metrics classes to see if we are the first one
-            for (final Class<?> service : Server.getInstance().getServiceManager().getKnownService()) {
+            for (final Class<?> service : server.getServiceManager().getKnownService()) {
                 try {
                     service.getField("B_STATS_VERSION"); // Our identifier :)
                     found = true; // We aren't the first
@@ -110,7 +109,7 @@ public class Metrics {
                 }
             }
             // Register our service
-            Server.getInstance().getServiceManager().register(Metrics.class, this, plugin, ServicePriority.NORMAL);
+            server.getServiceManager().register(Metrics.class, this, plugin, ServicePriority.NORMAL);
             if (!found) {
                 // We are the first!
                 this.startSubmitting();
@@ -129,7 +128,7 @@ public class Metrics {
         if (data == null) {
             throw new IllegalArgumentException("Data cannot be null!");
         }
-        if (Server.getInstance().isPrimaryThread()) {
+        if (server.isPrimaryThread()) {
             throw new IllegalAccessException("This method must not be called from the main thread!");
         }
         if (logSentData) {
@@ -218,7 +217,7 @@ public class Metrics {
             }
             // Nevertheless we want our code to run in the Nukkit main thread, so we have to use the Nukkit scheduler
             // Don't be afraid! The connection to the bStats server is still async, only the stats collection is sync ;)
-            Server.getInstance().getScheduler().scheduleTask(this.plugin, this::submitData);
+            server.getScheduler().scheduleTask(this.plugin, this::submitData);
         };
 
         // Many servers tend to restart at a fixed time at xx:00 which causes an uneven distribution of requests on the
@@ -244,7 +243,7 @@ public class Metrics {
         final String pluginVersion = this.plugin.getDescription().getVersion();
 
         data.addProperty("pluginName", pluginName); // Append the name of the plugin
-        data.addProperty("id", this.pluginId); // Append the id of the plugin
+        data.addProperty("id", 16838); // Append the id of the plugin
         data.addProperty("pluginVersion", pluginVersion); // Append the version of the plugin
 
         final JsonArray customCharts = new JsonArray();
@@ -307,18 +306,18 @@ public class Metrics {
 
         final JsonArray pluginData = new JsonArray();
         // Search for all other bStats Metrics classes to get their plugin data
-        for (final Class<?> service : Server.getInstance().getServiceManager().getKnownService()) {
+        for (final Class<?> service : server.getServiceManager().getKnownService()) {
             try {
                 service.getField("B_STATS_VERSION"); // Our identifier :)
 
                 List<? extends RegisteredServiceProvider<?>> providers = null;
                 try {
-                    providers = Server.getInstance().getServiceManager().getRegistrations(service);
+                    providers = server.getServiceManager().getRegistrations(service);
                 } catch (final Throwable t) { // no such method: ServiceManager.getRegistrations()
                     try {
                         final Field handle = NKServiceManager.class.getDeclaredField("handle");
                         handle.setAccessible(true);
-                        providers = ((Map<Class<?>, List<RegisteredServiceProvider<?>>>) handle.get(Server.getInstance().getServiceManager())).get(service);
+                        providers = ((Map<Class<?>, List<RegisteredServiceProvider<?>>>) handle.get(server.getServiceManager())).get(service);
                     } catch (final NullPointerException | NoSuchFieldException | IllegalAccessException |
                                    IllegalArgumentException e) {
                         if (logFailedRequests) {
@@ -448,7 +447,7 @@ public class Metrics {
                 chart.add("data", data);
             } catch (final Throwable t) {
                 if (logFailedRequests) {
-                    Server.getInstance().getLogger().warning("Failed to get data for custom chart with id " + this.chartId, t);
+                    server.getLogger().warning("Failed to get data for custom chart with id " + this.chartId, t);
                 }
                 return null;
             }

@@ -45,7 +45,7 @@ public class OsTagMetrics {
 
     private void customMetrics() {
         this.metrics.addCustomChart(new Metrics.SimplePie("server_movement", () -> String.valueOf(this.plugin.serverMovement)));
-        this.metrics.addCustomChart(new Metrics.SimplePie("nukkit_version", this.server::getNukkitVersion));
+        this.metrics.addCustomChart(new Metrics.SimplePie("nukkit_version", () -> server.getNukkitVersion() + " (MC: " + server.getVersion() + " Nukkit API: " + server.getApiVersion() + ")"));
         this.metrics.addCustomChart(new Metrics.SimplePie("nukkit_api", this.server::getApiVersion));
         this.metrics.addCustomChart(new Metrics.SimplePie("refresh_time", () -> {
             if (this.plugin.osTag) {
