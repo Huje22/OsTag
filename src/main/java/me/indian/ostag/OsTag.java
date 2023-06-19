@@ -11,6 +11,7 @@ import me.indian.ostag.listener.CpsListener;
 import me.indian.ostag.listener.Formater;
 import me.indian.ostag.listener.InputListener;
 import me.indian.ostag.listener.PlayerJoinListener;
+import me.indian.ostag.listener.PlayerQuitListener;
 import me.indian.ostag.runnnable.OsTimer;
 import me.indian.ostag.util.GithubUtil;
 import me.indian.ostag.util.MessageUtil;
@@ -36,6 +37,7 @@ public class OsTag extends PluginBase {
     public boolean debug;
     public boolean upDatechecker;
     private OsTagCommand osTagCommand;
+    private OsTimer osTimer;
     private UpDateUtil upDateUtil;
     private Formater formater;
     private LuckPerms luckPerms;
@@ -47,6 +49,10 @@ public class OsTag extends PluginBase {
 
     public OsTagCommand getOsTagCommand() {
         return this.osTagCommand;
+    }
+
+    public OsTimer getOsTimer() {
+        return this.osTimer;
     }
 
     public UpDateUtil getUpdateUtil() {
@@ -70,6 +76,7 @@ public class OsTag extends PluginBase {
         instance = this;
         this.saveDefaultConfig();
         this.osTagCommand = new OsTagCommand(this);
+        this.osTimer = new OsTimer();
         this.upDateUtil = new UpDateUtil();
         this.debug = this.getConfig().getBoolean("Debug");
         this.serverMovement = this.getConfig().getBoolean("Movement-server");
@@ -125,16 +132,7 @@ public class OsTag extends PluginBase {
         commandMap.register("OsTag", this.getOsTagCommand());
         commandMap.register("OsTag", new TestttCommand(this));
 
-        if (this.osTag) {
-            int refreshTime = this.getConfig().getInt("refresh-time");
-            if (refreshTime <= 0) {
-                refreshTime = 1;
-                this.getConfig().set("refresh-time", 1);
-                this.getConfig().save();
-                this.getLogger().warning(MessageUtil.colorize("&cRefresh time must be higer than &b0 &c,we will set it up for you!"));
-            }
-            this.getServer().getScheduler().scheduleRepeatingTask(new OsTimer(), 20 * refreshTime);
-        } else {
+        if (!this.osTag) {
             this.getLogger().info(MessageUtil.colorize("&bOsTag module is disabled "));
         }
         if (this.chatFormatter) {
@@ -143,11 +141,13 @@ public class OsTag extends PluginBase {
             this.getLogger().info(MessageUtil.colorize("&bChatFormatter module is disabled"));
         }
         pm.registerEvents(new PlayerJoinListener(this), this);
+        pm.registerEvents(new PlayerQuitListener(this), this);
+
         this.onEnableInfo();
         this.getServer().getScheduler().scheduleDelayedTask(this::info, 30);
         this.getUpdateUtil().autoUpDate();
         new OsTagMetrics().run();
-
+        
         final double executionTimeInSeconds = (System.currentTimeMillis() - millisActualTime) / 1000.0;
         this.getLogger().info(MessageUtil.colorize("&aStarted in &b" + executionTimeInSeconds + " &aseconds"));
     }

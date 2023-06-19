@@ -5,6 +5,7 @@ import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerJoinEvent;
 import me.indian.ostag.OsTag;
+import me.indian.ostag.runnnable.OsTimer;
 import me.indian.ostag.util.GithubUtil;
 import me.indian.ostag.util.Permissions;
 
@@ -27,6 +28,10 @@ public class PlayerJoinListener implements Listener {
             if (this.plugin.upDatechecker) {
                 player.sendMessage(this.plugin.pluginPrefix + compatibility);
             }
+        }
+
+        if (plugin.getOsTimer().getStatus() == OsTimer.Status.STOPPED) {
+            plugin.getOsTimer().runTimer();
         }
     }
 }
