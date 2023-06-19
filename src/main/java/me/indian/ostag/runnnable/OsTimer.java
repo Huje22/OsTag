@@ -35,23 +35,7 @@ public class OsTimer extends Task implements Runnable {
 
     @Override
     public void onRun(final int i) {
-        if (this.getStatus() == Status.STOPPED) {
-            if (this.plugin.debug) {
-                this.logger.info(debugPrefix + "Stopping timer...");
-            }
-            try {
-                cancel();
-                if (this.plugin.debug) {
-                    this.logger.info(debugPrefix + "Timer stoped");
-                }
-            } catch (final Exception e) {
-                if (this.plugin.debug) {
-                    this.logger.error(debugPrefix + "Can't stop timer!");
-                    e.printStackTrace();
-                }
-            }
-            return;
-        }
+        this.disableTask(this);
         executorService.execute(() -> {
             for (final Player all : Server.getInstance().getOnlinePlayers().values()) {
                 this.addOsTag(all);
@@ -84,22 +68,15 @@ public class OsTimer extends Task implements Runnable {
             this.config.save();
             this.plugin.getLogger().warning(MessageUtil.colorize("&cRefresh time must be higer than &b0 &c,we will set it up for you!"));
         }
-        if (!(this.getStatus() == Status.RUNNING)) {
+        if (this.getStatus() != Status.RUNNING && this.getStatus() != Status.DISABLED) {
             if (this.plugin.debug) {
                 this.logger.info(debugPrefix + "Enabling timer...");
             }
-            try {
-                this.plugin.getServer().getScheduler().scheduleRepeatingTask(this, 20 * refreshTime);
-                if (this.plugin.debug) {
-                    this.logger.info(debugPrefix + "Timer enabled");
-                }
-                this.setStatus(Status.RUNNING);
-            } catch (final Exception e) {
-                if (this.plugin.debug) {
-                    this.logger.error(debugPrefix + "Can't enable timer!");
-                    e.printStackTrace();
-                }
+            this.plugin.getServer().getScheduler().scheduleRepeatingTask(this, 20 * refreshTime);
+            if (this.plugin.debug) {
+                this.logger.info(debugPrefix + "Timer enabled");
             }
+            this.setStatus(Status.RUNNING);
         } else {
             throw new RuntimeException("OsTimer already running");
         }
@@ -120,8 +97,26 @@ public class OsTimer extends Task implements Runnable {
         }
     }
 
+    private void disableTask(final Task task){
+        if (!this.plugin.osTag) {
+            task.cancel();
+        }
+        if (this.getStatus() == Status.STOPPED ) {
+            if (this.plugin.debug) {
+                this.logger.info(debugPrefix + "Stopping timer...");
+            }
+            cancel();
+            if (this.plugin.debug) {
+                this.logger.info(debugPrefix + "Timer stoped");
+            }
+            this.setStatus(Status.DISABLED);
+            return;
+        }
+    }
+
     public enum Status {
         RUNNING,
-        STOPPED
+        STOPPED,
+        DISABLED
     }
 }

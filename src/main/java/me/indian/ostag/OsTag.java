@@ -147,7 +147,7 @@ public class OsTag extends PluginBase {
         this.getServer().getScheduler().scheduleDelayedTask(this::info, 30);
         this.getUpdateUtil().autoUpDate();
         new OsTagMetrics().run();
-        
+
         final double executionTimeInSeconds = (System.currentTimeMillis() - millisActualTime) / 1000.0;
         this.getLogger().info(MessageUtil.colorize("&aStarted in &b" + executionTimeInSeconds + " &aseconds"));
     }
