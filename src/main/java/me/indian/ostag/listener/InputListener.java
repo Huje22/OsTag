@@ -21,15 +21,20 @@ import java.util.concurrent.Executors;
 
 public class InputListener implements Listener {
 
-    private static final OsTag plugin = OsTag.getInstance();
-    private static final PluginLogger logger = plugin.getLogger();
-    private static final Map<String, InputMode> controller = new HashMap<>();
-    private final String debugPrefix = MessageUtil.colorize(plugin.publicDebugPrefix + "&8[&dInputListener&8] ");
-    private final ExecutorService executorService = Executors.newSingleThreadExecutor(new ThreadUtil("Ostag InputListener Thread"));
+    private final OsTag plugin;
+    private final PluginLogger logger;
+    private final Map<String, InputMode> controller;
+    private final String debugPrefix;
+    private final ExecutorService executorService;
 
-    public static String getController(final Player player) {
-        return String.valueOf(controller.get(player.getName()));
+    public InputListener(final OsTag plugin) {
+        this.plugin = plugin;
+        this.logger = this.plugin.getLogger();
+        this.controller = new HashMap<>();
+        this.debugPrefix = MessageUtil.colorize(this.plugin.publicDebugPrefix + "&8[&dInputListener&8] ");
+        this.executorService = Executors.newSingleThreadExecutor(new ThreadUtil("Ostag InputListener Thread"));
     }
+
 
     @SuppressWarnings("unused")
     @EventHandler
@@ -38,22 +43,21 @@ public class InputListener implements Listener {
             final DataPacket packet = event.getPacket();
             if (packet instanceof PlayerAuthInputPacket) {
                 final InputMode inputMode = ((PlayerAuthInputPacket) packet).getInputMode();
-                final Player player = event.getPlayer();
-                final String name = player.getName();
+                final String name = event.getPlayer().getName();
                 //thanks to Petterim
                 //https://github.com/PetteriM1
 
                 if (!controller.containsKey(name)) {
                     controller.put(name, inputMode);
                     if (plugin.debug) {
-                        logger.info(MessageUtil.colorize(this.debugPrefix + "&aPlayer: &6" + player.getName() + " &ahas been added to controller list with &3" + inputMode));
+                        logger.info(MessageUtil.colorize(this.debugPrefix + "&aPlayer: &6" + name + " &ahas been added to controller list with &3" + inputMode));
                     }
                     return;
                 }
                 if (controller.get(name) != inputMode) {
                     controller.put(name, inputMode);
                     if (plugin.debug) {
-                        logger.info(MessageUtil.colorize(this.debugPrefix + "&aPlayer: &6" + player.getName() + " &achanged controller to: &3" + inputMode));
+                        logger.info(MessageUtil.colorize(this.debugPrefix + "&aPlayer: &6" + name + " &achanged controller to: &3" + inputMode));
                     }
                 }
             }
@@ -66,20 +70,22 @@ public class InputListener implements Listener {
         this.timeRemove(event.getPlayer().getName());
     }
 
+    public String getController(final Player player) {
+        return String.valueOf(controller.get(player.getName()));
+    }
+
     private void timeRemove(final String name) {
-        this.executorService.execute(() -> {
-            new NukkitRunnable() {
-                @Override
-                public void run() {
-                    final Player player = plugin.getServer().getPlayer(name);
-                    if (player == null) {
-                        controller.remove(name);
-                        if (plugin.debug) {
-                            logger.info(MessageUtil.colorize(InputListener.this.debugPrefix + "&aPlayer &6" + name + "&a has been removed from the map"));
-                        }
+        this.executorService.execute(() -> new NukkitRunnable() {
+            @Override
+            public void run() {
+                final Player player = plugin.getServer().getPlayer(name);
+                if (player == null) {
+                    controller.remove(name);
+                    if (plugin.debug) {
+                        logger.info(MessageUtil.colorize(InputListener.this.debugPrefix + "&aPlayer &6" + name + "&a has been removed from the map"));
                     }
                 }
-            }.runTaskLater(plugin, 20 * 30);
-        });
+            }
+        }.runTaskLater(plugin, 20 * 30));
     }
 }

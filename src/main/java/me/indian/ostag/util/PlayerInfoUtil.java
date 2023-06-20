@@ -4,7 +4,6 @@ import cn.nukkit.Player;
 import cn.nukkit.utils.Config;
 import me.indian.ostag.OsTag;
 import me.indian.ostag.listener.CpsListener;
-import me.indian.ostag.listener.InputListener;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.model.user.User;
 
@@ -19,7 +18,7 @@ public class PlayerInfoUtil {
 
     public static String replaceAllInfo(final Player player, final String msg) {
         return msg
-                .replace("<cooldown>", plugin.getFormater().cooldown(player))
+                .replace("<cooldown>", plugin.getFormater().getCooldown(player))
                 .replace("<name>", player.getName())
                 .replace("<dis_name>", player.getDisplayName())
                 .replace("<suffix>", getLuckPermSuffix(player))
@@ -102,7 +101,7 @@ public class PlayerInfoUtil {
         final String unknowcon = MessageUtil.colorize(config.getString("UnknownController"));
 
         if (plugin.serverMovement) {
-            switch (InputListener.getController(player)) {
+            switch (plugin.getInputListener().getController(player)) {
                 case "MOUSE":
                     return keyboard;
                 case "TOUCH":

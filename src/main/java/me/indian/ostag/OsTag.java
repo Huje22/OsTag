@@ -13,7 +13,7 @@ import me.indian.ostag.listener.InputListener;
 import me.indian.ostag.listener.PlayerJoinListener;
 import me.indian.ostag.listener.PlayerPreLoginListener;
 import me.indian.ostag.listener.PlayerQuitListener;
-import me.indian.ostag.runnnable.OsTimer;
+import me.indian.ostag.runnable.OsTimer;
 import me.indian.ostag.util.GithubUtil;
 import me.indian.ostag.util.MessageUtil;
 import me.indian.ostag.util.PlayerInfoUtil;
@@ -42,6 +42,7 @@ public class OsTag extends PluginBase {
     private OsTimer osTimer;
     private UpDateUtil upDateUtil;
     private Formater formater;
+    private InputListener inputListener;
     private LuckPerms luckPerms;
     private PlaceholderAPI placeholderApi;
 
@@ -63,6 +64,10 @@ public class OsTag extends PluginBase {
 
     public Formater getFormater() {
         return this.formater;
+    }
+
+    public InputListener getInputListener() {
+        return this.inputListener;
     }
 
     public LuckPerms getLuckperms() {
@@ -127,18 +132,19 @@ public class OsTag extends PluginBase {
         }
         pm.registerEvents(new CpsListener(), this);
         if (this.serverMovement) {
-            pm.registerEvents(new InputListener(), this);
+            this.inputListener = new InputListener(this);
+            pm.registerEvents(this.getInputListener(), this);
         }
 
         final CommandMap commandMap = this.getServer().getCommandMap();
         commandMap.register("OsTag", this.getOsTagCommand());
         commandMap.register("OsTag", new TestttCommand(this));
 
-        if (!this.osTag) {
-            this.getLogger().info(MessageUtil.colorize("&bOsTag module is disabled "));
-        } else {
+        if (this.osTag) {
             this.getOsTimer().setStatus(Status.STOPPED);
             this.getOsTimer().startTimer();
+        } else {
+            this.getLogger().info(MessageUtil.colorize("&bOsTag module is disabled "));
         }
         if (this.chatFormatter) {
             pm.registerEvents(this.getFormater(), this);
@@ -174,7 +180,7 @@ public class OsTag extends PluginBase {
                     .visitorLoader(entry -> CpsListener.getCPS(entry.getPlayer()))
                     .build();
             api.builder(prefix + "cooldown", String.class)
-                    .visitorLoader(entry -> this.getFormater().cooldown(entry.getPlayer()))
+                    .visitorLoader(entry -> this.getFormater().getCooldown(entry.getPlayer()))
                     .build();
             api.builder(prefix + "device", String.class)
                     .visitorLoader(entry -> PlayerInfoUtil.getDevice(entry.getPlayer()))

@@ -20,11 +20,12 @@ public class Formater implements Listener {
     private static final HashMap<UUID, Long> cooldown = new HashMap<>();
     private final OsTag plugin;
     private final PlaceholderAPI api;
-    private final int second = 1000;
+    private final int second;
 
     public Formater(final OsTag plugin, final PlaceholderAPI api) {
         this.plugin = plugin;
         this.api = api;
+        this.second = 1000;
     }
 
     // IndianPL
@@ -103,7 +104,7 @@ public class Formater implements Listener {
         }
     }
 
-    public String cooldown(final Player player) {
+    public String getCooldown(final Player player) {
         final Config config = this.plugin.getConfig();
         final UUID uuid = player.getUniqueId();
         final long time = this.plugin.getConfig().getLong("cooldown.delay") * this.second;
