@@ -11,12 +11,14 @@ import me.indian.ostag.listener.CpsListener;
 import me.indian.ostag.listener.Formater;
 import me.indian.ostag.listener.InputListener;
 import me.indian.ostag.listener.PlayerJoinListener;
+import me.indian.ostag.listener.PlayerPreLoginListener;
 import me.indian.ostag.listener.PlayerQuitListener;
 import me.indian.ostag.runnnable.OsTimer;
 import me.indian.ostag.util.GithubUtil;
 import me.indian.ostag.util.MessageUtil;
 import me.indian.ostag.util.PlayerInfoUtil;
 import me.indian.ostag.util.PluginInfoUtil;
+import me.indian.ostag.util.Status;
 import me.indian.ostag.util.UpDateUtil;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
@@ -76,7 +78,7 @@ public class OsTag extends PluginBase {
         instance = this;
         this.saveDefaultConfig();
         this.osTagCommand = new OsTagCommand(this);
-        this.osTimer = new OsTimer();
+        this.osTimer = new OsTimer(this);
         this.upDateUtil = new UpDateUtil();
         this.debug = this.getConfig().getBoolean("Debug");
         this.serverMovement = this.getConfig().getBoolean("Movement-server");
@@ -134,6 +136,9 @@ public class OsTag extends PluginBase {
 
         if (!this.osTag) {
             this.getLogger().info(MessageUtil.colorize("&bOsTag module is disabled "));
+        } else {
+            this.getOsTimer().setStatus(Status.STOPPED);
+            this.getOsTimer().startTimer();
         }
         if (this.chatFormatter) {
             pm.registerEvents(this.getFormater(), this);
@@ -141,6 +146,7 @@ public class OsTag extends PluginBase {
             this.getLogger().info(MessageUtil.colorize("&bChatFormatter module is disabled"));
         }
         pm.registerEvents(new PlayerJoinListener(this), this);
+        pm.registerEvents(new PlayerPreLoginListener(this), this);
         pm.registerEvents(new PlayerQuitListener(this), this);
 
         this.onEnableInfo();

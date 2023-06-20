@@ -1,12 +1,12 @@
 package me.indian.ostag.runnnable;
 
 import cn.nukkit.Player;
-import cn.nukkit.Server;
 import cn.nukkit.plugin.PluginLogger;
-import cn.nukkit.scheduler.Task;
+import cn.nukkit.scheduler.NukkitRunnable;
 import cn.nukkit.utils.Config;
 import me.indian.ostag.OsTag;
 import me.indian.ostag.util.MessageUtil;
+import me.indian.ostag.util.Status;
 import me.indian.ostag.util.TagAddUtil;
 import me.indian.ostag.util.ThreadUtil;
 
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class OsTimer extends Task implements Runnable {
+public class OsTimer {
 
 
     private final OsTag plugin;
@@ -22,26 +22,47 @@ public class OsTimer extends Task implements Runnable {
     private final ExecutorService executorService;
     private final PluginLogger logger;
     private final String debugPrefix;
-    private Status status = Status.STOPPED;
+    private Status status;
     private boolean sented = false;
 
-    public OsTimer() {
-        this.plugin = OsTag.getInstance();
-        this.config = plugin.getConfig();
+    public OsTimer(final OsTag plugin) {
+        this.plugin = plugin;
+        this.config = this.plugin.getConfig();
         this.executorService = Executors.newSingleThreadExecutor(new ThreadUtil("Ostag OsTimer Thread"));
         this.logger = this.plugin.getLogger();
         this.debugPrefix = MessageUtil.colorize(this.plugin.publicDebugPrefix + "&8[&dOsTimer&8] ");
     }
 
-    @Override
-    public void onRun(final int i) {
-        this.disableTask(this);
-        executorService.execute(() -> {
-            for (final Player all : Server.getInstance().getOnlinePlayers().values()) {
-                this.addOsTag(all);
+    private void runTimer(final int i) {
+        executorService.execute(() -> new NukkitRunnable() {
+            @Override
+            public void run() {
+                if (getStatus() == Status.DISABLED) {
+                    cancel();
+                    return;
+                }
+                if (!plugin.osTag) {
+                    setStatus(Status.DISABLED);
+                    cancel();
+                    return;
+                }
+                if (getStatus() == Status.STOPPED) {
+                    if (plugin.debug) {
+                        logger.info(debugPrefix + "Stopping timer...");
+                    }
+                    cancel();
+                    if (plugin.debug) {
+                        logger.info(debugPrefix + "Timer stoped");
+                    }
+                    return;
+                }
+                for (final Player all : plugin.getServer().getOnlinePlayers().values()) {
+                    addOsTag(all);
+                }
             }
-        });
+        }.runTaskTimer(plugin, 20 * i, 20 * i));
     }
+
 
     private void addOsTag(final Player player) {
         final List<String> advancedPlayers = config.getStringList("advanced-players");
@@ -60,25 +81,19 @@ public class OsTimer extends Task implements Runnable {
         }
     }
 
-    public void runTimer() {
-        int refreshTime = this.config.getInt("refresh-time");
-        if (refreshTime <= 0) {
-            refreshTime = 1;
-            this.config.set("refresh-time", 1);
-            this.config.save();
-            this.plugin.getLogger().warning(MessageUtil.colorize("&cRefresh time must be higer than &b0 &c,we will set it up for you!"));
+    public void startTimer() {
+        if (this.getStatus() == Status.RUNNING) {
+            throw new RuntimeException("OsTimer already running");
         }
-        if (this.getStatus() != Status.RUNNING && this.getStatus() != Status.DISABLED) {
+        if (this.getStatus() == Status.STOPPED) {
             if (this.plugin.debug) {
                 this.logger.info(debugPrefix + "Enabling timer...");
             }
-            this.plugin.getServer().getScheduler().scheduleRepeatingTask(this, 20 * refreshTime);
+            this.runTimer(refreshTime());
             if (this.plugin.debug) {
                 this.logger.info(debugPrefix + "Timer enabled");
             }
             this.setStatus(Status.RUNNING);
-        } else {
-            throw new RuntimeException("OsTimer already running");
         }
     }
 
@@ -87,36 +102,28 @@ public class OsTimer extends Task implements Runnable {
     }
 
     public void setStatus(final Status status) {
-        if (!this.plugin.osTag) {
+        if (!this.plugin.osTag || this.getStatus() == Status.DISABLED) {
             if (!sented) {
                 sented = true;
-                this.logger.info(MessageUtil.colorize("&aCan't set status , ostag module is disabled"));
+                this.logger.info(MessageUtil.colorize("&aCan't set status , ostag module or status is disabled"));
+                if (this.getStatus() != Status.DISABLED) this.setStatus(Status.DISABLED);
             }
         } else {
             this.status = status;
+            if (this.plugin.debug) {
+                logger.info(MessageUtil.colorize(debugPrefix + "&aStatus seted to&b " + status));
+            }
         }
     }
 
-    private void disableTask(final Task task){
-        if (!this.plugin.osTag) {
-            task.cancel();
+    private int refreshTime() {
+        int refreshTime = this.config.getInt("refresh-time");
+        if (refreshTime <= 0) {
+            refreshTime = 1;
+            this.config.set("refresh-time", 1);
+            this.config.save();
+            this.plugin.getLogger().warning(MessageUtil.colorize("&cRefresh time must be higer than &b0 &c,we will set it up for you!"));
         }
-        if (this.getStatus() == Status.STOPPED ) {
-            if (this.plugin.debug) {
-                this.logger.info(debugPrefix + "Stopping timer...");
-            }
-            cancel();
-            if (this.plugin.debug) {
-                this.logger.info(debugPrefix + "Timer stoped");
-            }
-            this.setStatus(Status.DISABLED);
-            return;
-        }
-    }
-
-    public enum Status {
-        RUNNING,
-        STOPPED,
-        DISABLED
+        return refreshTime;
     }
 }
