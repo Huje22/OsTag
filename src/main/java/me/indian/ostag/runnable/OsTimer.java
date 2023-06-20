@@ -37,6 +37,18 @@ public class OsTimer {
         executorService.execute(() -> new NukkitRunnable() {
             @Override
             public void run() {
+                if(getStatus() == Status.RESTART){
+                    if (plugin.debug) {
+                        logger.info(debugPrefix + "Stopping timer...");
+                    }
+                    cancel();
+                    startTimer();
+                    if (plugin.debug) {
+                        logger.info(debugPrefix + "Timer restarted");
+                    }
+                    return;
+                }
+
                 if (getStatus() == Status.DISABLED) {
                     cancel();
                     return;
@@ -85,11 +97,11 @@ public class OsTimer {
         if (this.getStatus() == Status.RUNNING) {
             throw new RuntimeException("OsTimer already running");
         }
-        if (this.getStatus() == Status.STOPPED) {
+        if (this.getStatus() == Status.STOPPED || this.getStatus() == Status.RESTART) {
             if (this.plugin.debug) {
                 this.logger.info(debugPrefix + "Enabling timer...");
             }
-            this.runTimer(refreshTime());
+            this.runTimer(getRefreshTime());
             if (this.plugin.debug) {
                 this.logger.info(debugPrefix + "Timer enabled");
             }
@@ -116,7 +128,7 @@ public class OsTimer {
         }
     }
 
-    private int refreshTime() {
+    public int getRefreshTime() {
         int refreshTime = this.config.getInt("refresh-time");
         if (refreshTime <= 0) {
             refreshTime = 1;
