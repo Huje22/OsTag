@@ -210,10 +210,11 @@ Remove `ReplaceUtil` and add replace method in `PlayerInfoUtil` (Since 1.5.7.1) 
 Disabling the entire "Ostag" module when "scoretag" and "nametag" are disabled (Since 1.5.7.1)  <br/>
 Added more metrics (Since 1.5.7.2 - 1.5.7.3)  <br/>
 Added finally working tab command completion (Since 1.5.7.2)  <br/>
-Addded better config , now scoretag is as a list (Since 1.5.7.3)  <br/>
+Added better config , now scoretag is as a list (Since 1.5.7.3)  <br/>
 Added `/ostag menu` to manage some things using the GUI (Since 1.5.7.3)  <br/>
 Added new boolean in config `FormsDebug` If it is enabled, information about what a given player has done in forms is
 sent (Since 1.5.7.3)  <br/>
+New `OsTimer` system (Since 1.5.7.3)  <br/>
 
 __Fixes__: <br/>
 Code and code style fixes <br/>
