@@ -5,14 +5,19 @@ import cn.nukkit.level.Level;
 import cn.nukkit.utils.Config;
 import me.indian.ostag.OsTag;
 import me.indian.ostag.util.MessageUtil;
+import me.indian.ostag.util.Status;
 import ru.contentforge.formconstructor.form.CustomForm;
+import ru.contentforge.formconstructor.form.ModalForm;
 import ru.contentforge.formconstructor.form.SimpleForm;
 import ru.contentforge.formconstructor.form.element.ImageType;
 import ru.contentforge.formconstructor.form.element.Input;
 import ru.contentforge.formconstructor.form.element.Label;
+import ru.contentforge.formconstructor.form.element.SelectableElement;
+import ru.contentforge.formconstructor.form.element.StepSlider;
 import ru.contentforge.formconstructor.form.element.Toggle;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class OsTagForm {
@@ -42,7 +47,9 @@ public class OsTagForm {
 
         form.addButton("NameTag & ScoreTag", ImageType.PATH, "textures/ui/book_metatag_default", (p, button) -> scoreAndNameSettings())
                 .addButton("Advanced Players", ImageType.PATH, "textures/ui/FriendsDiversity", (p, button) -> advancedPlayersSettings())
-                .addButton("Disabled worlds", ImageType.PATH, "textures/ui/worldsIcon", (p, button) -> disabledWorld());
+                .addButton("Refresh Time", ImageType.PATH, "textures/ui/refresh_light", (p, button) -> refershTimeSettings())
+                .addButton("Disabled Worlds", ImageType.PATH, "textures/ui/worldsIcon", (p, button) -> disabledWorld());
+
         this.mainForm.addCloseButton(form);
         form.setNoneHandler(p -> this.mainForm.getSettings().settings());
         form.send(player);
@@ -113,10 +120,10 @@ public class OsTagForm {
                 advancedPlayers.add(playerName);
             }
 
-            config.set("advanced-players", advancedPlayers);
-            config.save();
+            this.config.set("advanced-players", advancedPlayers);
+            this.config.save();
             p.sendMessage(MessageUtil.colorize("&aSaved changes"));
-            this.mainForm.logger("&aPlayer&6 " + p.getName() + "&a edited&b " + form.getTitle());
+            this.mainForm.formLogger("&aPlayer&6 " + p.getName() + "&a edited&b " + form.getTitle());
             osTagSettings();
         });
         form.send(player);
@@ -172,8 +179,8 @@ public class OsTagForm {
             final List<String> finalSubtag = new ArrayList<>();
             final List<String> finalAsubtag = new ArrayList<>();
 
-            config.set("nick", response.getInput("nick").getValue());
-            config.set("a-nick", response.getInput("a-nick").getValue());
+            this.config.set("nick", response.getInput("nick").getValue());
+            this.config.set("a-nick", response.getInput("a-nick").getValue());
 
             for (int i = 0; i < subtag.size(); i++) {
                 final String tag = response.getInput("subtag_" + i).getValue();
@@ -202,12 +209,50 @@ public class OsTagForm {
             subtag = finalSubtag;
             aSubtag = finalAsubtag;
 
-            config.set("subtag", subtag);
-            config.set("a-subtag", aSubtag);
-            config.save();
+            this.config.set("subtag", subtag);
+            this.config.set("a-subtag", aSubtag);
+            this.config.save();
             p.sendMessage(MessageUtil.colorize("&aSaved changes"));
-            this.mainForm.logger("&aPlayer&6 " + p.getName() + "&a edited&b " + form.getTitle());
+            this.mainForm.formLogger("&aPlayer&6 " + p.getName() + "&a edited&b " + form.getTitle());
             osTagSettings();
+        });
+
+        form.setNoneHandler(p -> osTagSettings());
+        form.send(player);
+    }
+
+
+    private void refershTimeSettings() {
+        final CustomForm form = new CustomForm("Refresh Time settings");
+        final int refresh = this.plugin.getOsTimer().getRefreshTime();
+        final List<SelectableElement> elements = Arrays.asList(
+                new SelectableElement(MessageUtil.colorize("&a1 \n&aRecommended for the best game experience"), 1),
+                new SelectableElement(MessageUtil.colorize("&a2 \n&aAlso good for game experience"), 2),
+                new SelectableElement(MessageUtil.colorize("&a3 \n&eKinda good for game experience"), 3),
+                new SelectableElement(MessageUtil.colorize("&e4 \n&cNot recommended when use placeholders like &b<health> "), 4),
+                new SelectableElement(MessageUtil.colorize("&e5 \n&cNot recommended when use placeholders like &b<health> "), 5),
+                new SelectableElement(MessageUtil.colorize("&e6 \n&cNot recommended when use placeholders like &b<health> "), 6),
+                new SelectableElement(MessageUtil.colorize("&e7 \n&cNot recommended when use placeholders like &b<health> "), 7),
+                new SelectableElement(MessageUtil.colorize("&c8 \n&cNot recommended when use placeholders like &b<health> "), 8),
+                new SelectableElement(MessageUtil.colorize("&c9 \n&cNot recommended when use placeholders like &b<health> "), 9),
+                new SelectableElement(MessageUtil.colorize("&410 \n&cNot recommended when use placeholders like &b<health> "), 10)
+        );
+
+        form.addElement("refreshtime", new StepSlider("Seconds", elements, refresh - 1));
+
+        form.setHandler((p, response) -> {
+            final SelectableElement element = response.getStepSlider("refreshtime").getValue();
+            if (element.getValue() != null && element.getValue(Integer.class) != refresh) {
+                int finalRefreshTime = element.getValue(Integer.class);
+
+                this.config.set("refresh-time", finalRefreshTime);
+                this.config.save();
+                p.sendMessage(MessageUtil.colorize("&aSaved changes"));
+                this.mainForm.formLogger("&aPlayer&6 " + p.getName() + "&a edited&b " + form.getTitle());
+                restartTimer();
+            } else {
+                osTagSettings();
+            }
         });
 
         form.setNoneHandler(p -> osTagSettings());
@@ -225,7 +270,7 @@ public class OsTagForm {
         }
 
         form.addElement(new Label(MessageUtil.colorize("&lDetected worlds")));
-        for (Level level : plugin.getServer().getLevels().values()) {
+        for (final Level level : this.plugin.getServer().getLevels().values()) {
             final String levelName = level.getName();
             if (isDisabledWorld(levelName)) {
                 continue;
@@ -269,11 +314,36 @@ public class OsTagForm {
             }
 
             disabledWorlds = finalDis;
-            config.set("disabled-worlds", disabledWorlds);
-            config.save();
-            this.mainForm.logger("&aPlayer&6 " + p.getName() + "&a edited&b " + form.getTitle());
+            this.config.set("disabled-worlds", disabledWorlds);
+            this.config.save();
+            this.mainForm.formLogger("&aPlayer&6 " + p.getName() + "&a edited&b " + form.getTitle());
             p.sendMessage(MessageUtil.colorize("&aSaved changes"));
             osTagSettings();
+        });
+        form.send(player);
+    }
+
+    private void restartTimer() {
+        final ModalForm form = new ModalForm("OsTimer reset ");
+
+        form.setContent(MessageUtil.colorize("&aRestart &bOsTimer?\n"))
+                .setPositiveButton(MessageUtil.colorize("&aYes"))
+                .setNegativeButton(MessageUtil.colorize("&cNo"));
+
+        form.setNoneHandler(p -> {
+            p.sendMessage(MessageUtil.colorize("&aAction canceled :)"));
+            this.osTagSettings();
+        });
+
+        form.setHandler((p, result) -> {
+            if (result) {
+                this.plugin.getOsTimer().setSender(player);
+                this.plugin.getOsTimer().setStatus(Status.RESTART);
+                this.mainForm.formLogger("&aPlayer&6 " + p.getName() + "&a restarted &bOsTimer");
+            } else {
+                p.sendMessage(MessageUtil.colorize("&aAction canceled :)"));
+                this.osTagSettings();
+            }
         });
         form.send(player);
     }

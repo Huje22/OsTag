@@ -1,6 +1,7 @@
 package me.indian.ostag.runnable;
 
 import cn.nukkit.Player;
+import cn.nukkit.command.CommandSender;
 import cn.nukkit.plugin.PluginLogger;
 import cn.nukkit.scheduler.NukkitRunnable;
 import cn.nukkit.utils.Config;
@@ -16,7 +17,6 @@ import java.util.concurrent.Executors;
 
 public class OsTimer {
 
-
     private final OsTag plugin;
     private final Config config;
     private final ExecutorService executorService;
@@ -24,6 +24,7 @@ public class OsTimer {
     private final String debugPrefix;
     private Status status;
     private boolean sented = false;
+    private CommandSender sender;
 
     public OsTimer(final OsTag plugin) {
         this.plugin = plugin;
@@ -32,6 +33,7 @@ public class OsTimer {
         this.logger = this.plugin.getLogger();
         this.debugPrefix = MessageUtil.colorize(this.plugin.publicDebugPrefix + "&8[&dOsTimer&8] ");
     }
+
 
     private void runTimer(final int i) {
         executorService.execute(() -> new NukkitRunnable() {
@@ -75,7 +77,6 @@ public class OsTimer {
         }.runTaskTimer(plugin, 20 * i, 20 * i));
     }
 
-
     private void addOsTag(final Player player) {
         final List<String> advancedPlayers = config.getStringList("advanced-players");
         final List<String> disabledWorlds = config.getStringList("disabled-worlds");
@@ -117,19 +118,31 @@ public class OsTimer {
         if (!this.plugin.osTag || this.getStatus() == Status.DISABLED) {
             if (!sented) {
                 sented = true;
-                this.logger.info(MessageUtil.colorize("&aCan't set status , ostag module or status is disabled"));
+                final String cantSet = MessageUtil.colorize("&aCan't set status , ostag module or status is disabled");
+                this.logger.info(cantSet);
+                if (sender instanceof Player) {
+                    sender.sendMessage(cantSet);
+                }
                 if (this.getStatus() != Status.DISABLED) this.setStatus(Status.DISABLED);
             }
         } else {
             this.status = status;
             if (this.plugin.debug) {
-                logger.info(MessageUtil.colorize(debugPrefix + "&aStatus seted to&b " + status));
+                final String statusSeted = MessageUtil.colorize(debugPrefix + "&aStatus seted to&b " + status);
+                this.logger.info(statusSeted);
+                if (sender instanceof Player) {
+                    sender.sendMessage(statusSeted);
+                }
             }
         }
     }
 
+    public void setSender(final CommandSender sender) {
+        this.sender = sender;
+    }
+
     public int getRefreshTime() {
-        int refreshTime = this.config.getInt("refresh-time");
+        int refreshTime = this.config.getInt("refresh-time", 1);
         if (refreshTime <= 0) {
             refreshTime = 1;
             this.config.set("refresh-time", 1);
