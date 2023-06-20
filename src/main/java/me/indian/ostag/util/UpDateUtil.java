@@ -18,19 +18,38 @@ import java.util.concurrent.Executors;
 
 public class UpDateUtil {
 
-    private final OsTag plugin = OsTag.getInstance();
-    private final PluginLogger logger = this.plugin.getLogger();
-    private final Config config = this.plugin.getConfig();
-    private String downloadStatus = "";
-    private final String debugPrefix = MessageUtil.colorize(this.plugin.publicDebugPrefix + "&8[&dAutoUpdate&8] ");
-    private final String pluginsPath = Server.getInstance().getPluginPath();
-    private final String latestVersion = GithubUtil.getLatestTag();
-    private final String currentVersion = this.plugin.getDescription().getVersion();
-    private final String currentFileName = "Ostag-" + this.currentVersion + ".jar";
-    private final String latestUrl = "https://github.com/OpenPlugins-Minecraft/OsTag/releases/download/" + this.latestVersion + "/OsTag-" + this.latestVersion + ".jar";
-    private final String latestFileName = "OsTag-" + this.latestVersion + ".jar";
-    private final ExecutorService executorService = Executors.newSingleThreadExecutor(new ThreadUtil("Ostag Update Thread"));
+    private final OsTag plugin;
+    private final PluginLogger logger;
+    private final Config config;
+    private final String debugPrefix;
+    private final String pluginsPath;
+    private String latestVersion;
+    private final String currentVersion;
+    private final String currentFileName;
+    private String latestUrl;
+    private final String latestFileName;
+    private final ExecutorService executorService;
     private boolean redownload = false;
+    private String downloadStatus = "";
+
+    public UpDateUtil() {
+        this.refresh();
+        this.plugin = OsTag.getInstance();
+        this.logger = this.plugin.getLogger();
+        this.config = this.plugin.getConfig();
+        this.debugPrefix = MessageUtil.colorize(this.plugin.publicDebugPrefix + "&8[&dAutoUpdate&8] ");
+        this.pluginsPath = Server.getInstance().getPluginPath();
+        this.currentVersion = this.plugin.getDescription().getVersion();
+        this.currentFileName = "Ostag-" + this.currentVersion + ".jar";
+        this.latestFileName = "OsTag-" + this.latestVersion + ".jar";
+        this.executorService = Executors.newSingleThreadExecutor(new ThreadUtil("Ostag Update Thread"));
+    }
+
+    //Refreshing the tag so that it is as latest as possible regardless of the instance
+    private void refresh() {
+        this.latestVersion = GithubUtil.getLatestTag();
+        this.latestUrl = "https://github.com/OpenPlugins-Minecraft/OsTag/releases/download/" + this.latestVersion + "/OsTag-" + this.latestVersion + ".jar";
+    }
 
     public void autoUpDate() {
         if (this.config.getBoolean("AutoUpdate")) {
@@ -43,6 +62,7 @@ public class UpDateUtil {
     }
 
     private void upDate(final CommandSender sender) {
+        this.refresh();
         this.downloadStatus = "";
         this.executorService.execute(() -> {
             if (GithubUtil.getFastTagInfo().contains("false")) {
@@ -188,9 +208,8 @@ public class UpDateUtil {
     }
 
     public void setDownloadStatus(final String status) {
-        if (status.equalsIgnoreCase(MessageUtil.colorize("&cYou have downloaded the latest version but you are not using it"))) {
-            return;
+        if (!status.equalsIgnoreCase(MessageUtil.colorize("&cYou have downloaded the latest version but you are not using it"))) {
+            this.downloadStatus = status;
         }
-        this.downloadStatus = status;
     }
 }
