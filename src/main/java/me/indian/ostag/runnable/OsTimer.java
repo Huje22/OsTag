@@ -1,4 +1,4 @@
-package me.indian.ostag.runnnable;
+package me.indian.ostag.runnable;
 
 import cn.nukkit.Player;
 import cn.nukkit.plugin.PluginLogger;
