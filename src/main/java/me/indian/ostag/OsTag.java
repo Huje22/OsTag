@@ -85,13 +85,13 @@ public class OsTag extends PluginBase {
         this.osTagCommand = new OsTagCommand(this);
         this.osTimer = new OsTimer(this);
         this.upDateUtil = new UpDateUtil();
-        this.debug = this.getConfig().getBoolean("Debug");
-        this.serverMovement = this.getConfig().getBoolean("Movement-server");
-        this.upDatechecker = this.getConfig().getBoolean("UpdateChecker");
-        this.osTag = this.getConfig().getBoolean("OsTag");
-        this.chatFormatter = this.getConfig().getBoolean("ChatFormatter");
-        this.nametag = this.getConfig().getBoolean("NameTag");
-        this.scoreTag = this.getConfig().getBoolean("ScoreTag");
+        this.debug = this.getConfig().getBoolean("Debug", true);
+        this.serverMovement = this.getConfig().getBoolean("Movement-server", true);
+        this.upDatechecker = this.getConfig().getBoolean("UpdateChecker", true);
+        this.osTag = this.getConfig().getBoolean("OsTag", true);
+        this.chatFormatter = this.getConfig().getBoolean("ChatFormatter", true);
+        this.nametag = this.getConfig().getBoolean("NameTag", true);
+        this.scoreTag = this.getConfig().getBoolean("ScoreTag", true);
         if (!(nametag && scoreTag)) {
             this.osTag = false;
             if (this.debug) {
@@ -121,7 +121,7 @@ public class OsTag extends PluginBase {
             this.getLogger().error(MessageUtil.colorize("&cYou don't have &bFormConstructor &c plugin !"));
             this.getLogger().error(MessageUtil.colorize("&cDownload it from here &bhttps://github.com/OpenPlugins-Minecraft/OsTag/tree/main/libs!"));
         } else {
-            formConstructor = true;
+            this.formConstructor = true;
         }
 
         this.formater = new Formater(this, this.getPlaceholderApi());
