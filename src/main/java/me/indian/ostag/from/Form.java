@@ -94,7 +94,7 @@ public class Form {
         form.addButton("Reload config", ImageType.PATH, "textures/ui/refresh", (p, button) -> {
             plugin.getOsTagCommand().reloadConfig(player);
             this.reloadConfig();
-            this.logger("&aPlayer&6 " + p.getName() + "&a reloading config");
+            this.formLogger("&aPlayer&6 " + p.getName() + "&a reloading config");
         });
 
         this.addCloseButton(form);
@@ -113,7 +113,7 @@ public class Form {
             if (!downloadStatus.equalsIgnoreCase(MessageUtil.colorize("&cYou have downloaded the latest version but you are not using it"))) {
                 form.addButton("UpDate", ImageType.PATH, "textures/ui/up_chevron", (p, button) -> {
                     plugin.getUpdateUtil().manualUpDate(player);
-                    this.logger("&aPlayer&6 " + p.getName() + "&a trying to update plugin");
+                    this.formLogger("&aPlayer&6 " + p.getName() + "&a trying to update plugin");
                 });
             }
         } else {
@@ -121,7 +121,7 @@ public class Form {
                 form.setContent(MessageUtil.colorize("&cYou can't download latest version"))
                         .addButton("Force UpDate", ImageType.PATH, "textures/ui/ErrorGlyph_small", (p, button) -> {
                             plugin.getUpdateUtil().manualUpDate(player);
-                            this.logger("&aPlayer&6 " + p.getName() + "&a trying to force update plugin");
+                            this.formLogger("&aPlayer&6 " + p.getName() + "&a trying to force update plugin");
                         });
             } else {
                 form.setContent(MessageUtil.colorize("&aYou have latest version!"));
@@ -154,7 +154,7 @@ public class Form {
         return this.settings;
     }
 
-    public void logger(final String log) {
+    public void formLogger(final String log) {
         if (this.config.getBoolean("FormsDebug")) {
             plugin.getLogger().info(MessageUtil.colorize(debugPrefix + log));
             MessageUtil.sendMessageToAdmins(debugPrefix + log);

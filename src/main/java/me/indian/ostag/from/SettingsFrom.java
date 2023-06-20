@@ -78,7 +78,7 @@ public class SettingsFrom {
 
             config.save();
             p.sendMessage(MessageUtil.colorize("&aThis changes may need restart server"));
-            this.mainForm.logger("&aPlayer&6 " + p.getName() + "&a trying to edit&b " + form.getTitle());
+            this.mainForm.formLogger("&aPlayer&6 " + p.getName() + "&a trying to edit&b " + form.getTitle());
             if (p.isOp()) {
                 this.reloadServer();
             } else {
