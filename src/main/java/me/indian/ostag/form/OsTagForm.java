@@ -1,4 +1,4 @@
-package me.indian.ostag.from;
+package me.indian.ostag.form;
 
 import cn.nukkit.Player;
 import cn.nukkit.level.Level;

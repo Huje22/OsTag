@@ -10,7 +10,7 @@ import cn.nukkit.command.data.CommandParameter;
 import cn.nukkit.scheduler.NukkitRunnable;
 import cn.nukkit.utils.Config;
 import me.indian.ostag.OsTag;
-import me.indian.ostag.from.Form;
+import me.indian.ostag.form.Form;
 import me.indian.ostag.util.MessageUtil;
 import me.indian.ostag.util.Permissions;
 import me.indian.ostag.util.PluginInfoUtil;
