@@ -142,7 +142,6 @@ public class OsTag extends PluginBase {
 
         if (this.osTag) {
             this.getOsTimer().setStatus(Status.STOPPED);
-            this.getOsTimer().startTimer();
         } else {
             this.getLogger().info(MessageUtil.colorize("&bOsTag module is disabled "));
         }

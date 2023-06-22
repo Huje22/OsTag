@@ -21,9 +21,9 @@ public class GithubUtil {
     private static final String debugPrefix = MessageUtil.colorize(plugin.publicDebugPrefix + "&8[&dLatest tag&8] ");
     private static final String current = OsTag.getInstance().getDescription().getVersion();
     private static final String errorMessage = "&cCan't get latest tag";
-    private static final String latest = getLatestTag();
 
     public static String getFastTagInfo() {
+        final String latest = getLatestTag();
         if (latest.equals(errorMessage)) {
             return MessageUtil.colorize(errorMessage);
         }
@@ -35,6 +35,7 @@ public class GithubUtil {
     }
 
     public static String checkTagCompatibility() {
+        final String latest = getLatestTag();
         String tag = "&aYou are running latest version";
         if (latest.equals(errorMessage)) {
             return MessageUtil.colorize(errorMessage);

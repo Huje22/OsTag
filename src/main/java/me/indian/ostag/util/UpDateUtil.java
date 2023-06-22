@@ -23,11 +23,11 @@ public class UpDateUtil {
     private final Config config;
     private final String debugPrefix;
     private final String pluginsPath;
-    private String latestVersion;
     private final String currentVersion;
     private final String currentFileName;
+    private String latestVersion;
     private String latestUrl;
-    private final String latestFileName;
+    private String latestFileName;
     private final ExecutorService executorService;
     private boolean redownload = false;
     private String downloadStatus = "";
@@ -41,13 +41,13 @@ public class UpDateUtil {
         this.pluginsPath = Server.getInstance().getPluginPath();
         this.currentVersion = this.plugin.getDescription().getVersion();
         this.currentFileName = "Ostag-" + this.currentVersion + ".jar";
-        this.latestFileName = "OsTag-" + this.latestVersion + ".jar";
         this.executorService = Executors.newSingleThreadExecutor(new ThreadUtil("Ostag Update Thread"));
     }
 
     //Refreshing the tag so that it is as latest as possible regardless of the instance
     private void refresh() {
         this.latestVersion = GithubUtil.getLatestTag();
+        this.latestFileName = "OsTag-" + this.latestVersion + ".jar";
         this.latestUrl = "https://github.com/OpenPlugins-Minecraft/OsTag/releases/download/" + this.latestVersion + "/OsTag-" + this.latestVersion + ".jar";
     }
 
