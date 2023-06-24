@@ -22,7 +22,7 @@ public class CpsLimiterForm {
     }
 
     public void cpsLimiterSettings() {
-        final CustomForm form = new CustomForm("Cooldown Settings");
+        final CustomForm form = new CustomForm("CpsLimiter Settings");
         final String message = config.getString("Cps.message");
         final int maxCps = config.getInt("Cps.max", 1);
         final List<SelectableElement> elements = Arrays.asList(
@@ -49,7 +49,7 @@ public class CpsLimiterForm {
 
         );
 
-        form.addElement("maxcps", new StepSlider("Max Cps", elements, maxCps -1))
+        form.addElement("maxcps", new StepSlider("Max Cps", elements, maxCps - 1))
                 .addElement("message",
                         Input.builder()
                                 .setName(MessageUtil.colorize("&aCps limit reached message"))
@@ -60,18 +60,20 @@ public class CpsLimiterForm {
             final SelectableElement element = response.getStepSlider("maxcps").getValue();
             final String finalMessage = response.getInput("message").getValue();
 
-            if ((element.getValue() != null && element.getValue(Integer.class) != maxCps) && (finalMessage != null && finalMessage.equalsIgnoreCase(message))) {
-                this.config.set("Cps.max", element.getValue(Integer.class));
-                this.config.set("Cps.message", finalMessage);
+            if (element.getValue() != null && finalMessage != null) {
+                if (element.getValue(Integer.class) != maxCps && finalMessage.equalsIgnoreCase(message)) {
 
-                this.config.save();
-                p.sendMessage(MessageUtil.colorize("&aSaved changes"));
-                this.mainForm.formLogger("&aPlayer&6 " + p.getName() + "&a edited&b " + form.getTitle());
+                    this.config.set("Cps.max", element.getValue(Integer.class));
+                    this.config.set("Cps.message", finalMessage);
+
+                    this.config.save();
+                    p.sendMessage(MessageUtil.colorize("&aSaved changes"));
+                    this.mainForm.formLogger("&aPlayer&6 " + p.getName() + "&a edited&b " + form.getTitle());
+                }
             } else {
                 p.sendMessage(MessageUtil.colorize("&cCant save changes!"));
                 this.mainForm.formLogger("&aPlayer&6 " + p.getName() + "&c trying edit&b " + form.getTitle() + "&c something went wrong!");
             }
-
             this.mainForm.openSettings();
         });
 
