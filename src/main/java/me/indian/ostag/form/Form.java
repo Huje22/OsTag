@@ -54,7 +54,7 @@ public class Form {
         if (player.isOp() || player.hasPermission(Permissions.ADMIN)) {
             form.addButton("Reload", ImageType.PATH, "textures/ui/refresh", (p, button) -> reloadConfig())
                     .addButton("UpDate", ImageType.PATH, "textures/ui/up_chevron", (p, button) -> upDate())
-                    .addButton("Settings", ImageType.PATH, "textures/ui/icon_setting", (p, button) -> this.getSettings().settings());
+                    .addButton("Settings", ImageType.PATH, "textures/ui/icon_setting", (p, button) -> this.openSettings());
         }
 
         form.send(player);
@@ -150,8 +150,8 @@ public class Form {
         return this.player;
     }
 
-    public SettingsFrom getSettings() {
-        return this.settings;
+    public void openSettings() {
+       this.settings.settings();
     }
 
     public void formLogger(final String log) {

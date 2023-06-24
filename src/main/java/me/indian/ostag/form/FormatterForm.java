@@ -35,7 +35,7 @@ public class FormatterForm {
                 .addButton("Censorship", ImageType.PATH, "textures/ui/mute_on", (p, button) -> censorShipSettings());
 
         this.mainForm.addCloseButton(form);
-        form.setNoneHandler(p -> this.mainForm.getSettings().settings());
+        form.setNoneHandler(p -> this.mainForm.openSettings());
         form.send(player);
     }
 

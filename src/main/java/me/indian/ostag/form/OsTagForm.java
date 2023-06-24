@@ -51,7 +51,7 @@ public class OsTagForm {
                 .addButton("Disabled Worlds", ImageType.PATH, "textures/ui/worldsIcon", (p, button) -> disabledWorld());
 
         this.mainForm.addCloseButton(form);
-        form.setNoneHandler(p -> this.mainForm.getSettings().settings());
+        form.setNoneHandler(p -> this.mainForm.openSettings());
         form.send(player);
     }
 
