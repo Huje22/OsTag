@@ -6,6 +6,7 @@ import me.indian.ostag.util.MessageUtil;
 import ru.contentforge.formconstructor.form.CustomForm;
 import ru.contentforge.formconstructor.form.element.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -23,37 +24,30 @@ public class CpsLimiterForm {
 
     public void cpsLimiterSettings() {
         final CustomForm form = new CustomForm("CpsLimiter Settings");
-        final String message = config.getString("Cps.message");
+        final String cpsMessage = config.getString("Cps.message");
         final int maxCps = config.getInt("Cps.max", 1);
-        final List<SelectableElement> elements = Arrays.asList(
-                new SelectableElement(MessageUtil.colorize("&a1 \n&a"), 1),
-                new SelectableElement(MessageUtil.colorize("&a2 \n&a"), 2),
-                new SelectableElement(MessageUtil.colorize("&a3 \n&e"), 3),
-                new SelectableElement(MessageUtil.colorize("&e4 \n&c"), 4),
-                new SelectableElement(MessageUtil.colorize("&e5 \n&c"), 5),
-                new SelectableElement(MessageUtil.colorize("&e6 \n&c"), 6),
-                new SelectableElement(MessageUtil.colorize("&e7 \n&c"), 7),
-                new SelectableElement(MessageUtil.colorize("&c8 \n&c"), 8),
-                new SelectableElement(MessageUtil.colorize("&c9 \n&c"), 9),
-                new SelectableElement(MessageUtil.colorize("&410 \n&c"), 10),
-                new SelectableElement(MessageUtil.colorize("&a11 \n&a"), 11),
-                new SelectableElement(MessageUtil.colorize("&a12 \n&a"), 12),
-                new SelectableElement(MessageUtil.colorize("&a13 \n&e"), 13),
-                new SelectableElement(MessageUtil.colorize("&e14 \n&c"), 14),
-                new SelectableElement(MessageUtil.colorize("&e15 \n&c"), 15),
-                new SelectableElement(MessageUtil.colorize("&e16 \n&c"), 16),
-                new SelectableElement(MessageUtil.colorize("&e17 \n&c"), 17),
-                new SelectableElement(MessageUtil.colorize("&c18 \n&c"), 18),
-                new SelectableElement(MessageUtil.colorize("&c19 \n&c"), 19),
-                new SelectableElement(MessageUtil.colorize("&420 \n&c"), 20)
+        final List<SelectableElement> elements = new ArrayList<>();
+        for (int i = 1; i <= 50; i++) {
+            String format = "&a";
+            if (i >= 20) {
+                format = "&e";
+            }
+            if (i >= 40) {
+                format = "&c";
+            }
+            if (i >= 40) {
+                format = "&4";
+            }
 
-        );
-
+            final String message = MessageUtil.colorize(format + i);
+            final SelectableElement element = new SelectableElement(message, i);
+            elements.add(element);
+        }
         form.addElement("maxcps", new StepSlider("Max Cps", elements, maxCps - 1))
                 .addElement("message",
                         Input.builder()
                                 .setName(MessageUtil.colorize("&aCps limit reached message"))
-                                .setDefaultValue(message)
+                                .setDefaultValue(cpsMessage)
                                 .build());
 
         form.setHandler((p, response) -> {
@@ -61,7 +55,7 @@ public class CpsLimiterForm {
             final String finalMessage = response.getInput("message").getValue();
 
             if (element.getValue() != null && finalMessage != null) {
-                if (element.getValue(Integer.class) != maxCps && finalMessage.equalsIgnoreCase(message)) {
+                if (element.getValue(Integer.class) != maxCps && finalMessage.equalsIgnoreCase(cpsMessage)) {
 
                     this.config.set("Cps.max", element.getValue(Integer.class));
                     this.config.set("Cps.message", finalMessage);

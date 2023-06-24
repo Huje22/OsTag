@@ -225,10 +225,10 @@ public class OsTagForm {
         final CustomForm form = new CustomForm("Refresh Time settings");
         final int refresh = this.plugin.getOsTimer().getRefreshTime();
         final List<SelectableElement> elements = new ArrayList<>();
-        String format = "&c";
-        String annotation = "&aIt really so fast, may be good for &b<cps>&a placeholder";
 
         for (int i = 1; i <= 60; i++) {
+            String format = "&c";
+            String annotation = "&aIt really so fast, may be good for &b<cps>&a placeholder";
             if (i >= 20) {
                 format = "&a";
                 annotation = "&aIt's okay";

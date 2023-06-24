@@ -25,15 +25,6 @@ public class CpsListener implements Listener {
     // cps counter from https://github.com/GommeAWM/CPSCounter
     // witch permissions from author edited by IndianPL and Neziw
 
-    public static int getCPS(final Player player) {
-        final List<Long> list = cps.get(player.getName());
-        if (list == null) {
-            return 0;
-        }
-        list.removeIf(l -> l < System.currentTimeMillis() - 1000L);
-        return list.size();
-    }
-
     @SuppressWarnings("unused")
     @EventHandler
     private void onPacket(final DataPacketReceiveEvent event) {
@@ -51,6 +42,15 @@ public class CpsListener implements Listener {
             cps.remove(player.getName());
             cps.put(player.getName(), cpsList);
         }
+    }
+
+    public static int getCPS(final Player player) {
+        final List<Long> list = cps.get(player.getName());
+        if (list == null) {
+            return 0;
+        }
+        list.removeIf(l -> l < System.currentTimeMillis() - 1000L);
+        return list.size();
     }
 
     // cps counter from https://github.com/GommeAWM/CPSCounter
