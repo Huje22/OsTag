@@ -50,6 +50,7 @@ public class PluginInfoUtil {
         normalInfo.add("&1Modules");
         normalInfo.add("&aFormatter&3: " + StatusUtil.getFormaterStatus());
         normalInfo.add("&aOsTag&3: " + StatusUtil.getOsTagStatus());
+        normalInfo.add("&aCpsLimiter&3: " + StatusUtil.getCpsLimiterStatus());
         normalInfo.add(" ");
         if (this.lines) {
             normalInfo.add("&b-------------------------------");
@@ -75,6 +76,7 @@ public class PluginInfoUtil {
         adminInfo.add("&1Modules");
         adminInfo.add("&aFormatter&3: " + StatusUtil.getFormaterStatus());
         adminInfo.add("&aOsTag&3: " + StatusUtil.getOsTagStatus());
+        adminInfo.add("&aCpsLimiter&3: " + StatusUtil.getCpsLimiterStatus());
         adminInfo.add(" ");
         adminInfo.add("&1Plugins");
         adminInfo.add("&aLuckPerms&3: " + StatusUtil.getLuckPermStatus());

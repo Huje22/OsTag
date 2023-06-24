@@ -25,6 +25,14 @@ public class StatusUtil {
         return formatter;
     }
 
+    public static String getCpsLimiterStatus() {
+        String limiter = fal;
+        if (plugin.cpsLimiter) {
+            limiter = tru;
+        }
+        return limiter;
+    }
+
     public static String getLuckPermStatus() {
         String luckPerms = fal;
         if (plugin.luckPerm) {

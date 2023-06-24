@@ -7,19 +7,9 @@ import com.creeperface.nukkit.placeholderapi.api.PlaceholderAPI;
 import me.indian.ostag.basic.OsTagMetrics;
 import me.indian.ostag.command.OsTagCommand;
 import me.indian.ostag.command.TestttCommand;
-import me.indian.ostag.listener.CpsListener;
-import me.indian.ostag.listener.Formater;
-import me.indian.ostag.listener.InputListener;
-import me.indian.ostag.listener.PlayerJoinListener;
-import me.indian.ostag.listener.PlayerPreLoginListener;
-import me.indian.ostag.listener.PlayerQuitListener;
+import me.indian.ostag.listener.*;
 import me.indian.ostag.runnable.OsTimer;
-import me.indian.ostag.util.GithubUtil;
-import me.indian.ostag.util.MessageUtil;
-import me.indian.ostag.util.PlayerInfoUtil;
-import me.indian.ostag.util.PluginInfoUtil;
-import me.indian.ostag.util.Status;
-import me.indian.ostag.util.UpDateUtil;
+import me.indian.ostag.util.*;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 
@@ -36,6 +26,7 @@ public class OsTag extends PluginBase {
     public boolean scoreTag;
     public boolean osTag;
     public boolean chatFormatter;
+    public boolean cpsLimiter;
     public boolean debug;
     public boolean upDatechecker;
     private OsTagCommand osTagCommand;
@@ -90,6 +81,7 @@ public class OsTag extends PluginBase {
         this.upDatechecker = this.getConfig().getBoolean("UpdateChecker", true);
         this.osTag = this.getConfig().getBoolean("OsTag", true);
         this.chatFormatter = this.getConfig().getBoolean("ChatFormatter", true);
+        this.cpsLimiter = this.getConfig().getBoolean("CpsLimiter", true);
         this.nametag = this.getConfig().getBoolean("NameTag", true);
         this.scoreTag = this.getConfig().getBoolean("ScoreTag", true);
         if (!(nametag && scoreTag)) {
@@ -130,18 +122,23 @@ public class OsTag extends PluginBase {
             pm.disablePlugin(this);
             return;
         }
-        pm.registerEvents(new CpsListener(), this);
-        if (this.serverMovement) {
-            this.inputListener = new InputListener(this);
-            pm.registerEvents(this.getInputListener(), this);
-        }
 
         final CommandMap commandMap = this.getServer().getCommandMap();
         commandMap.register("OsTag", this.getOsTagCommand());
         commandMap.register("OsTag", new TestttCommand(this));
 
+
+        pm.registerEvents(new CpsListener(), this);
+        if (this.cpsLimiter) {
+            pm.registerEvents(new CpsLimiter(this), this);
+        }
+        if (this.serverMovement) {
+            this.inputListener = new InputListener(this);
+            pm.registerEvents(this.getInputListener(), this);
+        }
         if (this.osTag) {
-            this.getOsTimer().setStatus(Status.STOPPED);
+            this.getOsTimer().setStatus(OsTimerStatus.STOPPED);
+            this.getOsTimer().startTimer();
         } else {
             this.getLogger().info(MessageUtil.colorize("&bOsTag module is disabled "));
         }

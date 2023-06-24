@@ -243,9 +243,7 @@ public class OsTagForm {
         form.setHandler((p, response) -> {
             final SelectableElement element = response.getStepSlider("refreshtime").getValue();
             if (element.getValue() != null && element.getValue(Integer.class) != refresh) {
-                int finalRefreshTime = element.getValue(Integer.class);
-
-                this.config.set("refresh-time", finalRefreshTime);
+                this.config.set("refresh-time", element.getValue(Integer.class));
                 this.config.save();
                 p.sendMessage(MessageUtil.colorize("&aSaved changes"));
                 this.mainForm.formLogger("&aPlayer&6 " + p.getName() + "&a edited&b " + form.getTitle());

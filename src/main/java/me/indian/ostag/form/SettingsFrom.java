@@ -38,6 +38,9 @@ public class SettingsFrom {
         if (plugin.chatFormatter) {
             form.addButton("Formatter", ImageType.PATH, "textures/ui/mute_off", (p, button) -> new FormatterForm(this.mainForm, this.config).formatterSettings());
         }
+        if(plugin.cpsLimiter){
+            form.addButton("CpsLimiter", ImageType.PATH, "textures/ui/keyboard_tooltip_background", (p, button) -> new CpsLimiterForm(this.mainForm, this.config).cpsLimiterSettings());
+        }
         form.addButton("Modules", ImageType.PATH, "textures/ui/servers", (p, button) -> modulesSettings());
 
         this.mainForm.addCloseButton(form);
@@ -57,6 +60,7 @@ public class SettingsFrom {
                 .addElement("update", new Toggle("Update checker", plugin.upDatechecker))
                 .addElement("ostag", new Toggle("Ostag", plugin.osTag))
                 .addElement("formatter", new Toggle("ChatFormatter", plugin.chatFormatter))
+                .addElement("cpslimiter", new Toggle("CpsLimiter", plugin.cpsLimiter))
                 .addElement("debug", new Toggle("Debug", plugin.debug))
                 .addElement("movement", new Toggle("Server movement", plugin.serverMovement));
 
@@ -73,6 +77,7 @@ public class SettingsFrom {
             config.set("UpdateChecker", response.getToggle("update").getValue());
             config.set("OsTag", response.getToggle("ostag").getValue());
             config.set("ChatFormatter", response.getToggle("formatter").getValue());
+            config.set("CpsLimiter", response.getToggle("cpslimiter").getValue());
             config.set("Debug", response.getToggle("debug").getValue());
             config.set("Movement-server", response.getToggle("movement").getValue());
 
