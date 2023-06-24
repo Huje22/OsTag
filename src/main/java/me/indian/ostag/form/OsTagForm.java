@@ -17,7 +17,6 @@ import ru.contentforge.formconstructor.form.element.StepSlider;
 import ru.contentforge.formconstructor.form.element.Toggle;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class OsTagForm {
@@ -225,20 +224,27 @@ public class OsTagForm {
     private void refreshTimeSettings() {
         final CustomForm form = new CustomForm("Refresh Time settings");
         final int refresh = this.plugin.getOsTimer().getRefreshTime();
-        final List<SelectableElement> elements = Arrays.asList(
-                new SelectableElement(MessageUtil.colorize("&a1 \n&aRecommended for the best game experience"), 1),
-                new SelectableElement(MessageUtil.colorize("&a2 \n&aAlso good for game experience"), 2),
-                new SelectableElement(MessageUtil.colorize("&a3 \n&eKinda good for game experience"), 3),
-                new SelectableElement(MessageUtil.colorize("&e4 \n&cNot recommended when use placeholders like &b<health> "), 4),
-                new SelectableElement(MessageUtil.colorize("&e5 \n&cNot recommended when use placeholders like &b<health> "), 5),
-                new SelectableElement(MessageUtil.colorize("&e6 \n&cNot recommended when use placeholders like &b<health> "), 6),
-                new SelectableElement(MessageUtil.colorize("&e7 \n&cNot recommended when use placeholders like &b<health> "), 7),
-                new SelectableElement(MessageUtil.colorize("&c8 \n&cNot recommended when use placeholders like &b<health> "), 8),
-                new SelectableElement(MessageUtil.colorize("&c9 \n&cNot recommended when use placeholders like &b<health> "), 9),
-                new SelectableElement(MessageUtil.colorize("&410 \n&cNot recommended when use placeholders like &b<health> "), 10)
-        );
+        final List<SelectableElement> elements = new ArrayList<>();
+        String format = "&c";
+        String annotation = "&aIt really so fast, may be good for &b<cps>&a placeholder";
 
-        form.addElement("refreshtime", new StepSlider("Seconds", elements, refresh - 1));
+        for (int i = 1; i <= 60; i++) {
+            if (i >= 20) {
+                format = "&a";
+                annotation = "&aIt's okay";
+            }
+            if (i >= 40) {
+                format = "&e";
+                annotation = "&cMay be slow, not recommended when you want to use placeholders like: &b<cps> <health>&c or another similar";
+            }
+
+            final String message = MessageUtil.colorize(format + i + " \n" + annotation);
+            final SelectableElement element = new SelectableElement(message, i);
+            elements.add(element);
+        }
+
+        form.addElement(MessageUtil.colorize("&a20&e ticks&a = &b1 second"))
+                .addElement("refreshtime", new StepSlider("Ticks", elements, refresh - 1));
 
         form.setHandler((p, response) -> {
             final SelectableElement element = response.getStepSlider("refreshtime").getValue();

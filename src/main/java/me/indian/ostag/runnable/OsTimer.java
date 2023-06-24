@@ -39,7 +39,7 @@ public class OsTimer {
         executorService.execute(() -> new NukkitRunnable() {
             @Override
             public void run() {
-                if(getStatus() == OsTimerStatus.RESTART){
+                if (getStatus() == OsTimerStatus.RESTART) {
                     if (plugin.debug) {
                         logger.info(debugPrefix + "Stopping timer...");
                     }
@@ -74,7 +74,7 @@ public class OsTimer {
                     addOsTag(all);
                 }
             }
-        }.runTaskTimer(plugin, 20 * i, 20 * i));
+        }.runTaskTimer(plugin, i, i));
     }
 
     private void addOsTag(final Player player) {
