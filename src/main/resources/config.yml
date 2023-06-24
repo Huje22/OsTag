@@ -1,6 +1,6 @@
 #----------------------------------------
 #               OsTag
-#           Contains ChatFormating and OsTag
+#           Contains OsTag,ChatFormating and CpsLimiter
 #             By: IndianPL
 #             for colors use &
 #           Discord: https://discord.com/invite/aXDs6qtDCV
@@ -34,7 +34,6 @@
 # <unique_description> - player unique description from config
 # <cooldown> | %ostag_cooldown% - chat cooldown seconds info
 #Now you can use (almost) any placeholder anywhere you want (except <msg>)
-# for better work don't use / and \ , only use \n
 #--------------------------
 #       Modules
 #
@@ -52,6 +51,9 @@ OsTag: true
 #
 #ChatFormating module
 ChatFormatter: true
+#
+#Cps limiter module
+CpsLimiter: true
 #
 #
 #when turn off some module restart server
@@ -78,7 +80,7 @@ ScoreTag: true
 NameTag: true
 #
 #
-#Information refresh time in seconds
+#Information refresh time in ticks (20 ticks = 1 second)
 refresh-time: 1
 #
 #
@@ -155,6 +157,13 @@ cooldown:
   over: "&aYou can chat now"
   disabled: "&aCooldown now is disabled"
   bypass: "&aYou have immune to cooldown"
+#--------------------------
+#    CpsLimiter options
+#
+Cps:
+  max: 10
+  message: "&cTo fast! Your cps &b<cps> &cmax cps &b<maxCps>"
+#
 #--------------------------
 #     Messages and informations
 #
