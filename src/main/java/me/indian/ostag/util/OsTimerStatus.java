@@ -1,6 +1,6 @@
 package me.indian.ostag.util;
 
-public enum Status {
+public enum OsTimerStatus {
     RUNNING,
     STOPPED,
     DISABLED,

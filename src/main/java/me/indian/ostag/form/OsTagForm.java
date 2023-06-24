@@ -5,7 +5,7 @@ import cn.nukkit.level.Level;
 import cn.nukkit.utils.Config;
 import me.indian.ostag.OsTag;
 import me.indian.ostag.util.MessageUtil;
-import me.indian.ostag.util.Status;
+import me.indian.ostag.util.OsTimerStatus;
 import ru.contentforge.formconstructor.form.CustomForm;
 import ru.contentforge.formconstructor.form.ModalForm;
 import ru.contentforge.formconstructor.form.SimpleForm;
@@ -338,7 +338,7 @@ public class OsTagForm {
         form.setHandler((p, result) -> {
             if (result) {
                 this.plugin.getOsTimer().setSender(player);
-                this.plugin.getOsTimer().setStatus(Status.RESTART);
+                this.plugin.getOsTimer().setStatus(OsTimerStatus.RESTART);
                 this.mainForm.formLogger("&aPlayer&6 " + p.getName() + "&a restarted &bOsTimer");
             } else {
                 p.sendMessage(MessageUtil.colorize("&aAction canceled :)"));

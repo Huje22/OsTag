@@ -4,7 +4,7 @@ import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerPreLoginEvent;
 import me.indian.ostag.OsTag;
-import me.indian.ostag.util.Status;
+import me.indian.ostag.util.OsTimerStatus;
 
 public class PlayerPreLoginListener implements Listener {
     private final OsTag plugin;
@@ -17,7 +17,7 @@ public class PlayerPreLoginListener implements Listener {
     @SuppressWarnings("unused")
     @EventHandler
     private void onPlayerPreLogin(final PlayerPreLoginEvent event) {
-        if (this.plugin.getOsTimer().getStatus() == Status.STOPPED) {
+        if (this.plugin.getOsTimer().getStatus() == OsTimerStatus.STOPPED) {
             this.plugin.getOsTimer().startTimer();
         }
     }

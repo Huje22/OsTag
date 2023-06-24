@@ -7,7 +7,7 @@ import cn.nukkit.scheduler.NukkitRunnable;
 import cn.nukkit.utils.Config;
 import me.indian.ostag.OsTag;
 import me.indian.ostag.util.MessageUtil;
-import me.indian.ostag.util.Status;
+import me.indian.ostag.util.OsTimerStatus;
 import me.indian.ostag.util.TagAddUtil;
 import me.indian.ostag.util.ThreadUtil;
 
@@ -22,7 +22,7 @@ public class OsTimer {
     private final ExecutorService executorService;
     private final PluginLogger logger;
     private final String debugPrefix;
-    private Status status;
+    private OsTimerStatus status;
     private boolean sented = false;
     private CommandSender sender;
 
@@ -39,7 +39,7 @@ public class OsTimer {
         executorService.execute(() -> new NukkitRunnable() {
             @Override
             public void run() {
-                if(getStatus() == Status.RESTART){
+                if(getStatus() == OsTimerStatus.RESTART){
                     if (plugin.debug) {
                         logger.info(debugPrefix + "Stopping timer...");
                     }
@@ -51,16 +51,16 @@ public class OsTimer {
                     return;
                 }
 
-                if (getStatus() == Status.DISABLED) {
+                if (getStatus() == OsTimerStatus.DISABLED) {
                     cancel();
                     return;
                 }
                 if (!plugin.osTag) {
-                    setStatus(Status.DISABLED);
+                    setStatus(OsTimerStatus.DISABLED);
                     cancel();
                     return;
                 }
-                if (getStatus() == Status.STOPPED) {
+                if (getStatus() == OsTimerStatus.STOPPED) {
                     if (plugin.debug) {
                         logger.info(debugPrefix + "Stopping timer...");
                     }
@@ -95,10 +95,10 @@ public class OsTimer {
     }
 
     public void startTimer() {
-        if (this.getStatus() == Status.RUNNING) {
+        if (this.getStatus() == OsTimerStatus.RUNNING) {
             throw new RuntimeException("OsTimer already running");
         }
-        if (this.getStatus() == Status.STOPPED || this.getStatus() == Status.RESTART) {
+        if (this.getStatus() == OsTimerStatus.STOPPED || this.getStatus() == OsTimerStatus.RESTART) {
             if (this.plugin.debug) {
                 this.logger.info(debugPrefix + "Enabling timer...");
             }
@@ -106,16 +106,16 @@ public class OsTimer {
             if (this.plugin.debug) {
                 this.logger.info(debugPrefix + "Timer enabled");
             }
-            this.setStatus(Status.RUNNING);
+            this.setStatus(OsTimerStatus.RUNNING);
         }
     }
 
-    public Status getStatus() {
+    public OsTimerStatus getStatus() {
         return this.status;
     }
 
-    public void setStatus(final Status status) {
-        if (!this.plugin.osTag || this.getStatus() == Status.DISABLED) {
+    public void setStatus(final OsTimerStatus status) {
+        if (!this.plugin.osTag || this.getStatus() == OsTimerStatus.DISABLED) {
             if (!sented) {
                 sented = true;
                 final String cantSet = MessageUtil.colorize("&aCan't set status , ostag module or status is disabled");
@@ -123,7 +123,7 @@ public class OsTimer {
                 if (sender instanceof Player) {
                     sender.sendMessage(cantSet);
                 }
-                if (this.getStatus() != Status.DISABLED) this.setStatus(Status.DISABLED);
+                if (this.getStatus() != OsTimerStatus.DISABLED) this.setStatus(OsTimerStatus.DISABLED);
             }
         } else {
             this.status = status;
