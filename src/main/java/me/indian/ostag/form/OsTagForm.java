@@ -47,7 +47,7 @@ public class OsTagForm {
 
         form.addButton("NameTag & ScoreTag", ImageType.PATH, "textures/ui/book_metatag_default", (p, button) -> scoreAndNameSettings())
                 .addButton("Advanced Players", ImageType.PATH, "textures/ui/FriendsDiversity", (p, button) -> advancedPlayersSettings())
-                .addButton("Refresh Time", ImageType.PATH, "textures/ui/refresh_light", (p, button) -> refershTimeSettings())
+                .addButton("Refresh Time", ImageType.PATH, "textures/ui/refresh_light", (p, button) -> refreshTimeSettings())
                 .addButton("Disabled Worlds", ImageType.PATH, "textures/ui/worldsIcon", (p, button) -> disabledWorld());
 
         this.mainForm.addCloseButton(form);
@@ -222,7 +222,7 @@ public class OsTagForm {
     }
 
 
-    private void refershTimeSettings() {
+    private void refreshTimeSettings() {
         final CustomForm form = new CustomForm("Refresh Time settings");
         final int refresh = this.plugin.getOsTimer().getRefreshTime();
         final List<SelectableElement> elements = Arrays.asList(
