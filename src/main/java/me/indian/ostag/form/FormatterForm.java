@@ -230,7 +230,7 @@ public class FormatterForm {
                 break;
             }
         }
-        System.out.println(counter);
+
 
         form.addElement(new Label(MessageUtil.colorize("&aEnable mentions")))
                 .addElement("mentions_enable", new Toggle("Mention", enabled));
@@ -271,7 +271,7 @@ public class FormatterForm {
                     playerMentionConfig.setSoundsValue(sounds.getValue(Integer.class));
                 }
             }
-
+            
             config.save();
             p.sendMessage(MessageUtil.colorize("&aSaved changes"));
             this.mainForm.formLogger("&aPlayer&6 " + p.getName() + "&a edited&b " + form.getTitle());
