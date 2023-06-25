@@ -24,7 +24,7 @@
 
 This plugin is used to display information under the player's heads. And for chat formatting with LuckPerms plugin.
 
-Don't know how to start? Just check the [wiki](https://github.com/OpenPlugins-Minecraft/OsTag/wiki) page!
+Don't know how to start? Just check the [wiki](https://github.com/OpenPlugins-Minecraft/OsTag/blob/main/ConfigWiki.MD) page!
 
 If you wanna be contributor
 look [Contributing wiki page](https://github.com/OpenPlugins-Minecraft/OsTag/wiki/Concributing) <br/>

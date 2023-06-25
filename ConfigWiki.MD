@@ -40,6 +40,8 @@ You can set the name of the world where the information above the player's head 
 
 ### And (&) in chat
 If you want players to be able to use "and" (&) to write in color in chat set ``And-for-all`` to ``true``
+### Mention Sound
+When someone mentions a player, they are informed on the subtitle + they will get the sound they set in the settings (FormConstructor plugin required)
 ### Break Between Messages
 If you want one line of break between messages, set ``break-between-messages.enable`` to ``true``. Example:<br/>
 ![image](https://user-images.githubusercontent.com/68228599/210433043-c71265f3-9862-4822-a000-860c22295ef7.png)
