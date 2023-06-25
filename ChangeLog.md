@@ -215,6 +215,14 @@ Added `/ostag menu` to manage some things using the GUI (Since 1.5.7.3)  <br/>
 Added new boolean in config `FormsDebug` If it is enabled, information about what a given player has done in forms is
 sent (Since 1.5.7.3)  <br/>
 New `OsTimer` system (Since 1.5.7.3)  <br/>
+Added CpsLimiter (Since 1.5.7.4)  <br/>
+**NOTE**
+
+```
+I adding he here because I don't think anyone knows that I added it in `GommeAWM/CPSCounter` in commit `/commit/78069051c10d3c6770d523edb48ec1d1a78cdabb`
+```
+
+Now `refresh time` is in ticks! (Since 1.5.7.4)  <br/>
 
 __Fixes__: <br/>
 Code and code style fixes <br/>
