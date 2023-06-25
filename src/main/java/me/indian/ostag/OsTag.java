@@ -7,9 +7,21 @@ import com.creeperface.nukkit.placeholderapi.api.PlaceholderAPI;
 import me.indian.ostag.basic.OsTagMetrics;
 import me.indian.ostag.command.OsTagCommand;
 import me.indian.ostag.command.TestttCommand;
-import me.indian.ostag.listener.*;
+import me.indian.ostag.config.PlayerMentionConfig;
+import me.indian.ostag.listener.CpsLimiter;
+import me.indian.ostag.listener.CpsListener;
+import me.indian.ostag.listener.Formater;
+import me.indian.ostag.listener.InputListener;
+import me.indian.ostag.listener.PlayerJoinListener;
+import me.indian.ostag.listener.PlayerPreLoginListener;
+import me.indian.ostag.listener.PlayerQuitListener;
 import me.indian.ostag.runnable.OsTimer;
-import me.indian.ostag.util.*;
+import me.indian.ostag.util.GithubUtil;
+import me.indian.ostag.util.MessageUtil;
+import me.indian.ostag.util.OsTimerStatus;
+import me.indian.ostag.util.PlayerInfoUtil;
+import me.indian.ostag.util.PluginInfoUtil;
+import me.indian.ostag.util.UpDateUtil;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 
@@ -36,6 +48,7 @@ public class OsTag extends PluginBase {
     private InputListener inputListener;
     private LuckPerms luckPerms;
     private PlaceholderAPI placeholderApi;
+    private PlayerMentionConfig playersConfig;
 
     public static OsTag getInstance() {
         return instance;
@@ -69,10 +82,15 @@ public class OsTag extends PluginBase {
         return this.placeholderApi;
     }
 
+    public PlayerMentionConfig getPlayersConfig() {
+        return this.playersConfig;
+    }
+
     @Override
     public void onLoad() {
         instance = this;
         this.saveDefaultConfig();
+        this.playersConfig = new PlayerMentionConfig(this);
         this.osTagCommand = new OsTagCommand(this);
         this.osTimer = new OsTimer(this);
         this.upDateUtil = new UpDateUtil();
@@ -111,7 +129,9 @@ public class OsTag extends PluginBase {
         }
         if (pm.getPlugin("FormConstructor") == null) {
             this.getLogger().error(MessageUtil.colorize("&cYou don't have &bFormConstructor &c plugin !"));
+            this.getLogger().error(MessageUtil.colorize("&cthis is required for&b Mention Sound&c to work! !"));
             this.getLogger().error(MessageUtil.colorize("&cDownload it from here &bhttps://github.com/OpenPlugins-Minecraft/OsTag/tree/main/libs!"));
+            this.getConfig().set("MentionSound", false);
         } else {
             this.formConstructor = true;
         }

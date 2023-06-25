@@ -132,6 +132,9 @@ message-format: "%factions_faction% <dimension> <cps> <food>/<max_food> <preffix
 And-for-all: false
 #
 #
+MentionSound: true
+#
+#
 #break between messages, why? so that the emotes you give players will be visible if they are 16x16 [exparimental]
 break-between-messages:
   enable: false
@@ -139,7 +142,7 @@ break-between-messages:
 #
 #Censorship (remove all Upper words) [exparimental]
 censorship:
-  word: "Bread"
+  word: '*'
   enable: false
 BlackWords:
   - "dupa"

@@ -1,13 +1,20 @@
 package me.indian.ostag.form;
 
 import cn.nukkit.Player;
+import cn.nukkit.level.Sound;
 import cn.nukkit.utils.Config;
+import me.indian.ostag.OsTag;
+import me.indian.ostag.config.PlayerMentionConfig;
 import me.indian.ostag.util.MessageUtil;
+import me.indian.ostag.util.Permissions;
 import ru.contentforge.formconstructor.form.CustomForm;
 import ru.contentforge.formconstructor.form.SimpleForm;
+import ru.contentforge.formconstructor.form.element.Dropdown;
 import ru.contentforge.formconstructor.form.element.ImageType;
 import ru.contentforge.formconstructor.form.element.Input;
 import ru.contentforge.formconstructor.form.element.Label;
+import ru.contentforge.formconstructor.form.element.SelectableElement;
+import ru.contentforge.formconstructor.form.element.StepSlider;
 import ru.contentforge.formconstructor.form.element.Toggle;
 
 import java.util.ArrayList;
@@ -16,12 +23,14 @@ import java.util.List;
 public class FormatterForm {
 
     private final Form mainForm;
+    private final OsTag plugin;
     private final Config config;
     private final Player player;
     private List<String> blockedWords;
 
     public FormatterForm(final Form mainForm, final Config config) {
         this.mainForm = mainForm;
+        this.plugin = OsTag.getInstance();
         this.config = config;
         this.player = this.mainForm.getFormPlayer();
         this.blockedWords = config.getStringList("BlackWords");
@@ -30,9 +39,16 @@ public class FormatterForm {
     public void formatterSettings() {
         final SimpleForm form = new SimpleForm("Formatter Settings");
 
-        form.addButton("Chat Format", ImageType.PATH, "textures/ui/editIcon", (p, button) -> messageFormatSettings())
-                .addButton("Cooldown", ImageType.PATH, "textures/ui/timer", (p, button) -> cooldownSettings())
-                .addButton("Censorship", ImageType.PATH, "textures/ui/mute_on", (p, button) -> censorShipSettings());
+        if (this.player.hasPermission(Permissions.ADMIN)) {
+            form.addButton("Chat Format", ImageType.PATH, "textures/ui/editIcon", (p, button) -> messageFormatSettings());
+        }
+        if (this.config.getBoolean("MentionSound")) {
+            form.addButton("Mention", ImageType.PATH, "textures/ui/icon_bell", (p, button) -> mentionForm());
+        }
+        if (this.player.hasPermission(Permissions.ADMIN)) {
+            form.addButton("Cooldown", ImageType.PATH, "textures/ui/timer", (p, button) -> cooldownSettings())
+                    .addButton("Censorship", ImageType.PATH, "textures/ui/mute_on", (p, button) -> censorShipSettings());
+        }
 
         this.mainForm.addCloseButton(form);
         form.setNoneHandler(p -> this.mainForm.openSettings());
@@ -133,7 +149,6 @@ public class FormatterForm {
         form.send(player);
     }
 
-
     private void censorShipSettings() {
         final CustomForm form = new CustomForm("CensorShip Settings");
         final boolean enabled = config.getBoolean("censorship.enable");
@@ -168,7 +183,7 @@ public class FormatterForm {
             config.set("censorship.enable", response.getToggle("censor_enable").getValue());
             if (enabled) {
                 final List<String> finalBlocked = new ArrayList<>();
-                config.set("censorship.word", response.getInput("censor").getValue());
+                config.set("censorship.word", response.getInput("censor").getValue().charAt(0));
 
                 for (int i = 0; i < blockedWords.size(); i++) {
                     final String word = response.getInput("blackwords_" + i).getValue();
@@ -185,6 +200,78 @@ public class FormatterForm {
                 blockedWords = finalBlocked;
                 config.set("BlackWords", blockedWords);
             }
+            config.save();
+            p.sendMessage(MessageUtil.colorize("&aSaved changes"));
+            this.mainForm.formLogger("&aPlayer&6 " + p.getName() + "&a edited&b " + form.getTitle());
+            formatterSettings();
+        });
+
+        form.setNoneHandler(p -> formatterSettings());
+        form.send(player);
+    }
+
+
+    private void mentionForm() {
+        final CustomForm form = new CustomForm("Mentions Settings");
+        final PlayerMentionConfig playerMentionConfig = this.plugin.getPlayersConfig();
+        final boolean enabled = playerMentionConfig.hasEnabledMentions(this.player);
+        final boolean title = playerMentionConfig.hasEnabledTitle(this.player);
+        final int currentSoundIndex = playerMentionConfig.getSoundIndex(playerMentionConfig.getMentionSound(this.player));
+        final int soundsValue = playerMentionConfig.getSoundsValue();
+        final List<SelectableElement> elements = new ArrayList<>();
+        final List<SelectableElement> maxsounds = new ArrayList<>();
+
+        int counter = 0;
+        for (final Sound sound : Sound.values()) {
+            final SelectableElement element = new SelectableElement(sound.name(), counter);
+            elements.add(element);
+            counter++;
+            if (counter == soundsValue) {
+                break;
+            }
+        }
+        System.out.println(counter);
+
+        form.addElement(new Label(MessageUtil.colorize("&aEnable mentions")))
+                .addElement("mentions_enable", new Toggle("Mention", enabled));
+
+        if (enabled) {
+            form.addElement(new Label(MessageUtil.colorize("&aEnable title info")))
+                    .addElement("title_info_enable", new Toggle("Title info", title))
+                    .addElement("soundname", new Dropdown("Mention Sound", elements, currentSoundIndex));
+        }
+
+        if (this.player.hasPermission(Permissions.ADMIN)) {
+            for (int i = 1; i <= soundsValue + 100; i++) {
+                final SelectableElement element = new SelectableElement(String.valueOf(i), i);
+                maxsounds.add(element);
+            }
+            form.addElement("maxsounds", new StepSlider("Sounds value", maxsounds, soundsValue - 1));
+        }
+
+        form.setHandler((p, response) -> {
+            final boolean finalEnabled = response.getToggle("mentions_enable").getValue();
+            if (finalEnabled != enabled) {
+                playerMentionConfig.setEnabledMentions(this.player, finalEnabled);
+            }
+
+            if (enabled) {
+                final boolean finalTitle = response.getToggle("title_info_enable").getValue();
+                final SelectableElement element = response.getDropdown("soundname").getValue();
+                playerMentionConfig.setEnabledTitle(this.player, finalTitle);
+                if (element.getValue() != null) {
+                    if (element.getValue(Integer.class) != currentSoundIndex) {
+                        playerMentionConfig.setMentionSound(this.player, playerMentionConfig.getSoundByIndex(element.getValue(Integer.class)));
+                    }
+                }
+            }
+            if (this.player.hasPermission(Permissions.ADMIN)) {
+                final SelectableElement sounds = response.getStepSlider("maxsounds").getValue();
+                if (sounds.getValue() != null && sounds.getValue(Integer.class) != soundsValue) {
+                    playerMentionConfig.setSoundsValue(sounds.getValue(Integer.class));
+                }
+            }
+
             config.save();
             p.sendMessage(MessageUtil.colorize("&aSaved changes"));
             this.mainForm.formLogger("&aPlayer&6 " + p.getName() + "&a edited&b " + form.getTitle());

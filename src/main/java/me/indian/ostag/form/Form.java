@@ -38,9 +38,11 @@ public class Form {
         if (!plugin.formConstructor) {
             if (player.isOp()) {
                 player.sendMessage(MessageUtil.colorize("&cYou don't have &bFormConstructor&c plugin !"));
+                player.sendMessage(MessageUtil.colorize("&cthis is required for&b Mention Sound&c to work! !"));
                 player.sendMessage(MessageUtil.colorize("&cDownload it from here&b https://github.com/OpenPlugins-Minecraft/OsTag/tree/main/libs!"));
             } else {
                 player.sendMessage(MessageUtil.colorize("&cYThis server don't have &bFormConstructor&b plugin !"));
+                player.sendMessage(MessageUtil.colorize("&cthis is required for&b Mention Sound&c to work! !"));
             }
             return;
         }
@@ -53,9 +55,9 @@ public class Form {
 
         if (player.isOp() || player.hasPermission(Permissions.ADMIN)) {
             form.addButton("Reload", ImageType.PATH, "textures/ui/refresh", (p, button) -> reloadConfig())
-                    .addButton("UpDate", ImageType.PATH, "textures/ui/up_chevron", (p, button) -> upDate())
-                    .addButton("Settings", ImageType.PATH, "textures/ui/icon_setting", (p, button) -> this.openSettings());
+                    .addButton("UpDate", ImageType.PATH, "textures/ui/up_chevron", (p, button) -> upDate());
         }
+        form.addButton("Settings", ImageType.PATH, "textures/ui/icon_setting", (p, button) -> this.openSettings());
 
         form.send(player);
     }

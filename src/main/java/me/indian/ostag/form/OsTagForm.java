@@ -6,6 +6,7 @@ import cn.nukkit.utils.Config;
 import me.indian.ostag.OsTag;
 import me.indian.ostag.util.MessageUtil;
 import me.indian.ostag.util.OsTimerStatus;
+import me.indian.ostag.util.Permissions;
 import ru.contentforge.formconstructor.form.CustomForm;
 import ru.contentforge.formconstructor.form.ModalForm;
 import ru.contentforge.formconstructor.form.SimpleForm;
@@ -43,12 +44,12 @@ public class OsTagForm {
 
     public void osTagSettings() {
         final SimpleForm form = new SimpleForm("OsTag Settings");
-
-        form.addButton("NameTag & ScoreTag", ImageType.PATH, "textures/ui/book_metatag_default", (p, button) -> scoreAndNameSettings())
-                .addButton("Advanced Players", ImageType.PATH, "textures/ui/FriendsDiversity", (p, button) -> advancedPlayersSettings())
-                .addButton("Refresh Time", ImageType.PATH, "textures/ui/refresh_light", (p, button) -> refreshTimeSettings())
-                .addButton("Disabled Worlds", ImageType.PATH, "textures/ui/worldsIcon", (p, button) -> disabledWorld());
-
+        if (this.player.hasPermission(Permissions.ADMIN)) {
+            form.addButton("NameTag & ScoreTag", ImageType.PATH, "textures/ui/book_metatag_default", (p, button) -> scoreAndNameSettings())
+                    .addButton("Advanced Players", ImageType.PATH, "textures/ui/FriendsDiversity", (p, button) -> advancedPlayersSettings())
+                    .addButton("Refresh Time", ImageType.PATH, "textures/ui/refresh_light", (p, button) -> refreshTimeSettings())
+                    .addButton("Disabled Worlds", ImageType.PATH, "textures/ui/worldsIcon", (p, button) -> disabledWorld());
+        }
         this.mainForm.addCloseButton(form);
         form.setNoneHandler(p -> this.mainForm.openSettings());
         form.send(player);

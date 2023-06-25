@@ -4,6 +4,7 @@ import cn.nukkit.Player;
 import cn.nukkit.utils.Config;
 import me.indian.ostag.OsTag;
 import me.indian.ostag.util.MessageUtil;
+import me.indian.ostag.util.Permissions;
 import ru.contentforge.formconstructor.form.CustomForm;
 import ru.contentforge.formconstructor.form.ModalForm;
 import ru.contentforge.formconstructor.form.SimpleForm;
@@ -32,17 +33,18 @@ public class SettingsFrom {
     public void settings() {
         final SimpleForm form = new SimpleForm("Settings");
 
-        if (plugin.osTag) {
+        if (plugin.osTag && this.player.hasPermission(Permissions.ADMIN)) {
             form.addButton("OsTag", ImageType.PATH, "textures/ui/sidebar_icons/profile_screen_icon", (p, button) -> new OsTagForm(this.mainForm, this.config, this.advancedPlayers).osTagSettings());
         }
         if (plugin.chatFormatter) {
             form.addButton("Formatter", ImageType.PATH, "textures/ui/mute_off", (p, button) -> new FormatterForm(this.mainForm, this.config).formatterSettings());
         }
-        if(plugin.cpsLimiter){
+        if (plugin.cpsLimiter && this.player.hasPermission(Permissions.ADMIN)) {
             form.addButton("CpsLimiter", ImageType.PATH, "textures/ui/keyboard_tooltip_background", (p, button) -> new CpsLimiterForm(this.mainForm, this.config).cpsLimiterSettings());
         }
-        form.addButton("Modules", ImageType.PATH, "textures/ui/servers", (p, button) -> modulesSettings());
-
+        if (this.player.hasPermission(Permissions.ADMIN)) {
+            form.addButton("Modules", ImageType.PATH, "textures/ui/servers", (p, button) -> modulesSettings());
+        }
         this.mainForm.addCloseButton(form);
         form.setNoneHandler(p -> this.mainForm.runOstagFrom());
         form.send(player);
@@ -53,7 +55,8 @@ public class SettingsFrom {
 
         form.addElement(new Label(MessageUtil.colorize("&a&lRestart no needed!")));
         form.addElement("autoupdate", new Toggle("Auto Update", this.config.getBoolean("AutoUpdate")))
-                .addElement("formsdebug", new Toggle("Forms debug", this.config.getBoolean("FormsDebug")));
+                .addElement("formsdebug", new Toggle("Forms debug", this.config.getBoolean("FormsDebug")))
+                .addElement("mentionsound", new Toggle("MentionSound", this.config.getBoolean("MentionSound")));
 
 
         form.addElement(new Label(MessageUtil.colorize("&c&lThis booleans needed restart server to reload!")))
@@ -71,6 +74,7 @@ public class SettingsFrom {
 
             config.set("AutoUpdate", response.getToggle("autoupdate").getValue());
             config.set("FormsDebug", response.getToggle("formsdebug").getValue());
+            config.set("MentionSound", response.getToggle("mentionsound").getValue());
 
             //restart
 

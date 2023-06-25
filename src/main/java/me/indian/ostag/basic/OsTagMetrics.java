@@ -71,6 +71,7 @@ public class OsTagMetrics {
             final boolean cooldown = this.config.getBoolean("cooldown.enable");
             final boolean andForAll = this.config.getBoolean("And-for-all");
             final boolean formsDebug = this.config.getBoolean("FormsDebug");
+            final boolean mentions = this.config.getBoolean("MentionSound");
 
             if (ostag) {
                 functionMap.put("OsTag", 1);
@@ -108,8 +109,11 @@ public class OsTagMetrics {
             if (andForAll) {
                 functionMap.put("And For All", 1);
             }
-            if(formsDebug){
-                functionMap.put("Froms Debug" , 1);
+            if (formsDebug) {
+                functionMap.put("Froms Debug", 1);
+            }
+            if (mentions) {
+                functionMap.put("Mention sound", 1);
             }
 
             return functionMap;

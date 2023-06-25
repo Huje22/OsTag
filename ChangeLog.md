@@ -223,6 +223,8 @@ I adding he here because I don't think anyone knows that I added it in `GommeAWM
 ```
 
 Now `refresh time` is in ticks! (Since 1.5.7.4)  <br/>
+New censhorship system , now censor word muste be char! (Since 1.5.7.4)  <br/>
+Added sound when player mention system (FormConstructor plugin required) (Since 1.5.7.4)  <br/>
 
 __Fixes__: <br/>
 Code and code style fixes <br/>
