@@ -43,7 +43,6 @@ public class PlayerMentionConfig {
     }
 
     public boolean hasPlayer(final Player player) {
-        System.out.println("has player " + !this.playersConfig.getSection(player.getName()).isEmpty());
         return !this.playersConfig.getSection(player.getName()).isEmpty();
     }
 
