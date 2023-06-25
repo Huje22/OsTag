@@ -48,48 +48,21 @@ public class OsTagMetrics {
         this.metrics.addCustomChart(new Metrics.SimplePie("nukkit_version", () -> server.getNukkitVersion() + " (MC: " + server.getVersion() + " Nukkit API: " + server.getApiVersion() + ")"));
         this.metrics.addCustomChart(new Metrics.SimplePie("refresh_time", () -> {
             if (this.plugin.osTag) {
-                return this.config.getInt("refresh-time") + " seconds";
+                return this.plugin.getOsTimer().getRefreshTime() + " ticks";
             } else {
                 return "";
             }
         }));
 
-        this.metrics.addCustomChart(new Metrics.SimplePie("ostag_vs_chatformater", () -> {
-            String ostagVsFormater = "All disabled";
-            final boolean ostag = this.plugin.osTag;
-            final boolean chatFormater = this.plugin.chatFormatter;
-            if (ostag && chatFormater) {
-                ostagVsFormater = "OsTag and ChatFormater";
-            }
-            if (ostag && !chatFormater) {
-                ostagVsFormater = "OsTag";
-            }
-            if (!ostag && chatFormater) {
-                ostagVsFormater = "ChatFormater";
-            }
-            return ostagVsFormater;
-        }));
-
-        this.metrics.addCustomChart(new Metrics.SimplePie("scoretag_vs_nametag", () -> {
-            String scoreVsName = "All disabled";
-            if (this.plugin.osTag) {
-                final boolean nametag = this.plugin.nametag;
-                final boolean scoreTag = this.plugin.scoreTag;
-                if (nametag && scoreTag) {
-                    scoreVsName = "NameTag and ScoreTag";
-                }
-                if (nametag && !scoreTag) {
-                    scoreVsName = "NameTag";
-                }
-                if (!nametag && scoreTag) {
-                    scoreVsName = "ScoreTag";
-                }
-            }
-            return scoreVsName;
-        }));
 
         this.metrics.addCustomChart(new Metrics.AdvancedPie("functions", () -> {
             final Map<String, Integer> functionMap = new HashMap<>();
+
+            final boolean ostag = plugin.osTag;
+            final boolean formater = plugin.chatFormatter;
+            final boolean cpsLimiter = plugin.cpsLimiter;
+            final boolean nametag = this.plugin.nametag;
+            final boolean scoreTag = this.plugin.scoreTag;
             final boolean update = this.plugin.upDatechecker;
             final boolean auto = this.config.getBoolean("AutoUpdate");
             final boolean debug = this.plugin.debug;
@@ -99,6 +72,21 @@ public class OsTagMetrics {
             final boolean andForAll = this.config.getBoolean("And-for-all");
             final boolean formsDebug = this.config.getBoolean("FormsDebug");
 
+            if (ostag) {
+                functionMap.put("OsTag", 1);
+            }
+            if (formater) {
+                functionMap.put("ChatFormatter", 1);
+            }
+            if (cpsLimiter) {
+                functionMap.put("CpsLimiter", 1);
+            }
+            if (scoreTag) {
+                functionMap.put("ScoreTag", 1);
+            }
+            if (nametag) {
+                functionMap.put("NmaeTag", 1);
+            }
             if (update) {
                 functionMap.put("UpdateChecker", 1);
             }
@@ -188,7 +176,6 @@ public class OsTagMetrics {
             case 6:
                 return "Hololens";
             case 7:
-                return "Windows 10";
             case 8:
                 return "Windows";
             case 9:
