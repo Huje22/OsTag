@@ -16,14 +16,15 @@ public class PlayerMentionConfig {
 
     private final Config playersConfig;
     private final String defaultSound;
+    private final int defaultCustomIndex;
 
     public PlayerMentionConfig(final OsTag plugin) {
         File file = new File(plugin.getDataFolder(), "players.yml");
         if (!file.exists()) {
-            plugin.getLogger().info(TextFormat.RED + "File not found");
+            plugin.getLogger().info(MessageUtil.colorize("&cFile&6 players.yml&c not found"));
             try {
                 file.createNewFile();
-                plugin.getLogger().info(TextFormat.GREEN + "Created");
+                plugin.getLogger().info(MessageUtil.colorize("&aFile&6 players.yml&a created!"));
             } catch (IOException e) {
                 plugin.getLogger().warning(TextFormat.RED + "CANT CREATE FILE");
                 e.printStackTrace();
@@ -40,6 +41,7 @@ public class PlayerMentionConfig {
         this.playersConfig.setDefault(defaultMap);
         this.playersConfig.save();
         this.defaultSound = "BLOCK_SCAFFOLDING_BREAK";
+        this.defaultCustomIndex = 100;
     }
 
     public boolean hasPlayer(final Player player) {
@@ -52,6 +54,7 @@ public class PlayerMentionConfig {
         this.playersConfig.set(playerName + ".enabled", true);
         this.playersConfig.set(playerName + ".title", true);
         this.playersConfig.set(playerName + ".sound", defaultSound);
+        this.playersConfig.set(playerName + ".custom-index", defaultCustomIndex);
         System.out.println("Created " + playerName);
         this.playersConfig.save();
     }
@@ -71,6 +74,15 @@ public class PlayerMentionConfig {
 
     public void setMentionSound(final Player player, final String sound) {
         this.playersConfig.set(player.getName() + ".sound", sound);
+        this.playersConfig.save();
+    }
+
+    public int getPlayerCustomIndex(final Player player){
+        return this.playersConfig.getInt(player.getName() + ".custom-index", defaultCustomIndex);
+    }
+
+    public void setPlayerCustomIndex(final Player player, final int index) {
+        this.playersConfig.set(player.getName() + ".custom-index" , index);
         this.playersConfig.save();
     }
 

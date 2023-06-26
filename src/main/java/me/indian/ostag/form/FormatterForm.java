@@ -216,21 +216,27 @@ public class FormatterForm {
         final PlayerMentionConfig playerMentionConfig = this.plugin.getPlayersConfig();
         final boolean enabled = playerMentionConfig.hasEnabledMentions(this.player);
         final boolean title = playerMentionConfig.hasEnabledTitle(this.player);
-        final int currentSoundIndex = playerMentionConfig.getSoundIndex(playerMentionConfig.getMentionSound(this.player));
         final int soundsValue = playerMentionConfig.getSoundsValue();
         final List<SelectableElement> elements = new ArrayList<>();
         final List<SelectableElement> maxsounds = new ArrayList<>();
+        final int currentSoundIndex = playerMentionConfig.getSoundIndex(playerMentionConfig.getMentionSound(this.player));
 
-        int counter = 0;
-        for (final Sound sound : Sound.values()) {
-            final SelectableElement element = new SelectableElement(sound.name(), counter);
-            elements.add(element);
-            counter++;
-            if (counter == soundsValue) {
-                break;
+        if (enabled) {
+            int counter = 0;
+            for (final Sound sound : Sound.values()) {
+                final SelectableElement element = new SelectableElement(sound.name(), counter);
+                elements.add(element);
+                counter++;
+                if (counter == soundsValue) {
+                    if (currentSoundIndex > counter) {
+                        final SelectableElement currentSound = new SelectableElement(playerMentionConfig.getSoundByIndex(currentSoundIndex), counter);
+                        playerMentionConfig.setPlayerCustomIndex(this.player, counter);
+                        elements.add(currentSound);
+                    }
+                    break;
+                }
             }
         }
-
 
         form.addElement(new Label(MessageUtil.colorize("&aEnable mentions")))
                 .addElement("mentions_enable", new Toggle("Mention", enabled));
@@ -238,7 +244,12 @@ public class FormatterForm {
         if (enabled) {
             form.addElement(new Label(MessageUtil.colorize("&aEnable title info")))
                     .addElement("title_info_enable", new Toggle("Title info", title))
-                    .addElement("soundname", new Dropdown("Mention Sound", elements, currentSoundIndex));
+                    .addElement(new Label(MessageUtil.colorize("&aYour mention sound: &b" + playerMentionConfig.getMentionSound(this.player)  )))
+                    .addElement("soundname", new Dropdown(MessageUtil.colorize("&aMention Sound"), elements , playerMentionConfig.getPlayerCustomIndex(this.player) ))
+                    .addElement("customsound",
+                            Input.builder()
+                                    .setName(MessageUtil.colorize("&aAdd sound by index"))
+                                    .build());
         }
 
         if (this.player.hasPermission(Permissions.ADMIN)) {
@@ -260,18 +271,30 @@ public class FormatterForm {
                 final SelectableElement element = response.getDropdown("soundname").getValue();
                 playerMentionConfig.setEnabledTitle(this.player, finalTitle);
                 if (element.getValue() != null) {
-                    if (element.getValue(Integer.class) != currentSoundIndex) {
+                    if (element.getValue(Integer.class) != playerMentionConfig.getPlayerCustomIndex(this.player)) {
                         playerMentionConfig.setMentionSound(this.player, playerMentionConfig.getSoundByIndex(element.getValue(Integer.class)));
                     }
                 }
             }
+
+            final String customSound = response.getInput("customsound").getValue();
+            if (customSound != null) {
+                int index;
+                try {
+                    index = Integer.parseInt(customSound);
+                    playerMentionConfig.setMentionSound(this.player , playerMentionConfig.getSoundByIndex(index));
+                } catch (final NumberFormatException ex) {
+                    player.sendMessage(MessageUtil.colorize("&cIndex must be an integer"));
+                }
+            }
+
             if (this.player.hasPermission(Permissions.ADMIN)) {
                 final SelectableElement sounds = response.getStepSlider("maxsounds").getValue();
                 if (sounds.getValue() != null && sounds.getValue(Integer.class) != soundsValue) {
                     playerMentionConfig.setSoundsValue(sounds.getValue(Integer.class));
                 }
             }
-            
+
             config.save();
             p.sendMessage(MessageUtil.colorize("&aSaved changes"));
             this.mainForm.formLogger("&aPlayer&6 " + p.getName() + "&a edited&b " + form.getTitle());
