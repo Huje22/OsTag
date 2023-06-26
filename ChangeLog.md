@@ -239,7 +239,7 @@ New thing (Since x.x.x)  <br/>
 
 <div align="center">
 
-__**General info**__  <br/>
+# __**General info**__  <br/>
 </div>
 
 * After beta 1.5.5 each beta version will have additional numbering for example : **1.5.6.01** <br/>
