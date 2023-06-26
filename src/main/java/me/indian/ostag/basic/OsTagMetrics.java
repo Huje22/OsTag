@@ -45,7 +45,7 @@ public class OsTagMetrics {
 
     private void customMetrics() {
         this.metrics.addCustomChart(new Metrics.SimplePie("server_movement", () -> String.valueOf(this.plugin.serverMovement)));
-        this.metrics.addCustomChart(new Metrics.SimplePie("nukkit_version", () -> server.getNukkitVersion() + " (MC: " + server.getVersion() + " Nukkit API: " + server.getApiVersion() + ")"));
+        this.metrics.addCustomChart(new Metrics.SimplePie("nukkit_version", () -> server.getNukkitVersion() + " (MC: " + server.getVersion() + " Nukkit API: " + server.getApiVersion() + " Plugin Version " + this.plugin.getDescription().getVersion() +  ")"));
         this.metrics.addCustomChart(new Metrics.SimplePie("refresh_time", () -> {
             if (this.plugin.osTag) {
                 return this.plugin.getOsTimer().getRefreshTime() + " ticks";
@@ -58,9 +58,9 @@ public class OsTagMetrics {
         this.metrics.addCustomChart(new Metrics.AdvancedPie("functions", () -> {
             final Map<String, Integer> functionMap = new HashMap<>();
 
-            final boolean ostag = plugin.osTag;
-            final boolean formater = plugin.chatFormatter;
-            final boolean cpsLimiter = plugin.cpsLimiter;
+            final boolean ostag = this.plugin.osTag;
+            final boolean formater = this.plugin.chatFormatter;
+            final boolean cpsLimiter = this.plugin.cpsLimiter;
             final boolean nametag = this.plugin.nametag;
             final boolean scoreTag = this.plugin.scoreTag;
             final boolean update = this.plugin.upDatechecker;
