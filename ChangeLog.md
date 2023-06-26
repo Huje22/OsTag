@@ -1,5 +1,5 @@
+### **Version: 1.4.8** <br/>
 **09.12.2022** <br/>
-**Version: 1.4.8** <br/>
 
 The plugin now has so many naming changes, see the plugin page on CloudBurst to know them all and get it right <br/>
 Changed name from `OstagPNX` to `OsTag` <br/>
@@ -20,7 +20,8 @@ When the plugin encounters an error while reloading the config, it will inform a
 console <br/>
 
 ------------------------------------------------------------------------
-**11.12.2022** <br/>
+
+### **11.12.2022** <br/>
 **Version: 1.4.8.01** <br/>
 Now if you want everyone to be able to use `&` by default instead of `§` set `and-for-all` to true <br/>
 Still canot use `§` in chat , I try to fix it <br/>
@@ -30,8 +31,10 @@ Block `\n` in chat formating <br/>
 Changed `message.format` to `message-format` <br/>
 
 ----------------------------------------------------------------------------
+
+### **Version: 1.4.9** <br/>
 **Started in 11.12.2022 released on the day 12.12.2022**  <br/>
-**Version: 1.4.9** <br/>
+
 Config look improvements <br/>
 When you just type only `/ostag` it will bring up a list of parameters you can use <br/>
 Added `<unique-description>` using it in the `Players` section you can add an emoji or some text for this player
@@ -73,14 +76,18 @@ censorship:
 Added breaks between messages <br/>
 
 -----------------------------------
+
+### **Version: 1.4.9.01** <br/>
 **Released on the day 15.12.2022** <br/>
-**Version: 1.4.9.01** <br/>
+
 No breaks between messages when player was operator, fixed! <br/>
 some improvements in code <br/>
 
 -----------------------------------
+
+### **1.4.9.02** <br/>
 **Released on the day 17.12.2022** <br/>
-**1.4.9.02** <br/>
+
 Code improvements <br/>
 Now `§` working in chat :D <br/>
 Added disable ostag in a given world! if the player logs into a world where it is allowed, the name and information will
@@ -88,21 +95,27 @@ remain until no other plugin changes it or enters a allowed world <br/>
 Factions plugin support (Placeholder `<faction>`) <br/>
 
 ---------------------------------
+
+### **1.5.0** <br/>
 **Released on the day 18.12.2022** <br/>
-**1.5.0** <br/>
+
 Added PlaceholderAPI support <br/>
 Removed `<faction>` placeholder <br/>
 Want to use OsTag but don't want to use PlaceholderAPI? You can still use it without the placeholder api
 
 -----------------------------------
+
+### **1.5.1** <br/>
 **Released on the day 18.12.2022** <br/>
-**1.5.1** <br/>
+
 Code improvements <br/>
 Bug fixes (`<device>` placeholder) <br/>
 
 ------------------------------------
+
+### **1.5.2** <br/>
 **Released on the day 13.12.2022** <br/>
-**1.5.2** <br/>
+
 Big code improvements <br/>
 Now add `Windows Phone` in <device> placeholder <br/>
 Now when you move away from the player you only see the name line <br/>
@@ -116,8 +129,10 @@ Added placeholders that already existed but can now be used in other plugins usi
 Delated <deathskull> placeholder , now this placeholder is in DeathSkull plugin <br/>
 
 -----------------------------------------------
+
+### **1.5.3** <br/>
 **Released on the day 03.01.2023** <br/>
-**1.5.3** <br/>
+
 Added better support for `PowerNukkit` <br/>
 Added in `<gamemode>` placeholder spectator detect <br/>
 Code improvements <br/>
@@ -125,8 +140,10 @@ Added `%ostag_group%` placeholder to papi <br/>
 changed `PowerNukkiX-movement-server` to `movement-server` <br/>
 
 ----------------------------------------------
+
+### **1.5.4** <br/>
 **Released on the day 22.02.2023** <br/>
-**1.5.4** <br/>
+
 If you used old versions, remove config to generate a new one!!! <br/>
 Some code improvements and so many code style fixes <br/>
 Windows phone and gear vr removed from <device> placeholder , because not suported by mojang <br/>
@@ -143,8 +160,10 @@ now `breaks between messages` don't require enable cooldown <br/>
 Cooldown fix and cooldown placeholder `%ostag_cooldown%` <br/>
 
 ---------------------------
+
+### **1.5.5** <br/>
 **Released on the day 28.03.2023** <br/>
-**1.5.5** <br/>
+
 __Naming changes__: <br/>
 Fixed naming `<controler>` and `%ostag_controler%` to `<controller>` `%ostag_controller%` and also fixed `<preffix>`
 and `%ostag_preffix%` and `<unique_description>` <br/>
@@ -166,8 +185,9 @@ Cooldown disable info <br/>
 Better code optymalization <br/>
 
 ---------------------------------------------------------------
+
+##### **1.5.6** <br/>
 **Released on the day 17.05.2023** <br/>
-**1.5.6** <br/>
 
 __Naming changes__: <br/>
 none
@@ -198,7 +218,8 @@ Removed Prefixes interface because is un necessary, now we have ReplaceUtil (sin
 
 -------------------------------------------------
 **Released on the day xx.xx.2023** <br/>
-**1.5.7** <br/>
+
+### **1.5.7** <br/>
 
 __Naming changes__: <br/>
 From `and-for-all` to `And-for-all` (Since 1.5.7.3)  <br/>
@@ -225,6 +246,9 @@ I adding he here because I don't think anyone knows that I added it in `GommeAWM
 Now `refresh time` is in ticks! (Since 1.5.7.4)  <br/>
 New censhorship system , now censor word muste be char! (Since 1.5.7.4)  <br/>
 Added sound when player mention system (FormConstructor plugin required) (Since 1.5.7.4)  <br/>
+**New plugin version tagging system!
+** [Check This](https://github.com/OpenPlugins-Minecraft/OsTag/blob/main/ChangeLog.md#general-info--)  (Since
+1.5.7.4)  <br/>
 
 __Fixes__: <br/>
 Code and code style fixes <br/>
@@ -242,10 +266,8 @@ New thing (Since x.x.x)  <br/>
 # __**General info**__  <br/>
 </div>
 
-* After beta 1.5.5 each beta version will have additional numbering for example : **1.5.6.01** <br/>
-* Since 1.5.5 `ChangeLod.md` gets a new information format
-* Beta will be based on 5 phases (maybe more if something bigger is planned)
-* 
+* Versions will now be tagged normally!
+* Beta will only be available on our discord server for volunteers
 
 
 
