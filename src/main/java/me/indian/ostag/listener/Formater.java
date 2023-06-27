@@ -132,7 +132,7 @@ public class Formater implements Listener {
 
         if (!this.config.getBoolean("MentionSound")) return;
         final Player player = event.getPlayer();
-        final PlayerMentionConfig playersConfig = this.plugin.getPlayersConfig();
+        final PlayerMentionConfig playersConfig = this.plugin.getPlayersMentionConfig();
         final Pattern mentionPattern = Pattern.compile("(?<=\\s|^)@(\\w+)");
         final Matcher matcher = mentionPattern.matcher(event.getMessage());
 

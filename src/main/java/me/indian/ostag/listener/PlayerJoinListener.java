@@ -23,7 +23,7 @@ public class PlayerJoinListener implements Listener {
         final Player player = event.getPlayer();
         final String compatibility = GithubUtil.checkTagCompatibility();
 
-        this.plugin.getPlayersConfig().createPlayerSection(player);
+        this.plugin.getPlayersMentionConfig().createPlayerSection(player);
 
         if (player.hasPermission(Permissions.ADMIN) || player.isOp()) {
             if (this.plugin.upDatechecker) {

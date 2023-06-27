@@ -217,7 +217,7 @@ public class FormatterForm {
          */
 
         final CustomForm form = new CustomForm("Mentions Settings");
-        final PlayerMentionConfig playerMentionConfig = this.plugin.getPlayersConfig();
+        final PlayerMentionConfig playerMentionConfig = this.plugin.getPlayersMentionConfig();
         final boolean enabled = playerMentionConfig.hasEnabledMentions(this.player);
         final boolean title = playerMentionConfig.hasEnabledTitle(this.player);
         final int soundsValue = playerMentionConfig.getSoundsValue();

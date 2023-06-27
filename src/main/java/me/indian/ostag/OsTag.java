@@ -48,7 +48,7 @@ public class OsTag extends PluginBase {
     private InputListener inputListener;
     private LuckPerms luckPerms;
     private PlaceholderAPI placeholderApi;
-    private PlayerMentionConfig playersConfig;
+    private PlayerMentionConfig playerMentionConfig;
 
     public static OsTag getInstance() {
         return instance;
@@ -82,15 +82,15 @@ public class OsTag extends PluginBase {
         return this.placeholderApi;
     }
 
-    public PlayerMentionConfig getPlayersConfig() {
-        return this.playersConfig;
+    public PlayerMentionConfig getPlayersMentionConfig() {
+        return this.playerMentionConfig;
     }
 
     @Override
     public void onLoad() {
         instance = this;
         this.saveDefaultConfig();
-        this.playersConfig = new PlayerMentionConfig(this);
+        this.playerMentionConfig = new PlayerMentionConfig(this);
         this.osTagCommand = new OsTagCommand(this);
         this.osTimer = new OsTimer(this);
         this.upDateUtil = new UpDateUtil();
@@ -165,7 +165,7 @@ public class OsTag extends PluginBase {
         if (this.chatFormatter) {
             pm.registerEvents(this.getFormater(), this);
         } else {
-            this.getConfig().set("MentionSound", false);
+            this.getPlayersMentionConfig().setMentionSoundFunctionEnabled(false);
             this.getLogger().info(MessageUtil.colorize("&bChatFormatter module is disabled"));
         }
         pm.registerEvents(new PlayerJoinListener(this), this);
