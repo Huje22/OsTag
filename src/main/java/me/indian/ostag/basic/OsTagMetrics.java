@@ -23,6 +23,9 @@ public class OsTagMetrics {
     private final Metrics metrics = new Metrics(this.plugin);
     public boolean enabled = this.metrics.isEnabled();
 
+    //TODO: Do all variables in constructor
+
+    
     public void run() {
         executorService.execute(() -> {
             try {
@@ -86,7 +89,7 @@ public class OsTagMetrics {
                 functionMap.put("ScoreTag", 1);
             }
             if (nametag) {
-                functionMap.put("NmaeTag", 1);
+                functionMap.put("NameTag", 1);
             }
             if (update) {
                 functionMap.put("UpdateChecker", 1);
