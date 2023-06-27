@@ -5,29 +5,36 @@ import cn.nukkit.plugin.Plugin;
 import cn.nukkit.plugin.PluginLogger;
 import cn.nukkit.utils.Config;
 import me.indian.ostag.OsTag;
+import me.indian.ostag.config.PlayerMentionConfig;
 import me.indian.ostag.util.MessageUtil;
 import me.indian.ostag.util.ThreadUtil;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class OsTagMetrics {
 
-    private static final ExecutorService executorService = Executors.newSingleThreadExecutor(new ThreadUtil("Ostag Metrics Thread"));
-    private final OsTag plugin = OsTag.getInstance();
-    private final Server server = plugin.getServer();
-    private final Config config = this.plugin.getConfig();
-    private final PluginLogger logger = this.plugin.getLogger();
-    private final Metrics metrics = new Metrics(this.plugin);
-    public boolean enabled = this.metrics.isEnabled();
+    private final OsTag plugin;
+    private final Server server;
+    private final Config config;
+    private final PlayerMentionConfig mentionConfig;
+    private final PluginLogger logger;
+    private final Metrics metrics;
+    public boolean enabled;
 
-    //TODO: Do all variables in constructor
 
-    
+    public OsTagMetrics() {
+        this.plugin = OsTag.getInstance();
+        this.server = this.plugin.getServer();
+        this.config = this.plugin.getConfig();
+        this.mentionConfig = this.plugin.getPlayersMentionConfig();
+        this.logger = this.plugin.getLogger();
+        this.metrics = new Metrics(this.plugin);
+        this.enabled = this.metrics.isEnabled();
+    }
+
     public void run() {
-        executorService.execute(() -> {
+        new ThreadUtil("Ostag Metrics Thread", () -> {
             try {
                 if (!this.enabled) {
                     this.logger.info(MessageUtil.colorize("&aMetrics is disabled"));
@@ -43,12 +50,12 @@ public class OsTagMetrics {
                 }
                 Thread.currentThread().interrupt();
             }
-        });
+        }).newThread().start();
     }
 
     private void customMetrics() {
         this.metrics.addCustomChart(new Metrics.SimplePie("server_movement", () -> String.valueOf(this.plugin.serverMovement)));
-        this.metrics.addCustomChart(new Metrics.SimplePie("nukkit_version", () -> server.getNukkitVersion() + " (MC: " + server.getVersion() + " Nukkit API: " + server.getApiVersion() + " Plugin Version " + this.plugin.getDescription().getVersion() +  ")"));
+        this.metrics.addCustomChart(new Metrics.SimplePie("nukkit_version", () -> server.getNukkitVersion() + " (MC: " + server.getVersion() + " Nukkit API: " + server.getApiVersion() + " Version " + this.plugin.getDescription().getVersion() + ")"));
         this.metrics.addCustomChart(new Metrics.SimplePie("refresh_time", () -> {
             if (this.plugin.osTag) {
                 return this.plugin.getOsTimer().getRefreshTime() + " ticks";
@@ -56,14 +63,9 @@ public class OsTagMetrics {
                 return "";
             }
         }));
-
-
         this.metrics.addCustomChart(new Metrics.AdvancedPie("functions", () -> {
             final Map<String, Integer> functionMap = new HashMap<>();
 
-            final boolean ostag = this.plugin.osTag;
-            final boolean formater = this.plugin.chatFormatter;
-            final boolean cpsLimiter = this.plugin.cpsLimiter;
             final boolean nametag = this.plugin.nametag;
             final boolean scoreTag = this.plugin.scoreTag;
             final boolean update = this.plugin.upDatechecker;
@@ -76,15 +78,6 @@ public class OsTagMetrics {
             final boolean formsDebug = this.config.getBoolean("FormsDebug");
             final boolean mentions = this.config.getBoolean("MentionSound");
 
-            if (ostag) {
-                functionMap.put("OsTag", 1);
-            }
-            if (formater) {
-                functionMap.put("ChatFormatter", 1);
-            }
-            if (cpsLimiter) {
-                functionMap.put("CpsLimiter", 1);
-            }
             if (scoreTag) {
                 functionMap.put("ScoreTag", 1);
             }
@@ -121,7 +114,25 @@ public class OsTagMetrics {
 
             return functionMap;
         }));
+        this.metrics.addCustomChart(new Metrics.AdvancedPie("main_functions", () -> {
+            final Map<String, Integer> functionMap = new HashMap<>();
 
+            final boolean ostag = this.plugin.osTag;
+            final boolean formater = this.plugin.chatFormatter;
+            final boolean cpsLimiter = this.plugin.cpsLimiter;
+
+            if (ostag) {
+                functionMap.put("OsTag", 1);
+            }
+            if (formater) {
+                functionMap.put("ChatFormatter", 1);
+            }
+            if (cpsLimiter) {
+                functionMap.put("CpsLimiter", 1);
+            }
+
+            return functionMap;
+        }));
         this.metrics.addCustomChart(new Metrics.AdvancedPie("plugins", () -> {
             final Map<String, Plugin> serverPluginsMap = this.server.getPluginManager().getPlugins();
             final Map<String, Integer> pluginMap = new HashMap<>();
@@ -135,6 +146,22 @@ public class OsTagMetrics {
                 }
             }
             return pluginMap;
+        }));
+        this.metrics.addCustomChart(new Metrics.AdvancedPie("mention_sounds", () -> {
+            final Map<String, Integer> sounds = new HashMap<>();
+            if (!this.mentionConfig.mentionSoundFunctionEnabled()) {
+                sounds.put("Disabled", 1);
+                return sounds;
+            }
+            this.server.getOnlinePlayers().forEach(((uuid, player) -> {
+                final String sound = this.mentionConfig.getMentionSound(player);
+                if (!sounds.containsKey(sound)) {
+                    sounds.put(sound, 1);
+                } else {
+                    sounds.put(sound, sounds.get(sound) + 1);
+                }
+            }));
+            return sounds;
         }));
 
         /*
@@ -153,7 +180,6 @@ public class OsTagMetrics {
             });
             return valueMap;
         }));
-
         this.metrics.addCustomChart(new Metrics.AdvancedPie("player_game_version", () -> {
             final Map<String, Integer> valueMap = new HashMap<>();
             this.server.getOnlinePlayers().forEach((uuid, player) -> {
@@ -200,6 +226,6 @@ public class OsTagMetrics {
             case 15:
                 return "Linux";
         }
-        return "Unknown";
+        return "Unknown (" + os + ")";
     }
 }
