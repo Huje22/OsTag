@@ -212,6 +212,10 @@ public class FormatterForm {
 
 
     private void mentionForm() {
+          /*
+           This is for Mention Sound function and it is still experimental
+         */
+
         final CustomForm form = new CustomForm("Mentions Settings");
         final PlayerMentionConfig playerMentionConfig = this.plugin.getPlayersConfig();
         final boolean enabled = playerMentionConfig.hasEnabledMentions(this.player);
@@ -244,8 +248,8 @@ public class FormatterForm {
         if (enabled) {
             form.addElement(new Label(MessageUtil.colorize("&aEnable title info")))
                     .addElement("title_info_enable", new Toggle("Title info", title))
-                    .addElement(new Label(MessageUtil.colorize("&aYour mention sound: &b" + playerMentionConfig.getMentionSound(this.player)  )))
-                    .addElement("soundname", new Dropdown(MessageUtil.colorize("&aMention Sound"), elements , playerMentionConfig.getPlayerCustomIndex(this.player) ))
+                    .addElement(new Label(MessageUtil.colorize("&aYour mention sound: &b" + playerMentionConfig.getMentionSound(this.player))))
+                    .addElement("soundname", new Dropdown(MessageUtil.colorize("&aMention Sound"), elements, playerMentionConfig.getPlayerCustomIndex(this.player)))
                     .addElement("customsound",
                             Input.builder()
                                     .setName(MessageUtil.colorize("&aAdd sound by index"))
@@ -282,7 +286,7 @@ public class FormatterForm {
                 int index;
                 try {
                     index = Integer.parseInt(customSound);
-                    playerMentionConfig.setMentionSound(this.player , playerMentionConfig.getSoundByIndex(index));
+                    playerMentionConfig.setMentionSound(this.player, playerMentionConfig.getSoundByIndex(index));
                 } catch (final NumberFormatException ex) {
                     player.sendMessage(MessageUtil.colorize("&cIndex must be an integer"));
                 }

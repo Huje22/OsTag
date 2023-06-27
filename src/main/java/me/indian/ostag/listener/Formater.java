@@ -125,6 +125,11 @@ public class Formater implements Listener {
     @SuppressWarnings("unused")
     @EventHandler(priority = EventPriority.MONITOR)
     private void mentionSound(final PlayerChatEvent event) {
+
+          /*
+         This is for Mention Sound function and it is still experimental
+        */
+
         if (!this.config.getBoolean("MentionSound")) return;
         final Player player = event.getPlayer();
         final PlayerMentionConfig playersConfig = this.plugin.getPlayersConfig();

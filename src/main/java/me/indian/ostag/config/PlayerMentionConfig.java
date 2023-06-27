@@ -14,6 +14,10 @@ import java.util.LinkedHashMap;
 
 public class PlayerMentionConfig {
 
+    /*
+    This is for Mention Sound function and it is still experimental
+     */
+
     private final Config playersConfig;
     private final String defaultSound;
     private final int defaultCustomIndex;
