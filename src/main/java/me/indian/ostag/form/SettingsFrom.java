@@ -3,6 +3,7 @@ package me.indian.ostag.form;
 import cn.nukkit.Player;
 import cn.nukkit.utils.Config;
 import me.indian.ostag.OsTag;
+import me.indian.ostag.config.PlayerMentionConfig;
 import me.indian.ostag.util.MessageUtil;
 import me.indian.ostag.util.Permissions;
 import ru.contentforge.formconstructor.form.CustomForm;
@@ -52,11 +53,12 @@ public class SettingsFrom {
 
     private void modulesSettings() {
         final CustomForm form = new CustomForm("Modules settings");
+        final PlayerMentionConfig playerMentionConfig = this.plugin.getPlayersMentionConfig();
 
         form.addElement(new Label(MessageUtil.colorize("&a&lRestart no needed!")));
         form.addElement("autoupdate", new Toggle("Auto Update", this.config.getBoolean("AutoUpdate")))
                 .addElement("formsdebug", new Toggle("Forms debug", this.config.getBoolean("FormsDebug")))
-                .addElement("mentionsound", new Toggle("MentionSound", this.config.getBoolean("MentionSound")));
+                .addElement("mentionsound", new Toggle("MentionSound", playerMentionConfig.mentionSoundFunctionEnabled()));
 
 
         form.addElement(new Label(MessageUtil.colorize("&c&lThis booleans needed restart server to reload!")))
@@ -74,7 +76,7 @@ public class SettingsFrom {
 
             config.set("AutoUpdate", response.getToggle("autoupdate").getValue());
             config.set("FormsDebug", response.getToggle("formsdebug").getValue());
-            config.set("MentionSound", response.getToggle("mentionsound").getValue());
+            playerMentionConfig.setMentionSoundFunctionEnabled(response.getToggle("mentionsound").getValue());
 
             //restart
 

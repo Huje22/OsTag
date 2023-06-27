@@ -18,11 +18,14 @@ public class PlayerMentionConfig {
     This is for Mention Sound function and it is still experimental
      */
 
+    private final Config defaulConfig;
     private final Config playersConfig;
     private final String defaultSound;
     private final int defaultCustomIndex;
 
     public PlayerMentionConfig(final OsTag plugin) {
+        this.defaulConfig = plugin.getConfig();
+
         File file = new File(plugin.getDataFolder(), "players.yml");
         if (!file.exists()) {
             plugin.getLogger().info(MessageUtil.colorize("&cFile&6 players.yml&c not found"));
@@ -46,6 +49,15 @@ public class PlayerMentionConfig {
         this.playersConfig.save();
         this.defaultSound = "BLOCK_SCAFFOLDING_BREAK";
         this.defaultCustomIndex = 100;
+    }
+
+    public boolean mentionSoundFunctionEnabled(){
+        return this.defaulConfig.getBoolean("MentionSound");
+    }
+
+    public void setMentionSoundFunctionEnabled(final boolean enabled){
+         this.defaulConfig.set("MentionSound" , enabled);
+         this.defaulConfig.save();
     }
 
     public boolean hasPlayer(final Player player) {

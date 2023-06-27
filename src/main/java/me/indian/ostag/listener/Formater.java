@@ -126,15 +126,16 @@ public class Formater implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     private void mentionSound(final PlayerChatEvent event) {
 
-          /*
+        /*
          This is for Mention Sound function and it is still experimental
         */
 
-        if (!this.config.getBoolean("MentionSound")) return;
         final Player player = event.getPlayer();
         final PlayerMentionConfig playersConfig = this.plugin.getPlayersMentionConfig();
         final Pattern mentionPattern = Pattern.compile("(?<=\\s|^)@(\\w+)");
         final Matcher matcher = mentionPattern.matcher(event.getMessage());
+
+        if (!playersConfig.mentionSoundFunctionEnabled()) return;
 
         while (matcher.find()) {
             final String mentionWord = matcher.group(1);
@@ -147,7 +148,6 @@ public class Formater implements Listener {
                 if (Objects.equals(this.lastMention.get(player.getName()), mentionPlayer.getName())) continue;
                 this.lastMention.put(player.getName(), mentionPlayer.getName());
                 this.timeRemove(player, mentionPlayer);
-
 
                 if (playersConfig.hasEnabledMentions(mentionPlayer)) {
                     if (playersConfig.hasEnabledTitle(player)) {
