@@ -57,8 +57,8 @@ public class SettingsFrom {
 
         form.addElement(new Label(MessageUtil.colorize("&a&lRestart no needed!")));
         form.addElement("autoupdate", new Toggle("Auto Update", this.config.getBoolean("AutoUpdate")))
-                .addElement("formsdebug", new Toggle("Forms debug", this.config.getBoolean("FormsDebug")))
-                .addElement("mentionsound", new Toggle("MentionSound", playerMentionConfig.mentionSoundFunctionEnabled()));
+                .addElement("formsdebug", new Toggle("Forms debug", this.config.getBoolean("FormsDebug")));
+
 
 
         form.addElement(new Label(MessageUtil.colorize("&c&lThis booleans needed restart server to reload!")))
@@ -76,8 +76,6 @@ public class SettingsFrom {
 
             config.set("AutoUpdate", response.getToggle("autoupdate").getValue());
             config.set("FormsDebug", response.getToggle("formsdebug").getValue());
-            playerMentionConfig.setMentionSoundFunctionEnabled(response.getToggle("mentionsound").getValue());
-
             //restart
 
             config.set("UpdateChecker", response.getToggle("update").getValue());
