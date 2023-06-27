@@ -27,7 +27,7 @@ Enable what you want to be shown, you can choose whether the name tag or score t
 Scoretag is ``a-subtag`` and ``subtag``
 
 ### Refreshing infromations
-If you want the information above the player's head to update for more than 1 second, change the ``refresh-time`` to as many seconds as you need
+If you want the information above the player's head to update for more than 1 tick, change the ``refresh-time`` to as many seconds as you need
 ### Advanced and Normal player
 If you want a player to have different information overhead than others, list him or use ``/otag add <player>`` to do so
 
