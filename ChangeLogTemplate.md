@@ -37,6 +37,6 @@ x.x.x equals plugin version. <br/>
 If you contributing in beta version use additional markings for example : 2.9.3.1 (Like in changelog template). <br/>
 If full release is released create new beta, change version in `pom.xml` for example from `<version>1.9.3</version>`
 change to `<version>1.9.3.1-Beta</version>`. <br/>
-In `plugin.yml` you don't need change anything beacouse i used over there '${project.version}'. <br/>
+In `plugin.yml` you don't need change anything because i used over there '${project.version}'. <br/>
 Remember keeping similar Code style like a whole ostag code <br/>
 
