@@ -221,17 +221,20 @@ public class FormatterForm {
                 .setPositiveButton("Yes")
                 .setNegativeButton("No");
 
-        if (!this.player.hasPermission(Permissions.ADMIN)) {
-            mentionForm();
+        if (!this.player.hasPermission(Permissions.ADMIN) ) {
+            this.mentionForm();
+            return;
+        }
+        if (!this.playerMentionConfig.mentionSoundFunctionEnabled() ) {
+            this.mentionAdminForm();
             return;
         }
 
-        form.setNoneHandler(p -> this.mentionForm());
+        form.setNoneHandler(p -> this.formatterSettings());
 
         form.setHandler((p, result) -> {
             if (result) {
                 this.mentionAdminForm();
-                this.mainForm.formLogger("&aPlayer&6 " + p.getName() + "&a opended&b Mentions Admin Settings");
             } else {
                 this.mentionForm();
             }
