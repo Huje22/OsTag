@@ -45,9 +45,9 @@ public class OsTagForm {
     public void osTagSettings() {
         final SimpleForm form = new SimpleForm("OsTag Settings");
         if (this.player.hasPermission(Permissions.ADMIN)) {
-            form.addButton("NameTag & ScoreTag", ImageType.PATH, "textures/ui/book_metatag_default", (p, button) -> scoreAndNameSettings())
-                    .addButton("Advanced Players", ImageType.PATH, "textures/ui/FriendsDiversity", (p, button) -> advancedPlayersSettings())
-                    .addButton("Refresh Time", ImageType.PATH, "textures/ui/refresh_light", (p, button) -> refreshTimeSettings())
+            form.addButton("NameTag & ScoreTag", ImageType.PATH, "textures/ui/book_metatag_default", (p, button) -> scoreAndName())
+                    .addButton("Advanced Players", ImageType.PATH, "textures/ui/FriendsDiversity", (p, button) -> advancedPlayers())
+                    .addButton("Refresh Time", ImageType.PATH, "textures/ui/refresh_light", (p, button) -> refreshTimes())
                     .addButton("Disabled Worlds", ImageType.PATH, "textures/ui/worldsIcon", (p, button) -> disabledWorld());
         }
         this.mainForm.addCloseButton(form);
@@ -55,7 +55,7 @@ public class OsTagForm {
         form.send(player);
     }
 
-    private void advancedPlayersSettings() {
+    private void advancedPlayers() {
         final CustomForm form = new CustomForm("Advanced players settings");
 
         form.addElement(new Label(MessageUtil.colorize("&lOnline Players")));
@@ -128,8 +128,8 @@ public class OsTagForm {
         });
         form.send(player);
     }
-
-    private void scoreAndNameSettings() {
+    
+    private void scoreAndName() {
         final CustomForm form = new CustomForm("NameTag & ScoreTag Settings");
 
 
@@ -221,8 +221,7 @@ public class OsTagForm {
         form.send(player);
     }
 
-
-    private void refreshTimeSettings() {
+    private void refreshTimes() {
         final CustomForm form = new CustomForm("Refresh Time settings");
         final int refresh = this.plugin.getOsTimer().getRefreshTime();
         final List<SelectableElement> elements = new ArrayList<>();

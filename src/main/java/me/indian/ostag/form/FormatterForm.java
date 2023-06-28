@@ -43,15 +43,12 @@ public class FormatterForm {
         final SimpleForm form = new SimpleForm("Formatter Settings");
 
         if (this.player.hasPermission(Permissions.ADMIN)) {
-            form.addButton("Chat Format", ImageType.PATH, "textures/ui/editIcon", (p, button) -> messageFormatSettings());
+            form.addButton("Chat Format", ImageType.PATH, "textures/ui/editIcon", (p, button) -> this.messageFormat());
         }
-        form.addButton("Mention", ImageType.PATH, "textures/ui/icon_bell", (p, button) -> {
-            mentionModal();
-
-        });
+        form.addButton("Mention", ImageType.PATH, "textures/ui/icon_bell", (p, button) -> this.mentionModal());
         if (this.player.hasPermission(Permissions.ADMIN)) {
-            form.addButton("Cooldown", ImageType.PATH, "textures/ui/timer", (p, button) -> cooldownSettings())
-                    .addButton("Censorship", ImageType.PATH, "textures/ui/mute_on", (p, button) -> censorShipSettings());
+            form.addButton("Cooldown", ImageType.PATH, "textures/ui/timer", (p, button) -> this.cooldown())
+                    .addButton("Censorship", ImageType.PATH, "textures/ui/mute_on", (p, button) -> this.censorShip());
         }
 
         this.mainForm.addCloseButton(form);
@@ -59,7 +56,7 @@ public class FormatterForm {
         form.send(this.player);
     }
 
-    private void messageFormatSettings() {
+    private void messageFormat() {
         final CustomForm form = new CustomForm("Chat Format");
         final boolean andForAll = config.getBoolean("And-for-all");
         final boolean breaksBetweenMessages = config.getBoolean("break-between-messages.enable");
@@ -98,7 +95,7 @@ public class FormatterForm {
         form.send(player);
     }
 
-    private void cooldownSettings() {
+    private void cooldown() {
         final CustomForm form = new CustomForm("Cooldown Settings");
         final boolean enabled = config.getBoolean("cooldown.enable");
 
@@ -153,7 +150,7 @@ public class FormatterForm {
         form.send(player);
     }
 
-    private void censorShipSettings() {
+    private void censorShip() {
         final CustomForm form = new CustomForm("CensorShip Settings");
         final boolean enabled = config.getBoolean("censorship.enable");
 
@@ -218,9 +215,8 @@ public class FormatterForm {
         final ModalForm form = new ModalForm("Mention admin settings");
 
         form.setContent("Open mention admin settings?\n")
-                .setPositiveButton(MessageUtil.colorize("&cYes"))
-                .setNegativeButton(MessageUtil.colorize("&aNo"));
-
+                .setPositiveButton("Yes")
+                .setNegativeButton("No");
 
         if (!player.hasPermission(Permissions.ADMIN)) {
             mentionForm();

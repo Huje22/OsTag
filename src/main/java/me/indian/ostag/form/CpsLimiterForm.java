@@ -7,7 +7,6 @@ import ru.contentforge.formconstructor.form.CustomForm;
 import ru.contentforge.formconstructor.form.element.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class CpsLimiterForm {
@@ -22,7 +21,7 @@ public class CpsLimiterForm {
         this.player = this.mainForm.getFormPlayer();
     }
 
-    public void cpsLimiterSettings() {
+    public void cpsLimiter() {
         final CustomForm form = new CustomForm("CpsLimiter Settings");
         final String cpsMessage = config.getString("Cps.message");
         final int maxCps = config.getInt("Cps.max", 1);
