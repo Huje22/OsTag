@@ -58,7 +58,9 @@ public class PlayerInfoUtil {
         final String linux = MessageUtil.colorize(config.getString("Linux"));
         final String unknown = MessageUtil.colorize(config.getString("Unknown"));
 
-        switch (player.getLoginChainData().getDeviceOS()) {
+        final int deviceOs = player.getLoginChainData().getDeviceOS();
+
+        switch (deviceOs) {
             case 1:
                 return android;
             case 2:
@@ -89,7 +91,7 @@ public class PlayerInfoUtil {
             case 15:
                 return linux;
             default:
-                return unknown;
+                return unknown + " (" + deviceOs + ")";
         }
     }
 
