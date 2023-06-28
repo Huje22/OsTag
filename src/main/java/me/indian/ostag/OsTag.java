@@ -131,7 +131,7 @@ public class OsTag extends PluginBase {
             this.getLogger().error(MessageUtil.colorize("&cYou don't have &bFormConstructor &c plugin !"));
             this.getLogger().error(MessageUtil.colorize("&cthis is required for&b Mention Sound&c to work! !"));
             this.getLogger().error(MessageUtil.colorize("&cDownload it from here &bhttps://github.com/OpenPlugins-Minecraft/OsTag/tree/main/libs!"));
-            this.getConfig().set("MentionSound", false);
+            this.getPlayersMentionConfig().setMentionSoundFunctionEnabled(false);
         } else {
             this.formConstructor = true;
         }

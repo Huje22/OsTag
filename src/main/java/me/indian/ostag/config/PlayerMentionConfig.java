@@ -52,7 +52,7 @@ public class PlayerMentionConfig {
     }
 
     public boolean mentionSoundFunctionEnabled(){
-        return this.defaulConfig.getBoolean("MentionSound");
+        return this.defaulConfig.getBoolean("MentionSound",true);
     }
 
     public void setMentionSoundFunctionEnabled(final boolean enabled){

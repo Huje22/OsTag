@@ -24,7 +24,6 @@ import java.util.List;
 public class FormatterForm {
 
     private final Form mainForm;
-    private final OsTag plugin;
     private final Config config;
     private final Player player;
     private List<String> blockedWords;
@@ -32,11 +31,11 @@ public class FormatterForm {
 
     public FormatterForm(final Form mainForm, final Config config) {
         this.mainForm = mainForm;
-        this.plugin = OsTag.getInstance();
+        final OsTag plugin = OsTag.getInstance();
         this.config = config;
         this.player = this.mainForm.getFormPlayer();
         this.blockedWords = config.getStringList("BlackWords");
-        this.playerMentionConfig = this.plugin.getPlayersMentionConfig();
+        this.playerMentionConfig = plugin.getPlayersMentionConfig();
     }
 
     public void formatterSettings() {
@@ -58,13 +57,13 @@ public class FormatterForm {
 
     private void messageFormat() {
         final CustomForm form = new CustomForm("Chat Format");
-        final boolean andForAll = config.getBoolean("And-for-all");
-        final boolean breaksBetweenMessages = config.getBoolean("break-between-messages.enable");
+        final boolean andForAll = this.config.getBoolean("And-for-all");
+        final boolean breaksBetweenMessages = this.config.getBoolean("break-between-messages.enable");
 
         form.addElement("message_format",
                         Input.builder()
                                 .setName(MessageUtil.colorize("&lMessage format"))
-                                .setDefaultValue(config.getString("message-format"))
+                                .setDefaultValue(this.config.getString("message-format"))
                                 .build())
                 .addElement(new Label(MessageUtil.colorize("&lAdditional chat features")))
                 .addElement("and-for-all", new Toggle("And for all", andForAll))
@@ -73,31 +72,31 @@ public class FormatterForm {
         form.setHandler((p, response) -> {
             final String messageFormat = response.getInput("message_format").getValue();
             if (!messageFormat.isEmpty()) {
-                config.set("message-format", messageFormat);
+                this.config.set("message-format", messageFormat);
             }
 
             final boolean finalAndForAll = response.getToggle("and-for-all").getValue();
             if (finalAndForAll != andForAll) {
-                config.set("And-for-all", finalAndForAll);
+                this.config.set("And-for-all", finalAndForAll);
             }
 
             final boolean finalBreaksBetweenMessages = response.getToggle("breaks").getValue();
             if (finalBreaksBetweenMessages != breaksBetweenMessages) {
-                config.set("break-between-messages.enable", finalBreaksBetweenMessages);
+                this.config.set("break-between-messages.enable", finalBreaksBetweenMessages);
             }
 
-            config.save();
+            this.config.save();
             p.sendMessage(MessageUtil.colorize("&aSaved changes"));
             this.mainForm.formLogger("&aPlayer&6 " + p.getName() + "&a edited&b " + form.getTitle());
             formatterSettings();
         });
         form.setNoneHandler(p -> formatterSettings());
-        form.send(player);
+        form.send(this.player);
     }
 
     private void cooldown() {
         final CustomForm form = new CustomForm("Cooldown Settings");
-        final boolean enabled = config.getBoolean("cooldown.enable");
+        final boolean enabled = this.config.getBoolean("cooldown.enable");
 
         form.addElement(new Label(MessageUtil.colorize("&aEnable cooldown")))
                 .addElement("cooldown_enable", new Toggle("Cooldown", enabled));
@@ -106,53 +105,53 @@ public class FormatterForm {
             form.addElement("delay",
                             Input.builder()
                                     .setName(MessageUtil.colorize("&aCooldown time"))
-                                    .setDefaultValue(String.valueOf(config.getLong("cooldown.delay")))
+                                    .setDefaultValue(String.valueOf(this.config.getLong("cooldown.delay")))
                                     .build())
                     .addElement("message",
                             Input.builder()
                                     .setName(MessageUtil.colorize("&aCooldown message"))
-                                    .setDefaultValue(config.getString("cooldown.message"))
+                                    .setDefaultValue(this.config.getString("cooldown.message"))
                                     .build())
                     .addElement("over",
                             Input.builder()
                                     .setName(MessageUtil.colorize("&aCooldown over message"))
-                                    .setDefaultValue(config.getString("cooldown.over"))
+                                    .setDefaultValue(this.config.getString("cooldown.over"))
                                     .build())
                     .addElement("disabled",
                             Input.builder()
                                     .setName(MessageUtil.colorize("&aCooldown disabled message"))
-                                    .setDefaultValue(config.getString("cooldown.disabled"))
+                                    .setDefaultValue(this.config.getString("cooldown.disabled"))
                                     .build())
 
                     .addElement("bypass",
                             Input.builder()
                                     .setName(MessageUtil.colorize("&aCooldown bypass message"))
-                                    .setDefaultValue(config.getString("cooldown.bypass"))
+                                    .setDefaultValue(this.config.getString("cooldown.bypass"))
                                     .build());
         }
 
         form.setHandler((p, response) -> {
-            config.set("cooldown.enable", response.getToggle("cooldown_enable").getValue());
+            this.config.set("cooldown.enable", response.getToggle("cooldown_enable").getValue());
             if (enabled) {
-                config.set("cooldown.delay", Integer.valueOf(response.getInput("delay").getValue()));
-                config.set("cooldown.message", response.getInput("message").getValue());
-                config.set("cooldown.over", response.getInput("over").getValue());
-                config.set("cooldown.disabled", response.getInput("disabled").getValue());
-                config.set("cooldown.bypass", response.getInput("bypass").getValue());
+                this.config.set("cooldown.delay", Integer.valueOf(response.getInput("delay").getValue()));
+                this.config.set("cooldown.message", response.getInput("message").getValue());
+                this.config.set("cooldown.over", response.getInput("over").getValue());
+                this.config.set("cooldown.disabled", response.getInput("disabled").getValue());
+                this.config.set("cooldown.bypass", response.getInput("bypass").getValue());
             }
-            config.save();
+            this.config.save();
             p.sendMessage(MessageUtil.colorize("&aSaved changes"));
             this.mainForm.formLogger("&aPlayer&6 " + p.getName() + "&a edited&b " + form.getTitle());
             formatterSettings();
         });
 
         form.setNoneHandler(p -> formatterSettings());
-        form.send(player);
+        form.send(this.player);
     }
 
     private void censorShip() {
         final CustomForm form = new CustomForm("CensorShip Settings");
-        final boolean enabled = config.getBoolean("censorship.enable");
+        final boolean enabled = this.config.getBoolean("censorship.enable");
 
         form.addElement(new Label(MessageUtil.colorize("&aEnable censor ship")))
                 .addElement("censor_enable", new Toggle("Censorship", enabled));
@@ -161,15 +160,15 @@ public class FormatterForm {
             form.addElement("censor",
                     Input.builder()
                             .setName(MessageUtil.colorize("&aCensorShip message"))
-                            .setDefaultValue(config.getString("censorship.word"))
+                            .setDefaultValue(this.config.getString("censorship.word"))
                             .build());
 
             form.addElement(new Label(MessageUtil.colorize("&aBlocked words")));
-            for (int i = 0; i < blockedWords.size(); i++) {
+            for (int i = 0; i < this.blockedWords.size(); i++) {
                 form.addElement("blackwords_" + i,
                         Input.builder()
                                 .setName((i + 1) + ".")
-                                .setDefaultValue(blockedWords.get(i))
+                                .setDefaultValue(this.blockedWords.get(i))
                                 .build());
 
             }
@@ -181,12 +180,12 @@ public class FormatterForm {
         }
 
         form.setHandler((p, response) -> {
-            config.set("censorship.enable", response.getToggle("censor_enable").getValue());
+            this.config.set("censorship.enable", response.getToggle("censor_enable").getValue());
             if (enabled) {
                 final List<String> finalBlocked = new ArrayList<>();
-                config.set("censorship.word", response.getInput("censor").getValue().charAt(0));
+                this.config.set("censorship.word", response.getInput("censor").getValue().charAt(0));
 
-                for (int i = 0; i < blockedWords.size(); i++) {
+                for (int i = 0; i < this.blockedWords.size(); i++) {
                     final String word = response.getInput("blackwords_" + i).getValue();
                     if (!word.isEmpty()) {
                         finalBlocked.add(word);
@@ -198,34 +197,36 @@ public class FormatterForm {
                     finalBlocked.add(blockedWord);
                 }
 
-                blockedWords = finalBlocked;
-                config.set("BlackWords", blockedWords);
+                this.blockedWords = finalBlocked;
+                this.config.set("BlackWords", this.blockedWords);
             }
-            config.save();
+            this.config.save();
             p.sendMessage(MessageUtil.colorize("&aSaved changes"));
             this.mainForm.formLogger("&aPlayer&6 " + p.getName() + "&a edited&b " + form.getTitle());
             formatterSettings();
         });
 
         form.setNoneHandler(p -> formatterSettings());
-        form.send(player);
+        form.send(this.player);
     }
 
     private void mentionModal() {
+         /*
+           This is for Mention Sound function and it is still experimental
+         */
+
         final ModalForm form = new ModalForm("Mention admin settings");
 
         form.setContent("Open mention admin settings?\n")
                 .setPositiveButton("Yes")
                 .setNegativeButton("No");
 
-        if (!player.hasPermission(Permissions.ADMIN)) {
+        if (!this.player.hasPermission(Permissions.ADMIN)) {
             mentionForm();
             return;
         }
 
-        form.setNoneHandler(p -> {
-            this.mentionForm();
-        });
+        form.setNoneHandler(p -> this.mentionForm());
 
         form.setHandler((p, result) -> {
             if (result) {
@@ -235,7 +236,7 @@ public class FormatterForm {
                 this.mentionForm();
             }
         });
-        form.send(player);
+        form.send(this.player);
     }
 
     private void mentionAdminForm() {
@@ -244,44 +245,44 @@ public class FormatterForm {
          */
 
         final CustomForm form = new CustomForm("Mentions Admin Settings");
-        final boolean functionEnabled = playerMentionConfig.mentionSoundFunctionEnabled();
-        final int soundsValue = playerMentionConfig.getSoundsValue();
-        final List<SelectableElement> maxsounds = new ArrayList<>();
+        final boolean functionEnabled = this.playerMentionConfig.mentionSoundFunctionEnabled();
+        final int soundsValue = this.playerMentionConfig.getSoundsValue();
+        final List<SelectableElement> maxSounds = new ArrayList<>();
 
 
-        if (player.hasPermission(Permissions.ADMIN)) {
+        if (this.player.hasPermission(Permissions.ADMIN)) {
             form.addElement(MessageUtil.colorize("&4Admin Settings"))
-                    .addElement("mentionsound", new Toggle("Mention Sound Function", playerMentionConfig.mentionSoundFunctionEnabled()));
+                    .addElement("mentionsound", new Toggle("Mention Sound Function", this.playerMentionConfig.mentionSoundFunctionEnabled()));
             if (functionEnabled) {
                 for (int i = 1; i <= soundsValue + 100; i++) {
                     final SelectableElement element = new SelectableElement(String.valueOf(i), i);
-                    maxsounds.add(element);
+                    maxSounds.add(element);
                 }
-                form.addElement("maxsounds", new StepSlider("Sounds value", maxsounds, soundsValue - 1));
+                form.addElement("maxsounds", new StepSlider("Sounds value", maxSounds, soundsValue - 1));
             }
         }
 
         form.setHandler((p, response) -> {
             final boolean finalFunctionEnabled = response.getToggle("mentionsound").getValue();
-            if (player.hasPermission(Permissions.ADMIN)) {
+            if (this.player.hasPermission(Permissions.ADMIN)) {
                 if (finalFunctionEnabled != functionEnabled) {
-                    playerMentionConfig.setMentionSoundFunctionEnabled(finalFunctionEnabled);
+                    this.playerMentionConfig.setMentionSoundFunctionEnabled(finalFunctionEnabled);
                 }
                 if (functionEnabled) {
                     final SelectableElement sounds = response.getStepSlider("maxsounds").getValue();
                     if (sounds.getValue() != null && sounds.getValue(Integer.class) != soundsValue) {
-                        playerMentionConfig.setSoundsValue(sounds.getValue(Integer.class));
+                        this.playerMentionConfig.setSoundsValue(sounds.getValue(Integer.class));
                     }
                 }
             }
 
-            config.save();
+            this.config.save();
             p.sendMessage(MessageUtil.colorize("&aSaved changes"));
             this.mainForm.formLogger("&aPlayer&6 " + p.getName() + "&a edited&b " + form.getTitle());
             formatterSettings();
         });
         form.setNoneHandler(p -> formatterSettings());
-        form.send(player);
+        form.send(this.player);
     }
 
     private void mentionForm() {
@@ -290,12 +291,12 @@ public class FormatterForm {
          */
 
         final CustomForm form = new CustomForm("Mentions Settings");
-        final boolean functionEnabled = playerMentionConfig.mentionSoundFunctionEnabled();
-        final boolean playerEnabled = playerMentionConfig.hasEnabledMentions(this.player);
-        final boolean title = playerMentionConfig.hasEnabledTitle(this.player);
-        final int soundsValue = playerMentionConfig.getSoundsValue();
+        final boolean functionEnabled = this.playerMentionConfig.mentionSoundFunctionEnabled();
+        final boolean playerEnabled = this.playerMentionConfig.hasEnabledMentions(this.player);
+        final boolean title = this.playerMentionConfig.hasEnabledTitle(this.player);
+        final int soundsValue = this.playerMentionConfig.getSoundsValue();
         final List<SelectableElement> elements = new ArrayList<>();
-        final int currentSoundIndex = playerMentionConfig.getSoundIndex(playerMentionConfig.getMentionSound(this.player));
+        final int currentSoundIndex = this.playerMentionConfig.getSoundIndex(this.playerMentionConfig.getMentionSound(this.player));
 
         if (!functionEnabled) {
             this.player.sendMessage(MessageUtil.colorize("&cThis function disabled by Admin"));
@@ -311,8 +312,8 @@ public class FormatterForm {
                 counter++;
                 if (counter == soundsValue) {
                     if (currentSoundIndex > counter) {
-                        final SelectableElement currentSound = new SelectableElement(playerMentionConfig.getSoundByIndex(currentSoundIndex), counter);
-                        playerMentionConfig.setPlayerCustomIndex(this.player, counter);
+                        final SelectableElement currentSound = new SelectableElement(this.playerMentionConfig.getSoundByIndex(currentSoundIndex), counter);
+                        this.playerMentionConfig.setPlayerCustomIndex(this.player, counter);
                         elements.add(currentSound);
                     }
                     break;
@@ -326,8 +327,8 @@ public class FormatterForm {
         if (playerEnabled) {
             form.addElement(new Label(MessageUtil.colorize("&aEnable title info")))
                     .addElement("title_info_enable", new Toggle("Title info", title))
-                    .addElement(new Label(MessageUtil.colorize("&aYour mention sound: &b" + playerMentionConfig.getMentionSound(this.player))))
-                    .addElement("soundname", new Dropdown(MessageUtil.colorize("&aMention Sound"), elements, playerMentionConfig.getPlayerCustomIndex(this.player)))
+                    .addElement(new Label(MessageUtil.colorize("&aYour mention sound: &b" + this.playerMentionConfig.getMentionSound(this.player))))
+                    .addElement("soundname", new Dropdown(MessageUtil.colorize("&aMention Sound"), elements, this.playerMentionConfig.getPlayerCustomIndex(this.player)))
                     .addElement("customsound",
                             Input.builder()
                                     .setName(MessageUtil.colorize("&aAdd sound by index"))
@@ -337,16 +338,16 @@ public class FormatterForm {
         form.setHandler((p, response) -> {
             final boolean finalPlayerEnabled = response.getToggle("mentions_enable").getValue();
             if (finalPlayerEnabled != playerEnabled) {
-                playerMentionConfig.setEnabledMentions(this.player, finalPlayerEnabled);
+                this.playerMentionConfig.setEnabledMentions(this.player, finalPlayerEnabled);
             }
 
             if (playerEnabled) {
                 final boolean finalTitle = response.getToggle("title_info_enable").getValue();
                 final SelectableElement element = response.getDropdown("soundname").getValue();
-                playerMentionConfig.setEnabledTitle(this.player, finalTitle);
+                this.playerMentionConfig.setEnabledTitle(this.player, finalTitle);
                 if (element.getValue() != null) {
-                    if (element.getValue(Integer.class) != playerMentionConfig.getPlayerCustomIndex(this.player)) {
-                        playerMentionConfig.setMentionSound(this.player, playerMentionConfig.getSoundByIndex(element.getValue(Integer.class)));
+                    if (element.getValue(Integer.class) != this.playerMentionConfig.getPlayerCustomIndex(this.player)) {
+                        this.playerMentionConfig.setMentionSound(this.player, this.playerMentionConfig.getSoundByIndex(element.getValue(Integer.class)));
                     }
                 }
             }
@@ -356,16 +357,16 @@ public class FormatterForm {
                 int index;
                 try {
                     index = Integer.parseInt(customSound);
-                    playerMentionConfig.setMentionSound(this.player, playerMentionConfig.getSoundByIndex(index));
+                    this.playerMentionConfig.setMentionSound(this.player, this.playerMentionConfig.getSoundByIndex(index));
                 } catch (final NumberFormatException ex) {
-                    player.sendMessage(MessageUtil.colorize("&cIndex must be an integer"));
+                    this.player.sendMessage(MessageUtil.colorize("&cIndex must be an integer"));
                 }
             }
-            config.save();
+            this.config.save();
             p.sendMessage(MessageUtil.colorize("&aSaved changes"));
-            formatterSettings();
+            this.formatterSettings();
         });
-        form.setNoneHandler(p -> formatterSettings());
-        form.send(player);
+        form.setNoneHandler(p -> this.formatterSettings());
+        form.send(this.player);
     }
 }
