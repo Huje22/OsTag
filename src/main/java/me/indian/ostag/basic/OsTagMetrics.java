@@ -3,13 +3,16 @@ package me.indian.ostag.basic;
 import cn.nukkit.Server;
 import cn.nukkit.plugin.Plugin;
 import cn.nukkit.plugin.PluginLogger;
+import cn.nukkit.plugin.PluginManager;
 import cn.nukkit.utils.Config;
 import me.indian.ostag.OsTag;
 import me.indian.ostag.config.PlayerMentionConfig;
 import me.indian.ostag.util.MessageUtil;
 import me.indian.ostag.util.ThreadUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class OsTagMetrics {
@@ -18,6 +21,7 @@ public class OsTagMetrics {
     private final Server server;
     private final Config config;
     private final PlayerMentionConfig mentionConfig;
+    private final PluginManager pluginManager;
     private final PluginLogger logger;
     private final Metrics metrics;
     public boolean enabled;
@@ -28,6 +32,7 @@ public class OsTagMetrics {
         this.server = this.plugin.getServer();
         this.config = this.plugin.getConfig();
         this.mentionConfig = this.plugin.getPlayersMentionConfig();
+        this.pluginManager = this.server.getPluginManager();
         this.logger = this.plugin.getLogger();
         this.metrics = new Metrics(this.plugin);
         this.enabled = this.metrics.isEnabled();
@@ -56,6 +61,7 @@ public class OsTagMetrics {
     private void customMetrics() {
         this.metrics.addCustomChart(new Metrics.SimplePie("server_movement", () -> String.valueOf(this.plugin.serverMovement)));
         this.metrics.addCustomChart(new Metrics.SimplePie("nukkit_version", () -> server.getNukkitVersion() + " (MC: " + server.getVersion() + " Nukkit API: " + server.getApiVersion() + " Version " + this.plugin.getDescription().getVersion() + ")"));
+        this.addPluginWithVersionsInfo();
         this.metrics.addCustomChart(new Metrics.SimplePie("refresh_time", () -> {
             if (this.plugin.osTag) {
                 return this.plugin.getOsTimer().getRefreshTime() + " ticks";
@@ -191,6 +197,32 @@ public class OsTagMetrics {
                 }
             });
             return valueMap;
+        }));
+    }
+    
+    private void addPluginWithVersionsInfo() {
+        final List<String> plugins = new ArrayList<>();
+        plugins.add("LuckPerms");
+        plugins.add("FormConstructor");
+        plugins.add("PlaceholderAPI");
+        plugins.add("KotlinLib");
+
+        for (final String plg : plugins) {
+            this.sendPluginsData(plg);
+        }
+    }
+
+    private void sendPluginsData(final String pluginName) {
+        this.metrics.addCustomChart(new Metrics.DrilldownPie("plugins", () -> {
+            final Map<String, Map<String, Integer>> valmap = new HashMap<>();
+            final Map<String, Integer> assets = new HashMap<>();
+            final Plugin plg = this.pluginManager.getPlugin(pluginName);
+            if (plg != null) {
+                final String ver = plg.getDescription().getVersion();
+                assets.put(ver, 1);
+                valmap.put(pluginName, assets);
+            }
+            return valmap;
         }));
     }
 
