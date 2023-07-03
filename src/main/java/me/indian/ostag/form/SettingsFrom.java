@@ -41,7 +41,7 @@ public class SettingsFrom {
             form.addButton("Formatter", ImageType.PATH, "textures/ui/mute_off", (p, button) -> new FormatterForm(this.mainForm, this.config).formatterSettings());
         }
         if (plugin.cpsLimiter && this.player.hasPermission(Permissions.ADMIN)) {
-            form.addButton("CpsLimiter", ImageType.PATH, "textures/ui/keyboard_tooltip_background", (p, button) -> new CpsLimiterForm(this.mainForm, this.config).cpsLimiter());
+            form.addButton("CpsLimiter", ImageType.PATH, "textures/ui/cursor_gamecore", (p, button) -> new CpsLimiterForm(this.mainForm, this.config).cpsLimiter());
         }
         if (this.player.hasPermission(Permissions.ADMIN)) {
             form.addButton("Modules", ImageType.PATH, "textures/ui/servers", (p, button) -> modules());
