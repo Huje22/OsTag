@@ -159,7 +159,7 @@ public class FormatterForm {
         if (enabled) {
             form.addElement("censor",
                     Input.builder()
-                            .setName(MessageUtil.colorize("&aCensorShip message"))
+                            .setName(MessageUtil.colorize("&aCensorShip char"))
                             .setDefaultValue(this.config.getString("censorship.word"))
                             .build());
 
@@ -170,7 +170,6 @@ public class FormatterForm {
                                 .setName((i + 1) + ".")
                                 .setDefaultValue(this.blockedWords.get(i))
                                 .build());
-
             }
             form.addElement("blockword",
                     Input.builder()
