@@ -108,10 +108,12 @@ public class OsTag extends PluginBase {
         this.cpsLimit = this.getConfig().getBoolean("CpsLimiter", true);
         this.nametag = this.getConfig().getBoolean("NameTag", true);
         this.scoreTag = this.getConfig().getBoolean("ScoreTag", true);
-        if (!(nametag && scoreTag)) {
-            this.osTag = false;
-            if (this.debug) {
-                this.getLogger().info(MessageUtil.colorize(publicDebugPrefix + "&8[&dMain&8] " + "&bWe disable the&a ostag&b module because&a scoretag&b and&a nametag&b are disabled "));
+        if (this.osTag) {
+            if (!(nametag && scoreTag)) {
+                this.osTag = false;
+                if (this.debug) {
+                    this.getLogger().info(MessageUtil.colorize(publicDebugPrefix + "&8[&dMain&8] " + "&bWe disable the&a ostag&b module because&a scoretag&b and&a nametag&b are disabled "));
+                }
             }
         }
     }
