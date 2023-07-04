@@ -229,7 +229,7 @@ __New things__: <br/>
 Info how many kb have been downloaded on the download percentage (Since 1.5.7.1)  <br/>
 Remove `ReplaceUtil` and add replace method in `PlayerInfoUtil` (Since 1.5.7.1)  <br/>
 Disabling the entire "Ostag" module when "scoretag" and "nametag" are disabled (Since 1.5.7.1)  <br/>
-Added more metrics (Since 1.5.7.2 - 1.5.7.3)  <br/>
+Added more metrics (Since 1.5.7)  <br/>
 Added finally working tab command completion (Since 1.5.7.2)  <br/>
 Added better config , now scoretag is as a list (Since 1.5.7.3)  <br/>
 Added `/ostag menu` to manage some things using the GUI (Since 1.5.7.3)  <br/>
