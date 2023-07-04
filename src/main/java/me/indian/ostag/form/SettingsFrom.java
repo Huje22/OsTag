@@ -40,8 +40,8 @@ public class SettingsFrom {
         if (plugin.chatFormatter) {
             form.addButton("Formatter", ImageType.PATH, "textures/ui/mute_off", (p, button) -> new FormatterForm(this.mainForm, this.config).formatterSettings());
         }
-        if (plugin.cpsLimiter && this.player.hasPermission(Permissions.ADMIN)) {
-            form.addButton("CpsLimiter", ImageType.PATH, "textures/ui/cursor_gamecore", (p, button) -> new CpsLimiterForm(this.mainForm, this.config).cpsLimiter());
+        if (plugin.cpsLimit && this.player.hasPermission(Permissions.ADMIN)) {
+            form.addButton("CpsLimiter", ImageType.PATH, "textures/ui/cursor_gamecore", (p, button) -> new CpsLimiterForm(this.plugin, this.mainForm).cpsLimiter());
         }
         if (this.player.hasPermission(Permissions.ADMIN)) {
             form.addButton("Modules", ImageType.PATH, "textures/ui/servers", (p, button) -> modules());
@@ -60,12 +60,11 @@ public class SettingsFrom {
                 .addElement("formsdebug", new Toggle("Forms debug", this.config.getBoolean("FormsDebug")));
 
 
-
         form.addElement(new Label(MessageUtil.colorize("&c&lThis booleans needed restart server to reload!")))
                 .addElement("update", new Toggle("Update checker", plugin.upDatechecker))
                 .addElement("ostag", new Toggle("Ostag", plugin.osTag))
                 .addElement("formatter", new Toggle("ChatFormatter", plugin.chatFormatter))
-                .addElement("cpslimiter", new Toggle("CpsLimiter", plugin.cpsLimiter))
+                .addElement("cpslimiter", new Toggle("CpsLimiter", plugin.cpsLimit))
                 .addElement("debug", new Toggle("Debug", plugin.debug))
                 .addElement("movement", new Toggle("Server movement", plugin.serverMovement));
 

@@ -27,7 +27,7 @@ public class StatusUtil {
 
     public static String getCpsLimiterStatus() {
         String limiter = fal;
-        if (plugin.cpsLimiter) {
+        if (plugin.cpsLimit) {
             limiter = tru;
         }
         return limiter;

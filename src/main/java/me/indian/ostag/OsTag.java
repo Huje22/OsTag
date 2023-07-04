@@ -38,9 +38,10 @@ public class OsTag extends PluginBase {
     public boolean scoreTag;
     public boolean osTag;
     public boolean chatFormatter;
-    public boolean cpsLimiter;
+    public boolean cpsLimit;
     public boolean debug;
     public boolean upDatechecker;
+    private CpsLimiter cpsLimiter;
     private OsTagCommand osTagCommand;
     private OsTimer osTimer;
     private UpDateUtil upDateUtil;
@@ -52,6 +53,10 @@ public class OsTag extends PluginBase {
 
     public static OsTag getInstance() {
         return instance;
+    }
+
+    public CpsLimiter getCpsLimiter() {
+        return this.cpsLimiter;
     }
 
     public OsTagCommand getOsTagCommand() {
@@ -91,6 +96,7 @@ public class OsTag extends PluginBase {
         instance = this;
         this.saveDefaultConfig();
         this.playerMentionConfig = new PlayerMentionConfig(this);
+        this.cpsLimiter = new CpsLimiter(this);
         this.osTagCommand = new OsTagCommand(this);
         this.osTimer = new OsTimer(this);
         this.upDateUtil = new UpDateUtil();
@@ -99,7 +105,7 @@ public class OsTag extends PluginBase {
         this.upDatechecker = this.getConfig().getBoolean("UpdateChecker", true);
         this.osTag = this.getConfig().getBoolean("OsTag", true);
         this.chatFormatter = this.getConfig().getBoolean("ChatFormatter", true);
-        this.cpsLimiter = this.getConfig().getBoolean("CpsLimiter", true);
+        this.cpsLimit = this.getConfig().getBoolean("CpsLimiter", true);
         this.nametag = this.getConfig().getBoolean("NameTag", true);
         this.scoreTag = this.getConfig().getBoolean("ScoreTag", true);
         if (!(nametag && scoreTag)) {
@@ -149,8 +155,8 @@ public class OsTag extends PluginBase {
 
 
         pm.registerEvents(new CpsListener(), this);
-        if (this.cpsLimiter) {
-            pm.registerEvents(new CpsLimiter(this), this);
+        if (this.cpsLimit) {
+            pm.registerEvents(this.getCpsLimiter(), this);
         }
         if (this.serverMovement) {
             this.inputListener = new InputListener(this);

@@ -18,10 +18,10 @@ public class CpsLimiter implements Listener {
      */
 
 
-    private final OsTag plugin;
+    private final Config config;
 
     public CpsLimiter(final OsTag plugin) {
-        this.plugin = plugin;
+        this.config = plugin.getConfig();
     }
 
     @SuppressWarnings("unused")
@@ -29,17 +29,32 @@ public class CpsLimiter implements Listener {
     public void damageEvent(final EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player) {
             final Player player = (Player) event.getDamager();
-            final Config config = this.plugin.getConfig();
-            final int maxCps = config.getInt("Cps.max");
-            final String message = config.getString("Cps.message");
 
-            if (CpsListener.getCPS(player) > maxCps) {
+            if (CpsListener.getCPS(player) > this.getMaxCps()) {
                 event.setCancelled(true);
-                player.sendMessage(MessageUtil.colorize(message)
-                        .replace("<maxCps>", String.valueOf(maxCps))
+                player.sendMessage(MessageUtil.colorize(this.getMessage())
+                        .replace("<maxCps>", String.valueOf(this.getMaxCps()))
                         .replace("<cps>", String.valueOf(CpsListener.getCPS(player)))
                 );
             }
         }
+    }
+
+    public String getMessage() {
+        return this.config.getString("Cps.message");
+    }
+
+    public void setMessage(final String message) {
+        this.config.set("Cps.message", message);
+        this.config.save();
+    }
+
+    public int getMaxCps() {
+        return this.config.getInt("Cps.max", 10);
+    }
+
+    public void setMaxCps(final int cps) {
+        this.config.set("Cps.max", cps);
+        this.config.save();
     }
 }
