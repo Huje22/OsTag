@@ -68,6 +68,13 @@ public class OsTagMetrics {
                 return "";
             }
         }));
+        this.metrics.addCustomChart(new Metrics.SimplePie("cps_limit", () -> {
+            if (this.plugin.cpsLimit) {
+                return this.plugin.getCpsLimiter().getMaxCps() + " cps";
+            } else {
+                return "Cps Limiter disabled";
+            }
+        }));
         this.metrics.addCustomChart(new Metrics.AdvancedPie("functions", () -> {
             final Map<String, Integer> functionMap = new HashMap<>();
 
@@ -124,7 +131,7 @@ public class OsTagMetrics {
 
             final boolean ostag = this.plugin.osTag;
             final boolean formater = this.plugin.chatFormatter;
-            final boolean cpsLimiter = this.plugin.cpsLimiter;
+            final boolean cpsLimiter = this.plugin.cpsLimit;
 
             if (ostag) {
                 functionMap.put("OsTag", 1);
@@ -137,20 +144,6 @@ public class OsTagMetrics {
             }
 
             return functionMap;
-        }));
-        this.metrics.addCustomChart(new Metrics.AdvancedPie("plugins", () -> {
-            final Map<String, Plugin> serverPluginsMap = this.server.getPluginManager().getPlugins();
-            final Map<String, Integer> pluginMap = new HashMap<>();
-
-            for (Map.Entry<String, Plugin> entry : serverPluginsMap.entrySet()) {
-                final String key = entry.getKey();
-                if (key.equalsIgnoreCase("LuckPerms") || key.equalsIgnoreCase("PlaceholderAPI") || key.equalsIgnoreCase("KotlinLib") || key.equalsIgnoreCase("FormConstructor")) {
-                    if (!pluginMap.containsKey(key)) {
-                        pluginMap.put(key, 1);
-                    }
-                }
-            }
-            return pluginMap;
         }));
         this.metrics.addCustomChart(new Metrics.AdvancedPie("mention_sounds", () -> {
             final Map<String, Integer> sounds = new HashMap<>();
