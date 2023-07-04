@@ -61,7 +61,6 @@ public class OsTagMetrics {
     private void customMetrics() {
         this.metrics.addCustomChart(new Metrics.SimplePie("server_movement", () -> String.valueOf(this.plugin.serverMovement)));
         this.metrics.addCustomChart(new Metrics.SimplePie("nukkit_version", () -> server.getNukkitVersion() + " (MC: " + server.getVersion() + " Nukkit API: " + server.getApiVersion() + " Version " + this.plugin.getDescription().getVersion() + ")"));
-        this.addPluginWithVersionsInfo();
         this.metrics.addCustomChart(new Metrics.SimplePie("refresh_time", () -> {
             if (this.plugin.osTag) {
                 return this.plugin.getOsTimer().getRefreshTime() + " ticks";
@@ -198,6 +197,10 @@ public class OsTagMetrics {
             });
             return valueMap;
         }));
+
+        // Plugins 
+
+        this.addPluginWithVersionsInfo();
     }
     
     private void addPluginWithVersionsInfo() {
