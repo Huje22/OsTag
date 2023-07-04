@@ -220,11 +220,11 @@ public class FormatterForm {
                 .setPositiveButton("Yes")
                 .setNegativeButton("No");
 
-        if (!this.player.hasPermission(Permissions.ADMIN) ) {
+        if (!this.player.hasPermission(Permissions.ADMIN)) {
             this.mentionForm();
             return;
         }
-        if (!this.playerMentionConfig.mentionSoundFunctionEnabled() ) {
+        if (!this.playerMentionConfig.mentionSoundFunctionEnabled()) {
             this.mentionAdminForm();
             return;
         }
@@ -331,6 +331,7 @@ public class FormatterForm {
                     .addElement("title_info_enable", new Toggle("Title info", title))
                     .addElement(new Label(MessageUtil.colorize("&aYour mention sound: &b" + this.playerMentionConfig.getMentionSound(this.player))))
                     .addElement("soundname", new Dropdown(MessageUtil.colorize("&aMention Sound"), elements, this.playerMentionConfig.getPlayerCustomIndex(this.player)))
+                    .addElement("indexes", new Toggle("Show Indexes", false))
                     .addElement("customsound",
                             Input.builder()
                                     .setName(MessageUtil.colorize("&aAdd sound by index"))
@@ -352,16 +353,19 @@ public class FormatterForm {
                         this.playerMentionConfig.setMentionSound(this.player, this.playerMentionConfig.getSoundByIndex(element.getValue(Integer.class)));
                     }
                 }
-            }
 
-            final String customSound = response.getInput("customsound").getValue();
-            if (customSound != null) {
-                int index;
-                try {
-                    index = Integer.parseInt(customSound);
-                    this.playerMentionConfig.setMentionSound(this.player, this.playerMentionConfig.getSoundByIndex(index));
-                } catch (final NumberFormatException ex) {
-                    this.player.sendMessage(MessageUtil.colorize("&cIndex must be an integer"));
+                final String customSound = response.getInput("customsound").getValue();
+                if (customSound != null) {
+                    int index;
+                    try {
+                        index = Integer.parseInt(customSound);
+                        this.playerMentionConfig.setMentionSound(this.player, this.playerMentionConfig.getSoundByIndex(index));
+                    } catch (final NumberFormatException ex) {
+                        this.player.sendMessage(MessageUtil.colorize("&cIndex must be an integer"));
+                    }
+                }
+                if (response.getToggle("indexes").getValue()) {
+                    this.customIndexes();
                 }
             }
             this.config.save();
@@ -370,5 +374,25 @@ public class FormatterForm {
         });
         form.setNoneHandler(p -> this.formatterSettings());
         form.send(this.player);
+    }
+
+
+    public void customIndexes() {
+        final SimpleForm form = new SimpleForm("All sound indexes");
+
+        for (final Sound sound : Sound.values()) {
+            final String name = sound.name();
+            final int index = this.playerMentionConfig.getSoundIndex(name);
+
+            if (this.playerMentionConfig.getMentionSound(player).equalsIgnoreCase(name)) {
+                form.addContent(MessageUtil.colorize("&b" + index + " &6" + name + " &d(&bYour&d)\n"));
+            } else {
+                form.addContent(MessageUtil.colorize("&b" + index + " &a" + name+ "\n"));
+            }
+        }
+
+        this.mainForm.addCloseButton(form);
+        form.setNoneHandler((p) -> this.mentionForm());
+        form.send(player);
     }
 }
