@@ -39,8 +39,9 @@ look [Contributing wiki page](https://github.com/OpenPlugins-Minecraft/OsTag/wik
 
 * OsTag (name and scoretag)
 * Chat formating (with luckperms plugin support)
+* Cps Limiter 
 * Many placeholders and PlaceholderAPI support
-* Easy to configure
+* Easy to configure 
 * AutoUpdate and Update checker
 * and many more...
 
