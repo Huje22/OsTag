@@ -207,11 +207,13 @@ public class OsTagMetrics {
             this.sendPluginsData(plg);
         }
 
-//      Maybe someday it will be used xD
-//        final  Map<String , Plugin> plugins = this.server.getPluginManager().getPlugins();
-//        for(Map.Entry<String , Plugin> entry : plugins.entrySet()){
-//            this.sendPluginsData(entry.getKey());
-//        }
+/*
+      Maybe someday it will be used xD
+        final  Map<String , Plugin> plugins = this.server.getPluginManager().getPlugins();
+        for(Map.Entry<String , Plugin> entry : plugins.entrySet()){
+            this.sendPluginsData(entry.getKey());
+        }
+*/
     }
 
     private void sendPluginsData(final String pluginName) {
