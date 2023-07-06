@@ -71,7 +71,6 @@ public class PlayerMentionConfig {
         this.playersConfig.set(playerName + ".title", true);
         this.playersConfig.set(playerName + ".sound", defaultSound);
         this.playersConfig.set(playerName + ".custom-index", defaultCustomIndex);
-        System.out.println("Created " + playerName);
         this.playersConfig.save();
     }
 
