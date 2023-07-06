@@ -35,18 +35,6 @@ public class Form {
     }
 
     public void runOstagFrom() {
-        if (!plugin.formConstructor) {
-            if (player.isOp()) {
-                player.sendMessage(MessageUtil.colorize("&cYou don't have &bFormConstructor&c plugin !"));
-                player.sendMessage(MessageUtil.colorize("&cthis is required for&b Mention Sound&c to work! !"));
-                player.sendMessage(MessageUtil.colorize("&cDownload it from here&b https://github.com/OpenPlugins-Minecraft/OsTag/tree/main/libs!"));
-            } else {
-                player.sendMessage(MessageUtil.colorize("&cYThis server don't have &bFormConstructor&b plugin !"));
-                player.sendMessage(MessageUtil.colorize("&cthis is required for&b Mention Sound&c to work! !"));
-            }
-            return;
-        }
-
         final SimpleForm form = new SimpleForm(MessageUtil.colorize("&bOsTag &fMenu"));
 
         form.setContent(MessageUtil.colorize("&aJoin our discord\n"))

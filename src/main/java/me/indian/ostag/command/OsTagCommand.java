@@ -65,6 +65,17 @@ public class OsTagCommand extends Command {
         if (args[0].equalsIgnoreCase("menu")) {
             if (sender instanceof Player) {
                 final Player player = (Player) sender;
+                if (!plugin.formConstructor) {
+                    if (player.isOp()) {
+                        player.sendMessage(MessageUtil.colorize("&cYou don't have &bFormConstructor&c plugin !"));
+                        player.sendMessage(MessageUtil.colorize("&cthis is required for&b Mention Sound&c to work! !"));
+                        player.sendMessage(MessageUtil.colorize("&cDownload it from here&b https://github.com/OpenPlugins-Minecraft/OsTag/tree/main/libs!"));
+                    } else {
+                        player.sendMessage(MessageUtil.colorize("&cYThis server don't have &bFormConstructor&b plugin !"));
+                        player.sendMessage(MessageUtil.colorize("&cthis is required for&b Mention Sound&c to work! !"));
+                    }
+                    return false;
+                }
                 new Form(player).runOstagFrom();
             } else {
                 sender.sendMessage(MessageUtil.colorize("&cThis command only is for a player!"));
