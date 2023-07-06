@@ -44,4 +44,16 @@ public class TagAddUtil {
             player.setScoreTag(PlayerInfoUtil.replaceAllInfo(player, aSubTag));
         }
     }
+
+    public static void resetTag(final Player player) {
+        plugin.getLogger().info(MessageUtil.colorize("&aResting tag for&6 " + player.getName() + "&a.."));
+        if (plugin.nametag) {
+            player.setNameTag(PlayerInfoUtil.replaceAllInfo(player, player.getDisplayName()));
+            plugin.getLogger().info(MessageUtil.colorize("&aSeted &bNameTag&a to default for&6 " + player.getName() + "&a.."));
+        }
+        if (plugin.scoreTag) {
+            player.setScoreTag(PlayerInfoUtil.replaceAllInfo(player, ""));
+            plugin.getLogger().info(MessageUtil.colorize("&aSeted &bScoreTag&a to none for&6 " + player.getName() + "&a.."));
+        }
+    }
 }

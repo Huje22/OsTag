@@ -1,5 +1,6 @@
 package me.indian.ostag;
 
+import cn.nukkit.Player;
 import cn.nukkit.command.CommandMap;
 import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.plugin.PluginManager;
@@ -21,6 +22,7 @@ import me.indian.ostag.util.MessageUtil;
 import me.indian.ostag.util.OsTimerStatus;
 import me.indian.ostag.util.PlayerInfoUtil;
 import me.indian.ostag.util.PluginInfoUtil;
+import me.indian.ostag.util.TagAddUtil;
 import me.indian.ostag.util.UpDateUtil;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
@@ -189,8 +191,15 @@ public class OsTag extends PluginBase {
         this.getLogger().info(MessageUtil.colorize("&aStarted in &b" + executionTimeInSeconds + " &aseconds"));
     }
 
+    @Override
+    public void onDisable() {
+        for (final Player all : this.getServer().getOnlinePlayers().values()) {
+            TagAddUtil.resetTag(all);
+        }
+    }
+
     private void onEnableInfo() {
-        final PluginInfoUtil infoUtil = new PluginInfoUtil(this.getServer().getConsoleSender() , true);
+        final PluginInfoUtil infoUtil = new PluginInfoUtil(this.getServer().getConsoleSender(), true);
 
         for (final String s : infoUtil.getAdminInfo()) {
             this.getLogger().info(MessageUtil.colorize(s));
