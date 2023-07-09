@@ -22,9 +22,9 @@ public class MsgCommand extends Command {
     private final static Map<String, String> lastPlayer = new HashMap<>();
 
     public MsgCommand(final OsTag plugin) {
-        super("msg", " Ostag msg", "bad usage bro", new String[]{"w", "omsg"});
-
-        commandParameters.clear();
+        super("msg", " Ostag msg");
+        this.setAliases(new String[]{"w", "omsg"});
+        this.commandParameters.clear();
         this.commandParameters.put("default", new CommandParameter[]{
                 CommandParameter.newType("player", false, CommandParamType.TARGET),
                 CommandParameter.newType("message", false, CommandParamType.TEXT)
@@ -35,23 +35,29 @@ public class MsgCommand extends Command {
         this.playerSettingsConfig = this.plugin.getPlayersMentionConfig();
     }
 
+    public static String getLastMsgPlayer(final Player player) {
+        return lastPlayer.get(player.getName()) != null ? lastPlayer.get(player.getName()) : "null";
+    }
+
     @Override
     public boolean execute(final CommandSender sender, final String s, final String[] args) {
-        if (sender instanceof Player) {
-            if (!this.playerSettingsConfig.hasEnabledMsg((Player) sender)) {
-                sender.sendMessage(MessageUtil.colorize(this.config.getString("Msg.you-disabled")));
-                return false;
-            }
+        if (sender instanceof Player && !this.playerSettingsConfig.hasEnabledMsg((Player) sender)) {
+            sender.sendMessage(MessageUtil.colorize(this.config.getString("Msg.you-disabled")));
+            return false;
         }
         final Player recipient = this.plugin.getServer().getPlayer(args[0]);
         if (recipient != null) {
             if (!this.playerSettingsConfig.hasEnabledMsg(recipient)) {
                 sender.sendMessage(MessageUtil.colorize(this.config.getString("Msg.has-disabled").replace("<player>", args[0])));
-                return false;
+                return true;
             }
 
-            if (!Objects.equals(lastPlayer.get(sender.getName()), recipient.getName()))
+            if (!Objects.equals(lastPlayer.get(sender.getName()), recipient.getName())) {
                 lastPlayer.put(sender.getName(), recipient.getName());
+            }
+            if (!Objects.equals(lastPlayer.get(recipient.getName()), sender.getName())) {
+                lastPlayer.put(recipient.getName(), sender.getName());
+            }
 
             final String message = MessageUtil.buildMessageFromArgs(args, args[0]);
             final String messageToPlayer = MessageUtil.colorize(this.config.getString("Msg.to-player")
@@ -71,7 +77,7 @@ public class MsgCommand extends Command {
         } else {
             sender.sendMessage(MessageUtil.colorize(this.config.getString("Msg.null-recipient").replace("<player>", args[0])));
         }
-        return false;
+        return true;
     }
 
     private void sendToAdmins(final String msg, final CommandSender sender, final Player recipient) {

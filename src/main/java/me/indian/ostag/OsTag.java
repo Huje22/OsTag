@@ -8,6 +8,7 @@ import com.creeperface.nukkit.placeholderapi.api.PlaceholderAPI;
 import me.indian.ostag.basic.OsTagMetrics;
 import me.indian.ostag.command.MsgCommand;
 import me.indian.ostag.command.OsTagCommand;
+import me.indian.ostag.command.ReplyCommand;
 import me.indian.ostag.command.TestttCommand;
 import me.indian.ostag.config.PlayerSettingsConfig;
 import me.indian.ostag.listener.CpsLimiter;
@@ -162,6 +163,7 @@ public class OsTag extends PluginBase {
 
         if(this.msg) {
             commandMap.register("OsTag", new MsgCommand(this));
+            commandMap.register("OsTag", new ReplyCommand(this));
         }
 
         pm.registerEvents(new CpsListener(), this);

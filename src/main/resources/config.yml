@@ -139,6 +139,7 @@ MentionSound: true
 Msg:
   enabled: true
   console-logs: true
+  no-one: "&cYou have no one to answer"
   null-recipient: "&cCan't find &6<player>"
   you-disabled: "&cYou have disabled private messages!"
   has-disabled: "&&6<player> &chave disabled private messages!"

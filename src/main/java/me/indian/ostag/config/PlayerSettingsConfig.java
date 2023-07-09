@@ -15,6 +15,9 @@ import java.util.LinkedHashMap;
 
 public class PlayerSettingsConfig {
 
+
+    private final String mentionKey;
+    private final String msgKey;
     private final Config defaulConfig;
     private final Config playersConfig;
     private final String defaultSound;
@@ -43,8 +46,15 @@ public class PlayerSettingsConfig {
         defaultMap.put("SubTitle", "&6<player>&a mentioned you in chat");
         defaultMap.put("Sounds", 100);
 
+        //confi keyse
+        this.mentionKey = ".Mention";
+        this.msgKey = ".Msg";
+
+        //config defaults and save
         this.playersConfig.setDefault(defaultMap);
         this.playersConfig.save();
+
+        //defaults
         this.defaultSound = "BLOCK_SCAFFOLDING_BREAK";
         this.defaultCustomIndex = 100;
         this.defaultMsg = true;
@@ -57,12 +67,16 @@ public class PlayerSettingsConfig {
     public void createPlayerSection(final Player player) {
         if (this.hasPlayer(player)) return;
         final String playerName = player.getName();
-        this.playersConfig.set(playerName + ".Mention.enabled", true);
-        this.playersConfig.set(playerName + ".Mention.title", true);
-        this.playersConfig.set(playerName + ".Mention.sound", defaultSound);
-        this.playersConfig.set(playerName + ".Mention.custom-index", defaultCustomIndex);
-        this.playersConfig.set(playerName + ".Msg.enabled", defaultMsg);
-        this.playersConfig.set(playerName + ".Msg.private.enabled", defaultMsg);
+        //mention sound
+        this.playersConfig.set(playerName + mentionKey + ".enabled", true);
+        this.playersConfig.set(playerName + mentionKey + ".title", true);
+        this.playersConfig.set(playerName + mentionKey + ".sound", defaultSound);
+        this.playersConfig.set(playerName + mentionKey + ".custom-index", defaultCustomIndex);
+        //msg
+        this.playersConfig.set(playerName + msgKey + ".enabled", defaultMsg);
+        this.playersConfig.set(playerName + msgKey + ".private.enabled", defaultMsg);
+
+        //save config
         this.playersConfig.save();
     }
 
@@ -71,11 +85,11 @@ public class PlayerSettingsConfig {
      */
 
     public boolean hasEnabledMsg(final Player player) {
-        return this.playersConfig.getBoolean(player.getName() + "Msg.enabled", defaultMsg);
+        return this.playersConfig.getBoolean(player.getName() + msgKey + ".enabled", defaultMsg);
     }
 
     public void setEnabledMsg(final Player player, final boolean enabled) {
-        this.playersConfig.set(player.getName() + "Msg.enabled", enabled);
+        this.playersConfig.set(player.getName() + msgKey + ".enabled", enabled);
         this.playersConfig.save();
     }
 
@@ -83,11 +97,11 @@ public class PlayerSettingsConfig {
         if (!player.hasPermission(Permissions.ADMIN)) {
             return false;
         }
-        return this.playersConfig.getBoolean(player.getName() + "Msg.private.enabled", defaultMsg);
+        return this.playersConfig.getBoolean(player.getName() + msgKey + ".private.enabled", defaultMsg);
     }
 
     public void setEnabledPrivateMsg(final Player player, final boolean enabled) {
-        this.playersConfig.set(player.getName() + "Msg.private.enabled", enabled);
+        this.playersConfig.set(player.getName() + msgKey + ".private.enabled", enabled);
         this.playersConfig.save();
     }
 
@@ -106,38 +120,38 @@ public class PlayerSettingsConfig {
     }
 
     public boolean hasEnabledMentions(final Player player) {
-        return this.playersConfig.getBoolean(player.getName() + ".Mention.enabled", true);
+        return this.playersConfig.getBoolean(player.getName() + mentionKey + ".enabled", true);
     }
 
     public void setEnabledMentions(final Player player, final boolean enabled) {
-        this.playersConfig.set(player.getName() + ".Mention.enabled", enabled);
+        this.playersConfig.set(player.getName() + mentionKey + ".enabled", enabled);
         this.playersConfig.save();
     }
 
     public String getMentionSound(final Player player) {
-        return this.playersConfig.getString(player.getName() + ".Mention.sound", defaultSound);
+        return this.playersConfig.getString(player.getName() + mentionKey + ".sound", defaultSound);
     }
 
     public void setMentionSound(final Player player, final String sound) {
-        this.playersConfig.set(player.getName() + ".Mention.sound", sound);
+        this.playersConfig.set(player.getName() + mentionKey + ".sound", sound);
         this.playersConfig.save();
     }
 
     public int getPlayerCustomIndex(final Player player){
-        return this.playersConfig.getInt(player.getName() + ".Mention.custom-index", defaultCustomIndex);
+        return this.playersConfig.getInt(player.getName() + mentionKey + ".custom-index", defaultCustomIndex);
     }
 
     public void setPlayerCustomIndex(final Player player, final int index) {
-        this.playersConfig.set(player.getName() + ".Mention.custom-index", index);
+        this.playersConfig.set(player.getName() + mentionKey + ".custom-index", index);
         this.playersConfig.save();
     }
 
     public boolean hasEnabledTitle(final Player player) {
-        return this.playersConfig.getBoolean(player.getName() + ".Mention.title", true);
+        return this.playersConfig.getBoolean(player.getName() + mentionKey + ".title", true);
     }
 
     public void setEnabledTitle(final Player player, final boolean enabled) {
-        this.playersConfig.set(player.getName() + ".Mention.title", enabled);
+        this.playersConfig.set(player.getName() + mentionKey + ".title", enabled);
         this.playersConfig.save();
     }
 
