@@ -66,7 +66,8 @@ public class SettingsFrom {
                 .addElement("formatter", new Toggle("ChatFormatter", plugin.chatFormatter))
                 .addElement("cpslimiter", new Toggle("CpsLimiter", plugin.cpsLimit))
                 .addElement("debug", new Toggle("Debug", plugin.debug))
-                .addElement("movement", new Toggle("Server movement", plugin.serverMovement));
+                .addElement("movement", new Toggle("Server movement", plugin.serverMovement))
+                .addElement("msg", new Toggle("Private messages", plugin.msg));
 
 
         form.setHandler((p, response) -> {
@@ -83,6 +84,7 @@ public class SettingsFrom {
             config.set("CpsLimiter", response.getToggle("cpslimiter").getValue());
             config.set("Debug", response.getToggle("debug").getValue());
             config.set("Movement-server", response.getToggle("movement").getValue());
+            config.set("Msg.enabled", response.getToggle("msg").getValue());
 
             config.save();
             p.sendMessage(MessageUtil.colorize("&aThis changes may need restart server"));

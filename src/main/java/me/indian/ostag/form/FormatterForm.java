@@ -23,6 +23,7 @@ import java.util.List;
 
 public class FormatterForm {
 
+    private final OsTag plugin;
     private final Form mainForm;
     private final Config config;
     private final Player player;
@@ -30,12 +31,12 @@ public class FormatterForm {
     private final PlayerSettingsConfig playerSettingsConfig;
 
     public FormatterForm(final Form mainForm, final Config config) {
+        this.plugin = OsTag.getInstance();
         this.mainForm = mainForm;
-        final OsTag plugin = OsTag.getInstance();
         this.config = config;
         this.player = this.mainForm.getFormPlayer();
         this.blockedWords = config.getStringList("BlackWords");
-        this.playerSettingsConfig = plugin.getPlayersMentionConfig();
+        this.playerSettingsConfig = this.plugin.getPlayersMentionConfig();
     }
 
     public void formatterSettings() {
@@ -44,7 +45,8 @@ public class FormatterForm {
         if (this.player.hasPermission(Permissions.ADMIN)) {
             form.addButton("Chat Format", ImageType.PATH, "textures/ui/editIcon", (p, button) -> this.messageFormat());
         }
-        form.addButton("Mention", ImageType.PATH, "textures/ui/icon_bell", (p, button) -> this.mentionModal());
+        form.addButton("Mention", ImageType.PATH, "textures/ui/icon_bell", (p, button) -> this.mentionModal())
+                .addButton("Private messages", ImageType.PATH, "textures/ui/chat_send", (p, button) -> this.msgModal());
         if (this.player.hasPermission(Permissions.ADMIN)) {
             form.addButton("Cooldown", ImageType.PATH, "textures/ui/timer", (p, button) -> this.cooldown())
                     .addButton("Censorship", ImageType.PATH, "textures/ui/mute_on", (p, button) -> this.censorShip());
@@ -209,6 +211,130 @@ public class FormatterForm {
         form.send(this.player);
     }
 
+    private void msgModal() {
+        final ModalForm form = new ModalForm("Private messages admin settings");
+
+        form.setContent("Open msg admin settings?\n")
+                .setPositiveButton("Yes")
+                .setNegativeButton("No");
+
+        if (!this.player.hasPermission(Permissions.ADMIN)) {
+            this.msgNormal();
+            return;
+        }
+        if (!this.plugin.msg) {
+            this.mentionAdminForm();
+            return;
+        }
+
+        form.setNoneHandler(p -> this.formatterSettings());
+
+        form.setHandler((p, result) -> {
+            if (result) {
+                this.msgAdmin();
+            } else {
+                this.msgNormal();
+            }
+        });
+        form.send(this.player);
+    }
+
+    private void msgAdmin() {
+        final CustomForm form = new CustomForm("Private messages admin Settings");
+
+        form.addElement(new Label(MessageUtil.colorize("&aEnable cooldown")))
+                .addElement("console_logs", new Toggle("Console logs", this.config.getBoolean("Msg.console-logs")));
+
+        form.addElement("no-one",
+                        Input.builder()
+                                .setName(MessageUtil.colorize("&aNo one message"))
+                                .setDefaultValue(this.config.getString("Msg.no-one"))
+                                .build())
+                .addElement("null",
+                        Input.builder()
+                                .setName(MessageUtil.colorize("&aNull Recipitent"))
+                                .setDefaultValue(this.config.getString("Msg.null-recipient"))
+                                .build())
+                .addElement("cant-msg",
+                        Input.builder()
+                                .setName(MessageUtil.colorize("&aCant message"))
+                                .setDefaultValue(this.config.getString("Msg.cant-msg"))
+                                .build())
+                .addElement("ignored",
+                        Input.builder()
+                                .setName(MessageUtil.colorize("&aIgnored message"))
+                                .setDefaultValue(this.config.getString("Msg.ignored"))
+                                .build())
+                .addElement("un-ignored",
+                        Input.builder()
+                                .setName(MessageUtil.colorize("&aUnIgnored message"))
+                                .setDefaultValue(this.config.getString("Msg.un-ignored"))
+                                .build())
+                .addElement("you-disabled",
+                        Input.builder()
+                                .setName(MessageUtil.colorize("&aYou has disabled message"))
+                                .setDefaultValue(this.config.getString("Msg.you-disabled"))
+                                .build())
+                .addElement("has-disabled",
+                        Input.builder()
+                                .setName(MessageUtil.colorize("&aHim has disabled message"))
+                                .setDefaultValue(this.config.getString("Msg.has-disabled"))
+                                .build())
+                .addElement("to-player",
+                        Input.builder()
+                                .setName(MessageUtil.colorize("&aTo player prefix"))
+                                .setDefaultValue(this.config.getString("Msg.to-player"))
+                                .build())
+
+                .addElement("from-player",
+                        Input.builder()
+                                .setName(MessageUtil.colorize("&aFrom player prefix"))
+                                .setDefaultValue(this.config.getString("Msg.from-player"))
+                                .build());
+
+
+        form.setHandler((p, response) -> {
+            this.config.set("Msg.console-logs", response.getToggle("console_logs").getValue());
+
+            this.config.set("Msg.no-one", response.getInput("no-one").getValue());
+            this.config.set("Msg.null-recipient", response.getInput("null").getValue());
+            this.config.set("Msg.cant-msg", response.getInput("cant-msg").getValue());
+            this.config.set("Msg.ignored", response.getInput("ignored").getValue());
+            this.config.set("Msg.un-ignored", response.getInput("un-ignored").getValue());
+            this.config.set("Msg.you-disabled", response.getInput("you-disabled").getValue());
+            this.config.set("Msg.has-disabled", response.getInput("has-disabled").getValue());
+            this.config.set("Msg.to-player", response.getInput("to-player").getValue());
+            this.config.set("Msg.from-player", response.getInput("from-player").getValue());
+
+
+            this.config.save();
+            p.sendMessage(MessageUtil.colorize("&aSaved changes"));
+            this.mainForm.formLogger("&aPlayer&6 " + p.getName() + "&a edited&b " + form.getTitle());
+            formatterSettings();
+        });
+
+        form.setNoneHandler(p -> formatterSettings());
+        form.send(this.player);
+    }
+
+    private void msgNormal() {
+        final CustomForm form = new CustomForm("Private messages Settings");
+
+        
+
+
+        form.setHandler((p, response) -> {
+            this.config.save();
+            p.sendMessage(MessageUtil.colorize("&aSaved changes"));
+            this.mainForm.formLogger("&aPlayer&6 " + p.getName() + "&a edited&b " + form.getTitle());
+            formatterSettings();
+        });
+
+        form.setNoneHandler(p -> formatterSettings());
+        form.send(this.player);
+    }
+
+
     private void mentionModal() {
          /*
            This is for Mention Sound function and it is still experimental
@@ -221,7 +347,7 @@ public class FormatterForm {
                 .setNegativeButton("No");
 
         if (!this.player.hasPermission(Permissions.ADMIN)) {
-            this.mentionForm();
+            this.mentionNormal();
             return;
         }
         if (!this.playerSettingsConfig.mentionSoundFunctionEnabled()) {
@@ -235,7 +361,7 @@ public class FormatterForm {
             if (result) {
                 this.mentionAdminForm();
             } else {
-                this.mentionForm();
+                this.mentionNormal();
             }
         });
         form.send(this.player);
@@ -287,7 +413,7 @@ public class FormatterForm {
         form.send(this.player);
     }
 
-    private void mentionForm() {
+    private void mentionNormal() {
           /*
            This is for Mention Sound function and it is still experimental
          */
@@ -376,7 +502,6 @@ public class FormatterForm {
         form.send(this.player);
     }
 
-
     public void customIndexes() {
         final SimpleForm form = new SimpleForm("All sound indexes");
 
@@ -392,7 +517,7 @@ public class FormatterForm {
         }
 
         this.mainForm.addCloseButton(form);
-        form.setNoneHandler((p) -> this.mentionForm());
+        form.setNoneHandler((p) -> this.mentionNormal());
         form.send(player);
     }
 }
