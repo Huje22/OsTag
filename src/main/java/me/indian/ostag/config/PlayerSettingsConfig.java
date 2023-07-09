@@ -11,7 +11,9 @@ import me.indian.ostag.util.Permissions;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 public class PlayerSettingsConfig {
 
@@ -75,6 +77,7 @@ public class PlayerSettingsConfig {
         //msg
         this.playersConfig.set(playerName + msgKey + ".enabled", defaultMsg);
         this.playersConfig.set(playerName + msgKey + ".private.enabled", defaultMsg);
+        this.playersConfig.set(playerName + msgKey + ".ignored" , Arrays.asList("ExamplePlayer"));
 
         //save config
         this.playersConfig.save();
@@ -91,6 +94,30 @@ public class PlayerSettingsConfig {
     public void setEnabledMsg(final Player player, final boolean enabled) {
         this.playersConfig.set(player.getName() + msgKey + ".enabled", enabled);
         this.playersConfig.save();
+    }
+
+    public List<String> getIgnoredPlayers(final String name){
+        return this.playersConfig.getStringList(name + msgKey + ".ignored");
+    }
+
+    public void ignorePlayer(final Player player , final String ignore) {
+        final List<String> ignored = getIgnoredPlayers(player.getName());
+        ignored.add(ignore);
+        this.playersConfig.set(player.getName() + msgKey + ".ignored", ignored);
+        this.playersConfig.save();
+        player.sendMessage(MessageUtil.colorize(this.defaulConfig.getString("Msg.ignored")
+                .replace("<player>" , ignore)
+        ));
+    }
+
+    public void unIgnorePlayer(final Player player , final String ignore) {
+        final List<String> ignored = getIgnoredPlayers(player.getName());
+        ignored.remove(ignore);
+        this.playersConfig.set(player.getName() + msgKey + ".ignored", ignored);
+        this.playersConfig.save();
+        player.sendMessage(MessageUtil.colorize(this.defaulConfig.getString("Msg.un-ignored")
+                .replace("<player>" , ignore)
+        ));
     }
 
     public boolean hasEnabledPrivateMsg(final Player player) {
@@ -192,6 +219,6 @@ public class PlayerSettingsConfig {
     }
 
     public Config getConfig() {
-        return playersConfig;
+        return this.playersConfig;
     }
 }

@@ -6,6 +6,7 @@ import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.plugin.PluginManager;
 import com.creeperface.nukkit.placeholderapi.api.PlaceholderAPI;
 import me.indian.ostag.basic.OsTagMetrics;
+import me.indian.ostag.command.IgnoreCommand;
 import me.indian.ostag.command.MsgCommand;
 import me.indian.ostag.command.OsTagCommand;
 import me.indian.ostag.command.ReplyCommand;
@@ -161,9 +162,10 @@ public class OsTag extends PluginBase {
         commandMap.register("OsTag", this.getOsTagCommand());
         commandMap.register("OsTag", new TestttCommand(this));
 
-        if(this.msg) {
+        if(this.chatFormatter && this.msg) {
             commandMap.register("OsTag", new MsgCommand(this));
             commandMap.register("OsTag", new ReplyCommand(this));
+            commandMap.register("OsTag", new IgnoreCommand(this));
         }
 
         pm.registerEvents(new CpsListener(), this);

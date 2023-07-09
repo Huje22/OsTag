@@ -141,6 +141,9 @@ Msg:
   console-logs: true
   no-one: "&cYou have no one to answer"
   null-recipient: "&cCan't find &6<player>"
+  cant-msg: "&cYou cant send private message to &6<player>"
+  ignored: "&aIgnored player&6 <player>"
+  un-ignored: "&aUnIgnored player&6 <player>"
   you-disabled: "&cYou have disabled private messages!"
   has-disabled: "&&6<player> &chave disabled private messages!"
   to-player: "&7[&b<me>&4 ->&b &6<player>&7]&r "

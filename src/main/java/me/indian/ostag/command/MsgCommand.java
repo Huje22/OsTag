@@ -22,7 +22,7 @@ public class MsgCommand extends Command {
     private final static Map<String, String> lastPlayer = new HashMap<>();
 
     public MsgCommand(final OsTag plugin) {
-        super("msg", " Ostag msg");
+        super("msg", " Ostag msg" , "/omsg <player> <message>");
         this.setAliases(new String[]{"w", "omsg"});
         this.commandParameters.clear();
         this.commandParameters.put("default", new CommandParameter[]{
@@ -50,6 +50,14 @@ public class MsgCommand extends Command {
             if (!this.playerSettingsConfig.hasEnabledMsg(recipient)) {
                 sender.sendMessage(MessageUtil.colorize(this.config.getString("Msg.has-disabled").replace("<player>", args[0])));
                 return true;
+            }
+            if(this.playerSettingsConfig.getIgnoredPlayers(recipient.getName()).contains(sender.getName())){
+                sender.sendMessage(MessageUtil.colorize(this.config.getString("Msg.cant-msg").replace("<player>", recipient.getName())));
+                return false;
+            }
+            if(this.playerSettingsConfig.getIgnoredPlayers(sender.getName()).contains(recipient.getName())){
+                sender.sendMessage(MessageUtil.colorize(this.config.getString("Msg.cant-msg").replace("<player>", recipient.getName())));
+                return false;
             }
 
             if (!Objects.equals(lastPlayer.get(sender.getName()), recipient.getName())) {
