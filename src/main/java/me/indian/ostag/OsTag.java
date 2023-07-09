@@ -164,7 +164,6 @@ public class OsTag extends PluginBase {
             commandMap.register("OsTag", new MsgCommand(this));
         }
 
-
         pm.registerEvents(new CpsListener(), this);
         if (this.cpsLimit) {
             pm.registerEvents(this.getCpsLimiter(), this);

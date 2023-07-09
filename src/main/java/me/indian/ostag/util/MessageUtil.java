@@ -16,6 +16,25 @@ public class MessageUtil {
         return TextFormat.colorize('&', msg);
     }
 
+    public static String buildMessageFromArgs(final String[] args){
+        String message = "";
+        for (final String arg : args) {
+            message = message.concat(arg + " ");
+        }
+        message = message.trim();
+        return message;
+    }
+
+    public static String buildMessageFromArgs(final String[] args , final String includeArg){
+        String message = "";
+        for (final String arg : args) {
+            if (arg.equals(includeArg)) continue;
+            message = message.concat(arg + " ");
+        }
+        message = message.trim();
+        return message;
+    }
+
     public static String listToSpacedString(final List<String> lista) {
         if (lista == null) {
             return "";

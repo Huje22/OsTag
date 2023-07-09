@@ -135,6 +135,17 @@ And-for-all: false
 MentionSound: true
 #
 #
+#Msg
+Msg:
+  enabled: true
+  console-logs: true
+  null-recipient: "&cCan't find &6<player>"
+  you-disabled: "&cYou have disabled private messages!"
+  has-disabled: "&&6<player> &chave disabled private messages!"
+  to-player: "&7[&b<me>&4 ->&b &6<player>&7]&r "
+  from-player: "&7[&6<player>&4 -> &b<me>&7]&r "
+#
+#
 #break between messages, why? so that the emotes you give players will be visible if they are 16x16 [exparimental]
 break-between-messages:
   enable: false
