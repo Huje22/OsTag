@@ -99,16 +99,21 @@ public class FormatterForm {
     private void cooldown() {
         final CustomForm form = new CustomForm("Cooldown Settings");
         final boolean enabled = this.config.getBoolean("cooldown.enable");
+        final List<SelectableElement> elements = new ArrayList<>();
+        final int time = Math.toIntExact(this.plugin.getConfig().getLong("cooldown.delay"));
 
-        form.addElement(new Label(MessageUtil.colorize("&aEnable cooldown")))
+        for (int i = 1; i <= 50; i++) {
+            final SelectableElement element = new SelectableElement(String.valueOf(i), i);
+            elements.add(element);
+        }
+
+
+            form.addElement(new Label(MessageUtil.colorize("&aEnable cooldown")))
                 .addElement("cooldown_enable", new Toggle("Cooldown", enabled));
 
         if (enabled) {
-            form.addElement("delay",
-                            Input.builder()
-                                    .setName(MessageUtil.colorize("&aCooldown time"))
-                                    .setDefaultValue(String.valueOf(this.config.getLong("cooldown.delay")))
-                                    .build())
+
+            form.addElement("delay", new StepSlider(MessageUtil.colorize("&aCooldown time"), elements, time - 1))
                     .addElement("message",
                             Input.builder()
                                     .setName(MessageUtil.colorize("&aCooldown message"))
@@ -135,7 +140,11 @@ public class FormatterForm {
         form.setHandler((p, response) -> {
             this.config.set("cooldown.enable", response.getToggle("cooldown_enable").getValue());
             if (enabled) {
-                this.config.set("cooldown.delay", Integer.valueOf(response.getInput("delay").getValue()));
+                final SelectableElement element = response.getStepSlider("delay").getValue();
+
+                if (element.getValue() != null && element.getValue(Integer.class) != time) {
+                    this.config.set("cooldown.delay", Long.valueOf(element.getValue(Integer.class)));
+                }
                 this.config.set("cooldown.message", response.getInput("message").getValue());
                 this.config.set("cooldown.over", response.getInput("over").getValue());
                 this.config.set("cooldown.disabled", response.getInput("disabled").getValue());
@@ -320,7 +329,7 @@ public class FormatterForm {
     private void msgNormal() {
         final CustomForm form = new CustomForm("Private messages Settings");
 
-        
+
 
 
         form.setHandler((p, response) -> {
