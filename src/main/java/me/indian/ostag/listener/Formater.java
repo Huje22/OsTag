@@ -13,7 +13,7 @@ import cn.nukkit.scheduler.NukkitRunnable;
 import cn.nukkit.utils.Config;
 import com.creeperface.nukkit.placeholderapi.api.PlaceholderAPI;
 import me.indian.ostag.OsTag;
-import me.indian.ostag.config.PlayerMentionConfig;
+import me.indian.ostag.config.PlayerSettingsConfig;
 import me.indian.ostag.util.MessageUtil;
 import me.indian.ostag.util.Permissions;
 import me.indian.ostag.util.PlayerInfoUtil;
@@ -131,7 +131,7 @@ public class Formater implements Listener {
         */
 
         final Player player = event.getPlayer();
-        final PlayerMentionConfig playersConfig = this.plugin.getPlayersMentionConfig();
+        final PlayerSettingsConfig playersConfig = this.plugin.getPlayersMentionConfig();
         final Pattern mentionPattern = Pattern.compile("(?<=\\s|^)@(\\w+)");
         final Matcher matcher = mentionPattern.matcher(event.getMessage());
 

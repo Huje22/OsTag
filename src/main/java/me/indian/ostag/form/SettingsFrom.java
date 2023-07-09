@@ -3,7 +3,7 @@ package me.indian.ostag.form;
 import cn.nukkit.Player;
 import cn.nukkit.utils.Config;
 import me.indian.ostag.OsTag;
-import me.indian.ostag.config.PlayerMentionConfig;
+import me.indian.ostag.config.PlayerSettingsConfig;
 import me.indian.ostag.util.MessageUtil;
 import me.indian.ostag.util.Permissions;
 import ru.contentforge.formconstructor.form.CustomForm;
@@ -53,7 +53,7 @@ public class SettingsFrom {
 
     private void modules() {
         final CustomForm form = new CustomForm("Modules settings");
-        final PlayerMentionConfig playerMentionConfig = this.plugin.getPlayersMentionConfig();
+        final PlayerSettingsConfig playerSettingsConfig = this.plugin.getPlayersMentionConfig();
 
         form.addElement(new Label(MessageUtil.colorize("&a&lRestart no needed!")));
         form.addElement("autoupdate", new Toggle("Auto Update", this.config.getBoolean("AutoUpdate")))

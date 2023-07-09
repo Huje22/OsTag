@@ -6,7 +6,7 @@ import cn.nukkit.plugin.PluginLogger;
 import cn.nukkit.plugin.PluginManager;
 import cn.nukkit.utils.Config;
 import me.indian.ostag.OsTag;
-import me.indian.ostag.config.PlayerMentionConfig;
+import me.indian.ostag.config.PlayerSettingsConfig;
 import me.indian.ostag.util.MessageUtil;
 import me.indian.ostag.util.ThreadUtil;
 
@@ -20,7 +20,7 @@ public class OsTagMetrics {
     private final OsTag plugin;
     private final Server server;
     private final Config config;
-    private final PlayerMentionConfig mentionConfig;
+    private final PlayerSettingsConfig mentionConfig;
     private final PluginManager pluginManager;
     private final PluginLogger logger;
     private final Metrics metrics;

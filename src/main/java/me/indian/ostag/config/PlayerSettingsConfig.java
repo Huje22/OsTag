@@ -12,7 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 
-public class PlayerMentionConfig {
+public class PlayerSettingsConfig {
 
     /*
     This is for Mention Sound function and it is still experimental
@@ -23,7 +23,7 @@ public class PlayerMentionConfig {
     private final String defaultSound;
     private final int defaultCustomIndex;
 
-    public PlayerMentionConfig(final OsTag plugin) {
+    public PlayerSettingsConfig(final OsTag plugin) {
         this.defaulConfig = plugin.getConfig();
 
         File file = new File(plugin.getDataFolder(), "players.yml");

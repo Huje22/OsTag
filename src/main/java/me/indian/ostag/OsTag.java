@@ -6,9 +6,10 @@ import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.plugin.PluginManager;
 import com.creeperface.nukkit.placeholderapi.api.PlaceholderAPI;
 import me.indian.ostag.basic.OsTagMetrics;
+import me.indian.ostag.command.MsgCommand;
 import me.indian.ostag.command.OsTagCommand;
 import me.indian.ostag.command.TestttCommand;
-import me.indian.ostag.config.PlayerMentionConfig;
+import me.indian.ostag.config.PlayerSettingsConfig;
 import me.indian.ostag.listener.CpsLimiter;
 import me.indian.ostag.listener.CpsListener;
 import me.indian.ostag.listener.Formater;
@@ -43,6 +44,7 @@ public class OsTag extends PluginBase {
     public boolean cpsLimit;
     public boolean debug;
     public boolean upDatechecker;
+    public boolean msg;
     private CpsLimiter cpsLimiter;
     private OsTagCommand osTagCommand;
     private OsTimer osTimer;
@@ -51,7 +53,7 @@ public class OsTag extends PluginBase {
     private InputListener inputListener;
     private LuckPerms luckPerms;
     private PlaceholderAPI placeholderApi;
-    private PlayerMentionConfig playerMentionConfig;
+    private PlayerSettingsConfig playerSettingsConfig;
 
     public static OsTag getInstance() {
         return instance;
@@ -89,15 +91,15 @@ public class OsTag extends PluginBase {
         return this.placeholderApi;
     }
 
-    public PlayerMentionConfig getPlayersMentionConfig() {
-        return this.playerMentionConfig;
+    public PlayerSettingsConfig getPlayersMentionConfig() {
+        return this.playerSettingsConfig;
     }
 
     @Override
     public void onLoad() {
         instance = this;
         this.saveDefaultConfig();
-        this.playerMentionConfig = new PlayerMentionConfig(this);
+        this.playerSettingsConfig = new PlayerSettingsConfig(this);
         this.cpsLimiter = new CpsLimiter(this);
         this.osTagCommand = new OsTagCommand(this);
         this.osTimer = new OsTimer(this);
@@ -105,6 +107,7 @@ public class OsTag extends PluginBase {
         this.debug = this.getConfig().getBoolean("Debug", true);
         this.serverMovement = this.getConfig().getBoolean("Movement-server", true);
         this.upDatechecker = this.getConfig().getBoolean("UpdateChecker", true);
+        this.msg = this.getConfig().getBoolean("Msg.enabled", false);
         this.osTag = this.getConfig().getBoolean("OsTag", true);
         this.chatFormatter = this.getConfig().getBoolean("ChatFormatter", true);
         this.cpsLimit = this.getConfig().getBoolean("CpsLimiter", true);
@@ -156,6 +159,10 @@ public class OsTag extends PluginBase {
         final CommandMap commandMap = this.getServer().getCommandMap();
         commandMap.register("OsTag", this.getOsTagCommand());
         commandMap.register("OsTag", new TestttCommand(this));
+
+        if(this.msg) {
+            commandMap.register("OsTag", new MsgCommand(this));
+        }
 
 
         pm.registerEvents(new CpsListener(), this);
