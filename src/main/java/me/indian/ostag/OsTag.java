@@ -104,17 +104,6 @@ public class OsTag extends PluginBase {
         instance = this;
         this.saveDefaultConfig();
         this.mainThread = new ThreadUtil("Main");
-        this.mainThread.newThread(() -> {
-            this.playerSettingsConfig = new PlayerSettingsConfig(this);
-            this.cpsLimiter = new CpsLimiter(this);
-            this.osTagCommand = new OsTagCommand(this);
-            this.osTimer = new OsTimer(this);
-            this.getLogger().info(MessageUtil.colorize("&cLoading UpdateUtil.."));
-            this.upDateUtil = new UpDateUtil();
-            this.getLogger().info(MessageUtil.colorize("&aLoaded UpdateUtil "));
-            Thread.currentThread().interrupt();
-        }).start();
-
         this.debug = this.getConfig().getBoolean("Debug", true);
         this.serverMovement = this.getConfig().getBoolean("Movement-server", true);
         this.upDatechecker = this.getConfig().getBoolean("UpdateChecker", true);
@@ -132,6 +121,17 @@ public class OsTag extends PluginBase {
                 }
             }
         }
+
+        this.mainThread.newThread(() -> {
+            this.playerSettingsConfig = new PlayerSettingsConfig(this);
+            this.cpsLimiter = new CpsLimiter(this);
+            this.osTagCommand = new OsTagCommand(this);
+            this.osTimer = new OsTimer(this);
+            if (this.debug) this.getLogger().info(MessageUtil.colorize(publicDebugPrefix + "&8[&dMain&8] " + "&cLoading UpdateUtil.."));
+            this.upDateUtil = new UpDateUtil();
+            if (this.debug) this.getLogger().info(MessageUtil.colorize(publicDebugPrefix + "&8[&dMain&8] " + "&aLoaded UpdateUtil "));
+            Thread.currentThread().interrupt();
+        }).start();
     }
 
     @Override
