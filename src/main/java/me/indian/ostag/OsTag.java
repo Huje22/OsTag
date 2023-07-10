@@ -186,6 +186,7 @@ public class OsTag extends PluginBase {
             pm.registerEvents(this.getFormater(), this);
         } else {
             this.getPlayerSettingsConfig().setMentionSoundFunctionEnabled(false);
+            this.msg = false;
             this.getLogger().info(MessageUtil.colorize("&bChatFormatter module is disabled"));
         }
         pm.registerEvents(new PlayerJoinListener(this), this);
