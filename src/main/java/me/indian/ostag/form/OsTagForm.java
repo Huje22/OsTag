@@ -269,7 +269,7 @@ public class OsTagForm {
         if (!disabledWorlds.isEmpty()) {
             form.addElement(new Label(MessageUtil.colorize("&lDisabled worlds")));
         }
-        for (String world : disabledWorlds) {
+        for (final String world : disabledWorlds) {
             form.addElement("disabled_world_" + world, new Toggle(world, isDisabledWorld(world)));
         }
 
