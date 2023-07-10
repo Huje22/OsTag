@@ -131,7 +131,7 @@ public class Formater implements Listener {
         */
 
         final Player player = event.getPlayer();
-        final PlayerSettingsConfig playersConfig = this.plugin.getPlayersMentionConfig();
+        final PlayerSettingsConfig playersConfig = this.plugin.getPlayerSettingsConfig();
         final Pattern mentionPattern = Pattern.compile("(?<=\\s|^)@(\\w+)");
         final Matcher matcher = mentionPattern.matcher(event.getMessage());
 

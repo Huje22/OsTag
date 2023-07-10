@@ -93,7 +93,7 @@ public class OsTag extends PluginBase {
         return this.placeholderApi;
     }
 
-    public PlayerSettingsConfig getPlayersMentionConfig() {
+    public PlayerSettingsConfig getPlayerSettingsConfig() {
         return this.playerSettingsConfig;
     }
 
@@ -146,7 +146,7 @@ public class OsTag extends PluginBase {
             this.getLogger().error(MessageUtil.colorize("&cYou don't have &bFormConstructor &c plugin !"));
             this.getLogger().error(MessageUtil.colorize("&cthis is required for&b Mention Sound&c to work! !"));
             this.getLogger().error(MessageUtil.colorize("&cDownload it from here &bhttps://github.com/OpenPlugins-Minecraft/OsTag/tree/main/libs!"));
-            this.getPlayersMentionConfig().setMentionSoundFunctionEnabled(false);
+            this.getPlayerSettingsConfig().setMentionSoundFunctionEnabled(false);
         } else {
             this.formConstructor = true;
         }
@@ -185,7 +185,7 @@ public class OsTag extends PluginBase {
         if (this.chatFormatter) {
             pm.registerEvents(this.getFormater(), this);
         } else {
-            this.getPlayersMentionConfig().setMentionSoundFunctionEnabled(false);
+            this.getPlayerSettingsConfig().setMentionSoundFunctionEnabled(false);
             this.getLogger().info(MessageUtil.colorize("&bChatFormatter module is disabled"));
         }
         pm.registerEvents(new PlayerJoinListener(this), this);
@@ -196,6 +196,7 @@ public class OsTag extends PluginBase {
         this.getServer().getScheduler().scheduleDelayedTask(this::info, 30);
         this.getUpdateUtil().autoUpDate();
         new OsTagMetrics().run();
+       
 
         final double executionTimeInSeconds = (System.currentTimeMillis() - millisActualTime) / 1000.0;
         this.getLogger().info(MessageUtil.colorize("&aStarted in &b" + executionTimeInSeconds + " &aseconds"));

@@ -53,7 +53,7 @@ public class SettingsFrom {
 
     private void modules() {
         final CustomForm form = new CustomForm("Modules settings");
-        final PlayerSettingsConfig playerSettingsConfig = this.plugin.getPlayersMentionConfig();
+        final PlayerSettingsConfig playerSettingsConfig = this.plugin.getPlayerSettingsConfig();
 
         form.addElement(new Label(MessageUtil.colorize("&a&lRestart no needed!")));
         form.addElement("autoupdate", new Toggle("Auto Update", this.config.getBoolean("AutoUpdate")))
