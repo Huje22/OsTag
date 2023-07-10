@@ -249,12 +249,16 @@ Added sound when player mention system (FormConstructor plugin required) (Since 
 **New plugin version tagging system!
 ** [Check This](https://github.com/OpenPlugins-Minecraft/OsTag/blob/main/ChangeLog.md#general-info--)  (Since
 1.5.7.4)  <br/>
+Now Name and Score Tag reset to default when plugin get disabled (Since 1.5.7.5)  <br/>
+Added simple `/msg` and `/ignore` for formatter (Since 1.5.7.5)  <br/>
+Now if a player is inactive for 5 days after restarting the server he will be removed from `Players.yml` (Since 1.5.7.5)  <br/>
 
 __Fixes__: <br/>
 Code and code style fixes <br/>
 Better auto redownload (Since 1.5.7.1)  <br/>
 Fixed ostag command error when `/ostag add` player argument is null (Since 1.5.7.1)  <br/>
 Fixed `/ostag version` commpatibliity command (Since 1.5.7.3)  <br/>
+Now when dont have `FormConstructor` plugin `/ostag menu` command can't crash server (Since 1.5.7.5)  <br/>
 
 __Others__: <br/>
 New thing (Since x.x.x)  <br/>
