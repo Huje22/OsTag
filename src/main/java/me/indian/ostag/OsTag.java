@@ -26,6 +26,7 @@ import me.indian.ostag.util.OsTimerStatus;
 import me.indian.ostag.util.PlayerInfoUtil;
 import me.indian.ostag.util.PluginInfoUtil;
 import me.indian.ostag.util.TagAddUtil;
+import me.indian.ostag.util.ThreadUtil;
 import me.indian.ostag.util.UpDateUtil;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
@@ -33,6 +34,7 @@ import net.luckperms.api.LuckPermsProvider;
 public class OsTag extends PluginBase {
 
     private static OsTag instance;
+    private ThreadUtil mainThread;
     public String pluginPrefix = MessageUtil.colorize("&f[&bOsTag&f] ");
     public String publicDebugPrefix = MessageUtil.colorize("&8[&7Debug&8] ");
     public boolean luckPerm = false;
@@ -101,11 +103,18 @@ public class OsTag extends PluginBase {
     public void onLoad() {
         instance = this;
         this.saveDefaultConfig();
-        this.playerSettingsConfig = new PlayerSettingsConfig(this);
-        this.cpsLimiter = new CpsLimiter(this);
-        this.osTagCommand = new OsTagCommand(this);
-        this.osTimer = new OsTimer(this);
-        this.upDateUtil = new UpDateUtil();
+        this.mainThread = new ThreadUtil("Main");
+        mainThread.newThread(() -> {
+            this.playerSettingsConfig = new PlayerSettingsConfig(this);
+            this.cpsLimiter = new CpsLimiter(this);
+            this.osTagCommand = new OsTagCommand(this);
+            this.osTimer = new OsTimer(this);
+            this.getLogger().info(MessageUtil.colorize("&cLoading UpdateUtil.."));
+            this.upDateUtil = new UpDateUtil();
+            this.getLogger().info(MessageUtil.colorize("&aLoaded UpdateUtil "));
+            Thread.currentThread().interrupt();
+        }).start();
+
         this.debug = this.getConfig().getBoolean("Debug", true);
         this.serverMovement = this.getConfig().getBoolean("Movement-server", true);
         this.upDatechecker = this.getConfig().getBoolean("UpdateChecker", true);
@@ -130,13 +139,13 @@ public class OsTag extends PluginBase {
         final long millisActualTime = System.currentTimeMillis();
         final PluginManager pm = this.getServer().getPluginManager();
         if (pm.getPlugin("LuckPerms") == null) {
-            this.getLogger().warning(MessageUtil.colorize("&cYou don't have lucky perms , ChatFormatting don't correctly work"));
+            this.getLogger().warning(MessageUtil.colorize("&cYou don't have &bluck perms&c plugin , ChatFormatting don't correctly work"));
         } else {
             this.luckPerms = LuckPermsProvider.get();
             this.luckPerm = true;
         }
         if (pm.getPlugin("PlaceholderAPI") == null || pm.getPlugin("KotlinLib") == null) {
-            this.getLogger().warning(MessageUtil.colorize("&cYou don't have PlaceholderAPI or kotlin lib,placeholders from &bPlaceholderAPI&c will not work"));
+            this.getLogger().warning(MessageUtil.colorize("&cYou don't have &bPlaceholderAPI&c or&b kotlin lib&c,placeholders from &bPlaceholderAPI&c will not work"));
         } else {
             this.placeholderApi = PlaceholderAPI.getInstance();
             this.papiAndKotlinLib = true;
@@ -258,13 +267,15 @@ public class OsTag extends PluginBase {
     }
 
     private void info() {
-        final String version = this.getDescription().getVersion();
-        if (version.contains("Beta") || version.contains("beta")) {
-            this.getLogger().warning(MessageUtil.colorize("&4You are running beta version, it may not be stable"));
-        }
-        if (version.contains("Dev") || version.contains("dev")) {
-            this.getLogger().warning(MessageUtil.colorize("&4You running dev build , so many things which this version contains  may be removed"));
-        }
-        this.getLogger().info(GithubUtil.checkTagCompatibility());
+        this.mainThread.newThread(() -> {
+            final String version = this.getDescription().getVersion();
+            if (version.contains("Beta") || version.contains("beta")) {
+                this.getLogger().warning(MessageUtil.colorize("&4You are running beta version, it may not be stable"));
+            }
+            if (version.contains("Dev") || version.contains("dev")) {
+                this.getLogger().warning(MessageUtil.colorize("&4You running dev build , so many things which this version contains  may be removed"));
+            }
+            this.getLogger().info(GithubUtil.checkTagCompatibility());
+        }).start();
     }
 }
