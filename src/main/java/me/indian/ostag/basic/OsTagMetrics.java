@@ -39,7 +39,7 @@ public class OsTagMetrics {
     }
 
     public void run() {
-        new ThreadUtil("Ostag Metrics Thread", () -> {
+        new ThreadUtil("Metrics Thread", () -> {
             try {
                 if (!this.enabled) {
                     this.logger.info(MessageUtil.colorize("&aMetrics is disabled"));
