@@ -23,6 +23,7 @@ public class PlayerSettingsConfig {
 
 
     private final OsTag plugin;
+    private final File configFile;
     private final String mentionKey;
     private final String msgKey;
     private final Config defaulConfig;
@@ -35,27 +36,14 @@ public class PlayerSettingsConfig {
     public PlayerSettingsConfig(final OsTag plugin) {
         this.plugin = plugin;
         this.defaulConfig = this.plugin.getConfig();
-
-        File file = new File(this.plugin.getDataFolder(), "players.yml");
-        if (!file.exists()) {
-            this.plugin.getLogger().info(MessageUtil.colorize("&cFile&6 players.yml&c not found"));
-            try {
-                file.createNewFile();
-                this.plugin.getLogger().info(MessageUtil.colorize("&aFile&6 players.yml&a created!"));
-            } catch (IOException e) {
-                this.plugin.getLogger().warning(TextFormat.RED + "CANT CREATE FILE");
-                e.printStackTrace();
-            }
-        }
-
-        this.plugin.saveResource("players.yml");
-        this.playersConfig = new Config(file, Config.YAML);
-
+        this.configFile =  this.createConfigFile();
+        this.plugin.saveResource(this.configFile.getName());
+        this.playersConfig = new Config(this.configFile, Config.YAML);
         final LinkedHashMap<String, Object> defaultMap = new ConfigSection();
         defaultMap.put("SubTitle", "&6<player>&a mentioned you in chat");
         defaultMap.put("Sounds", 100);
 
-        //confi keyse
+        //config keys
         this.mentionKey = ".Mention";
         this.msgKey = ".Msg";
 
@@ -130,8 +118,28 @@ public class PlayerSettingsConfig {
         return this.playersConfig.getLong(name + ".lastPlayed");
     }
 
+
     public ExecutorService getExecutorService() {
         return this.executorService;
+    }
+
+    private File createConfigFile(){
+        final File file = new File(this.plugin.getDataFolder(), "players.yml");
+        if (!file.exists()) {
+            this.plugin.getLogger().info(MessageUtil.colorize("&cFile&6 players.yml&c not found"));
+            try {
+                file.createNewFile();
+                this.plugin.getLogger().info(MessageUtil.colorize("&aFile&6 players.yml&a created!"));
+            } catch (IOException e) {
+                this.plugin.getLogger().warning(TextFormat.RED + "CANT CREATE FILE");
+                e.printStackTrace();
+            }
+        }
+        return file;
+    }
+
+    public File getConfigFile() {
+        return this.configFile;
     }
 
     public Config getConfig() {
