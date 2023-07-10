@@ -41,7 +41,7 @@ public class UpDateUtil {
         this.pluginsPath = Server.getInstance().getPluginPath();
         this.currentVersion = this.plugin.getDescription().getVersion();
         this.currentFileName = "Ostag-" + this.currentVersion + ".jar";
-        this.executorService = Executors.newSingleThreadExecutor(new ThreadUtil("Ostag Update Thread"));
+        this.executorService = Executors.newSingleThreadExecutor(new ThreadUtil("Update Thread"));
     }
 
     //Refreshing the tag so that it is as latest as possible regardless of the instance

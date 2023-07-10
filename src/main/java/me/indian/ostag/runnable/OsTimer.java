@@ -29,7 +29,7 @@ public class OsTimer {
     public OsTimer(final OsTag plugin) {
         this.plugin = plugin;
         this.config = this.plugin.getConfig();
-        this.executorService = Executors.newSingleThreadExecutor(new ThreadUtil("Ostag OsTimer Thread"));
+        this.executorService = Executors.newSingleThreadExecutor(new ThreadUtil("OsTimer Thread"));
         this.logger = this.plugin.getLogger();
         this.debugPrefix = MessageUtil.colorize(this.plugin.publicDebugPrefix + "&8[&dOsTimer&8] ");
     }

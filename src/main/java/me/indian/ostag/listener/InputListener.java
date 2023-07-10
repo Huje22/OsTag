@@ -32,7 +32,7 @@ public class InputListener implements Listener {
         this.logger = this.plugin.getLogger();
         this.controller = new HashMap<>();
         this.debugPrefix = MessageUtil.colorize(this.plugin.publicDebugPrefix + "&8[&dInputListener&8] ");
-        this.executorService = Executors.newSingleThreadExecutor(new ThreadUtil("Ostag InputListener Thread"));
+        this.executorService = Executors.newSingleThreadExecutor(new ThreadUtil("InputListener Thread"));
     }
 
 

@@ -1,5 +1,6 @@
 package me.indian.ostag.listener;
 
+import cn.nukkit.Player;
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerQuitEvent;
@@ -18,6 +19,8 @@ public class PlayerQuitListener implements Listener {
     @SuppressWarnings("unused")
     @EventHandler
     private void onPlayerQuit(final PlayerQuitEvent event) {
+        final Player player = event.getPlayer();
+        this.plugin.getPlayerSettingsConfig().setLastPlayed(player.getName(), player.getLastPlayed());
         if ((this.plugin.getServer().getOnlinePlayers().size() - 1) == 0) {
             this.plugin.getOsTimer().setStatus(OsTimerStatus.STOPPED);
         }
