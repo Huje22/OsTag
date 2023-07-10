@@ -25,7 +25,7 @@ public class OsTagCommand extends Command {
     private String lastException = "";
 
     public OsTagCommand(final OsTag plugin) {
-        super("ostag", "ostag management");
+        super("ostag", "ostag management", MessageUtil.colorize("&aUsage &b/ostag &8[version , reload , add <player>, update, menu]"));
 
         commandParameters.clear();
 //        /ostag reload
@@ -59,7 +59,7 @@ public class OsTagCommand extends Command {
         final List<String> advancedPlayers = config.getStringList("advanced-players");
 
         if (args.length == 0) {
-            sender.sendMessage(MessageUtil.colorize("&aUsage &b/ostag &8[version , reload , add <player>, update, menu]"));
+            sender.sendMessage(this.usageMessage);
             return false;
         }
         if (args[0].equalsIgnoreCase("menu")) {

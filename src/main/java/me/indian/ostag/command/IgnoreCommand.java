@@ -16,14 +16,14 @@ public class IgnoreCommand extends Command {
     private final PlayerSettingsConfig playerSettingsConfig;
 
     public IgnoreCommand(final OsTag plugin) {
-        super("ignore","Ostag ignore command" , "/ignore <player>");
+        super("ignore", "Ostag ignore command", MessageUtil.colorize("&aUsage &b/ignore &8<player>"));
         this.plugin = plugin;
         this.config = this.plugin.getConfig();
         this.commandParameters.clear();
         this.commandParameters.put("default", new CommandParameter[]{
                 CommandParameter.newType("message", false, CommandParamType.TARGET)
         });
-        this.playerSettingsConfig = this.plugin.getPlayersMentionConfig();
+        this.playerSettingsConfig = this.plugin.getPlayerSettingsConfig();
     }
 
     @Override

@@ -22,8 +22,8 @@ public class MsgCommand extends Command {
     private final static Map<String, String> lastPlayer = new HashMap<>();
 
     public MsgCommand(final OsTag plugin) {
-        super("msg", " Ostag msg" , "/omsg <player> <message>");
-        this.setAliases(new String[]{"w", "omsg"});
+        super("omsg", "Ostag private messages", MessageUtil.colorize("&aUsage &b/omsg &8<player> <message>"));
+        this.setAliases(new String[]{"w", "msg", "tell"});
         this.commandParameters.clear();
         this.commandParameters.put("default", new CommandParameter[]{
                 CommandParameter.newType("player", false, CommandParamType.TARGET),
@@ -32,7 +32,7 @@ public class MsgCommand extends Command {
 
         this.plugin = plugin;
         this.config = this.plugin.getConfig();
-        this.playerSettingsConfig = this.plugin.getPlayersMentionConfig();
+        this.playerSettingsConfig = this.plugin.getPlayerSettingsConfig();
     }
 
     public static String getLastMsgPlayer(final Player player) {
@@ -68,6 +68,12 @@ public class MsgCommand extends Command {
             }
 
             final String message = MessageUtil.buildMessageFromArgs(args, args[0]);
+
+            if (message.isEmpty() || recipient.getName().equals(sender.getName())) {
+                sender.sendMessage(this.usageMessage);
+                return false;
+            }
+
             final String messageToPlayer = MessageUtil.colorize(this.config.getString("Msg.to-player")
                     .replace("<me>", sender.getName())
                     .replace("<player>", recipient.getName())) + message;

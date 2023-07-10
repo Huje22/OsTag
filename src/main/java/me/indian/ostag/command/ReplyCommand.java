@@ -14,7 +14,7 @@ public class ReplyCommand extends Command {
     private final Config config;
 
     public ReplyCommand(final OsTag plugin) {
-        super("r", " Ostag reply command" , "/r <message>");
+        super("r", " Ostag reply command", MessageUtil.colorize("&aUsage &b/r &8 <message>"));
         this.setAliases(new String[]{"reply"});
         this.commandParameters.clear();
         this.commandParameters.put("default", new CommandParameter[]{
