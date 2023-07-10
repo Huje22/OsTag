@@ -104,7 +104,7 @@ public class OsTag extends PluginBase {
         instance = this;
         this.saveDefaultConfig();
         this.mainThread = new ThreadUtil("Main");
-        mainThread.newThread(() -> {
+        this.mainThread.newThread(() -> {
             this.playerSettingsConfig = new PlayerSettingsConfig(this);
             this.cpsLimiter = new CpsLimiter(this);
             this.osTagCommand = new OsTagCommand(this);
