@@ -31,7 +31,7 @@ public class OsTagMetrics {
         this.plugin = OsTag.getInstance();
         this.server = this.plugin.getServer();
         this.config = this.plugin.getConfig();
-        this.mentionConfig = this.plugin.getPlayersMentionConfig();
+        this.mentionConfig = this.plugin.getPlayerSettingsConfig();
         this.pluginManager = this.server.getPluginManager();
         this.logger = this.plugin.getLogger();
         this.metrics = new Metrics(this.plugin);
@@ -89,6 +89,7 @@ public class OsTagMetrics {
             final boolean andForAll = this.config.getBoolean("And-for-all");
             final boolean formsDebug = this.config.getBoolean("FormsDebug");
             final boolean mentions = this.config.getBoolean("MentionSound");
+            final boolean msg = this.plugin.msg;
 
             if (scoreTag) {
                 functionMap.put("ScoreTag", 1);
@@ -122,6 +123,9 @@ public class OsTagMetrics {
             }
             if (mentions) {
                 functionMap.put("Mention sound", 1);
+            }
+            if (msg) {
+                functionMap.put("Private Messages", 1);
             }
 
             return functionMap;
