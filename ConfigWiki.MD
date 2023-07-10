@@ -31,29 +31,51 @@ If you want the information above the player's head to update for more than 1 ti
 ### Advanced and Normal player
 If you want a player to have different information overhead than others, list him or use ``/otag add <player>`` to do so
 
-Set what should be displayed in the name or subtag of the player, you can freely (Placeholder api is supported but you can still use it without this plugin, the list of default placeholders can be found in comfig.yml)
+Set what should be displayed in the name or subtag of the player, you can freely (Placeholder api is supported but you
+can still use it without this plugin, the list of default placeholders can be found in comfig.yml)
 
-You can set the name of the world where the information above the player's head will not be updated (This is still experimental and may not always work well)
+You can set the name of the world where the information above the player's head will not be updated (This is still
+experimental and may not always work well)
 
 ## ChatFormatter
+
 (Placeholder api and Luck perms are supported)
 
 ### And (&) in chat
+
 If you want players to be able to use "and" (&) to write in color in chat set ``And-for-all`` to ``true``
+
 ### Mention Sound
-When someone mentions a player, they are informed on the subtitle + they will get the sound they set in the settings (FormConstructor plugin required)
+
+When someone mentions a player, they are informed on the subtitle + they will get the sound they set in the settings (
+FormConstructor plugin required)
+
+### Msg
+
+Simple msg settings
+
 ### Break Between Messages
+
 If you want one line of break between messages, set ``break-between-messages.enable`` to ``true``. Example:<br/>
 ![image](https://user-images.githubusercontent.com/68228599/210433043-c71265f3-9862-4822-a000-860c22295ef7.png)
+
 ### Censorship
-If you want players not to be able to type certain words this useful, but it converts uppercase characters to lowercase because it's an experimental feature
+
+If you want players not to be able to type certain words this useful, but it converts uppercase characters to lowercase
+because it's an experimental feature
+
 ### Cooldown
-If you want players to be able to type every certain number of seconds, this may be useful to you, but this is also an experimental feature
+
+If you want players to be able to type every certain number of seconds, this may be useful to you, but this is also an
+experimental feature
 
 ## CpsLimiter
+
 `Cps.max` = max value of player cps <br/>
 `Cps.message` = cps limit reached message <br/>
+
 # Messages and informations
+
 Here you set everything you like
 
 
