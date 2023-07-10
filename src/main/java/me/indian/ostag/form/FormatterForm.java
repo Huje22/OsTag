@@ -36,7 +36,7 @@ public class FormatterForm {
         this.config = config;
         this.player = this.mainForm.getFormPlayer();
         this.blockedWords = config.getStringList("BlackWords");
-        this.playerSettingsConfig = this.plugin.getPlayersMentionConfig();
+        this.playerSettingsConfig = this.plugin.getPlayerSettingsConfig();
     }
 
     public void formatterSettings() {
@@ -106,9 +106,7 @@ public class FormatterForm {
             final SelectableElement element = new SelectableElement(String.valueOf(i), i);
             elements.add(element);
         }
-
-
-            form.addElement(new Label(MessageUtil.colorize("&aEnable cooldown")))
+        form.addElement(new Label(MessageUtil.colorize("&aEnable cooldown")))
                 .addElement("cooldown_enable", new Toggle("Cooldown", enabled));
 
         if (enabled) {
@@ -328,11 +326,72 @@ public class FormatterForm {
 
     private void msgNormal() {
         final CustomForm form = new CustomForm("Private messages Settings");
+        final List<String> ignored = this.playerSettingsConfig.getIgnoredPlayers(this.player.getName());
+        final boolean msg = this.playerSettingsConfig.hasEnabledMsg(this.player);
+        final boolean privateMsg = this.playerSettingsConfig.hasEnabledPrivateMsg(this.player);
 
+        form.addElement(MessageUtil.colorize("&aEnable/disable private messages"))
+                .addElement("msg_enable", new Toggle("Private Messages", msg));
 
+        if (msg) {
+            if (this.player.hasPermission(Permissions.ADMIN)) {
+                form.addElement("private_msg_enable", new Toggle("Private Players Messages", msg));
+            }
+
+            if (!ignored.isEmpty()) {
+                form.addElement(new Label(MessageUtil.colorize("&lIgnored Players")));
+            }
+            for (final String ignoredPlayer : ignored) {
+                form.addElement("ignored_players_" + ignoredPlayer, new Toggle(ignoredPlayer, this.playerSettingsConfig.isIgnored(this.player, ignoredPlayer)));
+            }
+
+            form.addElement(new Label(MessageUtil.colorize("&lDetected Players")));
+            for (final Player all : this.plugin.getServer().getOnlinePlayers().values()) {
+                if (all == this.player) continue;
+                final String detectedPlayerName = all.getName();
+                if (this.playerSettingsConfig.isIgnored(this.player, detectedPlayerName)) {
+                    continue;
+                }
+                form.addElement("detected_players_" + detectedPlayerName, new Toggle(detectedPlayerName, this.playerSettingsConfig.isIgnored(this.player, detectedPlayerName)));
+            }
+
+        }
 
 
         form.setHandler((p, response) -> {
+            final boolean finalMsg = response.getToggle("msg_enable").getValue();
+            if (finalMsg != msg) {
+                this.playerSettingsConfig.setEnabledMsg(this.player, finalMsg);
+            }
+
+            if (msg) {
+                if (this.player.hasPermission(Permissions.ADMIN)) {
+                    final boolean finalPrivateMsg = response.getToggle("private_msg_enable").getValue();
+                    if (finalPrivateMsg != privateMsg) {
+                        this.playerSettingsConfig.setEnabledMsg(this.player, finalPrivateMsg);
+                    }
+                }
+
+                for (final String ignoredPlayer : ignored) {
+                    if (response.getToggle("ignored_players_" + ignoredPlayer).getValue()) {
+                        this.playerSettingsConfig.ignorePlayer(player, ignoredPlayer);
+                    } else {
+                        this.playerSettingsConfig.unIgnorePlayer(player, ignoredPlayer);
+                    }
+                }
+
+                for (final Player all : this.plugin.getServer().getOnlinePlayers().values()) {
+                    if (all == this.player) continue;
+                    final String detectedPlayerName = all.getName();
+
+                    final Toggle toggle = response.getToggle("detected_players_" + detectedPlayerName);
+                    if (toggle != null && toggle.getValue()) {
+                        this.playerSettingsConfig.ignorePlayer(player, detectedPlayerName);
+                    } else {
+                        this.playerSettingsConfig.unIgnorePlayer(player, detectedPlayerName);
+                    }
+                }
+            }
             this.config.save();
             p.sendMessage(MessageUtil.colorize("&aSaved changes"));
             this.mainForm.formLogger("&aPlayer&6 " + p.getName() + "&a edited&b " + form.getTitle());
@@ -521,7 +580,7 @@ public class FormatterForm {
             if (this.playerSettingsConfig.getMentionSound(player).equalsIgnoreCase(name)) {
                 form.addContent(MessageUtil.colorize("&b" + index + " &6" + name + " &d(&bYour&d)\n"));
             } else {
-                form.addContent(MessageUtil.colorize("&b" + index + " &a" + name+ "\n"));
+                form.addContent(MessageUtil.colorize("&b" + index + " &a" + name + "\n"));
             }
         }
 
