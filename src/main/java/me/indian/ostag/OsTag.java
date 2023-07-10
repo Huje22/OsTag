@@ -162,7 +162,7 @@ public class OsTag extends PluginBase {
         commandMap.register("OsTag", this.getOsTagCommand());
         commandMap.register("OsTag", new TestttCommand(this));
 
-        if(this.chatFormatter && this.msg) {
+        if (this.chatFormatter && this.msg) {
             commandMap.register("OsTag", new MsgCommand(this));
             commandMap.register("OsTag", new ReplyCommand(this));
             commandMap.register("OsTag", new IgnoreCommand(this));
@@ -196,7 +196,8 @@ public class OsTag extends PluginBase {
         this.getServer().getScheduler().scheduleDelayedTask(this::info, 30);
         this.getUpdateUtil().autoUpDate();
         new OsTagMetrics().run();
-       
+
+        this.getPlayerSettingsConfig().getExecutorService().execute(() -> this.getPlayerSettingsConfig().removeOldPlayers());
 
         final double executionTimeInSeconds = (System.currentTimeMillis() - millisActualTime) / 1000.0;
         this.getLogger().info(MessageUtil.colorize("&aStarted in &b" + executionTimeInSeconds + " &aseconds"));

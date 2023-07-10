@@ -6,18 +6,23 @@ import cn.nukkit.utils.Config;
 import cn.nukkit.utils.ConfigSection;
 import cn.nukkit.utils.TextFormat;
 import me.indian.ostag.OsTag;
+import me.indian.ostag.util.MathUtil;
 import me.indian.ostag.util.MessageUtil;
 import me.indian.ostag.util.Permissions;
+import me.indian.ostag.util.ThreadUtil;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class PlayerSettingsConfig {
 
 
+    private final OsTag plugin;
     private final String mentionKey;
     private final String msgKey;
     private final Config defaulConfig;
@@ -25,23 +30,25 @@ public class PlayerSettingsConfig {
     private final String defaultSound;
     private final int defaultCustomIndex;
     private final boolean defaultMsg;
+    private final ExecutorService executorService;
 
     public PlayerSettingsConfig(final OsTag plugin) {
-        this.defaulConfig = plugin.getConfig();
+        this.plugin = plugin;
+        this.defaulConfig = this.plugin.getConfig();
 
-        File file = new File(plugin.getDataFolder(), "players.yml");
+        File file = new File(this.plugin.getDataFolder(), "players.yml");
         if (!file.exists()) {
-            plugin.getLogger().info(MessageUtil.colorize("&cFile&6 players.yml&c not found"));
+            this.plugin.getLogger().info(MessageUtil.colorize("&cFile&6 players.yml&c not found"));
             try {
                 file.createNewFile();
-                plugin.getLogger().info(MessageUtil.colorize("&aFile&6 players.yml&a created!"));
+                this.plugin.getLogger().info(MessageUtil.colorize("&aFile&6 players.yml&a created!"));
             } catch (IOException e) {
-                plugin.getLogger().warning(TextFormat.RED + "CANT CREATE FILE");
+                this.plugin.getLogger().warning(TextFormat.RED + "CANT CREATE FILE");
                 e.printStackTrace();
             }
         }
 
-        plugin.saveResource("players.yml");
+        this.plugin.saveResource("players.yml");
         this.playersConfig = new Config(file, Config.YAML);
 
         final LinkedHashMap<String, Object> defaultMap = new ConfigSection();
@@ -60,6 +67,9 @@ public class PlayerSettingsConfig {
         this.defaultSound = "BLOCK_SCAFFOLDING_BREAK";
         this.defaultCustomIndex = 100;
         this.defaultMsg = true;
+
+        //Management
+        this.executorService = Executors.newScheduledThreadPool(2, new ThreadUtil("players.yml Thread"));
     }
 
     public boolean hasPlayer(final Player player) {
@@ -69,6 +79,10 @@ public class PlayerSettingsConfig {
     public void createPlayerSection(final Player player) {
         if (this.hasPlayer(player)) return;
         final String playerName = player.getName();
+
+        //Management
+        this.playersConfig.set(playerName + ".lastPlayed", player.getLastPlayed());
+
         //mention sound
         this.playersConfig.set(playerName + mentionKey + ".enabled", true);
         this.playersConfig.set(playerName + mentionKey + ".title", true);
@@ -77,10 +91,51 @@ public class PlayerSettingsConfig {
         //msg
         this.playersConfig.set(playerName + msgKey + ".enabled", defaultMsg);
         this.playersConfig.set(playerName + msgKey + ".private.enabled", defaultMsg);
-        this.playersConfig.set(playerName + msgKey + ".ignored" , Arrays.asList("ExamplePlayer"));
+        this.playersConfig.set(playerName + msgKey + ".ignored", Arrays.asList("ExamplePlayer"));
+
+        System.out.println("Stworzono " + playerName);
 
         //save config
         this.playersConfig.save();
+    }
+
+     /*
+       This is for menagment "players.yml" file
+     */
+
+
+    public void removeOldPlayers() {
+        for (final String key : this.playersConfig.getKeys(false)) {
+            if (this.playersConfig.isSection(key)) {
+                final ConfigSection section = this.playersConfig.getSection(key);
+                final int lastPlayed = section.getInt("lastPlayed", 0);
+                final int difference = MathUtil.dayDifference(lastPlayed);
+                if (difference >= 5) {
+                    this.playersConfig.getSection(key).clear();
+                    this.plugin.getLogger().info(MessageUtil.colorize("&6<player>&a has been removed in&b players.yml&a because he has not played on the server for more than 5 days")
+                            .replace("<player>", key));
+                }
+            }
+        }
+        this.playersConfig.save();
+    }
+
+
+    public void setLastPlayed(final String name, final long last) {
+        this.playersConfig.set(name + ".lastPlayed", last);
+        this.playersConfig.save();
+    }
+
+    public Long getLastPlayed(final String name) {
+        return this.playersConfig.getLong(name + ".lastPlayed");
+    }
+
+    public ExecutorService getExecutorService() {
+        return this.executorService;
+    }
+
+    public Config getConfig() {
+        return this.playersConfig;
     }
 
       /*
@@ -96,27 +151,31 @@ public class PlayerSettingsConfig {
         this.playersConfig.save();
     }
 
-    public List<String> getIgnoredPlayers(final String name){
+    public List<String> getIgnoredPlayers(final String name) {
         return this.playersConfig.getStringList(name + msgKey + ".ignored");
     }
 
-    public void ignorePlayer(final Player player , final String ignore) {
+    public boolean isIgnored(final Player player, final String name) {
+        return this.playersConfig.getStringList(player.getName() + msgKey + ".ignored").contains(name);
+    }
+
+    public void ignorePlayer(final Player player, final String ignore) {
         final List<String> ignored = getIgnoredPlayers(player.getName());
         ignored.add(ignore);
         this.playersConfig.set(player.getName() + msgKey + ".ignored", ignored);
         this.playersConfig.save();
         player.sendMessage(MessageUtil.colorize(this.defaulConfig.getString("Msg.ignored")
-                .replace("<player>" , ignore)
+                .replace("<player>", ignore)
         ));
     }
 
-    public void unIgnorePlayer(final Player player , final String ignore) {
+    public void unIgnorePlayer(final Player player, final String ignore) {
         final List<String> ignored = getIgnoredPlayers(player.getName());
         ignored.remove(ignore);
         this.playersConfig.set(player.getName() + msgKey + ".ignored", ignored);
         this.playersConfig.save();
         player.sendMessage(MessageUtil.colorize(this.defaulConfig.getString("Msg.un-ignored")
-                .replace("<player>" , ignore)
+                .replace("<player>", ignore)
         ));
     }
 
@@ -216,9 +275,5 @@ public class PlayerSettingsConfig {
 
     public int getSoundsValue(){
         return this.playersConfig.getInt("Sounds", 100);
-    }
-
-    public Config getConfig() {
-        return this.playersConfig;
     }
 }

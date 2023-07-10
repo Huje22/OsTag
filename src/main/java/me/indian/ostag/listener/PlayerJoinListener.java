@@ -5,15 +5,18 @@ import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerJoinEvent;
 import me.indian.ostag.OsTag;
+import me.indian.ostag.config.PlayerSettingsConfig;
 import me.indian.ostag.util.GithubUtil;
 import me.indian.ostag.util.Permissions;
 
 public class PlayerJoinListener implements Listener {
 
     private final OsTag plugin;
+    private final PlayerSettingsConfig playerSettingsConfig;
 
     public PlayerJoinListener(final OsTag plugin) {
         this.plugin = plugin;
+        this.playerSettingsConfig = this.plugin.getPlayerSettingsConfig();
     }
 
 
@@ -23,7 +26,8 @@ public class PlayerJoinListener implements Listener {
         final Player player = event.getPlayer();
         final String compatibility = GithubUtil.checkTagCompatibility();
 
-        this.plugin.getPlayersMentionConfig().createPlayerSection(player);
+        this.playerSettingsConfig.createPlayerSection(player);
+        this.playerSettingsConfig.setLastPlayed(player.getName(), player.getLastPlayed());
 
         if (player.hasPermission(Permissions.ADMIN) || player.isOp()) {
             if (this.plugin.upDatechecker) {
