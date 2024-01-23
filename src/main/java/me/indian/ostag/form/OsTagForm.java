@@ -3,22 +3,21 @@ package me.indian.ostag.form;
 import cn.nukkit.Player;
 import cn.nukkit.level.Level;
 import cn.nukkit.utils.Config;
+import com.formconstructor.form.CustomForm;
+import com.formconstructor.form.ModalForm;
+import com.formconstructor.form.SimpleForm;
+import com.formconstructor.form.element.SelectableElement;
+import com.formconstructor.form.element.custom.Input;
+import com.formconstructor.form.element.custom.Label;
+import com.formconstructor.form.element.custom.StepSlider;
+import com.formconstructor.form.element.custom.Toggle;
+import com.formconstructor.form.element.simple.ImageType;
+import java.util.ArrayList;
+import java.util.List;
 import me.indian.ostag.OsTag;
 import me.indian.ostag.util.MessageUtil;
 import me.indian.ostag.util.OsTimerStatus;
 import me.indian.ostag.util.Permissions;
-import ru.contentforge.formconstructor.form.CustomForm;
-import ru.contentforge.formconstructor.form.ModalForm;
-import ru.contentforge.formconstructor.form.SimpleForm;
-import ru.contentforge.formconstructor.form.element.ImageType;
-import ru.contentforge.formconstructor.form.element.Input;
-import ru.contentforge.formconstructor.form.element.Label;
-import ru.contentforge.formconstructor.form.element.SelectableElement;
-import ru.contentforge.formconstructor.form.element.StepSlider;
-import ru.contentforge.formconstructor.form.element.Toggle;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class OsTagForm {
 
@@ -72,11 +71,9 @@ public class OsTagForm {
             }
             form.addElement("advanced_players_toggle_" + playerXName, new Toggle(playerXName, this.mainForm.isAdvancedPlayer(playerXName)));
         }
-        form.addElement("add_player",
-                Input.builder()
-                        .setName(MessageUtil.colorize("&lAdd non online player"))
-                        .setDefaultValue("ExamplePlayer")
-                        .build());
+        form.addElement(new Input("add_player")
+                        .setPlaceholder(MessageUtil.colorize("&lAdd non online player"))
+                        .setDefaultValue("ExamplePlayer"));
 
         form.setNoneHandler(p -> osTagSettings());
 
@@ -134,45 +131,34 @@ public class OsTagForm {
 
 
         form.addElement(new Label(MessageUtil.colorize("&lNormal player settings")));
-        form.addElement("nick",
-                Input.builder()
-                        .setName(MessageUtil.colorize("&aNameTag"))
+        form.addElement(new Input("nick").setPlaceholder(MessageUtil.colorize("&aNameTag"))
                         .setDefaultValue(config.getString("nick"))
-                        .build());
+                        );
 
         form.addElement(new Label(MessageUtil.colorize("&aSubTag")));
         for (int i = 0; i < subtag.size(); i++) {
-            form.addElement("subtag_" + i,
-                    Input.builder()
-                            .setName((i + 1) + ".")
-                            .setDefaultValue(subtag.get(i))
-                            .build());
+            form.addElement(new Input("subtag_" + i)
+                            .setPlaceholder((i + 1) + ".")
+                            .setDefaultValue(subtag.get(i)));
         }
-        form.addElement("add_subtag",
-                Input.builder()
-                        .setName(MessageUtil.colorize("&lAdd subtag line"))
-                        .setDefaultValue("ExampleWord")
-                        .build());
+        form.addElement(new Input("add_subtag").setPlaceholder(MessageUtil.colorize("&lAdd subtag line"))
+                        .setDefaultValue("ExampleWord"));
 
         form.addElement(new Label(MessageUtil.colorize("&lAdvanced player settings")))
-                .addElement("a-nick",
-                        Input.builder()
-                                .setName(MessageUtil.colorize("&aNameTag"))
-                                .setDefaultValue(config.getString("a-nick"))
-                                .build());
+                .addElement(new Input("a-nick")
+                                .setPlaceholder(MessageUtil.colorize("&aNameTag"))
+                                .setDefaultValue(config.getString("a-nick")));
+
         form.addElement(new Label(MessageUtil.colorize("&aSubTag")));
         for (int i = 0; i < aSubtag.size(); i++) {
-            form.addElement("a-subtag_" + i,
-                    Input.builder()
-                            .setName((i + 1) + ".")
-                            .setDefaultValue(aSubtag.get(i))
-                            .build());
+            form.addElement(new Input("a-subtag_" + i)
+                            .setPlaceholder((i + 1) + ".")
+                            .setDefaultValue(aSubtag.get(i)));
         }
         form.addElement("add_asubtag",
-                Input.builder()
-                        .setName(MessageUtil.colorize("&lAdd subtag line"))
+                new Input().setPlaceholder(MessageUtil.colorize("&lAdd subtag line"))
                         .setDefaultValue("ExampleWord")
-                        .build());
+                        );
 
 
         form.setHandler((p, response) -> {
@@ -283,10 +269,9 @@ public class OsTagForm {
         }
 
         form.addElement("add_world",
-                Input.builder()
-                        .setName(MessageUtil.colorize("&lDisable an undetected world"))
+                new Input().setPlaceholder(MessageUtil.colorize("&lDisable an undetected world"))
                         .setDefaultValue("ExampleWorld")
-                        .build());
+                        );
 
         form.setNoneHandler(p -> osTagSettings());
 

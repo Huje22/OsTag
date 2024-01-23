@@ -3,23 +3,22 @@ package me.indian.ostag.form;
 import cn.nukkit.Player;
 import cn.nukkit.level.Sound;
 import cn.nukkit.utils.Config;
+import com.formconstructor.form.CustomForm;
+import com.formconstructor.form.ModalForm;
+import com.formconstructor.form.SimpleForm;
+import com.formconstructor.form.element.SelectableElement;
+import com.formconstructor.form.element.custom.Dropdown;
+import com.formconstructor.form.element.custom.Input;
+import com.formconstructor.form.element.custom.Label;
+import com.formconstructor.form.element.custom.StepSlider;
+import com.formconstructor.form.element.custom.Toggle;
+import com.formconstructor.form.element.simple.ImageType;
+import java.util.ArrayList;
+import java.util.List;
 import me.indian.ostag.OsTag;
 import me.indian.ostag.config.PlayerSettingsConfig;
 import me.indian.ostag.util.MessageUtil;
 import me.indian.ostag.util.Permissions;
-import ru.contentforge.formconstructor.form.CustomForm;
-import ru.contentforge.formconstructor.form.ModalForm;
-import ru.contentforge.formconstructor.form.SimpleForm;
-import ru.contentforge.formconstructor.form.element.Dropdown;
-import ru.contentforge.formconstructor.form.element.ImageType;
-import ru.contentforge.formconstructor.form.element.Input;
-import ru.contentforge.formconstructor.form.element.Label;
-import ru.contentforge.formconstructor.form.element.SelectableElement;
-import ru.contentforge.formconstructor.form.element.StepSlider;
-import ru.contentforge.formconstructor.form.element.Toggle;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class FormatterForm {
 
@@ -62,11 +61,9 @@ public class FormatterForm {
         final boolean andForAll = this.config.getBoolean("And-for-all");
         final boolean breaksBetweenMessages = this.config.getBoolean("break-between-messages.enable");
 
-        form.addElement("message_format",
-                        Input.builder()
-                                .setName(MessageUtil.colorize("&lMessage format"))
-                                .setDefaultValue(this.config.getString("message-format"))
-                                .build())
+        form.addElement(new Input("message_format")
+                        .setPlaceholder(MessageUtil.colorize("&lMessage format"))
+                        .setDefaultValue(this.config.getString("message-format")))
                 .addElement(new Label(MessageUtil.colorize("&lAdditional chat features")))
                 .addElement("and-for-all", new Toggle("And for all", andForAll))
                 .addElement("breaks", new Toggle("Breaks between messages", breaksBetweenMessages));
@@ -112,27 +109,21 @@ public class FormatterForm {
         if (enabled) {
 
             form.addElement("delay", new StepSlider(MessageUtil.colorize("&aCooldown time"), elements, time - 1))
-                    .addElement("message",
-                            Input.builder()
-                                    .setName(MessageUtil.colorize("&aCooldown message"))
-                                    .setDefaultValue(this.config.getString("cooldown.message"))
-                                    .build())
-                    .addElement("over",
-                            Input.builder()
-                                    .setName(MessageUtil.colorize("&aCooldown over message"))
-                                    .setDefaultValue(this.config.getString("cooldown.over"))
-                                    .build())
-                    .addElement("disabled",
-                            Input.builder()
-                                    .setName(MessageUtil.colorize("&aCooldown disabled message"))
-                                    .setDefaultValue(this.config.getString("cooldown.disabled"))
-                                    .build())
-
-                    .addElement("bypass",
-                            Input.builder()
-                                    .setName(MessageUtil.colorize("&aCooldown bypass message"))
-                                    .setDefaultValue(this.config.getString("cooldown.bypass"))
-                                    .build());
+                    .addElement(new Input("message")
+                            .setPlaceholder(MessageUtil.colorize("&aCooldown message"))
+                            .setDefaultValue(this.config.getString("cooldown.message")))
+                    
+                    .addElement(new Input("over")
+                            .setPlaceholder(MessageUtil.colorize("&aCooldown over message"))
+                            .setDefaultValue(this.config.getString("cooldown.over")))
+                    
+                    .addElement(new Input("disabled")
+                            .setPlaceholder(MessageUtil.colorize("&aCooldown disabled message"))
+                            .setDefaultValue(this.config.getString("cooldown.disabled")))
+                    
+                    .addElement(new Input("bypass")
+                            .setPlaceholder(MessageUtil.colorize("&aCooldown bypass message"))
+                            .setDefaultValue(this.config.getString("cooldown.bypass")));
         }
 
         form.setHandler((p, response) -> {
@@ -166,25 +157,22 @@ public class FormatterForm {
                 .addElement("censor_enable", new Toggle("Censorship", enabled));
 
         if (enabled) {
-            form.addElement("censor",
-                    Input.builder()
+            form.addElement(new Input("censor")
                             .setName(MessageUtil.colorize("&aCensorShip char"))
                             .setDefaultValue(this.config.getString("censorship.word"))
-                            .build());
+            );
 
             form.addElement(new Label(MessageUtil.colorize("&aBlocked words")));
             for (int i = 0; i < this.blockedWords.size(); i++) {
-                form.addElement("blackwords_" + i,
-                        Input.builder()
+                form.addElement(new Input("blackwords_" + i)
                                 .setName((i + 1) + ".")
                                 .setDefaultValue(this.blockedWords.get(i))
-                                .build());
+                );
             }
-            form.addElement("blockword",
-                    Input.builder()
+            form.addElement(new Input("blockword")
                             .setName(MessageUtil.colorize("&lBlock an word"))
                             .setDefaultValue("ExampleWord")
-                            .build());
+            );
         }
 
         form.setHandler((p, response) -> {
@@ -252,52 +240,41 @@ public class FormatterForm {
         form.addElement(new Label(MessageUtil.colorize("&aEnable cooldown")))
                 .addElement("console_logs", new Toggle("Console logs", this.config.getBoolean("Msg.console-logs")));
 
-        form.addElement("no-one",
-                        Input.builder()
+        form.addElement(new Input("no-one")
                                 .setName(MessageUtil.colorize("&aNo one message"))
-                                .setDefaultValue(this.config.getString("Msg.no-one"))
-                                .build())
-                .addElement("null",
-                        Input.builder()
-                                .setName(MessageUtil.colorize("&aNull Recipitent"))
-                                .setDefaultValue(this.config.getString("Msg.null-recipient"))
-                                .build())
-                .addElement("cant-msg",
-                        Input.builder()
-                                .setName(MessageUtil.colorize("&aCant message"))
-                                .setDefaultValue(this.config.getString("Msg.cant-msg"))
-                                .build())
-                .addElement("ignored",
-                        Input.builder()
-                                .setName(MessageUtil.colorize("&aIgnored message"))
-                                .setDefaultValue(this.config.getString("Msg.ignored"))
-                                .build())
-                .addElement("un-ignored",
-                        Input.builder()
-                                .setName(MessageUtil.colorize("&aUnIgnored message"))
-                                .setDefaultValue(this.config.getString("Msg.un-ignored"))
-                                .build())
-                .addElement("you-disabled",
-                        Input.builder()
-                                .setName(MessageUtil.colorize("&aYou has disabled message"))
-                                .setDefaultValue(this.config.getString("Msg.you-disabled"))
-                                .build())
-                .addElement("has-disabled",
-                        Input.builder()
-                                .setName(MessageUtil.colorize("&aHim has disabled message"))
-                                .setDefaultValue(this.config.getString("Msg.has-disabled"))
-                                .build())
-                .addElement("to-player",
-                        Input.builder()
-                                .setName(MessageUtil.colorize("&aTo player prefix"))
-                                .setDefaultValue(this.config.getString("Msg.to-player"))
-                                .build())
+                                .setDefaultValue(this.config.getString("Msg.no-one")))
 
-                .addElement("from-player",
-                        Input.builder()
+                .addElement(new Input("null")
+                                .setName(MessageUtil.colorize("&aNull Recipitent"))
+                                .setDefaultValue(this.config.getString("Msg.null-recipient")))
+
+                .addElement(new Input("cant-msg")
+                                .setName(MessageUtil.colorize("&aCant message"))
+                                .setDefaultValue(this.config.getString("Msg.cant-msg")))
+
+                .addElement(new Input("ignored")
+                                .setName(MessageUtil.colorize("&aIgnored message"))
+                                .setDefaultValue(this.config.getString("Msg.ignored")))
+
+                .addElement(new Input("un-ignored")
+                                .setName(MessageUtil.colorize("&aUnIgnored message"))
+                                .setDefaultValue(this.config.getString("Msg.un-ignored")))
+
+                .addElement(new Input("you-disabled")
+                                .setName(MessageUtil.colorize("&aYou has disabled message"))
+                                .setDefaultValue(this.config.getString("Msg.you-disabled")))
+
+                .addElement(new Input("has-disabled")
+                                .setName(MessageUtil.colorize("&aHim has disabled message"))
+                                .setDefaultValue(this.config.getString("Msg.has-disabled")))
+
+                .addElement(new Input("to-player")
+                                .setName(MessageUtil.colorize("&aTo player prefix"))
+                                .setDefaultValue(this.config.getString("Msg.to-player")))
+
+                .addElement(new Input("from-player")
                                 .setName(MessageUtil.colorize("&aFrom player prefix"))
-                                .setDefaultValue(this.config.getString("Msg.from-player"))
-                                .build());
+                                .setDefaultValue(this.config.getString("Msg.from-player")));
 
 
         form.setHandler((p, response) -> {
@@ -527,9 +504,9 @@ public class FormatterForm {
                     .addElement("soundname", new Dropdown(MessageUtil.colorize("&aMention Sound"), elements, this.playerSettingsConfig.getPlayerCustomIndex(this.player)))
                     .addElement("indexes", new Toggle("Show Indexes", false))
                     .addElement("customsound",
-                            Input.builder()
+                              new Input()
                                     .setName(MessageUtil.colorize("&aAdd sound by index"))
-                                    .build());
+                    );
         }
 
         form.setHandler((p, response) -> {

@@ -234,31 +234,31 @@ public class OsTag extends PluginBase {
             final String prefix = "ostag_";
             api.builder(prefix + "cps", Integer.class)
                     .visitorLoader(entry -> CpsListener.getCPS(entry.getPlayer()))
-                    .build();
+                    ;
             api.builder(prefix + "cooldown", String.class)
                     .visitorLoader(entry -> this.getFormater().getCooldown(entry.getPlayer()))
-                    .build();
+                    ;
             api.builder(prefix + "device", String.class)
                     .visitorLoader(entry -> PlayerInfoUtil.getDevice(entry.getPlayer()))
-                    .build();
+                    ;
             api.builder(prefix + "controller", String.class)
                     .visitorLoader(entry -> PlayerInfoUtil.getController(entry.getPlayer()))
-                    .build();
+                    ;
             api.builder(prefix + "preffix", String.class)
                     .visitorLoader(entry -> PlayerInfoUtil.getLuckPermPreffix(entry.getPlayer()))
-                    .build();
+                    ;
             api.builder(prefix + "suffix", String.class)
                     .visitorLoader(entry -> PlayerInfoUtil.getLuckPermSuffix(entry.getPlayer()))
-                    .build();
+                    ;
             api.builder(prefix + "group", String.class)
                     .visitorLoader(entry -> PlayerInfoUtil.getLuckPermGroupDisName(entry.getPlayer()))
-                    .build();
+                    ;
             api.builder(prefix + "version", String.class)
                     .visitorLoader(entry -> entry.getPlayer().getLoginChainData().getGameVersion())
-                    .build();
+                    ;
             api.builder(prefix + "xp", String.class)
                     .visitorLoader(entry -> PlayerInfoUtil.getXp(entry.getPlayer()))
-                    .build();
+                    ;
             this.getLogger().info(MessageUtil.colorize("&aLoaded placeholderapi placeholders"));
         } catch (final Exception exception) {
             this.getLogger().error(MessageUtil.colorize("&cLoading placeholders failed "));

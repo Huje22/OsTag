@@ -2,15 +2,14 @@ package me.indian.ostag.form;
 
 import cn.nukkit.Player;
 import cn.nukkit.utils.Config;
+import com.formconstructor.form.SimpleForm;
+import com.formconstructor.form.element.simple.ImageType;
+import java.util.List;
 import me.indian.ostag.OsTag;
 import me.indian.ostag.util.GithubUtil;
 import me.indian.ostag.util.MessageUtil;
 import me.indian.ostag.util.Permissions;
 import me.indian.ostag.util.PluginInfoUtil;
-import ru.contentforge.formconstructor.form.SimpleForm;
-import ru.contentforge.formconstructor.form.element.ImageType;
-
-import java.util.List;
 
 /*
  Settings in forms is a pre-feature
@@ -155,10 +154,10 @@ public class Form {
         final SimpleForm form = new SimpleForm("Sample title");
         form.setContent("This is a text")
                 .addContent("\nThis is addition :3")
-                .addButton("Test1", ImageType.PATH, "textures/ui/settings_glyph_color_2x", (p, button) -> p.sendMessage(String.valueOf(button.index)))
-                .addButton("Test2", ImageType.PATH, "textures/ui/icon_setting", (p, button) -> p.sendMessage(String.valueOf(button.index)))
-                .addButton("Test3", ImageType.PATH, "textures/ui/refresh", (p, button) -> p.sendMessage(String.valueOf(button.index)))
-                .addButton("Test4", ImageType.PATH, "textures/ui/refresh_light", (p, button) -> p.sendMessage(String.valueOf(button.index)));
+                .addButton("Test1", ImageType.PATH, "textures/ui/settings_glyph_color_2x", (p, button) -> p.sendMessage(String.valueOf(button.getIndex())))
+                .addButton("Test2", ImageType.PATH, "textures/ui/icon_setting", (p, button) -> p.sendMessage(String.valueOf(button.getIndex())))
+                .addButton("Test3", ImageType.PATH, "textures/ui/refresh", (p, button) -> p.sendMessage(String.valueOf(button.getIndex())))
+                .addButton("Test4", ImageType.PATH, "textures/ui/refresh_light", (p, button) -> p.sendMessage(String.valueOf(button.getIndex())));
 
         form.setNoneHandler(p -> runOstagFrom());
         form.send(player);

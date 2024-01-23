@@ -2,18 +2,17 @@ package me.indian.ostag.form;
 
 import cn.nukkit.Player;
 import cn.nukkit.utils.Config;
+import com.formconstructor.form.CustomForm;
+import com.formconstructor.form.ModalForm;
+import com.formconstructor.form.SimpleForm;
+import com.formconstructor.form.element.custom.Label;
+import com.formconstructor.form.element.custom.Toggle;
+import com.formconstructor.form.element.simple.ImageType;
+import java.util.List;
 import me.indian.ostag.OsTag;
 import me.indian.ostag.config.PlayerSettingsConfig;
 import me.indian.ostag.util.MessageUtil;
 import me.indian.ostag.util.Permissions;
-import ru.contentforge.formconstructor.form.CustomForm;
-import ru.contentforge.formconstructor.form.ModalForm;
-import ru.contentforge.formconstructor.form.SimpleForm;
-import ru.contentforge.formconstructor.form.element.ImageType;
-import ru.contentforge.formconstructor.form.element.Label;
-import ru.contentforge.formconstructor.form.element.Toggle;
-
-import java.util.List;
 
 public class SettingsFrom {
 

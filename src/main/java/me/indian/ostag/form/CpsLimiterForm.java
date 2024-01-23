@@ -2,15 +2,14 @@ package me.indian.ostag.form;
 
 import cn.nukkit.Player;
 import cn.nukkit.utils.Config;
-import me.indian.ostag.OsTag;
-import me.indian.ostag.util.MessageUtil;
-import ru.contentforge.formconstructor.form.CustomForm;
-import ru.contentforge.formconstructor.form.element.Input;
-import ru.contentforge.formconstructor.form.element.SelectableElement;
-import ru.contentforge.formconstructor.form.element.StepSlider;
-
+import com.formconstructor.form.CustomForm;
+import com.formconstructor.form.element.SelectableElement;
+import com.formconstructor.form.element.custom.Input;
+import com.formconstructor.form.element.custom.StepSlider;
 import java.util.ArrayList;
 import java.util.List;
+import me.indian.ostag.OsTag;
+import me.indian.ostag.util.MessageUtil;
 
 public class CpsLimiterForm {
 
@@ -48,11 +47,10 @@ public class CpsLimiterForm {
             elements.add(element);
         }
         form.addElement("maxcps", new StepSlider("Max Cps", elements, maxCps - 1))
-                .addElement("message",
-                        Input.builder()
-                                .setName(MessageUtil.colorize("&aCps limit reached message"))
+                .addElement(new Input("message")
+                                .setPlaceholder(MessageUtil.colorize("&aCps limit reached message"))
                                 .setDefaultValue(cpsMessage)
-                                .build());
+                                );
 
         form.setHandler((p, response) -> {
             final SelectableElement element = response.getStepSlider("maxcps").getValue();
